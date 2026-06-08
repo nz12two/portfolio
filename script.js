@@ -1,69 +1,19 @@
 document.addEventListener('DOMContentLoaded', function () {
 
   // ===================================================================
-  // CUSTOM CURSOR
-  // ===================================================================
-  var cursorGlow = document.querySelector('.cursor-glow')
-  var cursorDot = document.querySelector('.cursor-dot')
-  var cursorTrail = document.querySelector('.cursor-trail')
-  var trailX = 0, trailY = 0
-  var mouseX = 0, mouseY = 0
-
-  document.addEventListener('mousemove', function (e) {
-    mouseX = e.clientX
-    mouseY = e.clientY
-    if (cursorGlow) {
-      cursorGlow.style.left = mouseX + 'px'
-      cursorGlow.style.top = mouseY + 'px'
-    }
-    if (cursorDot) {
-      cursorDot.style.left = mouseX + 'px'
-      cursorDot.style.top = mouseY + 'px'
-    }
-  })
-
-  // Smooth trail following cursor
-  function trailLoop() {
-    trailX += (mouseX - trailX) * 0.08
-    trailY += (mouseY - trailY) * 0.08
-    if (cursorTrail) {
-      cursorTrail.style.left = trailX + 'px'
-      cursorTrail.style.top = trailY + 'px'
-    }
-    requestAnimationFrame(trailLoop)
-  }
-  trailLoop()
-
-  // Hover effect on interactive elements
-  var hoverTargets = document.querySelectorAll('a, button, .btn, .faq-q, .skill, .nav-link')
-  hoverTargets.forEach(function (el) {
-    el.addEventListener('mouseenter', function () {
-      if (cursorDot) cursorDot.classList.add('hovering')
-    })
-    el.addEventListener('mouseleave', function () {
-      if (cursorDot) cursorDot.classList.remove('hovering')
-    })
-  })
-
-  // ===================================================================
   // NAV
   // ===================================================================
   var nav = document.querySelector('.nav')
-  var navProgress = document.querySelector('.nav-progress')
   var navToggle = document.querySelector('.nav-toggle')
   var navMenu = document.querySelector('.nav-menu')
   var navLinks = document.querySelectorAll('.nav-link')
 
   window.addEventListener('scroll', function () {
-    var y = window.scrollY
-    if (nav) nav.classList.toggle('scrolled', y > 60)
-    if (navProgress) {
-      var max = document.documentElement.scrollHeight - window.innerHeight
-      navProgress.style.width = (y / max) * 100 + '%'
-    }
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 60)
+
     var current = ''
     document.querySelectorAll('section[id]').forEach(function (sec) {
-      if (y >= sec.offsetTop - 120) current = sec.id
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id
     })
     navLinks.forEach(function (link) {
       if (link) link.classList.toggle('active', link.getAttribute('href') === '#' + current)
@@ -85,142 +35,109 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
   // ===================================================================
-  // TEXT SCRAMBLE EFFECT
+  // ROLE CYCLER
   // ===================================================================
-  function scrambleText(el) {
-    if (!el) return
-    var originalText = el.getAttribute('data-text') || el.textContent
-    var chars = '!@#$%&?+*ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    var frame = 0
-    var totalFrames = 20
-    var interval = 50
+  var roleEl = document.getElementById('hero-role')
+  if (roleEl) {
+    var roles = [
+      'Full Stack Developer',
+      'Automation Engineer',
+      'Bot Creator',
+      'System Architect',
+      'API Builder',
+    ]
+    var roleIndex = 0
+    var roleInterval = 3200
 
-    function shuffle() {
-      var result = ''
-      var progress = frame / totalFrames
-      var revealCount = Math.floor(originalText.length * progress)
-
-      for (var i = 0; i < originalText.length; i++) {
-        if (i < revealCount) {
-          result += originalText[i]
-        } else if (originalText[i] === ' ') {
-          result += ' '
+    function cycleRole() {
+      roleIndex = (roleIndex + 1) % roles.length
+      var nextRole = roles[roleIndex]
+      var i = 0
+      roleEl.textContent = ''
+      roleEl.classList.add('typing')
+      function typeRole() {
+        if (i < nextRole.length) {
+          roleEl.textContent += nextRole[i]
+          i++
+          setTimeout(typeRole, 30 + Math.random() * 20)
         } else {
-          result += chars[Math.floor(Math.random() * chars.length)]
+          roleEl.classList.remove('typing')
+          setTimeout(cycleRole, roleInterval)
         }
       }
-      el.textContent = result
-      frame++
+      typeRole()
+    }
 
-      if (frame <= totalFrames) {
-        setTimeout(shuffle, interval - (frame * 1.5))
+    // Start cycling after initial display
+    setTimeout(cycleRole, 4000)
+  }
+
+  // ===================================================================
+  // TERMINAL TYPING EFFECT
+  // ===================================================================
+  var termEl = document.getElementById('hero-terminal')
+  if (termEl) {
+    var termLines = [
+      { text: 'whoami', type: 'cmd' },
+      { text: 'NZ — Full Stack & Automation Developer', type: 'out' },
+      { text: 'cat /proc/status', type: 'cmd' },
+      { text: 'Online — Aceitando projetos', type: 'green' },
+    ]
+
+    var currentLine = 0
+    var charIndex = 0
+    var termText = termEl.querySelector('.term-text')
+    var termCursor = termEl.querySelector('.term-cursor')
+
+    function makeNewTermLine() {
+      var line = document.createElement('div')
+      line.className = 'term-line'
+      line.innerHTML = '<span class="term-prompt">$</span><span class="term-text"></span><span class="term-cursor" style="display:none">▊</span>'
+      termEl.appendChild(line)
+      termText = line.querySelector('.term-text')
+      termCursor = line.querySelector('.term-cursor')
+    }
+
+    function typeNextChar() {
+      if (currentLine >= termLines.length) {
+        setTimeout(function () {
+          if (termCursor) termCursor.style.display = 'none'
+          makeNewTermLine()
+          if (termCursor) termCursor.style.display = 'inline'
+        }, 400)
+        return
+      }
+
+      var line = termLines[currentLine]
+
+      if (charIndex === 0) {
+        termText.textContent = ''
+        termText.className = 'term-text ' + line.type
+        if (termCursor) termCursor.style.display = 'inline'
+      }
+
+      if (charIndex < line.text.length) {
+        termText.textContent += line.text[charIndex]
+        charIndex++
+        setTimeout(typeNextChar, 20 + Math.random() * 30)
       } else {
-        el.textContent = originalText
-      }
-    }
-
-    shuffle()
-  }
-
-  // Scramble hero text on page load
-  var scrambleEls = document.querySelectorAll('.scramble')
-  scrambleEls.forEach(function (el) {
-    setTimeout(function () { scrambleText(el) }, 300)
-  })
-
-  // Scramble section titles when they scroll into view
-  var titleScrambled = {}
-  var titleObs = new IntersectionObserver(function (entries) {
-    entries.forEach(function (entry) {
-      if (entry.isIntersecting) {
-        var scrambleTargets = entry.target.querySelectorAll('.gtext')
-        scrambleTargets.forEach(function (el) {
-          var key = el.textContent.trim()
-          if (!titleScrambled[key]) {
-            titleScrambled[key] = true
-            scrambleText(el)
-          }
-        })
-        titleObs.unobserve(entry.target)
-      }
-    })
-  }, { threshold: 0.3 })
-
-  document.querySelectorAll('.sec-head').forEach(function (head) {
-    titleObs.observe(head)
-  })
-
-  // ===================================================================
-  // MAGNETIC BUTTONS
-  // ===================================================================
-  var magnetBtns = document.querySelectorAll('.magnet-btn')
-
-  magnetBtns.forEach(function (btn) {
-    btn.addEventListener('mousemove', function (e) {
-      var rect = btn.getBoundingClientRect()
-      var x = e.clientX - rect.left - rect.width / 2
-      var y = e.clientY - rect.top - rect.height / 2
-      var strength = parseInt(btn.getAttribute('data-strength')) || 10
-      btn.style.transform = 'translate(' + (x / strength) + 'px, ' + (y / strength) + 'px)'
-    })
-
-    btn.addEventListener('mouseleave', function () {
-      btn.style.transform = 'translate(0, 0)'
-    })
-  })
-
-  // ===================================================================
-  // HERO MOUSE PARALLAX
-  // ===================================================================
-  var layers = document.querySelectorAll('.layer')
-
-  if (layers.length) {
-    document.querySelector('.hero').addEventListener('mousemove', function (e) {
-      var rect = this.getBoundingClientRect()
-      var x = (e.clientX - rect.left) / rect.width - 0.5
-      var y = (e.clientY - rect.top) / rect.height - 0.5
-
-      layers.forEach(function (layer) {
-        var depth = parseFloat(layer.getAttribute('data-depth')) || 0.04
-        layer.style.transform = 'translate(' + (x * depth * 100) + 'px, ' + (y * depth * 100) + 'px)'
-      })
-    })
-  }
-
-  // ===================================================================
-  // BLOP MORPH - UPDATE SVG PATH
-  // ===================================================================
-  var blobPath = document.querySelector('.blob-path')
-  if (blobPath) {
-    var points = []
-
-    function generateBlob() {
-      var cx = 300, cy = 300, r = 200
-      var numPoints = 8
-      var path = ''
-      for (var i = 0; i < numPoints; i++) {
-        var angle = (i / numPoints) * Math.PI * 2
-        var variance = (Math.random() - 0.5) * 80
-        var px = cx + Math.cos(angle) * (r + variance)
-        var py = cy + Math.sin(angle) * (r + variance)
-        if (i === 0) {
-          path += 'M' + px + ',' + py
-        } else {
-          var prevAngle = ((i - 1) / numPoints) * Math.PI * 2
-          var prevVariance = (Math.random() - 0.5) * 80
-          var cpx1 = cx + Math.cos(prevAngle + 0.3) * (r + prevVariance)
-          var cpy1 = cy + Math.sin(prevAngle + 0.3) * (r + prevVariance)
-          var cpx2 = cx + Math.cos(angle - 0.3) * (r + variance)
-          var cpy2 = cy + Math.sin(angle - 0.3) * (r + variance)
-          path += 'C' + cpx1 + ',' + cpy1 + ' ' + cpx2 + ',' + cpy2 + ' ' + px + ',' + py
+        charIndex = 0
+        currentLine++
+        if (currentLine >= termLines.length) {
+          if (termCursor) termCursor.style.display = 'inline'
+          return
         }
+        var delay = line.type === 'cmd' ? 600 : 300
+        setTimeout(function () {
+          if (termCursor) termCursor.style.display = 'none'
+          makeNewTermLine()
+          typeNextChar()
+        }, delay)
       }
-      path += 'Z'
-      blobPath.setAttribute('d', path)
     }
 
-    generateBlob()
-    setInterval(generateBlob, 4000)
+    // Start typing after a brief delay
+    setTimeout(typeNextChar, 800)
   }
 
   // ===================================================================
@@ -228,8 +145,18 @@ document.addEventListener('DOMContentLoaded', function () {
   // ===================================================================
   var grid = document.getElementById('proj-grid')
   var loading = document.getElementById('proj-loading')
+  var gridParent = grid ? grid.parentNode : null
 
   if (grid) {
+    // Show skeleton while loading
+    var skeletonHtml = '<div class="proj-skeleton">'
+    for (var s = 0; s < 6; s++) {
+      skeletonHtml += '<div class="proj-skeleton-card"><div class="proj-skeleton-img"></div><div class="proj-skeleton-body"><div class="proj-skeleton-line"></div><div class="proj-skeleton-line"></div><div class="proj-skeleton-line"></div><div class="proj-skeleton-line"></div></div></div>'
+    }
+    skeletonHtml += '</div>'
+    grid.innerHTML = skeletonHtml
+    if (loading) loading.style.display = 'none'
+
     fetch('https://api.github.com/users/nz12two/repos?sort=updated&per_page=6&type=owner')
       .then(function (r) {
         if (!r.ok) throw new Error('GitHub error')
@@ -264,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
           html += '<div class="proj-card">'
           html += '<div class="proj-img-wrap">'
-          html += '<div class="proj-img" style="background:linear-gradient(135deg,#141b38,#070b17);display:flex;align-items:center;justify-content:center;font-size:38px;color:#4a5a80;"><i class="fab fa-github"></i></div>'
+          html += '<div class="proj-img" style="background:linear-gradient(135deg,#181820,#0a0a0f);display:flex;align-items:center;justify-content:center;font-size:38px;color:#555568;"><i class="fab fa-github"></i></div>'
           html += '<div class="proj-overlay"><a href="' + r.html_url + '" target="_blank" class="proj-link"><i class="fas fa-external-link-alt"></i></a></div>'
           html += '</div>'
           html += '<div class="proj-info">'
@@ -290,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ===================================================================
   var faqItems = document.querySelectorAll('.faq-item')
   for (var i = 0; i < faqItems.length; i++) {
-    ;(function (item) {
+    (function (item) {
       var q = item.querySelector('.faq-q')
       if (q) {
         q.addEventListener('click', function () {
@@ -309,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // ===================================================================
   var statEls = document.querySelectorAll('.stat-num[data-num]')
   for (var i = 0; i < statEls.length; i++) {
-    ;(function (el) {
+    (function (el) {
       var obs = new IntersectionObserver(function (entries) {
         if (entries[0].isIntersecting) {
           obs.unobserve(el)
@@ -333,41 +260,39 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ===================================================================
+  // SKILL BAR ANIMATION
+  // ===================================================================
+  var skillBars = document.querySelectorAll('.skill-bar-fill[data-width]')
+  if (skillBars.length) {
+    var skillObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var bar = entry.target
+          var w = parseInt(bar.getAttribute('data-width')) || 0
+          bar.style.width = w + '%'
+          skillObs.unobserve(bar)
+        }
+      })
+    }, { threshold: 0.3 })
+    skillBars.forEach(function (bar) { skillObs.observe(bar) })
+  }
+
+  // ===================================================================
   // SCROLL REVEAL
   // ===================================================================
-  var revealEls = document.querySelectorAll('.reveal-on-scroll')
-
-  for (var i = 0; i < revealEls.length; i++) {
-    ;(function (el) {
-      el.style.opacity = '0'
-      el.style.transform = 'translateY(30px)'
-      el.style.transition = 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1)'
-
-      var obs = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) {
-          el.style.opacity = '1'
-          el.style.transform = 'translateY(0)'
-          obs.unobserve(el)
-        }
-      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' })
-      obs.observe(el)
-
-      // Fallback
-      var revealed = false
-      function checkScroll() {
-        if (!revealed) {
-          var rect = el.getBoundingClientRect()
-          if (rect.top < window.innerHeight - 60) {
-            el.style.opacity = '1'
-            el.style.transform = 'translateY(0)'
-            revealed = true
-          }
-        }
+  var revealEls = document.querySelectorAll('.reveal')
+  var revealObs = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible')
+        revealObs.unobserve(entry.target)
       }
-      window.addEventListener('scroll', checkScroll)
-      setTimeout(checkScroll, 3000)
-    })(revealEls[i])
-  }
+    })
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' })
+
+  revealEls.forEach(function (el) {
+    revealObs.observe(el)
+  })
 
   // ===================================================================
   // BACK TO TOP
@@ -379,43 +304,6 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     backTop.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: 'smooth' })
-    })
-  }
-
-  // ===================================================================
-  // 3D TILT CARDS
-  // ===================================================================
-  var tiltCards = document.querySelectorAll('[data-tilt]')
-  for (var i = 0; i < tiltCards.length; i++) {
-    (function (card) {
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect()
-        var x = (e.clientX - rect.left) / rect.width
-        var y = (e.clientY - rect.top) / rect.height
-        var tiltX = (y - 0.5) * 12
-        var tiltY = (x - 0.5) * -12
-        card.style.transform = 'perspective(800px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg) scale3d(1.02,1.02,1.02)'
-      })
-      card.addEventListener('mouseleave', function () {
-        card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)'
-      })
-    })(tiltCards[i])
-  }
-
-  // ===================================================================
-  // BG ORBS MOUSE PARALLAX
-  // ===================================================================
-  var orbs = document.querySelectorAll('.bg-orb')
-  var orbSpeeds = [0.012, 0.02, 0.008, 0.025, 0.015]
-  if (orbs.length) {
-    document.addEventListener('mousemove', function (e) {
-      var x = (e.clientX / window.innerWidth - 0.5) * 2
-      var y = (e.clientY / window.innerHeight - 0.5) * 2
-      for (var i = 0; i < orbs.length; i++) {
-        var speed = orbSpeeds[i % orbSpeeds.length]
-        orbs[i].style.setProperty('--px', (x * speed * 120) + 'px')
-        orbs[i].style.setProperty('--py', (y * speed * 120) + 'px')
-      }
     })
   }
 

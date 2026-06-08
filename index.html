@@ -12,24 +12,12 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   <title>NZ - Desenvolvedor Full Stack</title>
 </head>
 <body>
-
-  <!-- CUSTOM CURSOR -->
-  <div class="cursor-glow"></div>
-  <div class="cursor-dot"></div>
-  <div class="cursor-trail"></div>
-
-  <!-- FLOATING BG ORBS -->
-  <div class="bg-orb" data-orb="0"></div>
-  <div class="bg-orb" data-orb="1"></div>
-  <div class="bg-orb" data-orb="2"></div>
-  <div class="bg-orb" data-orb="3"></div>
-  <div class="bg-orb" data-orb="4"></div>
 
   <!-- NAV -->
   <header>
@@ -39,6 +27,7 @@
         <ul class="nav-menu">
           <li><a href="#inicio" class="nav-link active">Inicio</a></li>
           <li><a href="#sobre" class="nav-link">Sobre</a></li>
+          <li><a href="#automacao" class="nav-link">Automacao</a></li>
           <li><a href="#servicos" class="nav-link">Servicos</a></li>
           <li><a href="#projetos" class="nav-link">Projetos</a></li>
           <li><a href="#contato" class="nav-link">Contato</a></li>
@@ -48,133 +37,247 @@
         </button>
       </div>
     </nav>
-    <div class="nav-progress"></div>
   </header>
 
   <main>
 
     <!-- HERO -->
-    <section id="inicio" class="hero" data-depth="0">
-      <div class="hero-layers">
-        <div class="layer layer-1" data-depth="0.08"></div>
-        <div class="layer layer-2" data-depth="0.04"></div>
+    <section id="inicio" class="hero">
+      <div class="hero-grid">
+        <div class="hero-bg-grid"></div>
       </div>
-
-      <div class="hero-bg-morph">
-        <svg class="blob-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
-          <path class="blob-path" d="M300,-30C389.4,-30 470,40 495,125C520,210 490,310 430,375C370,440 280,470 190,450C100,430 30,360 15,270C0,180 40,70 130,20C220,-30 210,-30 300,-30Z" fill="rgba(37,99,235,0.06)"/>
-        </svg>
-      </div>
-
-      <div class="hero-inner">
-        <div class="hero-left" data-depth="0.02">
-          <div class="avatar-frame" data-tilt>
-            <div class="avatar-border"></div>
-            <img src="assets/icon.jpg" alt="NZ" class="avatar-img">
+      <div class="container">
+        <div class="hero-inner">
+          <div class="hero-text">
+            <div class="hero-badge">
+              <span class="badge-dot"></span>
+              <span class="badge-text">Disponivel para projetos</span>
+            </div>
+            <h1 class="hero-title">
+              <span class="hero-name">NZ</span>
+              <span class="hero-role" id="hero-role">Full Stack Developer</span>
+            </h1>
+            <p class="hero-focus">
+              <span class="focus-accent">Automacao</span>
+              <span class="focus-sep">/</span>
+              <span>Sistemas</span>
+              <span class="focus-sep">/</span>
+              <span>Bots</span>
+            </p>
+            <p class="hero-desc">Transformo suas ideias em solucoes digitais que geram resultados reais. Sites, sistemas, bots e automacoes.</p>
+            <div class="hero-btns">
+              <a href="#projetos" class="btn primary">Ver Projetos</a>
+              <a href="#contato" class="btn outline">Entrar em Contato</a>
+            </div>
+          </div>
+          <div class="hero-media">
+            <div class="hero-card">
+              <div class="hero-avatar-wrap">
+                <div class="hero-avatar-glow"></div>
+                <img src="assets/icon.jpg" alt="NZ" class="hero-avatar-img">
+              </div>
+              <div class="hero-terminal" id="hero-terminal">
+                <div class="term-line">
+                  <span class="term-prompt">$</span>
+                  <span class="term-text"></span>
+                  <span class="term-cursor" style="display:none">▊</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="hero-right" data-depth="-0.02">
-          <span class="hero-chip">Disponivel para projetos</span>
-          <h1 class="hero-title">
-            <span class="scramble" data-text="NZ">NZ</span>
-          </h1>
-          <p class="hero-sub">
-            <span class="scramble" data-text="Desenvolvedor Full Stack">Desenvolvedor Full Stack</span>
-          </p>
-          <p class="hero-desc">Transformo suas ideias em solucoes digitais que geram resultados reais. Sites, sistemas, bots e automacoes.</p>
-          <div class="hero-btns">
-            <a href="#projetos" class="btn primary magnet-btn" data-strength="15">Ver Projetos</a>
-            <a href="#contato" class="btn outline magnet-btn" data-strength="10">Contatar</a>
-          </div>
-        </div>
-
-        <div class="hero-scroll">
-          <span>Explore</span>
-          <div class="scroll-line"></div>
-        </div>
+      </div>
+      <div class="hero-scroll">
+        <span>Role para explorar</span>
+        <div class="scroll-line"></div>
       </div>
     </section>
+
+    <div class="section-divider"></div>
 
     <!-- SOBRE -->
     <section id="sobre" class="section alt-bg">
       <div class="container">
-        <div class="sec-head reveal-on-scroll">
+        <div class="sec-head reveal">
           <span class="sec-tag">Sobre</span>
           <h2 class="sec-title">Quem <span class="gtext">sou</span></h2>
         </div>
         <div class="sobre-grid">
-          <div class="sobre-card reveal-on-scroll">
+          <div class="sobre-content reveal">
             <p class="sobre-destaque">Desenvolvedor full stack focado em criar solucoes praticas, rapidas e confiaveis.</p>
             <p class="sobre-texto">Desenvolvo APIs, bots, automacoes e sites que funcionam de forma estavel e eficiente. Meu foco e entregar solucoes prontas para uso, com performance e confiabilidade.</p>
             <div class="skills">
-              <span class="skill" style="--i:0">JavaScript</span>
-              <span class="skill" style="--i:1">Python</span>
-              <span class="skill" style="--i:2">React</span>
-              <span class="skill" style="--i:3">Integracoes</span>
-              <span class="skill" style="--i:4">APIs</span>
-              <span class="skill" style="--i:5">Automacoes</span>
-              <span class="skill" style="--i:6">Bots</span>
-              <span class="skill" style="--i:7">Otimizacoes</span>
-              <span class="skill" style="--i:8">Sistemas Web</span>
+              <span class="skill">JavaScript</span>
+              <span class="skill">Python</span>
+              <span class="skill">React</span>
+              <span class="skill">Integracoes</span>
+              <span class="skill">APIs</span>
+              <span class="skill">Automacoes</span>
+              <span class="skill">Bots</span>
+              <span class="skill">Otimizacoes</span>
+              <span class="skill">Sistemas Web</span>
+            </div>
+            <div class="sobre-skills-bars">
+              <div class="skill-bar-group">
+                <div class="skill-bar-label"><span>JavaScript / React</span><span>80%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+              </div>
+              <div class="skill-bar-group">
+                <div class="skill-bar-label"><span>Python / Automacao</span><span>75%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
+              </div>
+              <div class="skill-bar-group">
+                <div class="skill-bar-label"><span>APIs / Integracoes</span><span>85%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
+              </div>
+              <div class="skill-bar-group">
+                <div class="skill-bar-label"><span>Bots / Automacao</span><span>70%</span></div>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70"></div></div>
+              </div>
             </div>
           </div>
-          <div class="stats reveal-on-scroll">
+          <div class="stats reveal">
             <div class="stat-item">
-              <div class="stat-icon"><i class="fas fa-code"></i></div>
               <div class="stat-num" data-num="25">0</div>
               <div class="stat-label">Projetos Entregues</div>
             </div>
             <div class="stat-item">
-              <div class="stat-icon"><i class="fas fa-smile"></i></div>
               <div class="stat-num" data-num="25">0</div>
               <div class="stat-label">Clientes Satisfeitos</div>
             </div>
             <div class="stat-item">
-              <div class="stat-icon"><i class="fas fa-clock"></i></div>
               <div class="stat-num" data-num="2">0</div>
               <div class="stat-label">Anos de Experiencia</div>
             </div>
           </div>
         </div>
+        <div class="tech-carousel reveal">
+          <div class="tech-track">
+            <span class="tech-item"><i class="fab fa-js"></i> JavaScript</span>
+            <span class="tech-item"><i class="fab fa-python"></i> Python</span>
+            <span class="tech-item"><i class="fab fa-react"></i> React</span>
+            <span class="tech-item"><i class="fab fa-node-js"></i> Node.js</span>
+            <span class="tech-item"><i class="fas fa-code-branch"></i> Git</span>
+            <span class="tech-item"><i class="fas fa-database"></i> APIs</span>
+            <span class="tech-item"><i class="fas fa-robot"></i> Bots</span>
+            <span class="tech-item"><i class="fas fa-cloud"></i> Integracoes</span>
+            <span class="tech-item"><i class="fab fa-js"></i> JavaScript</span>
+            <span class="tech-item"><i class="fab fa-python"></i> Python</span>
+            <span class="tech-item"><i class="fab fa-react"></i> React</span>
+            <span class="tech-item"><i class="fab fa-node-js"></i> Node.js</span>
+            <span class="tech-item"><i class="fas fa-code-branch"></i> Git</span>
+            <span class="tech-item"><i class="fas fa-database"></i> APIs</span>
+            <span class="tech-item"><i class="fas fa-robot"></i> Bots</span>
+            <span class="tech-item"><i class="fas fa-cloud"></i> Integracoes</span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- SERVICOS -->
-    <section id="servicos" class="section">
+    <div class="section-divider"></div>
+
+    <!-- AUTOMACAO -->
+    <section id="automacao" class="section">
       <div class="container">
-        <div class="sec-head reveal-on-scroll">
+        <div class="sec-head reveal">
+          <span class="sec-tag">Automacao</span>
+          <h2 class="sec-title">O que eu <span class="gtext">automatizo</span></h2>
+          <p class="sec-sub">Solucoes que desenvolvo para clientes e projetos reais</p>
+        </div>
+        <div class="auto-grid">
+          <div class="auto-card reveal" style="--i:0">
+            <div class="auto-header">
+              <i class="fa-solid fa-gear auto-icon"></i>
+              <span class="auto-lang">Python</span>
+            </div>
+            <h3>Workflows & Scripts</h3>
+            <p>Automacao de tarefas repetitivas, pipelines de dados, processamento de arquivos e integracao entre sistemas.</p>
+            <ul class="auto-feats">
+              <li>Scripts automatizados</li>
+              <li>Pipelines de dados</li>
+              <li>Processamento batch</li>
+            </ul>
+          </div>
+          <div class="auto-card reveal" style="--i:1">
+            <div class="auto-header">
+              <i class="fa-solid fa-robot auto-icon"></i>
+              <span class="auto-lang">Bots</span>
+            </div>
+            <h3>Bots & Assistentes</h3>
+            <p>Criacao de bots para Discord, Telegram e WhatsApp. Automacao de atendimento, moderacao e ferramentas uteis.</p>
+            <ul class="auto-feats">
+              <li>Bots de atendimento</li>
+              <li>Automacao de moderação</li>
+              <li>Ferramentas interativas</li>
+            </ul>
+          </div>
+          <div class="auto-card reveal" style="--i:2">
+            <div class="auto-header">
+              <i class="fa-solid fa-cloud auto-icon"></i>
+              <span class="auto-lang">APIs</span>
+            </div>
+            <h3>APIs & Integracoes</h3>
+            <p>Desenvolvimento de APIs REST, integracao entre servicos, webhooks e automacao de fluxos de trabalho.</p>
+            <ul class="auto-feats">
+              <li>APIs RESTful</li>
+              <li>Webhooks & eventos</li>
+              <li>Integracao de servicos</li>
+            </ul>
+          </div>
+          <div class="auto-card reveal" style="--i:3">
+            <div class="auto-header">
+              <i class="fa-solid fa-server auto-icon"></i>
+              <span class="auto-lang">DevOps</span>
+            </div>
+            <h3>Infra & Deploy</h3>
+            <p>Automacao de deploys, configuracao de servidores, CI/CD e monitoramento de sistemas em producao.</p>
+            <ul class="auto-feats">
+              <li>CI/CD pipelines</li>
+              <li>Deploy automatizado</li>
+              <li>Monitoramento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SERVICOS -->
+    <section id="servicos" class="section alt-bg">
+      <div class="container">
+        <div class="sec-head reveal">
           <span class="sec-tag">Servicos</span>
           <h2 class="sec-title">O que <span class="gtext">faco</span></h2>
           <p class="sec-sub">Solucoes que desenvolvo para clientes e projetos reais</p>
         </div>
         <div class="servicos-grid">
-          <div class="servico-card reveal-on-scroll" data-tilt style="--i:0">
+          <div class="servico-card reveal" style="--i:0">
             <span class="servico-icon"><i class="fas fa-globe"></i></span>
             <h3>Sites e Dashboards</h3>
             <p>Desenvolvimento de sites, dashboards de bots e sistemas web simples.</p>
           </div>
-          <div class="servico-card reveal-on-scroll" data-tilt style="--i:1">
+          <div class="servico-card reveal" style="--i:1">
             <span class="servico-icon"><i class="fas fa-robot"></i></span>
             <h3>Bots e Automacoes</h3>
             <p>Criacao de bots, automacoes basicas e integracoes.</p>
           </div>
-          <div class="servico-card reveal-on-scroll" data-tilt style="--i:2">
+          <div class="servico-card reveal" style="--i:2">
             <span class="servico-icon"><i class="fas fa-server"></i></span>
             <h3>Servidores de Minecraft</h3>
             <p>Configuracao de plugins, otimizacao de performance e manutencao.</p>
           </div>
-          <div class="servico-card reveal-on-scroll" data-tilt style="--i:3">
+          <div class="servico-card reveal" style="--i:3">
             <span class="servico-icon"><i class="fas fa-code"></i></span>
             <h3>Programacao</h3>
             <p>Desenvolvimento em JavaScript e Python, criacao de plugins e scripts.</p>
           </div>
-          <div class="servico-card reveal-on-scroll" data-tilt style="--i:4">
+          <div class="servico-card reveal" style="--i:4">
             <span class="servico-icon"><i class="fas fa-cogs"></i></span>
             <h3>Plugins Personalizados</h3>
             <p>Criacao e customizacao de plugins para servidores de Minecraft.</p>
           </div>
-          <div class="servico-card reveal-on-scroll" data-tilt style="--i:5">
+          <div class="servico-card reveal" style="--i:5">
             <span class="servico-icon"><i class="fas fa-chart-line"></i></span>
             <h3>Otimizacao e Performance</h3>
             <p>Melhoria de performance em sites, bots e servidores.</p>
@@ -183,30 +286,32 @@
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- DIFERENCIAIS -->
-    <section class="section alt-bg">
+    <section class="section">
       <div class="container">
-        <div class="sec-head reveal-on-scroll">
+        <div class="sec-head reveal">
           <span class="sec-tag">Diferenciais</span>
           <h2 class="sec-title">Por que <span class="gtext">trabalhar comigo?</span></h2>
         </div>
         <div class="diffs-grid">
-          <div class="diff-item reveal-on-scroll" data-tilt style="--i:0">
+          <div class="diff-item reveal" style="--i:0">
             <span class="diff-icon"><i class="fas fa-bolt"></i></span>
             <h4>Entrega rapida</h4>
             <p>Projetos entregues no prazo, sem atrasos.</p>
           </div>
-          <div class="diff-item reveal-on-scroll" data-tilt style="--i:1">
+          <div class="diff-item reveal" style="--i:1">
             <span class="diff-icon"><i class="fas fa-shield-alt"></i></span>
             <h4>Codigo confiavel</h4>
             <p>Solucoes estaveis e prontas para uso real.</p>
           </div>
-          <div class="diff-item reveal-on-scroll" data-tilt style="--i:2">
+          <div class="diff-item reveal" style="--i:2">
             <span class="diff-icon"><i class="fas fa-headset"></i></span>
             <h4>Suporte apos entrega</h4>
             <p>Ajuda e manutencao quando necessario.</p>
           </div>
-          <div class="diff-item reveal-on-scroll" data-tilt style="--i:3">
+          <div class="diff-item reveal" style="--i:3">
             <span class="diff-icon"><i class="fas fa-chart-line"></i></span>
             <h4>Alta performance</h4>
             <p>Sistemas rapidos e otimizados.</p>
@@ -215,10 +320,12 @@
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- PROJETOS -->
-    <section id="projetos" class="section">
+    <section id="projetos" class="section alt-bg">
       <div class="container">
-        <div class="sec-head reveal-on-scroll">
+        <div class="sec-head reveal">
           <span class="sec-tag">Projetos</span>
           <h2 class="sec-title">Meus <span class="gtext">trabalhos</span></h2>
           <p class="sec-sub">Projetos direto do meu GitHub</p>
@@ -226,6 +333,26 @@
         <div id="proj-loading" class="proj-loading">
           <i class="fas fa-spinner fa-spin"></i>
           <p>Carregando projetos do GitHub...</p>
+        </div>
+        <div class="proj-featured reveal">
+          <div class="proj-featured-inner">
+            <div class="proj-featured-content">
+              <span class="proj-featured-tag"><i class="fas fa-star"></i> Destaque</span>
+              <h3>Baccana's Hub</h3>
+              <p>Plataforma de servicos profissionais para servidores Minecraft. Configuracao, otimizacao e desenvolvimento.</p>
+              <div class="proj-featured-techs">
+                <span>Next.js</span>
+                <span>TypeScript</span>
+                <span>Tailwind</span>
+              </div>
+              <a href="https://baccanas-hub.vercel.app" target="_blank" class="btn primary">
+                <i class="fas fa-external-link-alt"></i> Ver Projeto
+              </a>
+            </div>
+            <div class="proj-featured-visual">
+              <i class="fas fa-cube"></i>
+            </div>
+          </div>
         </div>
         <div id="proj-grid" class="proj-grid"></div>
         <div class="proj-footer">
@@ -236,25 +363,27 @@
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- DEPOIMENTOS -->
-    <section class="section alt-bg">
+    <section class="section">
       <div class="container">
-        <div class="sec-head reveal-on-scroll">
+        <div class="sec-head reveal">
           <span class="sec-tag">Feedback</span>
           <h2 class="sec-title">O que <span class="gtext">dizem</span></h2>
         </div>
         <div class="dep-grid">
-          <div class="dep-card reveal-on-scroll" data-tilt style="--i:0">
+          <div class="dep-card reveal" style="--i:0">
             <span class="dep-quote"><i class="fas fa-quote-left"></i></span>
             <p>"Com a automacao implementada, o processo ficou 50% mais rapido e eficiente."</p>
             <h4>&mdash; Projeto Dashboard de Automacao</h4>
           </div>
-          <div class="dep-card reveal-on-scroll" data-tilt style="--i:1">
+          <div class="dep-card reveal" style="--i:1">
             <span class="dep-quote"><i class="fas fa-quote-left"></i></span>
             <p>"O site apresentou excelente performance e estabilidade, exatamente como precisava."</p>
             <h4>&mdash; Projeto Site Corporativo</h4>
           </div>
-          <div class="dep-card reveal-on-scroll" data-tilt style="--i:2">
+          <div class="dep-card reveal" style="--i:2">
             <span class="dep-quote"><i class="fas fa-quote-left"></i></span>
             <p>"A integracao de bots melhorou o atendimento e reduziu erros manuais significativamente."</p>
             <h4>&mdash; Projeto Bot de Atendimento</h4>
@@ -263,10 +392,12 @@
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- FAQ -->
-    <section class="section">
+    <section class="section alt-bg">
       <div class="container">
-        <div class="sec-head reveal-on-scroll">
+        <div class="sec-head reveal">
           <span class="sec-tag">FAQ</span>
           <h2 class="sec-title">Perguntas <span class="gtext">frequentes</span></h2>
         </div>
@@ -302,15 +433,17 @@
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- CONTATO -->
-    <section id="contato" class="section alt-bg">
+    <section id="contato" class="section">
       <div class="container">
-        <div class="sec-head reveal-on-scroll">
+        <div class="sec-head reveal">
           <span class="sec-tag">Contato</span>
           <h2 class="sec-title">Vamos <span class="gtext">conversar</span></h2>
           <p class="sec-sub">Descreva seu projeto e eu te retorno com a melhor solucao</p>
         </div>
-        <div class="contato-grid reveal-on-scroll">
+        <div class="contato-grid reveal">
           <div class="contato-form">
             <div class="form-grupo">
               <label class="form-label"><i class="fas fa-comments"></i> Como prefere conversar?</label>
@@ -376,13 +509,14 @@
       </div>
     </section>
 
+    <div class="section-divider"></div>
+
     <!-- CTA -->
     <section class="cta">
-      <div class="cta-orb"></div>
       <div class="container">
-        <h2 class="cta-titulo reveal-on-scroll">Pronto para transformar sua ideia em <span class="gtext">realidade</span>?</h2>
-        <p class="cta-sub reveal-on-scroll">Seu projeto merece um desenvolvimento serio, rapido e bem feito.</p>
-        <a href="#contato" class="btn primary btn-grande reveal-on-scroll">
+        <h2 class="cta-titulo reveal">Pronto para transformar sua ideia em <span class="gtext">realidade</span>?</h2>
+        <p class="cta-sub reveal">Seu projeto merece um desenvolvimento serio, rapido e bem feito.</p>
+        <a href="#contato" class="btn primary reveal">
           <i class="fas fa-rocket"></i> Vamos conversar!
         </a>
       </div>
@@ -400,6 +534,7 @@
         <div class="footer-nav">
           <a href="#inicio">Inicio</a>
           <a href="#sobre">Sobre</a>
+          <a href="#automacao">Automacao</a>
           <a href="#servicos">Servicos</a>
           <a href="#projetos">Projetos</a>
           <a href="#contato">Contato</a>
