@@ -5,7 +5,6 @@
   ### Full Stack Developer · Automation Enthusiast
 
   [![GitHub](https://img.shields.io/badge/GitHub-nz12two-3b82f6?style=flat-square&logo=github)](https://github.com/nz12two)
-  [![WhatsApp](https://img.shields.io/badge/WhatsApp-Contact-22c55e?style=flat-square&logo=whatsapp)](https://wa.me/5571992227288)
 
   <br>
   <em>"Transformo ideias em soluções digitais. Sistemas, automações e sites rápidos, estáveis e prontos para uso."</em>
@@ -54,7 +53,6 @@ Plataforma de serviços profissionais para servidores Minecraft. Configuração,
 
 ## 📫 Contato
 
-- **WhatsApp:** [+55 71 99222-7288](https://wa.me/5571992227288) (reposta mais rápida)
 - **E-mail:** [nzjr123@gmail.com](mailto:nzjr123@gmail.com)
 - **GitHub:** [github.com/nz12two](https://github.com/nz12two)
 - **Discord:** `@nz12two`
