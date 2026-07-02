@@ -313,10 +313,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var cttBtn = document.getElementById('ctt-btn')
   if (cttBtn) {
     cttBtn.addEventListener('click', function () {
-      var method = document.getElementById('ctt-method')
       var purpose = document.getElementById('ctt-purpose')
-      if (!method || !purpose) return
-      var m = method.value
+      if (!purpose) return
       var p = purpose.value
       var msgs = {
         orcamento: 'Ola! Gostaria de solicitar um orcamento para um projeto.',
@@ -326,14 +324,10 @@ document.addEventListener('DOMContentLoaded', function () {
         outro: 'Ola! Gostaria de conversar sobre outro assunto.'
       }
       var text = msgs[p] || msgs.outro
-      if (m === 'whatsapp') {
-        window.open('https://wa.me/5571992227288?text=' + encodeURIComponent(text), '_blank')
-      } else {
-        window.open(
-          'https://mail.google.com/mail/?view=cm&fs=1&to=nzjr123@gmail.com&su=Contato%20-%20Portfolio&body=' + encodeURIComponent(text),
-          '_blank'
-        )
-      }
+      window.open(
+        'https://mail.google.com/mail/?view=cm&fs=1&to=nzjr123@gmail.com&su=Contato%20-%20Portfolio&body=' + encodeURIComponent(text),
+        '_blank'
+      )
     })
   }
 
