@@ -1216,6 +1216,86 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
 .form-obs { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text3); margin-top: 12px; }
 .form-obs i { color: var(--green); }
 
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: all 0.2s var(--ease);
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-input:hover,
+.form-textarea:hover,
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--blue);
+  outline: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--text3);
+  font-size: 12px;
+}
+
+.form-textarea {
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+/* ===== WHATSAPP BUTTON ===== */
+.btn.whatsapp {
+  background: #25d366;
+  color: #fff;
+}
+
+.btn.whatsapp:hover {
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.25);
+  transform: translateY(-1px);
+}
+
+/* WhatsApp floating button */
+.whatsapp-float {
+  position: fixed;
+  bottom: 80px;
+  right: 28px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+  z-index: 99;
+  transition: all 0.3s var(--ease);
+  text-decoration: none;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 32px rgba(37, 211, 102, 0.4);
+  color: #fff;
+}
+
+@media (max-width: 480px) {
+  .whatsapp-float {
+    width: 46px;
+    height: 46px;
+    font-size: 20px;
+    bottom: 76px;
+    right: 16px;
+  }
+}
+
 .contato-links { display: grid; gap: 8px; }
 
 .ctt-link {

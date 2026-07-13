@@ -313,9 +313,37 @@ document.addEventListener('DOMContentLoaded', function () {
   var cttBtn = document.getElementById('ctt-btn')
   if (cttBtn) {
     cttBtn.addEventListener('click', function () {
+      var name = document.getElementById('ctt-name')
+      var email = document.getElementById('ctt-email')
       var purpose = document.getElementById('ctt-purpose')
-      if (!purpose) return
+      var message = document.getElementById('ctt-message')
+      
+      if (!name || !email || !purpose || !message) return
+      
+      var n = name.value.trim()
+      var e = email.value.trim()
       var p = purpose.value
+      var m = message.value.trim()
+      
+      if (!n) {
+        name.focus()
+        name.style.borderColor = '#ef4444'
+        setTimeout(function () { name.style.borderColor = '' }, 2000)
+        return
+      }
+      if (!e || !e.includes('@')) {
+        email.focus()
+        email.style.borderColor = '#ef4444'
+        setTimeout(function () { email.style.borderColor = '' }, 2000)
+        return
+      }
+      if (!m) {
+        message.focus()
+        message.style.borderColor = '#ef4444'
+        setTimeout(function () { message.style.borderColor = '' }, 2000)
+        return
+      }
+      
       var msgs = {
         orcamento: 'Ola! Gostaria de solicitar um orcamento para um projeto.',
         duvida: 'Ola! Tenho uma duvida tecnica.',
@@ -323,9 +351,10 @@ document.addEventListener('DOMContentLoaded', function () {
         reuniao: 'Ola! Gostaria de agendar uma reuniao.',
         outro: 'Ola! Gostaria de conversar sobre outro assunto.'
       }
-      var text = msgs[p] || msgs.outro
+      var subject = msgs[p] || msgs.outro
+      var body = 'Nome: ' + n + '\nEmail: ' + e + '\n\n' + subject + '\n\n' + m
       window.open(
-        'https://mail.google.com/mail/?view=cm&fs=1&to=nzjr123@gmail.com&su=Contato%20-%20Portfolio&body=' + encodeURIComponent(text),
+        'https://mail.google.com/mail/?view=cm&fs=1&to=nzjr123@gmail.com&su=Contato%20-%20Portfolio&body=' + encodeURIComponent(body),
         '_blank'
       )
     })

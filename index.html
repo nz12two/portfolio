@@ -7,8 +7,8 @@
   <meta name="author" content="NZ">
   <meta property="og:title" content="NZ - Desenvolvedor Full Stack">
   <meta property="og:description" content="Desenvolvedor Full Stack especializado em sistemas, automacoes e sites rapidos e estaveis.">
-  <meta property="og:image" content="https://raw.githubusercontent.com/nz12two/portifolio/main/github/social-preview.png">
-  <meta property="og:url" content="https://nz12two.github.io/portifolio/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/nz12two/portfolio/main/github/social-preview.png">
+  <meta property="og:url" content="https://nz12two.github.io/portfolio/">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:type" content="website">
@@ -70,6 +70,7 @@
             <div class="hero-btns">
               <a href="#projetos" class="btn primary">Ver Projetos</a>
               <a href="#contato" class="btn outline">Entrar em Contato</a>
+              <a href="https://wa.me/5511951999999" target="_blank" class="btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             </div>
           </div>
           <div class="hero-media">
@@ -140,15 +141,15 @@
           </div>
           <div class="stats reveal">
             <div class="stat-item">
-              <div class="stat-num" data-num="25">0</div>
+              <div class="stat-num" data-num="5">0</div>
               <div class="stat-label">Projetos Entregues</div>
             </div>
             <div class="stat-item">
-              <div class="stat-num" data-num="25">0</div>
+              <div class="stat-num" data-num="5">0</div>
               <div class="stat-label">Clientes Satisfeitos</div>
             </div>
             <div class="stat-item">
-              <div class="stat-num" data-num="2">0</div>
+              <div class="stat-num" data-num="1">0</div>
               <div class="stat-label">Anos de Experiencia</div>
             </div>
           </div>
@@ -377,18 +378,18 @@
         <div class="dep-grid">
           <div class="dep-card reveal" style="--i:0">
             <span class="dep-quote"><i class="fas fa-quote-left"></i></span>
-            <p>"Com a automacao implementada, o processo ficou 50% mais rapido e eficiente."</p>
-            <h4>&mdash; Projeto Dashboard de Automacao</h4>
+            <p>"Com a automacao implementada, o processo ficou 50% mais rapido e eficiente. Entregou no prazo e o suporte foi excelente."</p>
+            <h4>&mdash; Cliente, Projeto Automacao Comercial</h4>
           </div>
           <div class="dep-card reveal" style="--i:1">
             <span class="dep-quote"><i class="fas fa-quote-left"></i></span>
-            <p>"O site apresentou excelente performance e estabilidade, exatamente como precisava."</p>
-            <h4>&mdash; Projeto Site Corporativo</h4>
+            <p>"O site apresentou excelente performance e estabilidade, exatamente como precisava. Recomendo o trabalho."</p>
+            <h4>&mdash; Cliente, Site Institucional</h4>
           </div>
           <div class="dep-card reveal" style="--i:2">
             <span class="dep-quote"><i class="fas fa-quote-left"></i></span>
-            <p>"A integracao de bots melhorou o atendimento e reduziu erros manuais significativamente."</p>
-            <h4>&mdash; Projeto Bot de Atendimento</h4>
+            <p>"A integracao de bots melhorou o atendimento e reduziu erros manuais significativamente. Profissional dedicado."</p>
+            <h4>&mdash; Cliente, Bot de Atendimento</h4>
           </div>
         </div>
       </div>
@@ -447,7 +448,14 @@
         </div>
         <div class="contato-grid reveal">
           <div class="contato-form">
-
+            <div class="form-grupo">
+              <label class="form-label"><i class="fas fa-user"></i> Seu nome</label>
+              <input type="text" id="ctt-name" class="form-input" placeholder="Como voce se chama?" required>
+            </div>
+            <div class="form-grupo">
+              <label class="form-label"><i class="fas fa-envelope"></i> Seu e-mail</label>
+              <input type="email" id="ctt-email" class="form-input" placeholder="seu@email.com" required>
+            </div>
             <div class="form-grupo">
               <label class="form-label"><i class="fas fa-bullseye"></i> Qual o objetivo?</label>
               <div class="select-box">
@@ -461,8 +469,12 @@
                 <i class="fas fa-chevron-down"></i>
               </div>
             </div>
+            <div class="form-grupo">
+              <label class="form-label"><i class="fas fa-comment"></i> Descreva seu projeto</label>
+              <textarea id="ctt-message" class="form-textarea" placeholder="Conte um pouco sobre o que voce precisa..." rows="4" required></textarea>
+            </div>
             <button id="ctt-btn" class="btn primary btn-full">
-              Iniciar Conversa <i class="fas fa-paper-plane"></i>
+              Enviar Mensagem <i class="fas fa-paper-plane"></i>
             </button>
             <div class="form-obs">
               <i class="fas fa-info-circle"></i>
@@ -486,6 +498,15 @@
                 <strong>GitHub</strong>
                 <span>@nz12two</span>
                 <span class="ctt-status">Codigo aberto</span>
+              </span>
+              <i class="fas fa-arrow-right ctt-arrow"></i>
+            </a>
+            <a href="https://wa.me/5511951999999" target="_blank" class="ctt-link ctt-wa">
+              <span class="ctt-ico"><i class="fab fa-whatsapp"></i></span>
+              <span class="ctt-info">
+                <strong>WhatsApp</strong>
+                <span>(11) 95199-9999</span>
+                <span class="ctt-status">Resposta rapida</span>
               </span>
               <i class="fas fa-arrow-right ctt-arrow"></i>
             </a>
@@ -526,7 +547,7 @@
         </div>
         <div class="footer-social">
           <a href="https://github.com/nz12two" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-          <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <!-- instagram removido -->
           <a href="https://discord.com/users/1223791822795575400" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
         </div>
       </div>
@@ -539,6 +560,11 @@
   <button id="back-top" aria-label="Voltar ao topo">
     <i class="fas fa-chevron-up"></i>
   </button>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/5511951999999" target="_blank" class="whatsapp-float" aria-label="Fale pelo WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
   <script src="script.js"></script>
 </body>
