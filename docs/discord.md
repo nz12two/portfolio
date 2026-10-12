@@ -46,7 +46,7 @@ Tradução do rótulo declarado para o nome da categoria:
 | Plugin | 🔌 Plugins |
 | Ferramenta | 🌐 Sites |
 | Serviço | ⚙️ Otimizações |
-| Jogo / simulação | 🎮 Jogos |
+| Jogo / simulação | 🧩 scripts |
 | Agente | 🤖 Agentes |
 
 Duas traduções merecem justificativa: `Serviço` virou **Otimizações** porque a
@@ -55,37 +55,104 @@ tagline do Baccana's Hub é otimização de servidor Paper, e `Ferramenta` virou
 rótulo do produto não muda — muda o nome da prateleira onde ele fica.
 
 ```
-Info
-   📢 anúncios        texto, somente leitura — o webhook é o único que escreve
-   🎨 regras          texto, mensagem fixada
-   📌 informações     texto — o mapa do servidor, sem pergunta e sem bug
-   🗣️ geral           texto — apresentação; dúvida de produto vai no fórum
+🏠 início
+   📌 informações      o mapa do servidor, sem pergunta e sem bug
+   🎨 regras          as três regras, fixadas
+   📢 anúncios        canal de anúncio do Discord (tipo 5), somente leitura
+   📢 atualizações     o que mudou dentro de um produto que já existe
 
 🔌 Plugins
    🛡️ antixray        fórum — Bug, Dúvida, Configuração, Falso positivo
 
 ⚙️ Otimizações
-   🔧 baccanas-hub    fórum — Orçamento, Suporte, Dúvida
+   📦 packs           pacotes de otimização de servidor Paper, com número
 
 🌐 Sites
-   📚 api-directory   fórum — API fora do ar, Dúvida, Item faltando
-   📦 opendex         fórum — Dúvida, Item faltando, Erro
+   🔧 baccanas-hub    vitrine dos serviços e dos packs
+   📚 api-directory   diretório de APIs sondadas
+   📦 opendex         catálogo do ecossistema OpenCode
 
 🤖 Agentes
-   🤖 banzinho        fórum — Dúvida, Sugestão
+   🤖 banzinho_os     o agente: versão, o que faz, o que ainda não faz
+   📄 fórum-ia        conversa sobre IA — produto, ferramenta, método
 
-🎮 Jogos
-   🏙️ empresas-mundo  fórum — Dúvida, Modelo, Erro
+🧩 scripts
+   🏙️ empresas-mundo  simulação de empresas de entrega
 
 💬 Comunidade
+   🗣️ geral           conversa que não é sobre produto
    📣 feedback        fórum — Funcionalidade, Bug, Outro
    🛠️ solicitar       fórum — Serviço, Parceria
    💡 sugestões       fórum — Sugestão, Melhoria
-   🗂️ sem-categoria  texto
+   🗂️ sem-categoria  o que não coube
+
+🎧 suporte
+   ticket             problema aberto: o que fez, o que esperava, o log
+   apel              contestação de decisão ou bloqueio
 
 🔊 Voz
    🔊 Geral
 ```
+
+**Esta estrutura é do NZ**, montada pela interface em 2026-10-12 — a divisão por
+tipo (`Plugins`, `Otimizações`, `Sites`, `Agentes`, `scripts`) veio dele, e o
+que entrou aqui foi o acabamento: nome com emoji em tudo, tópico em cada canal e
+os cargos. A categoria continua acompanhando o campo `categoria` do catálogo,
+com `Serviço` traduzido para `Otimizações` e `Ferramenta` para `Sites`.
+
+Três coisas que o rascunho deixou abertas e continuam assim, por serem decisão
+dele e não defeito: `🔧 baccanas-hub` está em `🌐 Sites` e não em `Otimizações`;
+`🏙️ empresas-mundo` está em `🧩 scripts`; e `#apel` continua sem emoji.
+
+**Por que fórum e não texto nos canais de comunidade.** Em canal de texto o bug
+de janeiro e o de outubro ficam na mesma pilha e ninguém acha o antigo. Em
+fórum, cada assunto é uma página com título, tag e status de respondida — e o
+canal mostra quantas há sem ninguém precisar ler. Nos canais de produto o NZ
+escolheu texto: com um produto por canal e pouca gente a pilha curta é legível,
+e fórum só paga o custo quando o canal enche.
+
+Cada canal de produto tem **tópico igual à tagline** que o cartão da vitrine
+mostra, mais a prova e o link. Canal e página contam a mesma coisa: mesma fonte,
+dois lugares, nenhuma versão para manter em dia. Canal de voz é a exceção — o
+Discord não tem tópico nele e responde `CHANNEL_TOPIC_INVALID` para qualquer
+texto.
+
+`#anúncios` virou **canal de anúncio do Discord** (tipo 5), que é o que aparece
+no Server Discovery, e está com `@everyone` sem permissão de enviar. O aviso
+entra por webhook, que tem permissão própria — se o canal aceitasse escrita
+humana, ele seria mais um lugar onde atualização envelhece.
+
+## Cargos
+
+Um cargo por produto, e a pergunta do onboarding atribui o cargo correspondente.
+É por isso que o cargo não é enfeite: ele é o registro do que a pessoa veio fazer
+aqui. Cargo de categoria seriam oito cores que ninguém conseguiria escolher entre
+si.
+
+| cargo | cor | vem de |
+|---|---|---|
+| AntiXray | azul | `🔌 Plugins` |
+| Otimizações | laranja | `⚙️ Otimizações` |
+| Baccana's Hub | laranja | `🌐 Sites` |
+| API Directory | verde | `🌐 Sites` |
+| OpenDex | verde escuro | `🌐 Sites` |
+| Agente Banzinho | roxo | `🤖 Agentes` |
+| Fórum IA | ciano | `🤖 Agentes` |
+| EmpresasMundo | amarelo | `🧩 scripts` |
+| Suporte | vermelho, destacado, mencionável | `🎧 suporte` |
+| Desenvolvedor | cinza, destacado, mencionável | — |
+
+Só `Suporte` e `Desenvolvedor` são destacados: cargo de produto separado na
+lista de membros vira uma parede de nove cores sem conteúdo. O cargo integrado
+do bot se chama `Banzinho` e o produto chama `Agente Banzinho` para não
+parecerem o mesmo — cargo integrado o Discord recusa alteração.
+
+**Onboarding** gravado com oito opções (uma por canal de produto), entrada por
+`#regras` e `#informações`, cada opção atribuindo o cargo do produto. O
+Discord recusa ligar sozinho com `350000 requirements are not met` — a checagem
+é dele, não é campo inválido, e insistir no mesmo `PUT` não muda a resposta.
+Ligar é um interruptor em `Configurações do servidor → Ativação`, e ele já está
+com tudo preenchido.
 
 **Por que fórum e não texto.** Em canal de texto, o bug de janeiro e o de
 outubro ficam na mesma pilha e ninguém acha o antigo. Em fórum, cada assunto é
@@ -101,21 +168,14 @@ dois lugares, nenhuma versão para manter em dia.
 webhook, que tem permissão própria — se o canal aceitasse escrita humana, ele
 seria mais um lugar onde atualização envelhece.
 
-**Onboarding** gravado e **desligado**: uma pergunta ("O que te trouxe aqui?")
-com os nove fóruns como opção, entrada por `#regras` e `#informações`, e uma
-etapa explicando as regras. O Discord recusa ligar sozinho com `350000
-requirements are not met` — a checagem é dele, não é campo inválido, e insistir
-no mesmo `PUT` não muda a resposta. Ligar é um interruptor em
-`Configurações do servidor → Ativação`, e ele já está com tudo preenchido.
-
-Papel `membro`: o Discord exige que cada opção de onboarding aponte para um
-papel que exista, e `@everyone` responde `UNKNOWN_ROLE` para o bot. Um papel só
-serve para as nove opções — ele marca "passou pelo onboarding" e não cria nove
-cargos para depois não saber o que fazer com eles.
+O papel `membro` continua para quem entra sem escolher produto. O Discord exige
+que cada opção do onboarding aponte para um cargo que exista, e `@everyone`
+responde `UNKNOWN_ROLE` para o bot.
 
 Falta criar: nada. Os secrets `DISCORD_WEBHOOK_URL` e `DISCORD_BOT_TOKEN` e as
 variables `DISCORD_CANAL_ID` e `DISCORD_INVITE` já estão no repositório, e o
-circuito webhook → post → leitura pelo bot foi medido ponta a ponta.
+circuito medido ponta a ponta com o rascunho novo: webhook `204` → o bot lê a
+mensagem de volta → apaga, e o workflow `discord.yml` roda `success`.
 
 Por que este documento: o portfólio é estático e o `catalogo/dados/produtos.json`
 é a fonte de verdade dos produtos. Um Discord separado disso vira o segundo lugar
@@ -148,8 +208,9 @@ canal é o produto; o canal genérico é onde o assunto vai morrer.
                 escreve. É este canal que a página lê (dados/novidades.json).
 #geral           apresentação e conversa solta, não suporte.
 
-fórum por produto, um assunto por postagem:
+um produto por canal, texto:
   antixray        uso, detecção, falso positivo, thresholds.
+  packs           otimização de servidor Paper, com número medido.
   baccanas-hub    orçamento, suporte, otimização de servidor.
   api-directory   API fora do ar, dúvida de dado.
   opendex         item faltando, erro, dúvida de integração.
