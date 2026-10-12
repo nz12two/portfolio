@@ -4,92 +4,97 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catálogo — NZ</title>
-<meta name="description" content="Produtos que eu construo, com o que fazem, para quem são e como instalar.">
+<meta name="description" content="Catálogo navegável dos produtos que eu construo: busca, filtro por categoria, preço e stack.">
 <link rel="stylesheet" href="../v2/v2.css">
-<link rel="stylesheet" href="pagina.css">
+<link rel="stylesheet" href="catalogo.css">
 </head>
 <body>
 
 <header class="hdr">
   <div class="wrap hdr__in">
     <a href="../v2/index.html" class="brand">NZ <small>/ catálogo</small></a>
-    <nav class="nav"><a href="../v2/index.html">Voltar</a></nav>
+    <nav class="nav">
+      <a href="../v2/index.html">Produtos</a>
+      <a href="#comparar">Comparar</a>
+    </nav>
     <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
   </div>
 </header>
 
-<main class="wrap ppage">
+<main class="wrap cpage">
+
   <div class="eyebrow mono">catálogo</div>
-  <h1 style="max-width:18ch">O que está pronto para você usar hoje</h1>
-  <p class="ppage__tag" style="max-width:52ch">Cada produto tem o que faz, para quem é, quanto custa e como instalar. Sem waitlist.</p>
-  <div class="items">
-      <a class="item" href="./antixray.html">
-        <span class="item__n">01</span>
-        <div>
-          <h3 class="item__name">AntiXray</h3>
-          <p class="item__desc">Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.</p>
-          <div class="item__tags">
-            <span class="tag tag--beta">beta</span>
-            <span class="tag">Minecraft</span>
-            <span class="tag tag--acc">gratuito</span>
-          </div>
-        </div>
-        <span class="item__go" aria-hidden="true">&rarr;</span>
-      </a>
-      <a class="item" href="./api-directory.html">
-        <span class="item__n">02</span>
-        <div>
-          <h3 class="item__name">API Directory</h3>
-          <p class="item__desc">Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.</p>
-          <div class="item__tags">
-            <span class="tag tag--ok">estável</span>
-            <span class="tag">Ferramenta</span>
-            <span class="tag tag--acc">gratuito</span>
-          </div>
-        </div>
-        <span class="item__go" aria-hidden="true">&rarr;</span>
-      </a>
-      <a class="item" href="./opendex.html">
-        <span class="item__n">03</span>
-        <div>
-          <h3 class="item__name">OpenDex</h3>
-          <p class="item__desc">Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.</p>
-          <div class="item__tags">
-            <span class="tag tag--ok">estável</span>
-            <span class="tag">Ferramenta</span>
-            <span class="tag tag--acc">gratuito</span>
-          </div>
-        </div>
-        <span class="item__go" aria-hidden="true">&rarr;</span>
-      </a>
-      <a class="item" href="./empresas-mundo.html">
-        <span class="item__n">04</span>
-        <div>
-          <h3 class="item__name">EmpresasMundo</h3>
-          <p class="item__desc">Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.</p>
-          <div class="item__tags">
-            <span class="tag tag--ok">estável</span>
-            <span class="tag">Simulação</span>
-            <span class="tag tag--acc">gratuito</span>
-          </div>
-        </div>
-        <span class="item__go" aria-hidden="true">&rarr;</span>
-      </a>
-      <a class="item" href="./baccanas-hub.html">
-        <span class="item__n">05</span>
-        <div>
-          <h3 class="item__name">Baccana's Hub</h3>
-          <p class="item__desc">Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.</p>
-          <div class="item__tags">
-            <span class="tag tag--acc">em produção</span>
-            <span class="tag">Minecraft</span>
-            <span class="tag tag--acc">sob-consulta</span>
-          </div>
-        </div>
-        <span class="item__go" aria-hidden="true">&rarr;</span>
-      </a>
-  </div>
+  <h1 class="cpage__h1">O que está pronto para você usar hoje</h1>
+  <p class="cpage__sub">
+    Busca, filtro e comparação em cima dos dados de <code>catalogo/dados/catalogo.json</code>.
+    Se um filtro não achar nada, é porque não existe produto assim — não é bug.
+  </p>
+
+  <!-- ===== CONTROLES =====
+       Os controles ficam no HTML, não são gerados por JS: sem JS a página ainda
+       mostra o catálogo. O JS só refina o que já está na tela. -->
+  <section class="ctrl" aria-label="Filtros do catálogo">
+    <div class="ctrl__search">
+      <input type="search" id="q" placeholder="Buscar por nome, stack ou problema…" aria-label="Buscar produtos" autocomplete="off">
+      <span class="ctrl__count" id="count" role="status" aria-live="polite">—</span>
+    </div>
+
+    <div class="ctrl__grid">
+      <fieldset class="fset">
+        <legend>preço</legend>
+        <label><input type="checkbox" name="preco" value="gratis"><span>grátis</span></label>
+        <label><input type="checkbox" name="preco" value="consulta"><span>sob consulta</span></label>
+        <label><input type="checkbox" name="vip" value="1"><span>tem VIP</span></label>
+      </fieldset>
+
+      <fieldset class="fset">
+        <legend>categoria</legend>
+        <div id="fCats"></div>
+      </fieldset>
+
+      <fieldset class="fset">
+        <legend>stack</legend>
+        <div id="fStacks" class="fset__scroll"></div>
+      </fieldset>
+    </div>
+
+    <div class="ctrl__foot">
+      <label class="ctrl__sort">
+        <span>ordenar</span>
+        <select id="sort">
+          <option value="nome">nome</option>
+          <option value="categoria">categoria</option>
+          <option value="preco">preço</option>
+          <option value="vip">mais VIP</option>
+        </select>
+      </label>
+      <button type="button" class="btn btn--sm" id="clear">limpar</button>
+    </div>
+  </section>
+
+  <!-- Resultados. aria-live para o leitor de tela anunciar a contagem. -->
+  <div class="items" id="grid" role="list"></div>
+  <p class="cpage__empty" id="empty" hidden>Nenhum produto com esses filtros.</p>
+
+  <!-- ===== COMPARAR =====
+       Até 3 lado a lado. Comparar é a pergunta real de quem decide: "qual dos
+       dois eu instalo?" Uma tabela de 3 colunas responde; cinco cards não. -->
+  <section class="cmp" id="comparar" hidden>
+    <div class="cmp__hd">
+      <h2>Comparar</h2>
+      <button type="button" class="btn btn--sm" id="cmpClear">limpar comparação</button>
+    </div>
+    <div class="cmp__body" id="cmpBody"></div>
+  </section>
 </main>
 
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <span class="mono">NZ — construído à mão, sem template</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
+<script src="catalogo.js"></script>
 </body>
 </html>

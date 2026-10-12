@@ -1,0 +1,205 @@
+{
+  "gerado_em": "2026-10-12T11:41:25.295Z",
+  "total": 5,
+  "facetas": {
+    "categoria": [
+      "Ferramenta",
+      "Minecraft",
+      "Simulação"
+    ],
+    "preco": [
+      "gratis",
+      "consulta"
+    ],
+    "stack": [
+      "Astro 7",
+      "FastAPI",
+      "GitHub Actions",
+      "Gradle",
+      "Java",
+      "JavaScript",
+      "Next.js",
+      "OSMnx",
+      "OpenStreetMap",
+      "Paper API",
+      "Python",
+      "React 19",
+      "SQLite/MySQL/MariaDB/PostgreSQL",
+      "Tailwind",
+      "TypeScript",
+      "Vercel",
+      "WebSocket"
+    ]
+  },
+  "itens": [
+    {
+      "i": 1,
+      "slug": "antixray",
+      "nome": "AntiXray",
+      "tagline": "Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.",
+      "categoria": "Minecraft",
+      "status": "beta",
+      "statusTexto": "beta",
+      "preco": "gratuito",
+      "precoChave": "gratis",
+      "licenca": "MIT",
+      "stack": [
+        "Java",
+        "Gradle",
+        "Paper API",
+        "SQLite/MySQL/MariaDB/PostgreSQL"
+      ],
+      "stackChaves": [
+        "java",
+        "gradle",
+        "paper api",
+        "sqlite/mysql/mariadb/postgresql"
+      ],
+      "repo": "https://github.com/nz12two/antixray",
+      "site": null,
+      "inicial": "A",
+      "temGratis": true,
+      "temVip": true,
+      "nGratis": 4,
+      "nVip": 4,
+      "passos": 3,
+      "busca": "antixray detecção modular de x-ray para paper 1.21.4+, com 19+ detectores e motor de risco temporal. minecraft java gradle paper api sqlite/mysql/mariadb/postgresql dono de servidor paper que loses ores e não sabe quemminerou. administrador que precisa de evidência, não só de kick: o plugin salva replay dos últimos 5 minutos e gera evidência automática no flag. quem integra: há api pública (antixrayapi) e eventos para plugin próprio."
+    },
+    {
+      "i": 2,
+      "slug": "api-directory",
+      "nome": "API Directory",
+      "tagline": "Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.",
+      "categoria": "Ferramenta",
+      "status": "estavel",
+      "statusTexto": "estável",
+      "preco": "gratuito",
+      "precoChave": "gratis",
+      "licenca": "MIT (declarada no README, sem arquivo LICENSE)",
+      "stack": [
+        "Python",
+        "JavaScript",
+        "GitHub Actions"
+      ],
+      "stackChaves": [
+        "python",
+        "javascript",
+        "github actions"
+      ],
+      "repo": "https://github.com/nz12two/api-directory",
+      "site": "https://nz12two.github.io/api-directory/",
+      "inicial": "A",
+      "temGratis": true,
+      "temVip": true,
+      "nGratis": 3,
+      "nVip": 3,
+      "passos": 2,
+      "busca": "api directory diretório de apis públicas gratuitas que diz se elas respondem, com latência medida. ferramenta python javascript github actions quem procura endpoint grátis e precisa saber se ainda funciona antes de integrate. quem já toma low-level timeout do servidor e quer separar 'fora do ar' de 'cors bloqueando' — o site responde as duas perguntas separadamente."
+    },
+    {
+      "i": 3,
+      "slug": "opendex",
+      "nome": "OpenDex",
+      "tagline": "Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.",
+      "categoria": "Ferramenta",
+      "status": "estavel",
+      "statusTexto": "estável",
+      "preco": "gratuito",
+      "precoChave": "gratis",
+      "licenca": "MIT",
+      "stack": [
+        "Astro 7",
+        "React 19",
+        "TypeScript",
+        "Tailwind",
+        "GitHub Actions"
+      ],
+      "stackChaves": [
+        "astro 7",
+        "react 19",
+        "typescript",
+        "tailwind",
+        "github actions"
+      ],
+      "repo": "https://github.com/nz12two/opendex",
+      "site": "https://nz12two.github.io/opendex/",
+      "inicial": "O",
+      "temGratis": true,
+      "temVip": true,
+      "nGratis": 3,
+      "nVip": 3,
+      "passos": 2,
+      "busca": "opendex catálogo e documentação do ecossistema opencode: 122 repositórios reais, 247 pacotes npm, feed e ranking. ferramenta astro 7 react 19 typescript tailwind github actions quem usa opencode e não sabia que plugin, script ou mcp existem na comunidade. quem documenta: cada item tem página própria, gerada de dados reais."
+    },
+    {
+      "i": 4,
+      "slug": "empresas-mundo",
+      "nome": "EmpresasMundo",
+      "tagline": "Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.",
+      "categoria": "Simulação",
+      "status": "estavel",
+      "statusTexto": "estável",
+      "preco": "gratuito",
+      "precoChave": "gratis",
+      "licenca": "nenhuma",
+      "stack": [
+        "Python",
+        "FastAPI",
+        "WebSocket",
+        "OSMnx",
+        "OpenStreetMap",
+        "JavaScript"
+      ],
+      "stackChaves": [
+        "python",
+        "fastapi",
+        "websocket",
+        "osmnx",
+        "openstreetmap",
+        "javascript"
+      ],
+      "repo": "https://github.com/nz12two/empresas-mundo",
+      "site": null,
+      "inicial": "E",
+      "temGratis": true,
+      "temVip": true,
+      "nGratis": 3,
+      "nVip": 3,
+      "passos": 2,
+      "busca": "empresasmundo simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do openstreetmap. simulação python fastapi websocket osmnx openstreetmap javascript quem quer ver agent-based modeling funcionando em mapa real: são paulo via osmnx. quem estuda routing evolutionário — o dna de cada empresa (estratégia, agressividade, velocidade) evolui ao longo das gerações."
+    },
+    {
+      "i": 5,
+      "slug": "baccanas-hub",
+      "nome": "Baccana's Hub",
+      "tagline": "Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.",
+      "categoria": "Minecraft",
+      "status": "em-producao",
+      "statusTexto": "em produção",
+      "preco": "sob-consulta",
+      "precoChave": "consulta",
+      "licenca": "proprietario",
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind",
+        "Vercel"
+      ],
+      "stackChaves": [
+        "next.js",
+        "typescript",
+        "tailwind",
+        "vercel"
+      ],
+      "repo": null,
+      "site": "https://baccanas-hub.vercel.app",
+      "inicial": "B",
+      "temGratis": true,
+      "temVip": true,
+      "nGratis": 2,
+      "nVip": 3,
+      "passos": 1,
+      "busca": "baccana's hub plataforma de serviços profissionais para servidores minecraft — configuração, otimização e desenvolvimento. minecraft next.js typescript tailwind vercel dono de servidor que quer alguém que já roda paper em produção para cuidar do setup, da otimização e do desenvolvimento sob demanda."
+    }
+  ]
+}

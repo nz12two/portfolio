@@ -187,60 +187,6 @@ function paginaProduto(p, vip) {
 `;
 }
 
-function paginaIndice(prods) {
-  const linhas = prods
-    .map((p, i) => {
-      const e = EST(p);
-      return `      <a class="item" href="./${esc(p.slug)}.html">
-        <span class="item__n">${String(i + 1).padStart(2, "0")}</span>
-        <div>
-          <h3 class="item__name">${esc(p.nome)}</h3>
-          <p class="item__desc">${esc(p.tagline)}</p>
-          <div class="item__tags">
-            <span class="tag tag--${e.cls}">${esc(e.txt)}</span>
-            <span class="tag">${esc(p.categoria)}</span>
-            <span class="tag tag--acc">${esc(p.preco)}</span>
-          </div>
-        </div>
-        <span class="item__go" aria-hidden="true">&rarr;</span>
-      </a>`;
-    })
-    .join("\n");
-
-  return `<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo — NZ</title>
-<meta name="description" content="Produtos que eu construo, com o que fazem, para quem são e como instalar.">
-<link rel="stylesheet" href="${CSS}">
-<link rel="stylesheet" href="pagina.css">
-</head>
-<body>
-
-<header class="hdr">
-  <div class="wrap hdr__in">
-    <a href="../v2/index.html" class="brand">NZ <small>/ catálogo</small></a>
-    <nav class="nav"><a href="../v2/index.html">Voltar</a></nav>
-    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
-  </div>
-</header>
-
-<main class="wrap ppage">
-  <div class="eyebrow mono">catálogo</div>
-  <h1 style="max-width:18ch">O que está pronto para você usar hoje</h1>
-  <p class="ppage__tag" style="max-width:52ch">Cada produto tem o que faz, para quem é, quanto custa e como instalar. Sem waitlist.</p>
-  <div class="items">
-${linhas}
-  </div>
-</main>
-
-</body>
-</html>
-`;
-}
-
 function main() {
   let data;
   try {
@@ -256,16 +202,20 @@ function main() {
   }
   const vip = read("vip.json", null);
 
+  // So as paginas de produto sao geradas. O indice NAO e gerado: e a pagina
+  // interativa, escrita a mao porque precisa dos controles de busca e filtro no
+  // HTML. Ela consum catalogo.json e nao depende deste arquivo — se este
+  // sobrescrevesse index.html, o catalogo voltaria a ser lista estatica.
   let n = 0;
   for (const p of prods) {
     fs.writeFileSync(path.join(SAIDA, `${p.slug}.html`), paginaProduto(p, vip));
     n++;
   }
-  fs.writeFileSync(path.join(SAIDA, "index.html"), paginaIndice(prods));
 
   const comVip = vip ? prods.filter((p) => vip.produtos?.[p.slug]?.vip?.length).length : 0;
-  console.log(`${n} produto(s) -> ${path.relative(RAIZ, SAIDA)}`);
+  console.log(`${n} pagina(s) de produto -> ${path.relative(RAIZ, SAIDA)}`);
   console.log(`  com area VIP: ${comVip}/${n}`);
+  console.log(`  index.html nao e gerado (interativo, usa dados/catalogo.json)`);
 }
 
 main();
