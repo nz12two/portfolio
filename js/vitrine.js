@@ -135,7 +135,11 @@
       tags.map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("") +
       "</div></div>" +
       '<div class="destaque__num">' +
-      '<strong data-count="' + esc(String(it.prova.num)) + '">0</strong>' +
+      // O valor nasce no HTML, nao como 0. A versao anterior escrevia 0 e
+      // so a animacao substituia — sob prefers-reduced-motion a animacao nao
+      // roda e o site ficava mostrando "0 APIs sondadas", que e um numero
+      // falso no lugar do numero verdadeiro. Animated para o valor real.
+      '<strong data-count="' + esc(String(it.prova.num)) + '">' + esc(String(it.prova.num)) + "</strong>" +
       "<span>" + esc(it.prova.unidade) + "</span>" +
       "</div>" +
       '<span class="item__go" aria-hidden="true">&rarr;</span>' +
@@ -180,6 +184,7 @@
     var alvo = grid.querySelector(".destaque__num strong");
     if (alvo && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
       var fim = Number(alvo.getAttribute("data-count")) || 0;
+      alvo.textContent = "0";
       var t0 = null;
       var passo = function (ts) {
         if (t0 === null) t0 = ts;

@@ -1,0 +1,108 @@
+/* ===== CONTA =====
+   Login e cadastro. Formulario curto e sem moldura: quem entra aqui ja
+   sabe o que quer, e uma tela cheia de caixa de texto atrasa a sessao.
+   A coluna e estreita de proposito — 420px e a largura em que um formulario
+   de e-mail e senha para de parecer um formulario de empresa. */
+
+.acct { max-width: 420px; margin-top: 34px; }
+.acct__form { display: grid; gap: 16px; }
+.acct__campo { display: grid; gap: 6px; }
+.acct__campo > span {
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+}
+.acct__campo input {
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--tx);
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: var(--r-s);
+  transition: border-color 0.18s var(--ease), background 0.18s var(--ease);
+}
+.acct__campo input:focus {
+  border-color: var(--acc);
+  outline: none;
+  background: var(--bg-2);
+}
+.acct__campo input:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.acct__botoes { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.acct__nota { font-size: var(--t-xs); color: var(--tx-3); }
+
+.acct__erro {
+  font-size: var(--t-sm);
+  color: #ff9a8b;
+  border-left: 2px solid #ff9a8b;
+  padding: 6px 0 6px 12px;
+}
+
+/* Aviso de deploy sem configuracao. Este e o bloco que substitui a farsa:
+   antes o botao destravava tudo sem pedir nada. Agora ele diz que nao esta
+   pronto e por que. */
+.acct__aviso {
+  max-width: 620px;
+  margin-top: 30px;
+  padding: 16px 18px;
+  border: 1px solid color-mix(in oklab, var(--acc) 40%, transparent);
+  border-radius: var(--r-s);
+  background: color-mix(in oklab, var(--acc) 7%, transparent);
+}
+.acct__aviso strong { display: block; margin-bottom: 6px; }
+.acct__aviso p { font-size: var(--t-sm); color: var(--tx-2); margin: 0; }
+.acct__aviso code {
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.9em;
+  color: var(--tx);
+}
+
+.acct__painel {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-s);
+  background: var(--bg-2);
+}
+.acct__rotulo {
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: var(--t-xs);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin: 0;
+}
+.acct__email { font-size: var(--t-lg); margin: 0; }
+
+/* `[hidden]` do browser vale `display: none`, mas qualquer `display` numa
+   classe ganha em especificidade. O painel da sessao tem `display: grid`,
+   entao ficava VISIVEL com o atributo hidden ligado — medido no screenshot
+   como "SESSÃO ATIVA" aparecendo com ninguem logado. Esta regra e a correcao
+   padrao para o problema; melhor que remover o display de cada bloco. */
+[hidden] { display: none !important; }
+
+/* O espaco abaixo do header fixo. `.cpage` mora em css/catalogo.css e esta
+   pagina nao carrega aquele arquivo — medido no screenshot: sem isto, o
+   eyebrow "conta" e o H1 "Entrar" ficam escondidos ATRAS do header. A conta
+   declara o proprio espacamento em vez de puxar a folha do catalogo inteiro
+   por causa de uma classe. */
+.cpage {
+  padding-top: clamp(110px, 12vw, 160px);
+  padding-bottom: clamp(64px, 9vw, 130px);
+}
+
+/* So para leitor de tela: rotulo visual do campo ja e o <span> dentro do
+   <label>, entao o h2 da secao nao pode aparecer duplicado na tela. */
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

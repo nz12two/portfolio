@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conta — NZ</title>
+  <meta name="description" content="Entrar ou criar conta para acessar o conteúdo VIP do catálogo.">
+  <link rel="canonical" href="https://nz12two.github.io/portfolio/conta.html">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/vip.css">
+  <link rel="stylesheet" href="css/conta.css">
+</head>
+<body>
+  <header class="hdr">
+    <div class="wrap hdr__in">
+      <a href="index.html" class="brand">NZ <small>/ conta</small></a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="catalogo/index.html">Marketplace</a>
+      </nav>
+      <a href="index.html" class="btn">Voltar</a>
+    </div>
+  </header>
+
+  <main class="wrap cpage">
+    <div class="eyebrow mono">conta</div>
+    <h1 class="cpage__h1">Entrar</h1>
+    <p class="cpage__sub">A conta serve para o conteúdo VIP do catálogo. Não
+      pede pagamento aqui: o pagamento é combinado antes.</p>
+
+    <!-- Estado sem configuração. Aparece sozinho quando js/auth-config.js está
+         vazio — o botão de login fica desligado e explica o motivo, em vez de
+         aceitar qualquer senha. -->
+    <div class="acct__aviso" id="semConfig" hidden>
+      <strong>Autenticação não configurada neste deploy.</strong>
+      <p>A conta só funciona depois de apontar <code>js/auth-config.js</code> para um
+        projeto. Sem isso os botões ficam desligados — em vez de fingir um login
+        que aceitaria qualquer senha.</p>
+    </div>
+
+    <section class="acct" aria-labelledby="acctH">
+      <h2 id="acctH" class="sr-only">Entrar ou criar conta</h2>
+
+      <form class="acct__form" id="form" novalidate>
+        <label class="acct__campo">
+          <span>e-mail</span>
+          <input type="email" id="email" name="email" autocomplete="email" required
+                 placeholder="voce@exemplo.com" spellcheck="false">
+        </label>
+
+        <label class="acct__campo">
+          <span>senha</span>
+          <input type="password" id="senha" name="senha" autocomplete="current-password"
+                 required minlength="8" placeholder="mínimo de 8 caracteres">
+        </label>
+
+        <p class="acct__erro" id="erro" role="alert" hidden></p>
+
+        <div class="acct__botoes">
+          <button type="submit" class="btn btn--acc" id="btnEntrar">Entrar</button>
+          <button type="button" class="btn" id="btnCriar">Criar conta</button>
+        </div>
+
+        <p class="acct__nota">Mínimo de 8 caracteres. Criar conta não dá acesso
+          VIP sozinho — isso é liberado depois, à mão.</p>
+      </form>
+
+      <!-- Painel de quem já entrou. some para anonimo. -->
+      <div class="acct__painel" id="painel" hidden>
+        <p class="acct__rotulo">sessão ativa</p>
+        <p class="acct__email" data-conta-email></p>
+        <button type="button" class="btn" data-conta-sair>Sair</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/auth-config.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script defer>
+    // Ponte da pagina com o modulo. Fica aqui e nao dentro do auth.js porque e
+    // especifico desta tela: o modulo nao deve saber que existe um formulario.
+    window.addEventListener('DOMContentLoaded', function () {
+      var A = window.NZAuth;
+      var form = document.getElementById('form');
+      var erro = document.getElementById('erro');
+      var painel = document.getElementById('painel');
+      var semConfig = document.getElementById('semConfig');
+      var btnEntrar = document.getElementById('btnEntrar');
+      var btnCriar = document.getElementById('btnCriar');
+
+      function mostrarErro(msg) {
+        erro.textContent = msg;
+        erro.hidden = !msg;
+      }
+
+      function pintar() {
+        var logado = A.estado() === 'autenticado';
+        form.hidden = logado;
+        painel.hidden = !logado;
+        semConfig.hidden = A.estado() !== 'sem-config';
+        A.aplicar();
+      }
+
+      if (!A.configurado()) {
+        btnEntrar.disabled = true;
+        btnCriar.disabled = true;
+      }
+
+      A.aoMudar(pintar);
+
+      function acao(fn) {
+        return function (ev) {
+          if (ev) ev.preventDefault();
+          mostrarErro('');
+          var email = document.getElementById('email').value.trim();
+          var senha = document.getElementById('senha').value;
+          if (!email || !senha) { mostrarErro('Preencha e-mail e senha.'); return; }
+          if (senha.length < 8) { mostrarErro('A senha precisa de pelo menos 8 caracteres.'); return; }
+          var b = ev && ev.target;
+          if (b) { b.disabled = true; b.dataset.texto = b.textContent; b.textContent = '…'; }
+          fn(email, senha)
+            .then(function () { document.getElementById('senha').value = ''; })
+            .catch(function (e) { mostrarErro(e.message || 'Não deu.'); })
+            .then(function () {
+              if (b) { b.disabled = false; b.textContent = b.dataset.texto; }
+              pintar();
+            });
+        };
+      }
+
+      form.addEventListener('submit', acao(A.entrar));
+      btnCriar.addEventListener('click', acao(A.cadastrar));
+    });
+  </script>
+</body>
+</html>

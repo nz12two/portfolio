@@ -1,5 +1,5 @@
 /* Area VIP: o que fica atrás da porta.
-   O cadeado e um elemento visual; a logica esta em vip.js e usa localStorage. */
+   O cadeado e um elemento visual; a logica esta em js/auth.js e usa sessao real. */
 
 .vip {
   margin-top: clamp(46px, 6vw, 74px);

@@ -87,7 +87,7 @@
       "preco_nota": "MIT. Atenção: o README declara MIT mas o repositório está sem arquivo LICENSE — divergência a corrigir.",
       "repo": "https://github.com/nz12two/api-directory",
       "site": "https://nz12two.github.io/api-directory/",
-      "licenca": "MIT (declarada no README, sem arquivo LICENSE)",
+      "licenca": "MIT (só no README)",
       "stack": [
         "Python",
         "JavaScript",
@@ -332,7 +332,7 @@
       "preco_nota": "Sem licença e sem preço definidos enquanto é fechado. Não contrate antes de o código existir publicamente.",
       "repo": null,
       "site": null,
-      "licenca": "proprietário (fechado)",
+      "licenca": "proprietário",
       "stack": [
         "TypeScript",
         "Node.js",

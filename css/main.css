@@ -559,16 +559,41 @@ p { text-wrap: pretty; }
 /* Dentro da grade o .item volta a ser card: sem a coluna do numero na margem
    e com a borda toda em volta. A coluna de 54px + 1fr + seta era o formato de
    LINHA e num card de 240px sobrava 40px para o nome. */
+/* DEFERTADO. Este bloco transformou o .item (que tem TRES filhos: numero,
+   conteudo, seta) mantendo `display: grid` com DUAS colunas. Medido no
+   screenshot a 1440px: os titulos dos 4 cards da primeira linha ficavam em
+   y=95, y=82, y=126 e y=92 — 44px de desnivel entre cards vizinhos — e a
+   seta caia no meio do texto em tres alturas diferentes, porque o terceiro
+   filho nao tinha coluna propria. Agora e flex de coluna, que e o formato
+   que tres filhos empilhados pedem. */
 .items--comDestaque .item {
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
-  gap: 10px;
-  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 9px;
+  padding: 15px 16px 14px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--bg-2);
   transition: border-color 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
+/* Numero vira selo no canto: dentro do fluxo ele empurrava o titulo para
+   baixo e era a metade do desnivel medido acima. */
+.items--comDestaque .item__n {
+  position: absolute;
+  top: 11px;
+  right: 13px;
+  font-size: var(--t-xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--tx-3);
+  opacity: 0.7;
+}
+/* O conteudo cresce para ocupar o card, entao as tags de todos os cards da
+   linha terminam na mesma altura — com `flex: 0` elas grudavam no texto e
+   cada card ficava com a base em um lugar. */
+.items--comDestaque .item > div { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+.items--comDestaque .item__name { margin: 0; padding-right: 34px; }
+.items--comDestaque .item__tags { margin-top: auto; }
 .items--comDestaque .item:last-child { border-bottom: 1px solid var(--line); }
 .items--comDestaque .item:hover,
 .items--comDestaque .item:focus-visible {
@@ -582,7 +607,9 @@ p { text-wrap: pretty; }
   color: var(--tx-3);
 }
 .items--comDestaque .item__desc { margin: 0; }
-.items--comDestaque .item__go { align-self: center; }
+/* Seta no rodape a direita, nao centrada: `align-self: center` no eixo
+   transversal de uma coluna a colocava no meio vertical da linha do texto. */
+.items--comDestaque .item__go { align-self: flex-end; }
 
 /* Mesmo limite de 3 linhas do card do catálogo. Sem isso o card mais longo
    estica a linha inteira da grade e os outros ficam com buraco embaixo. */

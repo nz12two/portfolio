@@ -52,7 +52,12 @@
       <a href="catalogo/index.html#tipos">Marketplace</a>
       <a href="#prova">Prova</a>
     </nav>
-    <a href="#contato" class="btn btn--acc">Contato</a>
+    <a href="#contato" class="btn">Contato</a>
+    <!-- Botao de conta. O texto e reescrito por js/auth.js: "entrar" anonimo,
+         o nome da pessoa com sessao, "sair" depois. Sem sessao e sem
+         configuracao ele leva para conta.html, onde a falta de configuracao
+         e explicada em vez de fingida. -->
+    <a href="conta.html" class="btn btn--acc" data-conta-open aria-label="Entrar na sua conta">entrar</a>
   </div>
 </header>
 
@@ -342,6 +347,11 @@
 <!-- Ultimo: le dados/novidades.json, que e o unico arquivo que precisa de rede.
      Sem ele a secao fica oculta e o resto do site nao sente falta. -->
 <script src="js/novidades.js" defer></script>
+<!-- Autenticacao por ultimo: precisa do catalogo pronto para pintar os gates
+    VIP de acao. js/auth-config.js vem antes porque auth.js le a config no
+     corpo do IIFE. -->
+<script src="js/auth-config.js"></script>
+<script src="js/auth.js" defer></script>
 </body>
 </html>
 

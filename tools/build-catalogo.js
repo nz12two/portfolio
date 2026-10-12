@@ -188,11 +188,11 @@ function paginaProduto(p, vip) {
              ? `<div class="planos__acesso">
            <div class="vip__gate" data-gate>
              <p class="vip__msg">Quer ver o material do nível pago?</p>
-             <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
-             <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+             <a class="btn btn--acc" href="../conta.html">Entrar na conta</a>
+             <p class="vip__note">O material pago fica atrás da sua conta. Sem conta, o que está aqui é o nível grátis.</p>
            </div>
            <div class="vip__unlocked" data-unlocked hidden>
-             <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+             <p class="vip__msg vip__msg--ok">Sessão ativa.</p>
              <a class="btn btn--acc" href="${esc(p.repo || "#")}" target="_blank" rel="noopener">Ir para o código</a>
            </div>
          </div>`
@@ -240,7 +240,7 @@ function paginaProduto(p, vip) {
   <div class="wrap hdr__in">
     <a href="../index.html" class="brand">NZ <small>/ ${esc(p.nome)}</small></a>
     <nav class="nav"><a href="../index.html">Produtos</a></nav>
-    <button class="btn btn--acc" data-vip-open>VIP</button>
+    <a class="btn btn--acc" href="../conta.html" data-conta-open>VIP</a>
   </div>
 </header>
 
@@ -302,7 +302,8 @@ function paginaProduto(p, vip) {
   </div>
 </footer>
 
-<script src="../js/vip.js" defer></script>
+<script src="../js/auth-config.js"></script>
+<script src="../js/auth.js" defer></script>
 <script src="../js/copiar.js" defer></script>
 </body>
 </html>

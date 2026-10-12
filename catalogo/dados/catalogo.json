@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-12T16:53:04.556Z",
+  "gerado_em": "2026-10-12T17:00:39.990Z",
   "total": 6,
   "tipos": [
     {
@@ -86,10 +86,10 @@
     ],
     "licenca": [
       "MIT",
-      "MIT (declarada no README, sem arquivo LICENSE)",
+      "MIT (só no README)",
       "nenhuma",
       "proprietario",
-      "proprietário (fechado)"
+      "proprietário"
     ],
     "dominio": [
       "dados",
@@ -198,7 +198,7 @@
       "licencaNota": null,
       "preco": "gratuito",
       "precoChave": "gratis",
-      "licenca": "MIT (declarada no README, sem arquivo LICENSE)",
+      "licenca": "MIT (só no README)",
       "stack": [
         "Python",
         "JavaScript",
@@ -442,7 +442,7 @@
       "licencaNota": "Nenhuma licença pública ainda. O README não promete o que o código não provou.",
       "preco": "sob-consulta",
       "precoChave": "consulta",
-      "licenca": "proprietário (fechado)",
+      "licenca": "proprietário",
       "stack": [
         "TypeScript",
         "Node.js",
