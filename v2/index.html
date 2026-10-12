@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZ — constrói plugins, catálogos e agentes que rodam</title>
+<meta name="description" content="NZ constrói software que roda: plugin de detecção de x-ray para Paper 1.21.4, catálogos com auto-atualização e simulação multi-agente. Código aberto, instalado e medido.">
+<link rel="stylesheet" href="v2.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr__in">
+    <a href="#topo" class="brand">NZ <small>/ build log</small></a>
+    <nav class="nav">
+      <a href="#produtos">Produtos</a>
+      <a href="#prova">Prova</a>
+      <a href="#sobre">Sobre</a>
+    </nav>
+    <a href="#contato" class="btn btn--acc">Contato</a>
+  </div>
+</header>
+
+<main id="topo">
+
+  <!-- ===== HERO =====
+       Sem degradê, sem digitando, sem terminal animando. A atenção vem do
+       painel de evidência: linguagens por byte real dos repos, que é o único
+       número que não dá paraIFICAR sem abrir o repositório. -->
+  <section class="hero wrap">
+    <div class="hero__grid">
+      <div>
+        <h1>Eu construo coisas<br>que <em>realmente rodam</em>.</h1>
+        <p class="hero__sub">
+          Plugin de detecção de x-ray para Paper 1.21.4. Catálogos que se atualizam
+          sozinhos. Simulação de empresas de entrega competindo num mapa real.
+          Tudo com o código aberto, o passo a passo e o número medido.
+        </p>
+        <div class="hero__cta">
+          <a href="#produtos" class="btn btn--acc">Ver os produtos</a>
+          <a href="https://github.com/nz12two" class="btn">Código no GitHub</a>
+        </div>
+      </div>
+
+      <!-- Dados: bytes por linguagem, somados nos 4 repositórios públicos.
+           Total medido em 2026-10-12. -->
+      <aside class="panel proof">
+        <div class="proof__hd">
+          <span class="mono">código publicado</span>
+          <span class="proof__num">1.2<span> MB</span></span>
+        </div>
+        <div class="bar">
+          <div class="bar__row">
+            <span class="bar__name">Java</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.53"></span></span>
+            <span class="bar__val">580 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name">Typesc</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.50"></span></span>
+            <span class="bar__val">548 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name">Astro</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.35"></span></span>
+            <span class="bar__val">381 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name">Python</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.16"></span></span>
+            <span class="bar__val">176 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name">Outros</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.12"></span></span>
+            <span class="bar__val">143 KB</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== PRODUTOS =====
+       Lista editorial com número, não grade de caixas iguais. Cinco produtos
+       com a mesma forma viram uma parede; numerados, viram um índice. -->
+  <section class="sec sec--alt" id="produtos">
+    <div class="wrap">
+      <div class="eyebrow mono">produtos</div>
+      <h2 style="font-size:var(--t-2xl);max-width:20ch">O que está pronto para você usar hoje</h2>
+      <p class="lead" style="margin-top:18px">
+        Cada item tem página com o que faz, para quem é e como instalar.
+        Sem waitlist, sem “em breve”.
+      </p>
+
+      <div class="items">
+        <a class="item rv" href="../catalogo/antixray.html">
+          <span class="item__n">01</span>
+          <div>
+            <h3 class="item__name">AntiXray</h3>
+            <p class="item__desc">
+              Detecção de x-ray para Paper 1.21.4 com 19+ detectores independentes,
+              motor de risco temporal e evidência automática no flag. Você recebe o
+              relatório, não só o kick.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--beta">beta</span>
+              <span class="tag">Java</span><span class="tag">Paper 1.21.4</span>
+              <span class="tag">MIT</span><span class="tag">grátis</span>
+            </div>
+          </div>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="item rv" href="../catalogo/api-directory.html">
+          <span class="item__n">02</span>
+          <div>
+            <h3 class="item__name">API Directory</h3>
+            <p class="item__desc">
+              Catálogo de APIs públicas gratuitas que diz se elas respondem, com a
+              latência medida de fora. Separa servidor fora do ar de CORS bloqueando —
+              duas perguntas que um diretório comum não responde.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--ok">estável</span>
+              <span class="tag">Python</span><span class="tag">JavaScript</span>
+              <span class="tag">MIT</span><span class="tag">grátis</span>
+            </div>
+          </div>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="item rv" href="../catalogo/opendex.html">
+          <span class="item__n">03</span>
+          <div>
+            <h3 class="item__name">OpenDex</h3>
+            <p class="item__desc">
+              Catálogo e documentação do ecossistema OpenCode: 122 repositórios e 247
+              pacotes, todos de dado real. Se não há fonte, a página mostra estado
+              vazio em vez de inventar item.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--ok">estável</span>
+              <span class="tag">Astro 7</span><span class="tag">React 19</span>
+              <span class="tag">MIT</span><span class="tag">grátis</span>
+            </div>
+          </div>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="item rv" href="../catalogo/empresas-mundo.html">
+          <span class="item__n">04</span>
+          <div>
+            <h3 class="item__name">EmpresasMundo</h3>
+            <p class="item__desc">
+              Simulação de empresas de entrega disputando rota: cada uma é um agente
+              com rede neural recorrente própria, evoluindo ao longo das gerações num
+              grafo real de São Paulo.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--ok">estável</span>
+              <span class="tag">Python</span><span class="tag">FastAPI</span>
+              <span class="tag">OSM</span><span class="tag">grátis</span>
+            </div>
+          </div>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="item rv" href="../catalogo/baccanas-hub.html">
+          <span class="item__n">05</span>
+          <div>
+            <h3 class="item__name">Baccana's Hub</h3>
+            <p class="item__desc">
+              Serviço para servidores Minecraft: configuração, otimização de tick loop
+              e desenvolvimento sob medida. Você conversa comigo antes de contratar —
+              sem formulário corporativo.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--acc">sob consulta</span>
+              <span class="tag">Next.js</span><span class="tag">TypeScript</span>
+            </div>
+          </div>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROVA =====
+       Resposta direta à pergunta que todo visitante faz em silêncio: "isso
+       funciona mesmo?". Os números aqui são verificáveis abrindo o repositório
+       — foi por isso que tirei "5 clientes satisfeitos". -->
+  <section class="sec" id="prova">
+    <div class="wrap">
+      <div class="eyebrow mono">prova</div>
+      <h2 style="font-size:var(--t-2xl);max-width:22ch">Cada afirmação aqui abre um repositório</h2>
+      <p class="lead" style="margin-top:18px">
+        Nada de depoimento ou número de vitrine. Se eu afirmo que funciona, o código
+        está aberto e o build está no Actions.
+      </p>
+
+      <div class="about__list" style="margin-top:44px">
+        <div class="about__row">
+          <span class="about__k">AntiXray compila e empacota</span>
+          <span class="about__v">JDK 21 · exit 0 · jar 909 KB</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">OpenDex gera páginas em build</span>
+          <span class="about__v">380 páginas · 0 erros · ~36s</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">API Directory mede latência de verdade</span>
+          <span class="about__v">16 workers · 1x ao dia no CI</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">EmpresasMundo simula em mapa real</span>
+          <span class="about__v">OSMnx · FastAPI · WebSocket</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">Zero dependência de terceiros no site</span>
+          <span class="about__v">sprite SVG local · sem CDN</span>
+        </div>
+      </div>
+
+      <div style="margin-top:38px">
+        <a href="https://github.com/nz12two" class="btn btn--acc">Abrir o GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SOBRE ===== -->
+  <section class="sec sec--alt" id="sobre">
+    <div class="wrap">
+      <div class="eyebrow mono">sobre</div>
+      <div class="about">
+        <div>
+          <h2 style="font-size:var(--t-2xl);max-width:16ch">Administro servidores e escrevo o código que faltava neles</h2>
+        </div>
+        <div>
+          <p class="lead" style="font-size:var(--t-md)">
+            Comecei por plugin de Minecraft porque era o problema que eu tinha. O que
+            me interessa é a mesma coisa em qualquer lugar: um sistema que funciona,
+            com o número medido e o passo a passo que outra pessoa consegue repetir.
+          </p>
+          <p style="color:var(--tx-2);margin-top:16px">
+            Escrevo em Java, Python, TypeScript e JavaScript. Publico o código aberto
+            porque é assim que eu confiro que funciona de verdade — e o build quebrado
+            na frente de todo mundo incomoda mais que a bug escondida.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTATO ===== -->
+  <section class="sec" id="contato">
+    <div class="wrap">
+      <div class="eyebrow mono">contato</div>
+      <div class="ct">
+        <div>
+          <h2 style="font-size:var(--t-2xl);max-width:14ch">Me conta o problema</h2>
+          <p class="lead" style="margin-top:18px">
+            Se for plugin para servidor, automação ou catálogo com auto-atualização,
+            eu já tenho o caminho. Descreve em duas linhas e eu respondo com o que dá
+            e o que não dá.
+          </p>
+        </div>
+
+        <form class="panel" style="padding:26px" novalidate>
+          <div class="field">
+            <label for="v2-nome">Seu nome</label>
+            <input id="v2-nome" name="nome" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="v2-email">Seu e-mail</label>
+            <input id="v2-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="v2-assunto">O que você precisa</label>
+            <select id="v2-assunto" name="assunto">
+              <option value="plugin">Plugin para servidor Minecraft</option>
+              <option value="catalogo">Catálogo ou página com auto-atualização</option>
+              <option value="automacao">Automação ou bot</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="v2-msg">Detalha em duas linhas</label>
+            <textarea id="v2-msg" name="mensagem" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--acc" style="width:100%">Enviar mensagem</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <span class="mono">NZ — construído à mão, sem template</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
+<script>
+/* Header ganha borda ao rolar: sinaliza que há conteúdo acima.
+   O reveal e a barra usam o mesmo observer — uma instância só, em vez de três
+   observers disparados em separado. */
+(function () {
+  var hdr = document.getElementById('hdr');
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('on'); });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.rv, .bar__fill').forEach(function (el) { io.observe(el); });
+
+  var onScroll = function () { hdr.dataset.stuck = window.scrollY > 8 ? '1' : '0'; };
+  onScroll();
+  addEventListener('scroll', onScroll, { passive: true });
+
+  // Navegação por âncora rola suave mas o observer precisa reagir depois.
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function () { setTimeout(onScroll, 120); });
+  });
+})();
+</script>
+</body>
+</html>
