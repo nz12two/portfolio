@@ -5,9 +5,12 @@
 API — o id da barra de endereço do browser não era o mesmo).
 
 Identidades prontas:
-- Bot **`Banz`** (o bot do Banzinho) tem `Manage Channels + Manage Webhooks +
-  View Channel + Read History` aqui, e é ele que lê o `#anúncios`.
-- Webhook **`portfolio-push`** no `#anúncios` — é o que posta produto novo.
+- Bot **`Banz`** (o bot do Banzinho) tem `MANAGE_GUILD` (`permissions=8`) no
+  cargo integrado, e é ele que **posta e lê** no servidor inteiro. Todo anúncio
+  sai por aqui — ver [Como o Discord é avisado](#como-o-discord-é-avisado).
+
+O webhook `portfolio-push` existiu entre 2026-10-12 e o fim do mesmo dia, e foi
+apagado.
 
 ## Ícone do servidor: só pelo dono
 
@@ -118,9 +121,9 @@ Discord não tem tópico nele e responde `CHANNEL_TOPIC_INVALID` para qualquer
 texto.
 
 `#anúncios` virou **canal de anúncio do Discord** (tipo 5), que é o que aparece
-no Server Discovery, e está com `@everyone` sem permissão de enviar. O aviso
-entra por webhook, que tem permissão própria — se o canal aceitasse escrita
-humana, ele seria mais um lugar onde atualização envelhece.
+no Server Discovery, e está com `@everyone` sem permissão de enviar. Só o bot
+posta — se o canal aceitasse escrita humana, ele seria mais um lugar onde
+atualização envelhece.
 
 ## Cargos
 
@@ -154,168 +157,63 @@ Discord recusa ligar sozinho com `350000 requirements are not met` — a checage
 Ligar é um interruptor em `Configurações do servidor → Ativação`, e ele já está
 com tudo preenchido.
 
-**Por que fórum e não texto.** Em canal de texto, o bug de janeiro e o de
-outubro ficam na mesma pilha e ninguém acha o antigo. Em fórum, cada assunto é
-uma página com título próprio, tag e status de respondida — e o canal mostra
-quantas há sem ninguém precisar ler. Foi a decisão que mudou o servidor de
-"lista de canais" para estrutura.
-
-Cada fórum de produto tem **tópico igual à tagline** que o cartão da vitrine
-mostra, mais a prova e o link. Canal e página contam a mesma coisa: mesma fonte,
-dois lugares, nenhuma versão para manter em dia.
-
-`#anúncios` está com `@everyone` sem permissão de enviar. O aviso entra por
-webhook, que tem permissão própria — se o canal aceitasse escrita humana, ele
-seria mais um lugar onde atualização envelhece.
-
 O papel `membro` continua para quem entra sem escolher produto. O Discord exige
 que cada opção do onboarding aponte para um cargo que exista, e `@everyone`
 responde `UNKNOWN_ROLE` para o bot.
 
-Falta criar: nada. Os secrets `DISCORD_WEBHOOK_URL` e `DISCORD_BOT_TOKEN` e as
-variables `DISCORD_CANAL_ID` e `DISCORD_INVITE` já estão no repositório, e o
-circuito medido ponta a ponta com o rascunho novo: webhook `204` → o bot lê a
-mensagem de volta → apaga, e o workflow `discord.yml` roda `success`.
+## Como o Discord e avisado
 
-Por que este documento: o portfólio é estático e o `catalogo/dados/produtos.json`
-é a fonte de verdade dos produtos. Um Discord separado disso vira o segundo lugar
-onde o produto muda — e o primeiro lugar a divergir. Aqui o Discord é **destino
-das mudanças de verdade**, não um segundo catálogo.
+Um caminho só. `tools/anunciar.js` e a saida: o bot e a boca, resolve o canal
+pelo **nome** (nao por id, para renomear canal nao quebrar nada), formata pelo
+**tipo** e entrega. O que merece virar anuncio e decidido fora — pelo CI quando
+o fato vem de um push, pelo Banzinho quando a decisao e dele.
 
-Duas direções, deliberadamente separadas porque têm custos e credenciais
-diferentes:
+`tools/aviso-discord.js` so descobre o que mudou no catalogo e delega para
+ele. Descobrir a diferenca e entregar no canal certo sao trabalhos diferentes, e
+juntar os dois e o que faz um script crescer ate ter credencial propria.
 
-| direção | quem manda | custo | credencial | script |
-|---|---|---|---|---|
-| produto → Discord | `produtos.json` | webhook, sem bot | `DISCORD_WEBHOOK_URL` | `tools/aviso-discord.js` |
-| Discord → página | canal `#anuncios` | bot REST, sem gateway | `DISCORD_BOT_TOKEN` | `tools/puxar-novidades.js` |
+| tipo | canal | cor |
+|---|---|---|
+| `produto_novo` | 📢 anúncios | verde |
+| `mudou` | 📢 anúncios | laranja |
+| `saiu` | 📢 anúncios | cinza |
+| `versao` | 📢 anúncios | roxo |
+| `status` | 📢 anúncios | cinza |
+| `numero` | 📢 atualizações | laranja |
+| `apresentacao` | o canal do produto | azul |
+| `lead` | 📦 packs | laranja |
 
-Nenhuma das duas exige o bot ligado 24h. A segunda usa só REST
-(`GET /channels/{id}/messages`) — sem gateway, sem message content intent, sem
-processo vivo. Roda no CI por cron e grava `dados/novidades.json`.
+`--produto` tem duas leituras e elas nao se misturam: quando o tipo tem destino
+canonico, o produto **rotula o embed** e o canal vem do mapa; quando o tipo nao
+tem (apresentacao), o produto escolhe o canal. Medido: com `--produto` decidindo
+sempre o destino, "AntiXray mudou de preço" foi para `#antixray` em vez de
+`#anúncios` — e o script imprimia "1 anúncio enviado", que e o pior tipo de
+mentira: sucesso sem efeito.
 
----
+**Fórum não aceita mensagem.** `POST` direto em canal tipo 15 devolve `50008
+Cannot send messages in a non-text channel`. A apresentacao de um fórum e um
+**tópico** (criado em `POST /channels/{id}/threads`), que e onde a conversa
+acontece mesmo. Os outros cinco produtos receberam mensagem direta.
 
-## Estrutura do servidor
+Tres medidas que valem mais que a resposta `200`:
 
-O servidor tem **um produto cada canal**. Um canal `#geral` com seis produtos é
-onde atualização morre: ninguém abre, e o dado envelhece sem ninguém perceber. O
-canal é o produto; o canal genérico é onde o assunto vai morrer.
+- `message_count` do tópico vem velho logo após criar — a mensagem estava lá e o
+  contador dizia 0. Prova de thread e **ler as mensagens**.
+- `username` do payload é **ignorado** quando se posta com token de bot: só vale
+  para webhook. Com token de bot o autor e o próprio bot. Por isso a busca e pelo
+  embed, nao pelo autor.
+- Pin de post de fórum e `PUT /channels/{threadId}/pins/{messageId}`. Com o id
+  do fórum no lugar do tópico o `PUT` devolve **204 e não fixa nada**.
 
-```
-#regras          as três regras abaixo, fixadas.
-#anúncios        produto novo, versão nova, mudança de status. Só o webhook
-                escreve. É este canal que a página lê (dados/novidades.json).
-#geral           apresentação e conversa solta, não suporte.
+O webhook `portfolio-push` e o secret `DISCORD_WEBHOOK_URL` foram apagados em
+2026-10-12. Webhook so posta em **um** canal e era a segunda credencial do mesmo
+servidor; dois caminhos de saída sao duas coisas para quebrar, e a segunda quase
+sempre quebra depois da primeira funcionar sem ninguem ver. O token do bot e o que
+da alcada de todos os canais.
 
-um produto por canal, texto:
-  antixray        uso, detecção, falso positivo, thresholds.
-  packs           otimização de servidor Paper, com número medido.
-  baccanas-hub    orçamento, suporte, otimização de servidor.
-  api-directory   API fora do ar, dúvida de dado.
-  opendex         item faltando, erro, dúvida de integração.
-  empresas-mundo  modelo, grafo, simulação.
-  banzinho        dúvida e sugestão sobre o agente.
-  feedback        o que está faltando. Post do NZ responde em 24h ou o issue
-                  vira produto — e volta pro produtos.json.
-```
+`DISCORD_CANAL_ID` continua existindo porque `puxar-novidades.js` o usa para
+ler de volta o que foi anunciado e alimentar a vitrine.
 
-Categorias e domínios já existem como taxonomia declarada em `produtos.json`
-(`tipo`, `categoria`, `dominio`) — o canal não é invenção nova, é a mesma
-taxonomia com outro formato. A categoria usa **`categoria`** (o tipo de
-trabalho), não `dominio` (onde o produto roda): `minecraft` e `dados` são o
-assunto, e assunto é assunto de fórum, não de prateleira. Produto novo cujo
-`categoria` ainda não tem prateleira cai em `#sem-categoria` até o NZ decidir.
-
-A lista com categoria e tópico de cada canal é o **estado** e fica no topo deste
-documento; esta seção é a **regra** que justifica o estado.
-
-### Papéis
-
-- **NZ** — dono. Vê tudo.
-- **servidor** — 2 níveis de moderação, se precisar. Começar sem moderação
-  automatizada: um bot de moderação em servidor de 20 pessoas é enfeite.
-
-### Regras — três linhas, no canal de regras
-
-1. Pergunta de produto vai no fórum do produto. `#geral` existe para apresentação
-   e conversa solta, não para suporte — a diferença é que ninguém com a resposta
-   está lendo `#geral`.
-2. Bug: o que você fez, o que esperava, o log. Sem log eu não consigo responder.
-3. Nada de link de servidor de terceiros. Um spam em servidor pequeno mata o
-   sinal e o NZ para de olhar.
-
----
-
-## Como cada canal recebe conteúdo
-
-| evento no repositório | vai para |
-|---|---|
-| produto novo em `produtos.json` | `#anúncios` + canal do produto |
-| `status` muda (beta → estável) | `#anúncios` + canal do produto |
-| `preco` muda | `#anúncios` + canal do produto |
-| `prova.num` muda | `#anúncios` + canal do produto |
-| release no GitHub (tag) | canal do produto |
-
-As quatro primeiras saem sozinhas, pelo `tools/aviso-discord.js` — que só posta
-o que **mudou**, comparando com `dados/discord-estado.json`. Release no GitHub
-fica manual por enquanto: um workflow que lê tag e formata embed é a mesma
-mecânica, entra quando existir a primeira tag.
-
----
-
-## Configuração — feito em 2026-10-12
-
-Servidor, canais e webhook saíram pela API depois que o bot entrou; o que ficou
-gravado no repositório:
-
-| onde | valor |
-|---|---|
-| secret `DISCORD_WEBHOOK_URL` | webhook `portfolio-push` do `#anúncios` |
-| secret `DISCORD_BOT_TOKEN` | token do bot `Banz` (`BANZ_TOKEN`) |
-| variable `DISCORD_CANAL_ID` | `1559216733506764821` (id do `#anúncios`) |
-| variable `DISCORD_INVITE` | <https://discord.gg/FwPq3hSmr> |
-
-Reutilizar o token do `Banzinho` em vez de criar um aplicativo "NZ Studios" é
-uma troca deliberada: mesmo token, um lugar a menos para vazar credencial. O
-custo é que o bot que lê o feed também é o que atende o NZ no servidor — se
-ele cair, o feed cai junto. Quando der, trocar por token dedicado no
-Developer Portal é uma variável nova, não uma mudança de desenho.
-
-Para reautorizar o bot depois de trocar o token:
-
-```
-https://discord.com/oauth2/authorize?client_id=1503083764178227342&scope=bot&permissions=74756
-```
-
----
-
-## Estado no repositório
-
-```
-dados/discord-estado.json   o que já foi anunciado (snapshot, evita post duplo)
-dados/novidades.json         últimas de #anúncios, lido pela home
-```
-
-`novidades.json` é gerado, nunca editado à mão — igual `evidencia.json`. A home
-lê esse arquivo e, se ele não existir ou estiver velho, **a seção não aparece**.
-Feed de atualização quebrado na home é pior que feed ausente: a pessoa vê um
-card de 3 semanas e pensa que o produto parou.
-
-O botão "Entrar no Discord" tem o convite no `index.html`, porque o servidor
-existe e o link é válido — esperar o bot para publicar o link deixaria a home sem
-botão por causa de uma credencial. Quando `novidades.json` trouxer um `convite`,
-ele sobrescreve o `href`; nunca esconde um botão que já funciona.
-
----
-
-## Rodar local
-
-```
-node tools/aviso-discord.js            # mostra o que seria enviado, não envia
-node tools/aviso-discord.js --enviar   # envia de verdade
-node tools/puxar-novidades.js          # precisa de DISCORD_BOT_TOKEN no env
-```
-
-Dry-run é o padrão de propósito: rodar o script errado em cima do canal certo é
-um post que ninguém consegue apagar direito.
+Dry-run e o padrao (`--enviar` grava). **Dry-run precisa de token**: resolver o
+canal por nome e uma chamada de rede, e sem token o script falha 401 antes de
+imprimir o que enviaria.

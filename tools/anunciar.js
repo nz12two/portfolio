@@ -40,7 +40,13 @@ const ENVIAR = process.argv.includes("--enviar");
 // Destino por tipo. O canal e achado pelo NOME: guardar id num arquivo e um
 // convite para recriar o canal sem o bot notar.
 const CANAIS = {
-  produto: "anuncios",
+  // `mudou` e `saiu` sao o mesmo caminho de destino: uma mudanca de produto
+  // chega no canal de anuncios como "o que mudou", e o valor novo fica no
+  // corpo. Nao ha um canal "saiu" â€” um produto que sai do catalogo nao tem
+  // shelf onde ficar.
+  produto_novo: "anuncios",
+  mudou: "anuncios",
+  saiu: "anuncios",
   versao: "anuncios",
   status: "anuncios",
   numero: "atualizacoes",
@@ -48,7 +54,7 @@ const CANAIS = {
 };
 
 const COR = {
-  produto: 0x3ba55c,
+  produto_novo: 0x3ba55c,
   mudou: 0xd8a24a,
   saiu: 0x9aa0a6,
   versao: 0x7c6cff,
@@ -60,7 +66,9 @@ const COR = {
 };
 
 const ROTULO = {
-  produto: "Produto novo",
+  produto_novo: "Produto novo",
+  mudou: "Mudou",
+  saiu: "Saiu do catÃ¡logo",
   versao: "VersÃ£o nova",
   status: "Status",
   numero: "NÃºmero mudou",
@@ -74,19 +82,26 @@ function arg(nome, padrao) {
 const temFlag = (n) => process.argv.includes("--" + n);
 
 const bruto = arg("json", null);
-const P = bruto
+// --json aceita UM payload ou uma LISTA deles. Lote importa porque a mudanca de
+// catalogo chega com varias de uma vez, e o rate limit do Discord (~5 por 2s)
+// e' por envio: dois canais viram um, um script so roda uma vez.
+const CRU = bruto
   ? JSON.parse(fs.readFileSync(bruto, "utf8"))
-  : {
-      tipo: arg("tipo", "post"),
-      produto: arg("produto", null),
-      canal: arg("canal", null),
-      titulo: arg("titulo", null),
-      corpo: arg("corpo", null),
-      linha: temFlag("linha") ? process.argv.slice(process.argv.indexOf("--linha") + 1) : [],
-      antes: arg("antes", null),
-      depois: arg("depois", null),
-      todos: temFlag("todos"),
-    };
+  : [
+      {
+        tipo: arg("tipo", "post"),
+        produto: arg("produto", null),
+        canal: arg("canal", null),
+        titulo: arg("titulo", null),
+        corpo: arg("corpo", null),
+        linha: temFlag("linha") ? process.argv.slice(process.argv.indexOf("--linha") + 1) : [],
+        antes: arg("antes", null),
+        depois: arg("depois", null),
+        todos: temFlag("todos"),
+      },
+    ];
+const P = Array.isArray(CRU) ? CRU[0] : CRU;
+
 
 const produto = (slug) => PRODUTOS.find((x) => x.slug === slug) || null;
 
@@ -189,7 +204,7 @@ async function postar(canal, payload) {
     });
     if (!r.ok) throw new Error("POST thread em " + canal.name + " -> HTTP " + r.status + " " + (await r.text()).slice(0, 140));
     const th = await r.json();
-    await fetch(API + "/channels/" + canal.id + "/messages/" + th.id + "/pins/" + th.id, {
+    await fetch(API + "/channels/" + th.id + "/pins/" + th.id, {
       method: "PUT", headers: { Authorization: "Bot " + TOKEN },
     });
     console.log("   topico criado em " + canal.name + "  (" + th.id + ")");
@@ -221,14 +236,31 @@ async function main() {
     return;
   }
 
-  const nome = P.canal || (P.produto ? canalDoProduto(P.produto) : CANAIS[P.tipo]);
-  if (!nome) throw new Error("nÃ£o sei onde postar: tipo " + P.tipo + " sem --canal e sem --produto");
-  const canal = await acharCanal(cs, nome);
-  if (!canal) throw new Error("canal nÃ£o encontrado: " + nome);
-  await postar(canal, montar(P));
+  // Lote: um payload por mudanca, com pausa entre eles. Rate limit do Discord
+  // e' ~5 envios por 2s por alvo, e perder metade do lote no 429 e' pior que
+  // levar 250ms por item.
+  const payloads = Array.isArray(CRU) ? CRU : [CRU];
+  for (let i = 0; i < payloads.length; i++) {
+    const x = payloads[i];
+
+    // `--produto` tem duas leituras e misturar as duas manda mudanca de
+    // catalogo para o canal do produto em vez do canal de anuncios. Medido:
+    // "antiXray mudou de preco" foi para #antixray e nao chegou em #anuncios,
+    // enquanto o script dizia "1 anuncio enviado" â€” sucesso sem efeito.
+    //   - tipo tem destino canonico -> o produto so rotula o embed
+    //   - tipo NAO tem (apresentacao) -> o produto escolhe o canal
+    const canonico = CANAIS[x.tipo];
+    const nome = x.canal || (canonico ? canonico : x.produto ? canalDoProduto(x.produto) : null);
+    if (!nome) throw new Error("nÃ£o sei onde postar: tipo " + x.tipo + " sem --canal e sem --produto");
+    const canal = await acharCanal(cs, nome);
+    if (!canal) throw new Error("canal nÃ£o encontrado: " + nome);
+    await postar(canal, montar(x));
+    if (i < payloads.length - 1) await new Promise((r) => setTimeout(r, 250));
+  }
 }
 
 main().catch((e) => {
   console.error("falhou: " + e.message);
   process.exit(1);
 });
+

@@ -11,6 +11,8 @@ on:
     paths:
       - 'catalogo/dados/produtos.json'
       - 'tools/aviso-discord.js'
+      - 'tools/anunciar.js'
+      - 'dados/evidencia.json'
       - 'dados/discord-estado.json'
   schedule:
     # A cada 6h. Discord nao tem push; sem poll, "ultimas novidades" envelhece
@@ -31,13 +33,17 @@ jobs:
         with:
           node-version: '24'
 
+      # Tudo que fala no Discord passa pelo bot: `anunciar.js` e o caminho
+      # unico, e o token do bot e o que da alcada de todos os canais. O
+      # `aviso-discord.js` so descobre o que mudou e chama ele.
+      #
       # Secret nao existe para ninguem antes de o NZ criar o servidor. O passo
       # de anuncio trata isso como "impossivel avisar" e sai 1, que e o sinal
       # certo: quem espera receber o aviso precisa ver que ele nao saiu.
       - name: anunciar mudanca de produto
         if: github.event_name == 'push'
         env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
         run: node tools/aviso-discord.js --enviar
 
       - name: puxar novidades do canal
@@ -56,7 +62,7 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add dados/novidades.json dados/discord-estado.json
           if git diff --cached --quiet; then
-            echo 'nada mudou no catalogo nem no feed — sem commit'
+            echo 'nada mudou no catalogo nem no feed â€” sem commit'
             exit 0
           fi
           git commit -m 'discord: novidades e estado do catalogo'
