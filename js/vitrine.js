@@ -113,8 +113,12 @@
       var pr = i.prova;
       // numero grande e unidade embaixo; o "como" fica como title para o
       // hover, senão a faixa vira um paragrafo e perde a leitura de 2s.
+      // O icone vem da UNIDADE medida (window.iconeDaUnidade), não da posição
+      // na faixa: se o catálogo trocar a ordem dos produtos, o desenho continua
+      // do lado do número certo sem ninguém editar nada aqui.
+      var icoUnidade = (window.iconeDaUnidade && window.iconeDaUnidade(pr.unidade)) || '';
       return "<div title=\"" + esc(pr.como || "") + "\">" +
-        "<dt>" + esc(pr.unidade) + "</dt>" +
+        "<dt>" + icoUnidade + "<span>" + esc(pr.unidade) + "</span></dt>" +
         "<dd>" + esc(String(pr.num)) + "</dd></div>";
     }).join("");
   };

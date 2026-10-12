@@ -127,6 +127,10 @@ body {
   text-decoration: none;
 }
 .brand:hover { color: var(--tx); }
+/* "/ build log" quebrando em duas linhas dentro do logo. Medido: com os icones
+   no nav a marca ficou com 107px e o texto em 44px de altura (2 linhas), com
+   144px de folga sobrando no header. Nao falta espaco: falta oNOWRAP. */
+.brand small { white-space: nowrap; }
 .brand__mark {
   width: 26px;
   height: 26px;

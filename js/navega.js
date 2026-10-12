@@ -71,9 +71,17 @@
     return b;
   }
 
-  var btnBusca = botao('btn--search', 'Buscar produtos e tecnologias', '<span>Buscar</span>');
+  /* Os botoes que este script cria quando o HTML nao os traz (outra pagina,
+   * ou o header montado por outra via) usam o mesmo conjunto de icones do
+   * resto. Antes aqui iam os caracteres U+2315 e U+2630: um nao e lupa e o
+   * outro depende da fonte do sistema para sair desenhado. */
+  function ic(nome) {
+    return (window.icone && window.icone(nome)) || '';
+  }
 
-  var btnMenu = botao('btn--menu', 'Menu de navegação', '<span aria-hidden="true">☰</span>');
+  var btnBusca = botao('btn--search', 'Buscar produtos e tecnologias', ic('busca') + '<span>Buscar</span>');
+
+  var btnMenu = botao('btn--menu', 'Menu de navegação', ic('menu'));
   btnMenu.setAttribute('aria-expanded', 'false');
 
   // Painel mobile fora do fluxo quando fechado

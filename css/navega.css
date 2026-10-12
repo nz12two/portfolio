@@ -32,14 +32,12 @@
   transition: color 0.18s, border-color 0.18s;
 }
 .btn--search:hover { color: var(--tx); border-color: var(--tx-2); }
-.btn--search::before {
-  content: "";
-  display: inline-block;
-  width: 16px; height: 16px;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>') no-repeat center / contain;
-  opacity: 0.8;
-  flex-shrink: 0;
-}
+
+/* A lupa saiu daqui. Este ::before desenhava a lupa em SVG enquanto o botao
+   trazia DEPOIS o caractere U+2315 — duas lupas no mesmo botao. E o desenho
+   em CSS nao conversava com o dos outros icones: traco 2, opacidade propria,
+   data-uri solta no meio da folha. Agora a lupa vem de js/icones.js, junto com
+   o menu e o resto, e o desenho e um so. Medido: o botao mostrava 2 lupas. */
 
 /* Botao menu movel */
 .btn--menu {

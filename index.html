@@ -22,6 +22,10 @@
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="css/hero.css">
 <link rel="stylesheet" href="css/navega.css">
+<!-- Os icones saem de um conjunto so (js/icones.js). Antes o botao de busca
+     carregava duas lupas: a do ::before abaixo e o caractere U+2315 dentro
+     do botao. O ::before saiu; a lupa vem do conjunto, como todo o resto. -->
+<link rel="stylesheet" href="css/icones.css">
 <link rel="stylesheet" href="css/lab.css">
 <link rel="stylesheet" href="css/viz.css">
 <link rel="stylesheet" href="css/vitrine-prev.css">
@@ -52,22 +56,20 @@
            antes do catalogo — link que aponta para a ordem antiga reforçava o
            defeito que o NZ apontou. Marketplace e link de verdade para a
            pagina com os filtros, nao ancora dentro desta. -->
-      <a href="#sobre">Sobre</a>
-      <a href="#produtos">Produtos</a>
-      <a href="catalogo/index.html#tipos">Marketplace</a>
-      <a href="#lab">Lab</a>
-      <a href="#dados">Dados</a>
-      <a href="#prova">Prova</a>
+      <a href="#sobre" data-ico="sobre">Sobre</a>
+      <a href="#produtos" data-ico="produtos">Produtos</a>
+      <a href="catalogo/index.html#tipos" data-ico="marketplace">Marketplace</a>
+      <a href="#lab" data-ico="lab">Lab</a>
+      <a href="#dados" data-ico="dados">Dados</a>
+      <a href="#prova" data-ico="prova">Prova</a>
     </nav>
     <div class="hdr__acoes">
-      <button type="button" class="btn btn--search" aria-label="Buscar produtos e tecnologias" title="Buscar (Ctrl+K)">
-        <span aria-hidden="true">⌕</span><span class="btn__rot">Buscar</span>
+      <button type="button" class="btn btn--search" data-ico="busca" aria-label="Buscar produtos e tecnologias" title="Buscar (Ctrl+K)">
+        <span class="btn__rot">Buscar</span>
       </button>
       <a href="#contato" class="btn">Contato</a>
-      <a href="conta.html" class="btn btn--acc" data-conta-open aria-label="Entrar na sua conta">entrar</a>
-      <button type="button" class="btn btn--menu" aria-label="Abrir menu" aria-expanded="false">
-        <span aria-hidden="true">☰</span>
-      </button>
+      <a href="conta.html" class="btn btn--acc" data-ico="conta" data-conta-open aria-label="Entrar na sua conta"><span class="btn__rot">entrar</span></a>
+      <button type="button" class="btn btn--menu" data-ico="menu" aria-label="Abrir menu" aria-expanded="false"></button>
     </div>
   </div>
 </header>
@@ -499,6 +501,7 @@
 <!-- O catálogo antes dos scripts que o usam: vitrine.js lê window.CATALOGO.
      Sem este <script>, a lista da home e o rodapé ficam vazios. -->
 <script src="catalogo/dados/catalogo.js" defer></script>
+<script src="js/icones.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/vitrine.js" defer></script>
 <!-- Depois da vitrine: le os slugs que ela acabou de pintar e monta o preview

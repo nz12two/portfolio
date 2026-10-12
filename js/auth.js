@@ -181,13 +181,31 @@
 
     // Botao do header: vira "sair" com sessao, e ganha o nome quando estah
     // logado, para nao ser um botao sem dono.
+    //
+    // O texto vai para dentro de um <span class="btn__rot">, e nao direto no
+    // botao: `b.textContent = "conta"` apaga TODOS os filhos, e um dos filhos
+    // e o icone que o conjunto de icones puser ali. Medido: o botao ficava com
+    // `data-ico-feito="sim"` e nenhum icone na tela — o auth.js roda depois do
+    // icones.js e apagava o desenho.
+    function rotuloDoBotao(b, texto) {
+      var alvo = b.querySelector(".btn__rot");
+      if (!alvo) {
+        alvo = document.createElement("span");
+        alvo.className = "btn__rot";
+        var ico = b.querySelector(".ico");
+        if (ico) ico.after(alvo);
+        else b.appendChild(alvo);
+      }
+      alvo.textContent = texto;
+    }
+
     document.querySelectorAll("[data-conta-open]").forEach(function (b) {
       if (estado === "sem-config") {
-        b.textContent = "conta";
+        rotuloDoBotao(b, "conta");
         b.setAttribute("aria-label", "Entrar — autenticação não configurada neste deploy");
         return;
       }
-      b.textContent = ativo ? (usuarioAtual && usuarioAtual.email ? usuarioAtual.email.split("@")[0] : "sair") : "entrar";
+      rotuloDoBotao(b, ativo ? (usuarioAtual && usuarioAtual.email ? usuarioAtual.email.split("@")[0] : "sair") : "entrar");
     });
 
     // Nome e email em qualquer lugar que peça.

@@ -190,18 +190,21 @@
           var nAlta = (sev.high || 0) + (sev.critical || 0);
 
           // tiles: numero medido, rotulo curto. Sem "MB de codigo" e sem
-          // numero que nao responda pergunta.
+          // numero que nao responda pergunta. O quarto item e o nome do icone:
+          // o desenho acompanha o que foi medido, e sai do mesmo conjunto do
+          // nav — antes o tile era numero e palavra, sem nenhuma marca.
           var nums = [
-            [ex.chamadas_medidas, 'chamadas medidas', ''],
-            [ex.ferramentas.length, 'ferramentas distintas', ''],
-            [(ex.taxa_erro_global * 100).toFixed(1) + '%', 'taxa de erro', ex.taxa_erro_global > 0.05 ? 'tile--ruim' : ''],
-            [dc.total || 0, 'achados abertos', nAlta > 0 ? 'tile--ruim' : ''],
+            [ex.chamadas_medidas, 'chamadas medidas', '', 'terminal'],
+            [ex.ferramentas.length, 'ferramentas distintas', '', 'ferramenta'],
+            [(ex.taxa_erro_global * 100).toFixed(1) + '%', 'taxa de erro', ex.taxa_erro_global > 0.05 ? 'tile--ruim' : '', 'erro'],
+            [dc.total || 0, 'achados abertos', nAlta > 0 ? 'tile--ruim' : '', 'achado'],
           ];
           for (var i = 0; i < nums.length; i++) {
             // div, nao dt/dd: num <dl> de 4 colunas cada dt e cada dd ocupa uma
             // celula, e o numero acabava na linha ao lado do proprio rotulo.
             var box = document.createElement('div');
             box.className = 'tile' + (nums[i][2] ? ' ' + nums[i][2] : '');
+            box.innerHTML = (window.icone ? window.icone(nums[i][3]) : '');
             var dt = document.createElement('span');
             dt.className = 'tile__n';
             dt.textContent = String(nums[i][0]);
