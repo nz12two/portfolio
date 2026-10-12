@@ -7,6 +7,7 @@
 <meta name="description" content="Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.">
 <link rel="stylesheet" href="../v2/v2.css">
 <link rel="stylesheet" href="pagina.css">
+<link rel="stylesheet" href="vip.css">
 </head>
 <body>
 
@@ -14,7 +15,7 @@
   <div class="wrap hdr__in">
     <a href="../v2/index.html" class="brand">NZ <small>/ AntiXray</small></a>
     <nav class="nav"><a href="../v2/index.html">Produtos</a></nav>
-    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
+    <button class="btn btn--acc" data-vip-open>VIP</button>
   </div>
 </header>
 
@@ -86,6 +87,29 @@
          <h2>Como funciona o pipeline de detecção</h2>
          <p class="psec__p">A coleta (block break, movimento, sessão) alimenta a extração de features: 25+ features de mineração pré-computadas por jogador.</p><p class="psec__p">Os 19+ detectores rodam em 3 tiers — Fast, Medium, Heavy — com dependências entre eles. Detector rápido descarta o óbvio; o pesado só entra quando o risco já subiu.</p><p class="psec__p">O Risk Engine pontua de forma temporal: risco atual + anterior + histórico. Um pico isolado não pune; um padrão sustentado, sim.</p><p class="psec__p">A punishível é configurável: log, warn, kick, ban, freeze ou comando próprio. Evidence gera o relatório e Replay guarda os últimos 5 minutos de dados do jogador no momento do flag.</p><p class="psec__p">Discord recebe embed rico por webhook, com rate limiting — para não inundar o canal de quem responde.</p>
        </section>
+  <section class="psec">
+         <div class="eyebrow mono">grátis</div>
+         <h2>O que já está liberado</h2>
+         <ul class="psec__ul"><li>jar completo do plugin, pronto pra instalar</li><li>config.example.yml comentado</li><li>documentação dos 18 módulos</li><li>API pública AntiXrayAPI e todos os eventos</li></ul>
+       </section>
+  <section class="vip" data-slug="antixray">
+         <div class="vip__head">
+           <span class="tag tag--acc">VIP</span>
+           <h2>O que o nível VIP destrava</h2>
+         </div>
+         <ul class="vip__list">
+           <li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> config de produção calibrada para seu servidor (tuning de threshold com base no seu hardware e número de jogadores)</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> suporte direto por Discord para ajuste de falso positivo</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> builds nightly com detector novo antes do público</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> painel web de leitura das evidências geradas</li>
+         </ul>
+         <div class="vip__gate" data-gate>
+           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
+           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         </div>
+         <div class="vip__unlocked" data-unlocked hidden>
+           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+           <a class="btn btn--acc" href="https://github.com/nz12two/antixray" target="_blank" rel="noopener">Ir para o código</a>
+         </div>
+       </section>
 
   <div class="ppage__links">
         <a class="btn btn--acc" href="https://github.com/nz12two/antixray" target="_blank" rel="noopener">Ver código</a>
@@ -100,5 +124,6 @@
   </div>
 </footer>
 
+<script src="vip.js"></script>
 </body>
 </html>

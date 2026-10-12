@@ -7,6 +7,7 @@
 <meta name="description" content="Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.">
 <link rel="stylesheet" href="../v2/v2.css">
 <link rel="stylesheet" href="pagina.css">
+<link rel="stylesheet" href="vip.css">
 </head>
 <body>
 
@@ -14,7 +15,7 @@
   <div class="wrap hdr__in">
     <a href="../v2/index.html" class="brand">NZ <small>/ API Directory</small></a>
     <nav class="nav"><a href="../v2/index.html">Produtos</a></nav>
-    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
+    <button class="btn btn--acc" data-vip-open>VIP</button>
   </div>
 </header>
 
@@ -77,6 +78,29 @@
          <h2>Por que a latência não é medida no navegador</h2>
          <p class="psec__p">Porque o navegador mentiria. Um fetch só entrega o corpo se o servidor mandar Access-Control-Allow-Origin; sem isso o browser bloqueia e reporta 'failed' — sem distinguir servidor fora do ar de CORS barrando.</p><p class="psec__p">São duas perguntas diferentes, então a sondagem responde as duas: tools/probe_apis.py no CI mede se o host responde e em quantos ms; o botão ▶ no navegador diz se dá para consumir no front.</p><p class="psec__p">Quando o ▶ falha mas a sondagem diz HTTP 200, as duas informações aparecem lado a lado — e as duas estão certas.</p>
        </section>
+  <section class="psec">
+         <div class="eyebrow mono">grátis</div>
+         <h2>O que já está liberado</h2>
+         <ul class="psec__ul"><li>site completo no ar, com os dados já medidos</li><li>dataset bruto em JSON (apis + health)</li><li>código do CI que mede latência</li></ul>
+       </section>
+  <section class="vip" data-slug="api-directory">
+         <div class="vip__head">
+           <span class="tag tag--acc">VIP</span>
+           <h2>O que o nível VIP destrava</h2>
+         </div>
+         <ul class="vip__list">
+           <li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> monitor próprio com alerta quando uma API que você usa cai</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> endpoint próprio com SLA e histórico de latência</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> exportação programada para o seu formato</li>
+         </ul>
+         <div class="vip__gate" data-gate>
+           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
+           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         </div>
+         <div class="vip__unlocked" data-unlocked hidden>
+           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+           <a class="btn btn--acc" href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">Ir para o código</a>
+         </div>
+       </section>
 
   <div class="ppage__links">
         <a class="btn btn--acc" href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">Ver código</a>
@@ -91,5 +115,6 @@
   </div>
 </footer>
 
+<script src="vip.js"></script>
 </body>
 </html>

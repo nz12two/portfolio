@@ -48,15 +48,19 @@
   --r-l: 20px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Uma escala fluida. O clamp liga dois extremos e o navegador escolhe o meio
-     — em vez de 6 tamanhos que não combinam entre si. */
-  --t-xs: clamp(0.72rem, 0.7rem + 0.1vw, 0.78rem);
-  --t-sm: clamp(0.86rem, 0.83rem + 0.15vw, 0.94rem);
-  --t-md: clamp(1rem, 0.96rem + 0.2vw, 1.1rem);
-  --t-lg: clamp(1.25rem, 1.15rem + 0.5vw, 1.55rem);
-  --t-xl: clamp(1.7rem, 1.4rem + 1.4vw, 2.6rem);
-  --t-2xl: clamp(2.3rem, 1.5rem + 3.6vw, 4.4rem);
-  --t-3xl: clamp(3rem, 1.2rem + 7.5vw, 7rem);
+  /* Escala fluida. Os tetos caíram porque medidos no browser: o t-3xl anterior
+     batia 112px no h1 e 52px no h2 de seção. Letra grande não é letra boa —
+     o que faz um título ler é o contraste com o corpo, e 112px esmaga o resto
+     da página. A razão h1:corpo agora é ~2.6:1, não ~8:1.
+
+     O piso também importa: 3rem no h1 forçava quebra feia em tela estreita. */
+  --t-xs: clamp(0.75rem, 0.73rem + 0.1vw, 0.8rem);
+  --t-sm: clamp(0.85rem, 0.83rem + 0.12vw, 0.92rem);
+  --t-md: clamp(0.95rem, 0.92rem + 0.15vw, 1.02rem);
+  --t-lg: clamp(1.1rem, 1.05rem + 0.3vw, 1.28rem);
+  --t-xl: clamp(1.3rem, 1.18rem + 0.7vw, 1.7rem);
+  --t-2xl: clamp(1.6rem, 1.35rem + 1.3vw, 2.3rem);
+  --t-3xl: clamp(2rem, 1.6rem + 2.1vw, 3.15rem);
 
   --gut: clamp(20px, 4vw, 48px);
   --page: 1180px;

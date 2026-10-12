@@ -1,0 +1,67 @@
+{
+  "_nota": "O que cada nível entrega. 'gratis' é público e aparece na página; 'vip' fica atrás da porta local. Nenhum item aqui é segredo: o código está no GitHub. O VIP vende acesso, tempo e suporte — não exclusividade de código, porque código aberto não se esconde.",
+  "_precos": "Preço é sugestão. Defina antes de publicar qualquer cobrança real — nada aqui cobra ninguém.",
+  "produtos": {
+    "antixray": {
+      "gratis": [
+        "jar completo do plugin, pronto pra instalar",
+        "config.example.yml comentado",
+        "documentação dos 18 módulos",
+        "API pública AntiXrayAPI e todos os eventos"
+      ],
+      "vip": [
+        "config de produção calibrada para seu servidor (tuning de threshold com base no seu hardware e número de jogadores)",
+        "suporte direto por Discord para ajuste de falso positivo",
+        "builds nightly com detector novo antes do público",
+        "painel web de leitura das evidências geradas"
+      ]
+    },
+    "api-directory": {
+      "gratis": [
+        "site completo no ar, com os dados já medidos",
+        "dataset bruto em JSON (apis + health)",
+        "código do CI que mede latência"
+      ],
+      "vip": [
+        "monitor próprio com alerta quando uma API que você usa cai",
+        "endpoint próprio com SLA e histórico de latência",
+        "exportação programada para o seu formato"
+      ]
+    },
+    "opendex": {
+      "gratis": [
+        "site no ar com 122 repos e 247 pacotes indexados",
+        "dados em aberto",
+        "código do coletor"
+      ],
+      "vip": [
+        "seu próprio catálogo, espelhado e atualizado junto com o meu",
+        "personalização de marca e domínio",
+        "alerta quando o ecossistema ganha plugin relevante"
+      ]
+    },
+    "empresas-mundo": {
+      "gratis": [
+        "simulação completa com OSMnx e FastAPI",
+        "código do agente e do motor",
+        "instruções de setup"
+      ],
+      "vip": [
+        "rodar a simulação na sua cidade e no seu grafo real",
+        "rodar a hipótese que você quer testar, com leitura do resultado",
+        "relatório de resultado e leitura do agente"
+      ]
+    },
+    "baccanas-hub": {
+      "gratis": [
+        "conversa de diagnóstico do seu servidor (30 min)",
+        "lista dos 10 gargalos mais comuns de Paper"
+      ],
+      "vip": [
+        "configuração e otimização feitas no seu servidor",
+        "desenvolvimento sob medida (plugin, integração, automação)",
+        "manutenção contínua"
+      ]
+    }
+  }
+}

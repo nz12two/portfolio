@@ -1,14 +1,19 @@
 #!/usr/bin/env node
 /**
- * Gera as páginas de produto a partir de catalogo/dados/produtos.json usando o
- * MESMO sistema visual da home v2.
+ * Paginas de produto com area VIP. Gera a partir de catalogo/dados/produtos.json
+ * mais catalogo/dados/vip.json (o que cada nivel desbloqueia).
  *
- * Antes estas páginas tinham CSS próprio (catalogo.css), o que produzia a pior
- * quebra possível: home nova abrindo página antiga. Duas direções visuais no
- * mesmo produto lê como site remontado. Agora existe uma fonte de estilo só,
- * v2/v2.css, e as classes daqui são desse sistema.
+ * O catalogo ate agora era 5 paginas estaticas iguais. Isso e um PDF, nao um
+ * catalogo: nao da para filtrar, comparar nem abrir o que so existe para quem
+ * paga. Aqui cada produto ganha do que e gratuito, do que e VIP, e uma secao de
+ * downloads que so renderiza para quem entrou.
  *
- * Sem dependencia, sem framework — o mesmo esquema do portfolio.
+ * A parte honesta: o "login" e local (localStorage) porque nao existe backend
+ * neste repositorio estatico. Isso NAO e seguranca — e um portao de vitrine. A
+ * troca por auth de verdade (Supabase/Auth0/backend) e um arquivo so, porque a
+ * fronteira esta isolada em vip.js. Digo isso na pagina em vez de fingir que
+ * e conta com senha.
+ *
  * Rodar: node catalogo/build.js
  */
 
@@ -16,26 +21,33 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const RAIZ = path.join(__dirname, "..");
-const SAIDA = __dirname; // gera direto em catalogo/, linkado como ../catalogo/x.html
+const SAIDA = __dirname;
 const CSS = "../v2/v2.css";
 
 const esc = (s) =>
   String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
-// Estado -> cor e rotulo. Mesma semantica da home v2.
 const ESTADO = {
-  estavel: { txt: "estável", cls: "ok", cor: "var(--ok)" },
-  beta: { txt: "beta", cls: "beta", cor: "var(--warn)" },
-  "em-producao": { txt: "em produção", cls: "acc", cor: "var(--acc)" },
+  estavel: { txt: "estável", cls: "ok" },
+  beta: { txt: "beta", cls: "beta" },
+  "em-producao": { txt: "em produção", cls: "acc" },
 };
 const EST = (p) => ESTADO[p.status] || ESTADO.estavel;
 
-function paginaProduto(p) {
-  const e = EST(p);
+function read(file, fallback) {
+  try {
+    return JSON.parse(fs.readFileSync(path.join(__dirname, "dados", file), "utf8"));
+  } catch {
+    return fallback;
+  }
+}
 
-  const tags = (p.stack || [])
-    .map((s) => `<span class="tag">${esc(s)}</span>`)
-    .join("");
+function paginaProduto(p, vip) {
+  const e = EST(p);
+  const v = (vip && vip.produtos && vip.produtos[p.slug]) || { gratis: [], vip: [] };
+  const temVip = (v.vip || []).length > 0;
+
+  const tags = (p.stack || []).map((s) => `<span class="tag">${esc(s)}</span>`).join("");
 
   const passos = (p.instalacao || [])
     .map(
@@ -62,6 +74,35 @@ function paginaProduto(p) {
        </section>`
     : "";
 
+  const blocoVip = temVip
+    ? `<section class="vip" data-slug="${esc(p.slug)}">
+         <div class="vip__head">
+           <span class="tag tag--acc">VIP</span>
+           <h2>O que o nível VIP destrava</h2>
+         </div>
+         <ul class="vip__list">
+           ${(v.vip || []).map((x) => `<li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> ${esc(x)}</li>`).join("")}
+         </ul>
+         <div class="vip__gate" data-gate>
+           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
+           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         </div>
+         <div class="vip__unlocked" data-unlocked hidden>
+           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+           <a class="btn btn--acc" href="${esc(p.repo || "#")}" target="_blank" rel="noopener">Ir para o código</a>
+         </div>
+       </section>`
+    : "";
+
+  const gratis = (v.gratis || []).length
+    ? `<section class="psec">
+         <div class="eyebrow mono">grátis</div>
+         <h2>O que já está liberado</h2>
+         <ul class="psec__ul">${(v.gratis || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+       </section>`
+    : "";
+
   const links = [
     p.repo ? `<a class="btn btn--acc" href="${esc(p.repo)}" target="_blank" rel="noopener">Ver código</a>` : "",
     p.site ? `<a class="btn" href="${esc(p.site)}" target="_blank" rel="noopener">Abrir</a>` : "",
@@ -76,6 +117,7 @@ function paginaProduto(p) {
 <meta name="description" content="${esc(p.tagline)}">
 <link rel="stylesheet" href="${CSS}">
 <link rel="stylesheet" href="pagina.css">
+<link rel="stylesheet" href="vip.css">
 </head>
 <body>
 
@@ -83,7 +125,7 @@ function paginaProduto(p) {
   <div class="wrap hdr__in">
     <a href="../v2/index.html" class="brand">NZ <small>/ ${esc(p.nome)}</small></a>
     <nav class="nav"><a href="../v2/index.html">Produtos</a></nav>
-    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
+    <button class="btn btn--acc" data-vip-open>VIP</button>
   </div>
 </header>
 
@@ -124,6 +166,8 @@ function paginaProduto(p) {
   </section>
 
   ${tuto}
+  ${gratis}
+  ${blocoVip}
 
   <div class="ppage__links">
         ${links}
@@ -137,6 +181,7 @@ function paginaProduto(p) {
   </div>
 </footer>
 
+<script src="vip.js"></script>
 </body>
 </html>
 `;
@@ -144,10 +189,10 @@ function paginaProduto(p) {
 
 function paginaIndice(prods) {
   const linhas = prods
-    .map((p) => {
+    .map((p, i) => {
       const e = EST(p);
       return `      <a class="item" href="./${esc(p.slug)}.html">
-        <span class="item__n">${String(prods.indexOf(p) + 1).padStart(2, "0")}</span>
+        <span class="item__n">${String(i + 1).padStart(2, "0")}</span>
         <div>
           <h3 class="item__name">${esc(p.nome)}</h3>
           <p class="item__desc">${esc(p.tagline)}</p>
@@ -197,10 +242,9 @@ ${linhas}
 }
 
 function main() {
-  const src = path.join(__dirname, "dados", "produtos.json");
   let data;
   try {
-    data = JSON.parse(fs.readFileSync(src, "utf8"));
+    data = JSON.parse(fs.readFileSync(path.join(__dirname, "dados", "produtos.json"), "utf8"));
   } catch (e) {
     console.error(`produtos.json inválido: ${e.message}`);
     process.exit(1);
@@ -210,23 +254,18 @@ function main() {
     console.error("produtos.json sem produtos");
     process.exit(1);
   }
+  const vip = read("vip.json", null);
 
   let n = 0;
   for (const p of prods) {
-    fs.writeFileSync(path.join(SAIDA, `${p.slug}.html`), paginaProduto(p));
+    fs.writeFileSync(path.join(SAIDA, `${p.slug}.html`), paginaProduto(p, vip));
     n++;
   }
   fs.writeFileSync(path.join(SAIDA, "index.html"), paginaIndice(prods));
 
-  const semPreco = prods.filter((p) => !p.preco).length;
-  const semTutorial = prods.filter((p) => !p.tutorial || !(p.tutorial.corpo || []).length).length;
-  const semInstalacao = prods.filter((p) => !(p.instalacao || []).length).length;
-
-  console.log(`${n} produto(s) -> ${path.relative(RAIZ, SAIDA)} (css: ${CSS})`);
-  console.log(`  sem preco: ${semPreco} | sem tutorial: ${semTutorial} | sem instalacao: ${semInstalacao}`);
-  if (semPreco || semTutorial || semInstalacao) {
-    console.log("  aviso: produto incompleto ainda não está pronto para vender.");
-  }
+  const comVip = vip ? prods.filter((p) => vip.produtos?.[p.slug]?.vip?.length).length : 0;
+  console.log(`${n} produto(s) -> ${path.relative(RAIZ, SAIDA)}`);
+  console.log(`  com area VIP: ${comVip}/${n}`);
 }
 
 main();

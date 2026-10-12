@@ -7,6 +7,7 @@
 <meta name="description" content="Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.">
 <link rel="stylesheet" href="../v2/v2.css">
 <link rel="stylesheet" href="pagina.css">
+<link rel="stylesheet" href="vip.css">
 </head>
 <body>
 
@@ -14,7 +15,7 @@
   <div class="wrap hdr__in">
     <a href="../v2/index.html" class="brand">NZ <small>/ Baccana's Hub</small></a>
     <nav class="nav"><a href="../v2/index.html">Produtos</a></nav>
-    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
+    <button class="btn btn--acc" data-vip-open>VIP</button>
   </div>
 </header>
 
@@ -68,6 +69,29 @@
          <h2>O que está incluído</h2>
          <p class="psec__p">Configuração de servidor do zero ou revisão da que já existe.</p><p class="psec__p">Otimização: Paper, view distance, entity ticks, o que pesa de verdade no tick loop.</p><p class="psec__p">Desenvolvimento sob medida — plugins, integração com outros plugins, automação derotina do admin.</p>
        </section>
+  <section class="psec">
+         <div class="eyebrow mono">grátis</div>
+         <h2>O que já está liberado</h2>
+         <ul class="psec__ul"><li>conversa de diagnóstico do seu servidor (30 min)</li><li>lista dos 10 gargalos mais comuns de Paper</li></ul>
+       </section>
+  <section class="vip" data-slug="baccanas-hub">
+         <div class="vip__head">
+           <span class="tag tag--acc">VIP</span>
+           <h2>O que o nível VIP destrava</h2>
+         </div>
+         <ul class="vip__list">
+           <li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> configuração e otimização feitas no seu servidor</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> desenvolvimento sob medida (plugin, integração, automação)</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> manutenção contínua</li>
+         </ul>
+         <div class="vip__gate" data-gate>
+           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
+           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         </div>
+         <div class="vip__unlocked" data-unlocked hidden>
+           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+           <a class="btn btn--acc" href="#" target="_blank" rel="noopener">Ir para o código</a>
+         </div>
+       </section>
 
   <div class="ppage__links">
         
@@ -82,5 +106,6 @@
   </div>
 </footer>
 
+<script src="vip.js"></script>
 </body>
 </html>
