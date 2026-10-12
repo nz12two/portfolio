@@ -9,6 +9,28 @@ Identidades prontas:
   View Channel + Read History` aqui, e é ele que lê o `#anúncios`.
 - Webhook **`portfolio-push`** no `#anúncios` — é o que posta produto novo.
 
+## Ícone do servidor: só pelo dono
+
+O cargo integrado do bot tem `permissions=8` (`MANAGE_GUILD`), então falta de
+permissão não é a explicação — e foi o que a medição descartou:
+
+| tentativa | resultado |
+|---|---|
+| `PATCH /guilds/{id}` com `icon` = base64 do PNG do kit | HTTP 200, `icon` volta com o hash antigo |
+| o mesmo com outro PNG do próprio repo (`opendex.png`, 1100×739) | HTTP 200, `icon` volta com o hash antigo |
+| `GET /guilds/{id}/members/{bot}` sem `with_counts` | `permissions` **ausente** — BigInt(undefined) vira `0x0`, negativo falso |
+| `GET /guilds/{id}/roles` | cargo integrado `Banzinho` com `permissions: "8"` |
+
+Ou seja: o endpoint aceita o `PATCH` e descarta o campo. O `description` do
+mesmo `PATCH` entra, então não é o PUT que está falhando. Trocar ícone de guild
+é ação do dono: `Configurações do servidor → Ícone do servidor`, arrastando
+`C:\Users\Lucas\Desktop\nz-studio-icone-512.png` (o `app-icon-512.png` do kit,
+512×512, PNG válido).
+
+Antes de concluir isso, dois falsos-negativos que custaram três chamadas e
+viram outros três: ler permissão sem `with_counts`, e comparar o `hash` do
+`icon` logo depois do `PATCH` sem esperar o estado propagar.
+
 ## Estrutura que existe hoje
 
 A **categoria** de cada canal vem do campo `categoria` de `produtos.json` — o
