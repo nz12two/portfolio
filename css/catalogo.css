@@ -190,6 +190,42 @@
 .mkt__rotulo { font-size: var(--t-sm); font-weight: 550; }
 .mkt__desc { font-size: var(--t-xs); color: var(--tx-3); line-height: 1.35; }
 
+/* Chips de filtro ativo (OpenCTI #17006). Ficam ENTRE os controles e os
+   resultados: e onde o olho ja esta depois de marcar um filtro. Cada chip
+   remove o seu, e "limpar tudo" zera — sem isso, quem filtra e quer voltar
+   precisa desmarcar um por um e lembrar o que tinha marcado. */
+.ctrl__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--line);
+}
+.ctrl__chipsLabel {
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+  text-transform: lowercase;
+}
+.ctrl__chipsRow { display: flex; flex-wrap: wrap; gap: 6px; flex: 1; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 9px;
+  font: inherit;
+  font-size: var(--t-xs);
+  color: var(--tx);
+  background: var(--surf);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: border-color 0.16s, color 0.16s;
+}
+.chip:hover { border-color: var(--acc); color: var(--acc); }
+.chip span { color: var(--tx-3); font-size: 1.05em; line-height: 1; }
+.chip:hover span { color: var(--acc); }
+
 /* Faceta de tipo: a contagem fica ao lado do rotulo, para o filtro dizer
    "plugin 1" e nao so "plugin". */
 .fset__vazio { opacity: 0.45; }

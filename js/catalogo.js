@@ -164,9 +164,13 @@
       });
     }
 
+    // Stack com a contagem, como as outras facetas. Sem o <i>, a linha nasce sem
+    // numero e so ganha um depois do primeiro desenho — e se o JS travar
+    // antes disso, o filtro fica 20 opcoes mudas.
     fStacks.innerHTML = DADOS.facetas.stack
       .map(function (s) {
-        return '<label><input type="checkbox" name="stack" value="' + esc(s) + '"><span>' + esc(s) + "</span></label>";
+        return '<label><input type="checkbox" name="stack" value="' + esc(s) + '">' +
+          "<span>" + esc(s) + " <i>0</i></span></label>";
       })
       .join("");
   }
@@ -181,6 +185,81 @@
     return [].slice.call(document.querySelectorAll('input[name="' + nome + '"]:checked'))
       .map(function (i) { return i.value; });
   };
+
+  // Chips dos filtros ativos + estado na URL.
+  //
+  // Padrao OpenCTI #17006 (opencti#17006, "Faceted search"): cada filtro ligado
+  // vira um chip removivel acima dos resultados, e o estado inteiro vai na
+  // query string. Sem os dois, quem filtra e depois quer mandar o link para
+  // alguem chega num catalogo sem filtro nenhum — e a pergunta real de quem
+  // navega por marketplace e "qual dos dois eu instalo?".
+  var NOME_FACETA = { preco: "preço", tipo: "tipo", status: "status", licenca: "licença", dominio: "domínio", stack: "stack" };
+
+  function rotuloDe(campo, valor) {
+    if (campo === "tipo") {
+      var t = (DADOS.tipos || []).find(function (x) { return x.slug === valor; });
+      return t ? t.rotulo : valor;
+    }
+    return valor;
+  }
+
+  function desenharChips() {
+    var box = document.getElementById("chipsRow");
+    if (!box) return;
+    var chips = [];
+    if (eAtual.q) chips.push({ campo: "q", valor: eAtual.q, txt: '"' + eAtual.q + '"' });
+    if (eAtual.vip) chips.push({ campo: "vip", valor: "1", txt: "tem VIP" });
+    ["preco", "tipo", "status", "licenca", "dominio"].forEach(function (campo) {
+      eAtual[campo].forEach(function (v) {
+        chips.push({ campo: campo, valor: v, txt: NOME_FACETA[campo] + ": " + rotuloDe(campo, v) });
+      });
+    });
+    eAtual.stack.forEach(function (v) {
+      chips.push({ campo: "stack", valor: v, txt: v });
+    });
+
+    var cont = document.getElementById("chips");
+    cont.hidden = chips.length === 0;
+    box.innerHTML = chips.map(function (c) {
+      // data-campo/data-valor em vez de um indice: remover "Ferramenta" nao
+      // pode depender de a ordem dos chips continuar igual.
+      return '<button type="button" class="chip" data-campo="' + esc(c.campo) +
+        '" data-valor="' + esc(c.valor) + '" aria-label="Remover filtro ' + esc(c.txt) + '">' +
+        esc(c.txt) + '<span aria-hidden="true">&times;</span></button>';
+    }).join("");
+  }
+
+  // Estado na URL. searchParams em vez de montar a query a mao: encodes sozinho
+  // e o resultado volta com replaceState, sem criar entrada de historico — um
+  // filtro nao pode virar dez passos de "voltar" no botao do navegador.
+  function salvarNaUrl() {
+    if (!window.history || !window.history.replaceState) return;
+    var p = new URLSearchParams();
+    if (eAtual.q) p.set("q", q.value.trim());
+    if (eAtual.vip) p.set("vip", "1");
+    ["preco", "tipo", "status", "licenca", "dominio"].forEach(function (campo) {
+      eAtual[campo].forEach(function (v) { p.append(campo, v); });
+    });
+    eAtual.stack.forEach(function (v) { p.append("stack", v); });
+    if (sort.value !== "nome") p.set("ordem", sort.value);
+    var s = p.toString();
+    window.history.replaceState(null, "", s ? "?" + s : location.pathname);
+  }
+
+  function lerDaUrl() {
+    var p = new URLSearchParams(location.search);
+    if (![].concat(Array.from(p.keys())).length) return;
+    q.value = p.get("q") || "";
+    var vip = document.querySelector('input[name="vip"]');
+    if (vip) vip.checked = p.get("vip") === "1";
+    ["preco", "tipo", "status", "licenca", "dominio", "stack"].forEach(function (campo) {
+      p.getAll(campo).forEach(function (v) {
+        var box = document.querySelector('input[name="' + campo + '"][value="' + v.replace(/"/g, '\\"') + '"]');
+        if (box) box.checked = true;
+      });
+    });
+    if (p.get("ordem")) sort.value = p.get("ordem");
+  }
 
   // Filtra e reaplica o estado visual do marketplace. O card e o checkbox sao
   // o mesmo filtro visto de dois lugares: marcar um tem que acender o outro.
@@ -209,6 +288,8 @@
     desenhar();
     atualizarContagens();
     sincronizarMarketplace();
+    desenharChips();
+    salvarNaUrl();
   }
 
   function estado() {
@@ -227,7 +308,7 @@
         if (eAtual.dominio.length && eAtual.dominio.indexOf(i.dominio) === -1) return false;
         if (eAtual.preco.length && eAtual.preco.indexOf(i.precoChave) === -1) return false;
         if (eAtual.stack.length) {
-          var bate = eAtual.stack.some(function (s) { return i.stackChaves.indexOf(s) !== -1; });
+          var bate = eAtual.stack.some(function (s) { return i.stackChaves.indexOf(normalizar(s)) !== -1; });
           if (!bate) return false;
         }
         if (eAtual.vip && !i.temVip) return false;
@@ -236,9 +317,16 @@
       });
       var m = {};
       base.forEach(function (i) {
-        var v = i[campo];
-        if (v == null || v === "") return;
-        m[v] = (m[v] || 0) + 1;
+        // Stack e multi-valor: um produto tem varias linguagens e conta em
+        // TODAS elas. Somar `i.stack` como chave unica agrupava o array
+        // inteiro ("Astro 7,Bun,FastAPI") e nenhuma opcao da faceta casava —
+        // o resultado era as 20 linguaturas marcadas [off], com a faceta
+        // inutilizavel.
+        var vs = Array.isArray(i[campo]) ? i[campo] : [i[campo]];
+        vs.forEach(function (v) {
+          if (v == null || v === "") return;
+          m[v] = (m[v] || 0) + 1;
+        });
       });
       return m;
     };
@@ -280,7 +368,7 @@
       if (e.licenca.length && e.licenca.indexOf(it.licenca) === -1) return false;
       if (e.dominio.length && e.dominio.indexOf(it.dominio) === -1) return false;
       if (e.stack.length) {
-        var bate = e.stack.some(function (s) { return it.stackChaves.indexOf(s) !== -1; });
+        var bate = e.stack.some(function (s) { return it.stackChaves.indexOf(normalizar(s)) !== -1; });
         if (!bate) return false;
       }
       return true;
@@ -292,6 +380,12 @@
       if (modo === "preco") {
         var ordem = { gratis: 0, consulta: 1, pago: 2 };
         return (ordem[a.precoChave] - ordem[b.precoChave]) || a.nome.localeCompare(b.nome);
+      }
+      // Ordenar pelo maior numero medido. "prova" e o numero de dentro do produto
+      // (2085 APIs, 372 repos), nao a contagem de itens — o marketplace nao
+      // esta ranqueando por popularidade que ele nao tem como saber.
+      if (modo === "prova") {
+        return (b.prova ? b.prova.num : -1) - (a.prova ? a.prova.num : -1) || a.nome.localeCompare(b.nome);
       }
       if (modo === "vip") return b.nVip - a.nVip || a.nome.localeCompare(b.nome);
       return a.nome.localeCompare(b.nome);
@@ -438,6 +532,46 @@
       if (b) alternarCmp(b.getAttribute("data-cmp"), b);
     });
 
+    // Chips removiveis e "limpar tudo" (OpenCTI #17006). O chip carrega
+    // data-campo/data-valor, entao remover um nao depende da ordem: clicar em
+    // "Ferramenta" nao pode apagar o filtro de preco que estava antes dele.
+    var row = document.getElementById("chipsRow");
+    if (row) {
+      row.addEventListener("click", function (e) {
+        var b = e.target.closest(".chip");
+        if (!b) return;
+        var campo = b.getAttribute("data-campo");
+        var valor = b.getAttribute("data-valor");
+        if (campo === "q") {
+          q.value = "";
+        } else if (campo === "vip") {
+          var v = document.querySelector('input[name="vip"]');
+          if (v) v.checked = false;
+        } else {
+          var box = document.querySelector('input[name="' + campo + '"][value="' + valor.replace(/"/g, '\\"') + '"]');
+          if (box) box.checked = false;
+        }
+        atualizarEVoltarAoTopo();
+      });
+    }
+
+    // Estado vazio com acao: "Nenhum produto com esses filtros" sozinho e beco.
+    // Quem caiu nele precisa de saida, e a saida e o reset — o mesmo botao do
+    // "limpar tudo", ligado ao mesmo handler.
+    var emptyClear = document.getElementById("emptyClear");
+    if (emptyClear) emptyClear.addEventListener("click", function () { clearAll.click(); });
+
+    var clearAll = document.getElementById("clearAll");
+    if (clearAll) {
+      clearAll.addEventListener("click", function () {
+        q.value = "";
+        document.querySelectorAll(".ctrl input[type=checkbox]").forEach(function (i) { i.checked = false; });
+        sort.value = "nome";
+        atualizarEVoltarAoTopo();
+        q.focus();
+      });
+    }
+
     document.getElementById("clear").addEventListener("click", function () {
       q.value = "";
       // O seletor antigo era ".ctrl input" — os checkboxes de tipo estao dentro de
@@ -446,8 +580,7 @@
       // marcando um tipo que nao estava filtrando nada.
       document.querySelectorAll(".ctrl input[type=checkbox]").forEach(function (i) { i.checked = false; });
       sort.value = "nome";
-      desenhar();
-      sincronizarMarketplace();
+      atualizarEVoltarAoTopo();
       q.focus();
     });
 
@@ -466,9 +599,14 @@
      O fetch do .json so fica como reserva se o .js nao vier. */
   function comDados(d) {
     DADOS = d;
+    // A URL vem DEPOIS de montarFacetas, nao antes. `lerDaUrl()` marca os
+    // checkboxes procurados por seletor — se rodar antes das facetas
+    // existirem, nao acha nenhum, marca nada, e quem chega por link
+    // compartilhado ve a lista cheia sem nenhum filtro aplicado.
     montarFacetas();
+    lerDaUrl();
     ligar();
-    desenhar();
+    atualizarEVoltarAoTopo();
 
     // Rodapé com o dado que muda: quantos produtos e quando o catálogo foi
     // gerado. Substitui uma frase fixa que não dizia nada.

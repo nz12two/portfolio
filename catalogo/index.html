@@ -99,14 +99,21 @@
       </fieldset>
     </div>
 
+    <div class="ctrl__chips" id="chips" hidden>
+      <span class="ctrl__chipsLabel">filtrando por</span>
+      <div class="ctrl__chipsRow" id="chipsRow"></div>
+      <button type="button" class="btn btn--sm" id="clearAll">limpar tudo</button>
+    </div>
+
     <div class="ctrl__foot">
       <label class="ctrl__sort">
         <span>ordenar</span>
         <select id="sort">
-          <option value="nome">nome</option>
+          <option value="nome" selected>nome</option>
           <option value="categoria">categoria</option>
           <option value="preco">preço</option>
           <option value="vip">mais VIP</option>
+          <option value="prova">maior prova primeiro</option>
         </select>
       </label>
       <button type="button" class="btn btn--sm" id="clear">limpar</button>
@@ -115,7 +122,10 @@
 
   <!-- Resultados. aria-live para o leitor de tela anunciar a contagem. -->
   <div class="items" id="grid" role="list"></div>
-  <p class="cpage__empty" id="empty" hidden>Nenhum produto com esses filtros.</p>
+  <div class="cpage__empty" id="empty" hidden>
+    <p>Nenhum produto com esses filtros.</p>
+    <button type="button" class="btn btn--sm" id="emptyClear">limpar os filtros</button>
+  </div>
 
   <!-- ===== COMPARAR =====
        Até 3 lado a lado. Comparar é a pergunta real de quem decide: "qual dos
