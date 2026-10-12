@@ -112,13 +112,86 @@
     }).join("");
   };
 
+  // Card de destaque: o produto de maior numero medido, occupying o dobro da
+  // linha. A vitrine era uma lista em ordem de catalogo, entao os 6 tinham o
+  // mesmo peso visual e o maior feito (2085 APIs sondadas) ficava ao lado de
+  // um projeto de 3 passos. O criterio e o `prova.num` — o mesmo numero que
+  // da para conferir abrindo o repo. Sem prova nao hay destaque: destaques
+  // escolhidos por gosto seriam numero falso com outro nome.
+  var destaque = function (it) {
+    var tags = [];
+    var st = TAG_STATUS[it.status];
+    if (st) tags.push(st.txt);
+    var pr = TAG_PRECO[it.precoChave];
+    if (pr) tags.push(pr.txt);
+
+    return (
+      '<a class="destaque rv" href="catalogo/' + esc(it.slug) + '.html">' +
+      '<div class="destaque__mid">' +
+      '<span class="destaque__selo">maior número medido</span>' +
+      '<h3 class="destaque__name">' + esc(it.nome) + "</h3>" +
+      '<p class="destaque__desc">' + esc(it.home ? it.home.descricao : it.tagline) + "</p>" +
+      '<div class="destaque__tags">' +
+      tags.map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("") +
+      "</div></div>" +
+      '<div class="destaque__num">' +
+      '<strong data-count="' + esc(String(it.prova.num)) + '">0</strong>' +
+      "<span>" + esc(it.prova.unidade) + "</span>" +
+      "</div>" +
+      '<span class="item__go" aria-hidden="true">&rarr;</span>' +
+      "</a>"
+    );
+  };
+
   var montar = function (dados) {
-    grid.innerHTML = dados.itens.map(card).join("");
+    // O maior `prova.num` vira destaque e sai da lista. Sem `prova`, ninguem
+    // entra — o criterio tem de ser medivel para o card poder dizer o numero.
+    var comProva = dados.itens
+      .filter(function (it) { return it.prova && it.prova.num > 0; })
+      .sort(function (a, b) { return b.prova.num - a.prova.num; });
+    var topo = comProva[0];
+    var resto = topo
+      ? dados.itens.filter(function (it) { return it.slug !== topo.slug; })
+      : dados.itens;
+
+    grid.classList.toggle("items--comDestaque", !!topo);
+    grid.innerHTML = (topo ? destaque(topo) : "") + resto.map(card).join("");
 
     // O reveal observa os .rv por seletor no momento em que roda. A lista nasce
     // depois disso, entao os itens novos ficariam invisiveis para sempre sem
     // entrar no observer de novo.
     if (window.__reveal) window.__reveal(grid);
+
+    // Brilho que segue o cursor no destaque. Duas custom properties lidas no
+    // radial-gradient do CSS; o handler fica no elemento, entao nao ha
+    // listener por pixel no document e o preco e zero quando o mouse sai.
+    var dq = grid.querySelector(".destaque");
+    if (dq) {
+      dq.addEventListener("pointermove", function (e) {
+        var r = dq.getBoundingClientRect();
+        dq.style.setProperty("--mx", (e.clientX - r.left) + "px");
+        dq.style.setProperty("--my", (e.clientY - r.top) + "px");
+      });
+    }
+
+    // Contador do destaque: conta de 0 ate o numero quando o card entra na
+    // tela. O numero ja estava no HTML como 0 — o valor so e escrito aqui,
+    // porque contar e animacao e animacao nao roda sem o elemento na tela.
+    var alvo = grid.querySelector(".destaque__num strong");
+    if (alvo && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      var fim = Number(alvo.getAttribute("data-count")) || 0;
+      var t0 = null;
+      var passo = function (ts) {
+        if (t0 === null) t0 = ts;
+        var p = Math.min((ts - t0) / 900, 1);
+        // easeOutExpo: comec rapido e desacelera, que e o que leitura de
+        // numero pede — linear faz o ultimo digito parecer que travou.
+        alvo.textContent = String(Math.round(fim * (1 - Math.pow(2, -10 * p))));
+        if (p < 1) requestAnimationFrame(passo);
+        else alvo.textContent = String(fim);
+      };
+      requestAnimationFrame(passo);
+    }
 
     // Rodapé: o número de produtos e a data da geração. É o dado que muda
     // sozinho; a frase fixa que estava aqui antes não mudava nunca. O mesmo

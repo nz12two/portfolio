@@ -19,7 +19,7 @@
   // O id no HTML passou de "fCats" (categoria) para "fTipos" quando a taxonomia
   // virou declarada. A variavel ficou com o nome antigo e `fTipos` daria
   // ReferenceError — a pagina inteira pararia em `montarFacetas`.
-  var fTipos = document.getElementById("fTipos");
+  var fTipos = null; // a faceta "tipo" foi fundida nos cards do marketplace
   var fStacks = document.getElementById("fStacks");
   var cmpSec = document.getElementById("comparar");
   var cmpBody = document.getElementById("cmpBody");
@@ -109,14 +109,9 @@
       dominio: DADOS.facetas.dominio,
     };
 
-    fTipos.innerHTML = tipos
-      .map(function (t) {
-        var n = conta("tipo")[t.slug] || 0;
-        return '<label' + (n ? "" : ' class="fset__vazio"') + '>' +
-          '<input type="checkbox" name="tipo" value="' + esc(t.slug) + '"' + (n ? "" : " disabled") + ">" +
-          "<span>" + esc(t.rotulo) + " <i>" + n + "</i></span></label>";
-      })
-      .join("");
+    // A faceta "tipo" da barra lateral foi removida: os cards acima ja fazem
+    // esse papel e mostravam os mesmos 8 tipos com os mesmos numeros duas
+    // vezes na mesma tela.
 
     // Status e licenca: eixos que o marketplace nao tinha. Licenca importa
     // para quem vai instalar (MIT, proprietário, nenhuma); status importa para
@@ -137,31 +132,33 @@
 
     // Marketplace: um card por tipo declarado, com a contagem real. Tipo vazio
     // entra apagado e NAO some — a pratica existe e isso e informacao.
+    //
+    // O card E o checkbox. Antes a pagina tinha os mesmos 8 tipos duas vezes —
+    // aqui com nome e descricao, e de novo na faceta "tipo" da barra de
+    // filtros, com os mesmos numeros. Clicar em um nao fazia nada no outro
+    // sem um handler copiando estado de um lado para o outro. Agora o checkbox
+    // mora dentro do card: um controle, um estado, e o clique e o nativo do
+    // label. O filtro por tipo sai da barra lateral inteiro.
     var mkt = document.getElementById("mktGrid");
     if (mkt) {
+      // Contagem viva: quanto casa com o RESTO do filtro, o mesmo criterio
+      // das outras facetas. Marcar "status: privado" tem de zerar o card de
+      // Plugin, e nao deixar o numero antigo mandando no clic.
+      var mapaTipo = conta("tipo");
       mkt.innerHTML = tipos
         .map(function (t) {
-          var n = DADOS.itens.filter(function (i) { return i.tipo === t.slug; }).length;
-          return '<button type="button" class="mkt__card' + (n ? "" : " mkt__card--vazio") + '"' +
-            ' data-tipo="' + esc(t.slug) + '"' + (n ? "" : " disabled") +
-            ' aria-pressed="false">' +
+          var n = mapaTipo[t.slug] || 0;
+          return '<label class="mkt__card' + (n ? "" : " mkt__card--vazio") + '"' +
+            ' data-tipo="' + esc(t.slug) + '">' +
+            '<input type="checkbox" name="tipo" value="' + esc(t.slug) + '"' + (n ? "" : " disabled") + '>' +
             '<span class="mkt__n">' + n + "</span>" +
             '<span class="mkt__rotulo">' + esc(t.rotulo) + "</span>" +
             '<span class="mkt__desc">' + esc(t.desc) + "</span>" +
-            "</button>";
+            "</label>";
         })
         .join("");
 
-      // Um clique no card marca o checkbox do mesmo tipo, e os dois ficam em
-      // sincronia porque os dois escrevem no mesmo estado.
-      mkt.addEventListener("click", function (e) {
-        var b = e.target.closest(".mkt__card");
-        if (!b || b.disabled) return;
-        var box = fTipos.querySelector('input[value="' + b.getAttribute("data-tipo") + '"]');
-        if (!box) return;
-        box.checked = !box.checked;
-        atualizarEVoltarAoTopo();
-      });
+      mkt.addEventListener("change", atualizarEVoltarAoTopo);
     }
 
     // Stack com a contagem, como as outras facetas. Sem o <i>, a linha nasce sem
@@ -264,9 +261,11 @@
   // Filtra e reaplica o estado visual do marketplace. O card e o checkbox sao
   // o mesmo filtro visto de dois lugares: marcar um tem que acender o outro.
   function sincronizarMarketplace() {
-    var marcado = marcados("tipo");
+    // O card ja contem o checkbox, entao "sincronizar" virou so pintar o estado
+    // — o filtro, o chip e a contagem leem o mesmo input.
     Array.prototype.forEach.call(document.querySelectorAll(".mkt__card"), function (b) {
-      b.setAttribute("aria-pressed", marcado.indexOf(b.getAttribute("data-tipo")) !== -1 ? "true" : "false");
+      var box = b.querySelector("input");
+      b.classList.toggle("is-on", !!(box && box.checked));
     });
   }
 
@@ -346,7 +345,6 @@
       return campo === "precoChave" ? "preco" : campo;
     };
 
-    aplicar("#fTipos", "tipo");
     aplicar("#fStatus", "status");
     aplicar("#fLicenca", "licenca");
     aplicar("#fDominio", "dominio");
@@ -427,27 +425,37 @@
           esc(it.distribuicao || "Código privado. Vira distribuível depois.") + "</p>"
         : "";
 
-      return '<div class="res" role="listitem">' +
-        '<span class="res__n">' + String(it.i).padStart(2, "0") + "</span>" +
-        "<div>" +
+      // Card em coluna, nao linha. A lista anterior empilhava um produto
+      // embaixo do outro com o descricao inteiro: com 15 itens isso vira uma
+      // rolagem de 15 alturas de tela e o marketplace some. Em grade, a
+      // primeira linha ja mostra 3-4 e a comparacao entre eles e de relance.
+      // O `res__foot` e o que gruda a metrica e o botao no rodape do card
+      // (flex:1 no meio), senao cards com descricoes de tamanhos diferentes
+      // alinhavam o numero e o "comparar" em alturas diferentes.
+      return '<article class="res" role="listitem">' +
+        '<div class="res__top">' +
+          foto +
+          '<span class="res__n">' + String(it.i).padStart(2, "0") + "</span>" +
+        "</div>" +
+        '<div class="res__body">' +
           '<h3 class="res__name"><a href="./' + esc(it.slug) + '.html">' + marcar(it.nome, termo) + "</a></h3>" +
           '<p class="res__desc">' + marcar(it.tagline, termo) + "</p>" +
-          foto +
           fechado +
           '<div class="res__tags">' +
             '<span class="tag tag--' + (it.status === "beta" ? "beta" : it.status === "em-producao" || it.privado ? "acc" : "ok") + '">' + esc(it.statusTexto) + "</span>" +
-            '<span class="tag">' + esc(it.categoria) + "</span>" +
             '<span class="tag tag--acc">' + esc(it.preco) + "</span>" +
-            it.stack.slice(0, 3).map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("") +
+            it.stack.slice(0, 2).map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("") +
+          "</div>" +
+        "</div>" +
+        '<div class="res__foot">' +
+          '<div class="res__stats">' +
+            metricas.map(function (m) { return "<span>" + m + "</span>"; }).join("") +
           "</div>" +
           '<button class="cmp__pick" data-cmp="' + esc(it.slug) + '" aria-pressed="' + (cmp.indexOf(it.slug) !== -1) + '">' +
             (cmp.indexOf(it.slug) !== -1 ? "no comparador ✓" : "+ comparar") +
           "</button>" +
         "</div>" +
-        '<div class="res__stats">' +
-          metricas.map(function (m) { return "<span>" + m + "</span>"; }).join("") +
-        "</div>" +
-      "</div>";
+      "</article>";
     }).join("");
   }
 

@@ -442,6 +442,98 @@ p { text-wrap: pretty; }
    =========================================================================== */
 .items { display: grid; gap: 2px; margin-top: 40px; }
 
+/* ===== DESTAQUE =====
+   Com o destaque no topo, a vitrine vira uma grade: o destaque ocupa a linha
+   inteira, os outros cards ficam lado a lado. Mantendo a lista empilhada, o
+   card dobrado nao chegava a ser dobro de nada — so ocupava a mesma coluna
+   com mais altura. */
+.items--comDestaque {
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.items--comDestaque .destaque { grid-column: 1 / -1; }
+
+.destaque {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: clamp(16px, 3vw, 40px);
+  padding: clamp(22px, 3.5vw, 38px);
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-l);
+  overflow: hidden;
+  transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+/* Brilho que segue o cursor: o card avisa que responde, e o efeito nasce do
+   proprio elemento (custom property) em vez de dozens de gradientes fixos.
+   pointer-events:none para nunca roubar o clique do link. */
+.destaque::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, var(--acc) 16%, transparent),
+    transparent 70%
+  );
+}
+.destaque:hover { border-color: var(--tx-3); transform: translateY(-3px); box-shadow: 0 18px 50px -30px rgb(0 0 0 / 0.9); }
+.destaque:hover::after { opacity: 1; }
+
+.destaque__mid { display: grid; gap: 8px; justify-items: start; }
+.destaque__selo {
+  font-family: ui-monospace, "JetBrains Mono", "SF Mono", Consolas, monospace;
+  font-size: var(--t-xs);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--acc);
+  border: 1px solid color-mix(in oklab, var(--acc) 45%, transparent);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.destaque__name { font-size: var(--t-xl); letter-spacing: -0.03em; }
+.destaque__desc { color: var(--tx-2); max-width: 60ch; }
+.destaque__tags { display: flex; flex-wrap: wrap; gap: 7px; }
+
+/* O numero grande e a prova, entao ele e o elemento mais alto do card: quem
+   le a vitrine precisa ver 2085 antes de ler o nome. tabular-nums mantem a
+   largura estavel durante a contagem, senao o card anda a cada quadro. */
+.destaque__num {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 10px 22px;
+  text-align: center;
+}
+.destaque__num strong {
+  font-size: clamp(34px, 6vw, 62px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, var(--tx) 30%, var(--acc));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.destaque__num span { font-size: var(--t-xs); color: var(--tx-3); max-width: 16ch; }
+
+@media (max-width: 720px) {
+  .destaque { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .destaque__num { justify-items: start; text-align: left; padding: 8px 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .destaque:hover { transform: none; }
+  .destaque::after { display: none; }
+}
+
 /* O padding lateral ja e o da lista inteira: aumentar no hover fazia o texto
    pular 14px para a direita enquanto as outras linhas ficavam paradas — uma
    linha desalinhada das outras na hora de passar o mouse. O hover agora
@@ -459,6 +551,34 @@ p { text-wrap: pretty; }
   position: relative;
 }
 .item:last-child { border-bottom: 1px solid var(--line); }
+
+/* Dentro da grade o .item volta a ser card: sem a coluna do numero na margem
+   e com a borda toda em volta. A coluna de 54px + 1fr + seta era o formato de
+   LINHA e num card de 240px sobrava 40px para o nome. */
+.items--comDestaque .item {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 10px;
+  padding: 16px 16px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-2);
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.items--comDestaque .item:last-child { border-bottom: 1px solid var(--line); }
+.items--comDestaque .item:hover,
+.items--comDestaque .item:focus-visible {
+  border-color: var(--tx-3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 34px -24px rgb(0 0 0 / 0.85);
+}
+.items--comDestaque .item__n {
+  grid-column: 1 / -1;
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+}
+.items--comDestaque .item__desc { margin: 0; }
+.items--comDestaque .item__go { align-self: center; }
 
 /* Risco na margem: marca a linha sem empurrar nada. O ::before fica no
    padding, entao aparece sem alterar o fluxo. */

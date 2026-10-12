@@ -79,14 +79,24 @@
    informacao do card, mas com menos altura — 5 linhas cabem onde 5 cartoes
    nao cabem, e o scroll e o objetivo. */
 .res {
-  display: grid;
-  grid-template-columns: 40px minmax(0, 1fr) auto;
-  gap: 18px;
-  align-items: start;
-  padding: 20px 4px;
-  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
   position: relative;
-  transition: background 0.18s;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+/* O hover levanta o card. Aqui ele mudava so o fundo de uma linha; em card,
+   um deslocamento curto e o que diz "clicavel" sem mexer em medida nenhuma
+   interna — o padding e as fontes continuam identicos. */
+.res:hover,
+.res:focus-within {
+  border-color: var(--tx-3);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px -18px rgb(0 0 0 / 0.75);
 }
 /* Mesmo criterio da home: o hover muda cor, nunca geometria. Esticar a foto e
    manter o resto parado faz o card parecer duas coisas diferentes. */
@@ -106,7 +116,103 @@
 .res:focus-within { background: var(--surf); }
 .res:hover::before,
 .res:focus-within::before { transform: scaleY(1); }
-.res:last-child { border-bottom: 1px solid var(--line); }
+
+/* ===== CARD EM GRADE =====
+   A lista empilhava um produto embaixo do outro, com o texto inteiro. Com 15
+   itens isso e 15 alturas de tela de rolagem, e o marketplace — que existe
+   para comparar — fica impossivel de comparar. Em grade, 3 ou 4 aparecem de
+   uma vez e a diferenca entre eles e lida de relance.
+   O limite de altura NAO esta aqui: mexer em altura/max-height de card e o
+   que corta descricao em telas estreitas. A grade ja resolve. */
+
+.items {
+  display: grid;
+  /* 240px e o menor que ainda deixa o titulo do produto em uma linha sem
+     cortar: medido 268px dava 2 colunas numa janela de 900, que e o minimo
+     do projeto — o marketplace precisa caber 3 para o card fazer o que ele
+     promete, que e comparar de relance. */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.res__top {
+  position: relative;
+  background: var(--bg-2);
+}
+/* Numero do catalogo fica sobre a foto: no card antigo ele era uma coluna ao
+   lado do texto e ocupava 40px que hoje sao conteudo. */
+.res__top .res__n {
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  z-index: 1;
+  font-size: var(--t-xs);
+  font-weight: 600;
+  color: var(--tx-2);
+  background: color-mix(in oklab, var(--bg) 78%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 2px 8px;
+  backdrop-filter: blur(4px);
+}
+
+.res__body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 14px 16px 12px;
+  flex: 1;
+}
+/* Dentro do card o ritmo vem do `gap`, nao da margin de cada filho — senao a
+   margem do .res__desc (pensada para a lista) empurra o rodape e os cards
+   ficam com alturas diferentes. */
+.res__body > * { margin: 0; }
+
+.res__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 11px 16px;
+  border-top: 1px solid var(--line);
+  margin-top: auto;
+}
+
+/* Sem imagem, o espaco continua sendo o mesmo tamanho de foto. Se o
+   placeholder encolhesse, o card inteiro pulava de altura entre um item e
+   outro e a grade fica um xadrez. E o motivo da falta de imagem aparece
+   dentro do espaco, nao como frase solta no meio do card. */
+.res__semfoto {
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1100 / 520;
+  margin: 0;
+  padding: 16px;
+  text-align: center;
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 9px, var(--line) 9px 10px),
+    var(--bg-2);
+  border-bottom: 1px solid var(--line);
+}
+.res__foto { margin: 0; border-bottom: 1px solid var(--line); max-width: none; }
+.res__foto img { aspect-ratio: 1100 / 520; }
+
+/* O card de tipo virou <label>: o checkbox mora dentro dele e some da tela,
+   mas continua focavel e legivel por leitor de tela. */
+.mkt__card input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.mkt__card:focus-within { outline: 2px solid var(--acc); outline-offset: 2px; }
+.mkt__card.is-on { border-color: var(--acc); background: var(--surf); box-shadow: inset 0 0 0 1px var(--acc); }
+.mkt__card.is-on .mkt__n { background: var(--acc); color: var(--bg); border-color: var(--acc); }
+.mkt__card:hover:not(.mkt__card--vazio) { transform: translateY(-2px); }
+.mkt__card { transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  .res:hover, .res:focus-within, .mkt__card:hover { transform: none; }
+}
 .res__n { font-size: var(--t-md); color: var(--tx-3); font-variant-numeric: tabular-nums; }
 .res__name {
   font-size: var(--t-lg);
