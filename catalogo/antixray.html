@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AntiXray — NZ</title>
 <meta name="description" content="Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
+<link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/antixray.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="AntiXray — NZ">
+<meta property="og:description" content="Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.">
+<meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/antixray.html">
+<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/produto.css">
 <link rel="stylesheet" href="../css/vip.css">
@@ -36,11 +48,7 @@
 
   <p class="ppage__aviso">Compila e empacota (verificado em JDK 21). Em desenvolvimento: os detectores ainda precisam de ajuste de taxa de falso positivo em servidor real e o projeto não tem suíte de testes. Não use em produção sem revisar os thresholds de risco.</p>
 
-  <section class="psec psec--acc">
-    <h2>Preço e licença</h2>
-    <p class="psec__big">gratuito</p>
-    <p class="psec__p">MIT. Licença permissiva: quem quiser pode vender uma cópia modificada. Se virar produto pago, a licença precisa mudar antes.</p>
-  </section>
+  <p class="shot shot--vazio">Rodar dentro de um servidor Paper 1.21.4 — nao ha URL publica para fotografar.</p>
 
   <section class="psec">
     <h2>Para quem é</h2>
@@ -56,7 +64,12 @@
         <div class="step__n">1</div>
         <div>
           <h3 class="step__t">Compilar o jar</h3>
-          <pre class="step__code"><code>.\gradlew.bat shadowJar</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>.\gradlew.bat shadowJar</code></pre>
+          </div>
           <p class="step__out">saída: <code>build/libs/AntiXray-2.0.0.jar</code></p>
           <p class="step__note">Requer JDK 21. Verificado: exit 0, 909 KB.</p>
         </div>
@@ -65,7 +78,12 @@
         <div class="step__n">2</div>
         <div>
           <h3 class="step__t">Jogar na pasta plugins/</h3>
-          <pre class="step__code"><code>copie build/libs/AntiXray-2.0.0.jar para &lt;servidor&gt;/plugins/</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>copie build/libs/AntiXray-2.0.0.jar para &lt;servidor&gt;/plugins/</code></pre>
+          </div>
           
           <p class="step__note">Reinicie o servidor. Os 18 módulos registram no console em sequência.</p>
         </div>
@@ -74,7 +92,12 @@
         <div class="step__n">3</div>
         <div>
           <h3 class="step__t">Configurar</h3>
-          <pre class="step__code"><code>copie config.example.yml para plugins/AntiXray/config.yml e ajuste os thresholds</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>copie config.example.yml para plugins/AntiXray/config.yml e ajuste os thresholds</code></pre>
+          </div>
           
           <p class="step__note">Este passo é o que separa uso em teste de uso em servidor com jogador. Os thresholds de risco são o produto, não um detalhe.</p>
         </div>
@@ -87,28 +110,56 @@
          <h2>Como funciona o pipeline de detecção</h2>
          <p class="psec__p">A coleta (block break, movimento, sessão) alimenta a extração de features: 25+ features de mineração pré-computadas por jogador.</p><p class="psec__p">Os 19+ detectores rodam em 3 tiers — Fast, Medium, Heavy — com dependências entre eles. Detector rápido descarta o óbvio; o pesado só entra quando o risco já subiu.</p><p class="psec__p">O Risk Engine pontua de forma temporal: risco atual + anterior + histórico. Um pico isolado não pune; um padrão sustentado, sim.</p><p class="psec__p">A punishível é configurável: log, warn, kick, ban, freeze ou comando próprio. Evidence gera o relatório e Replay guarda os últimos 5 minutos de dados do jogador no momento do flag.</p><p class="psec__p">Discord recebe embed rico por webhook, com rate limiting — para não inundar o canal de quem responde.</p>
        </section>
-  <section class="psec">
-         <div class="eyebrow mono">grátis</div>
-         <h2>O que já está liberado</h2>
-         <ul class="psec__ul"><li>jar completo do plugin, pronto pra instalar</li><li>config.example.yml comentado</li><li>documentação dos 18 módulos</li><li>API pública AntiXrayAPI e todos os eventos</li></ul>
-       </section>
-  <section class="vip" data-slug="antixray">
-         <div class="vip__head">
-           <span class="tag tag--acc">VIP</span>
-           <h2>O que o nível VIP destrava</h2>
+  <section class="planos" data-slug="antixray">
+         <div class="eyebrow mono">planos</div>
+         <h2>O que é grátis, e o que a versão paga acrescenta</h2>
+         <p class="planos__lead">
+           O que está no GitHub continua gratuito, com a mesma licença e sem
+           conta. A versão paga não é o código trancado — é o mesmo código
+           calibrado para o seu caso, com alguém olhando junto.
+         </p>
+         <div class="planos__grid">
+           
+        <article class="plano" data-gratis="1">
+          <header class="plano__hd">
+            <h3 class="plano__nome">AntiXray Community</h3>
+            <p class="plano__preco plano__preco--zero">R$ 0</p>
+          </header>
+          <p class="plano__resumo">O plugin inteiro, como está no GitHub. Sem conta, sem cartão, sem expiração.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>jar completo do plugin, pronto pra instalar</li><li><span class="plano__pip" aria-hidden="true"></span>config.example.yml comentado</li><li><span class="plano__pip" aria-hidden="true"></span>documentação dos 18 módulos</li><li><span class="plano__pip" aria-hidden="true"></span>API pública AntiXrayAPI e todos os eventos</li>
+          </ul>
+          <p class="plano__dif">Você instala e roda hoje. Ideal para testar no seu servidor.</p>
+        </article>
+           
+        <article class="plano">
+          <header class="plano__hd">
+            <h3 class="plano__nome">AntiXray Pro</h3>
+            <p class="plano__preco">R$ 29/mês</p>
+          </header>
+          <p class="plano__resumo">O mesmo plugin, calibrado para o seu servidor e com alguém olhando.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>config de produção calibrada para seu servidor (tuning de threshold com base no seu hardware e número de jogadores)</li><li><span class="plano__pip" aria-hidden="true"></span>suporte direto por Discord para ajuste de falso positivo</li><li><span class="plano__pip" aria-hidden="true"></span>builds nightly com detector novo antes do público</li><li><span class="plano__pip" aria-hidden="true"></span>painel web de leitura das evidências geradas</li>
+          </ul>
+          <p class="plano__dif">Detec calibrado contra falso positivo no seu hardware e número de jogadores, suporte por Discord, builds nightly com detector novo antes do público e painel web para ler as evidências.</p>
+        </article>
          </div>
-         <ul class="vip__list">
-           <li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> config de produção calibrada para seu servidor (tuning de threshold com base no seu hardware e número de jogadores)</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> suporte direto por Discord para ajuste de falso positivo</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> builds nightly com detector novo antes do público</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> painel web de leitura das evidências geradas</li>
-         </ul>
-         <div class="vip__gate" data-gate>
-           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
-           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
-           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         <div class="planos__acesso">
+           <div class="vip__gate" data-gate>
+             <p class="vip__msg">Quer ver o material do nível pago?</p>
+             <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+             <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+           </div>
+           <div class="vip__unlocked" data-unlocked hidden>
+             <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+             <a class="btn btn--acc" href="https://github.com/nz12two/antixray" target="_blank" rel="noopener">Ir para o código</a>
+           </div>
          </div>
-         <div class="vip__unlocked" data-unlocked hidden>
-           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
-           <a class="btn btn--acc" href="https://github.com/nz12two/antixray" target="_blank" rel="noopener">Ir para o código</a>
-         </div>
+         <p class="planos__aviso">
+           Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi
+           deixar o valor visível antes de a cobrança funcionar do que montar um
+           checkout que não entrega.
+         </p>
        </section>
 
   <div class="ppage__links">
@@ -125,5 +176,6 @@
 </footer>
 
 <script src="../js/vip.js" defer></script>
+<script src="../js/copiar.js" defer></script>
 </body>
 </html>

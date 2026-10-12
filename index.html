@@ -3,16 +3,46 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NZ — constrói plugins, catálogos e agentes que rodam</title>
+<title>NZ - constrói plugins, catálogos e agentes que rodam</title>
 <meta name="description" content="NZ constrói software que roda: plugin de detecção de x-ray para Paper 1.21.4, catálogos com auto-atualização e simulação multi-agente. Código aberto, instalado e medido.">
+<link rel="canonical" href="https://nz12two.github.io/portfolio/">
+<!-- OG: é o que aparece quando o link vai para WhatsApp ou Telegram. Sem isso
+     o preview é o primeiro link do texto em azul, e o portfólio perde a
+     identidade no canal por onde ele mais circula. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="NZ — constrói plugins, catálogos e agentes que rodam">
+<meta property="og:description" content="5 produtos com código aberto, o número medido e o passo a passo que outra pessoa consegue repetir.">
+<meta property="og:url" content="https://nz12two.github.io/portfolio/">
+<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
+<meta property="og:image:width" content="1890">
+<meta property="og:image:height" content="910">
+<meta property="og:image:alt" content="NZ — portfólio de plugins, catálogos e agentes que rodam">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
+<!-- Barra de leitura. Um site longo sem indicador de onde você está é um site
+     longo em que ninguém chega ao fim. Fica no topo, 2px, e é a única coisa
+     que se move enquanto o texto está parado. -->
+<div class="progress" aria-hidden="true"><span class="progress__fill" id="progressFill"></span></div>
+
+<!-- ===== HEADER =====
+     O monograma é um SVG inline em vez de imagem: sem request extra, nítido em
+     qualquer densidade de tela e dentro do stream de texto. -->
 <header class="hdr" id="hdr">
   <div class="wrap hdr__in">
-    <a href="#topo" class="brand">NZ <small>/ build log</small></a>
+    <a href="#topo" class="brand">
+      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+        <rect x="1" y="1" width="30" height="30" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="M9 22 L16 9 L23 22" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12.2 17.6 H19.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+      </svg>
+      <span>NZ</span>
+      <small>/ build log</small>
+    </a>
     <nav class="nav">
       <a href="#produtos">Produtos</a>
       <a href="#prova">Prova</a>
@@ -27,8 +57,11 @@
   <!-- ===== HERO =====
        Sem degradê, sem digitando, sem terminal animando. A atenção vem do
        painel de evidência: linguagens por byte real dos repos, que é o único
-       número que não dá paraIFICAR sem abrir o repositório. -->
+       número que não dá para falsificar sem abrir o repositório. -->
   <section class="hero wrap">
+    <!-- Malha de fundo que se desloca devagar. Um plano de cor puro com texto
+         parado lê como documento; a grade dá profundidade sem custar nada. -->
+    <div class="hero__grid-bg" aria-hidden="true"></div>
     <div class="hero__grid">
       <div>
         <h1>Eu construo coisas<br>que <em>realmente rodam</em>.</h1>
@@ -140,7 +173,7 @@
           <div>
             <h3 class="item__name">OpenDex</h3>
             <p class="item__desc">
-              Catálogo e documentação do ecossistema OpenCode: 122 repositórios e 247
+              Catálogo e documentação do ecossistema OpenCode: 123 repositórios e 249
               pacotes, todos de dado real. Se não há fonte, a página mostra estado
               vazio em vez de inventar item.
             </p>
@@ -238,11 +271,25 @@
     <div class="wrap">
       <div class="eyebrow mono">sobre</div>
       <div class="about">
+        <!-- Rosto e nome. Um portfólio que só mostra produto e nunca mostra
+             quem fez vira uma vitrine anônima: a pessoa não tem a quem
+             atribuir o que está vendo. -->
+        <aside class="about__card">
+          <img class="about__foto" src="assets/avatar.jpg" alt="NZ" width="160" height="160" loading="lazy" decoding="async">
+          <div>
+            <p class="about__nome">NZ</p>
+            <p class="about__papel">Desenvolvedor · automação · servidores Minecraft</p>
+          </div>
+          <dl class="about__fatos">
+            <div><dt>linguagens</dt><dd>Java · Python · TypeScript</dd></div>
+            <div><dt>no GitHub</dt><dd><a href="https://github.com/nz12two" style="color:var(--acc)">nz12two</a></dd></div>
+            <div><dt>base</dt><dd>Brasil</dd></div>
+          </dl>
+        </aside>
+
         <div>
           <h2 style="font-size:var(--t-2xl);max-width:16ch">Administro servidores e escrevo o código que faltava neles</h2>
-        </div>
-        <div>
-          <p class="lead" style="font-size:var(--t-md)">
+          <p class="lead" style="font-size:var(--t-md);margin-top:20px">
             Comecei por plugin de Minecraft porque era o problema que eu tinha. O que
             me interessa é a mesma coisa em qualquer lugar: um sistema que funciona,
             com o número medido e o passo a passo que outra pessoa consegue repetir.
@@ -251,6 +298,11 @@
             Escrevo em Java, Python, TypeScript e JavaScript. Publico o código aberto
             porque é assim que eu confiro que funciona de verdade — e o build quebrado
             na frente de todo mundo incomoda mais que a bug escondida.
+          </p>
+          <p style="color:var(--tx-2);margin-top:16px">
+            Quando você fechar a conta aqui, você fala comigo. Não tem formulário
+            corporativo, não tem SDR ligando, não tem fila: a mesma pessoa que
+            escreve o plugin é quem responde.
           </p>
         </div>
       </div>

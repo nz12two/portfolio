@@ -107,11 +107,18 @@
 
     empty.hidden = lista.length > 0;
     grid.innerHTML = lista.map(function (it) {
+      // Foto so quando existe captura real. Sem imagem entra o motivo, em vez
+      // de um retangulo cinza que parece falha de carregamento.
+      var foto = it.imagem
+        ? '<figure class="res__foto"><img src="' + esc(it.imagem) + '" alt="' + esc(it.imagemAlt || "") + '" loading="lazy" decoding="async" width="1100" height="739"></figure>'
+        : '<p class="res__semfoto">' + esc(it.imagemMotivo || "Sem imagem.") + "</p>";
+
       return '<div class="res" role="listitem">' +
         '<span class="res__n">' + String(it.i).padStart(2, "0") + "</span>" +
         "<div>" +
           '<h3 class="res__name"><a href="./' + esc(it.slug) + '.html">' + marcar(it.nome, termo) + "</a></h3>" +
           '<p class="res__desc">' + marcar(it.tagline, termo) + "</p>" +
+          foto +
           '<div class="res__tags">' +
             '<span class="tag tag--' + (it.status === "beta" ? "beta" : it.status === "em-producao" ? "acc" : "ok") + '">' + esc(it.statusTexto) + "</span>" +
             '<span class="tag">' + esc(it.categoria) + "</span>" +
@@ -223,24 +230,39 @@
     });
   }
 
-  // ===== BOOT =====
-  fetch("dados/catalogo.json")
-    .then(function (r) {
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      return r.json();
-    })
-    .then(function (d) {
-      DADOS = d;
-      montarFacetas();
-      ligar();
-      desenhar();
-    })
-    .catch(function (e) {
-      // Estado honesto: se os dados nao carregaram, a pagina diz por que em vez
-      // de mostrar "0 produtos", que pareceria que o catalogo esta vazio.
-      grid.innerHTML = "";
-      empty.hidden = false;
-      empty.textContent = "Não consegui carregar os dados do catálogo (" + e.message + "). Rode: node catalogo/gerar-catalogo.js";
-      count.textContent = "erro";
-    });
+  /* ===== BOOT =====
+     Os dados vem de dados/catalogo.js, que e window.CATALOGO. Antes vinha por
+     fetch do .json e abria direto do disco a pagina ficava vazia com
+     "Failed to fetch" — o catalogo inteiro sumia por causa de como o arquivo foi
+     aberto. JS carregado por <script> nao depende de contexto.
+     O fetch do .json so fica como reserva se o .js nao vier. */
+  function comDados(d) {
+    DADOS = d;
+    montarFacetas();
+    ligar();
+    desenhar();
+  }
+
+  function falha(e) {
+    // Estado honesto: se os dados nao carregaram, a pagina diz por que em vez
+    // de mostrar "0 produtos", que pareceria que o catalogo esta vazio.
+    grid.innerHTML = "";
+    empty.hidden = false;
+    empty.textContent =
+      "Não consegui carregar os dados do catálogo (" + (e && e.message ? e.message : "erro") +
+      "). Rode: node tools/gerar-catalogo.js";
+    count.textContent = "erro";
+  }
+
+  if (window.CATALOGO) {
+    comDados(window.CATALOGO);
+  } else {
+    fetch("dados/catalogo.json")
+      .then(function (r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(comDados)
+      .catch(falha);
+  }
 })();

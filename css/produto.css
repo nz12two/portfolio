@@ -52,6 +52,132 @@
   background: linear-gradient(90deg, transparent, var(--acc-line) 35%, var(--acc-line) 65%, transparent);
 }
 
+/* Captura real do produto. A legenda diz quando foi tirada e leva ao site que
+   esta no ar — quem duvida do print tem um link para conferir. */
+.shot {
+  margin: 0 0 clamp(38px, 5vw, 58px);
+  border-radius: var(--r);
+  overflow: hidden;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  max-width: 880px;
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1100 / 739;
+  object-fit: cover;
+  object-position: top center;
+}
+.shot figcaption {
+  padding: 11px 15px;
+  border-top: 1px solid var(--line);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+}
+.shot figcaption a { color: var(--acc); }
+
+/* Sem captura: o motivo. Um retangulo vazio pareceria imagem quebrada. */
+.shot--vazio {
+  border: 0;
+  border-left: 2px solid var(--line-hi);
+  background: none;
+  border-radius: 0;
+  padding: 4px 0 4px 16px;
+  color: var(--tx-3);
+  font-size: var(--t-sm);
+  max-width: 62ch;
+}
+
+/* ===========================================================================
+   PLANOS — grátis e pago lado a lado
+   A pergunta que a pessoa fez ("é free ou pago?") vira estrutura visual: o
+   plano gratuito e o unico com borda cheia e selo de preço zero; os pagos
+   ficam a direita, com o preço grande. Preço é a coisa que a pessoa procura,
+   então é o elemento de maior contraste do bloco.
+   =========================================================================== */
+.planos { margin-top: clamp(56px, 8vw, 96px); }
+.planos h2 { font-size: var(--t-xl); margin-bottom: 14px; max-width: 26ch; }
+.planos__lead { color: var(--tx-2); max-width: 62ch; margin-bottom: 30px; }
+
+.planos__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.plano {
+  background: var(--surf);
+  padding: 24px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+/* Luz no topo: o plano se lê como painel, não como caixa contornada. */
+.plano::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-hi) 35%, var(--line-hi) 65%, transparent);
+}
+
+.plano__hd { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
+.plano__nome { font-size: var(--t-md); font-weight: 640; letter-spacing: -0.015em; }
+.plano__preco {
+  font-size: var(--t-xl);
+  font-weight: 660;
+  letter-spacing: -0.03em;
+  color: var(--acc);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.plano__preco--zero { color: var(--ok); }
+
+.plano__resumo { color: var(--tx-2); font-size: var(--t-sm); margin-bottom: 16px; }
+
+.plano__list { list-style: none; display: grid; gap: 9px; margin-bottom: 16px; }
+.plano__list li { display: flex; gap: 10px; align-items: flex-start; font-size: var(--t-sm); color: var(--tx-2); }
+.plano__pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--acc);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+.plano[data-gratis="1"] .plano__pip { background: var(--ok); }
+
+/* A diferença entre o que é e o que passa a ser: fica no rodapé do card, em
+   texto menor, porque é consequência e não benefício. */
+.plano__dif {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+}
+
+.planos__acesso { margin-top: 22px; }
+.planos__aviso {
+  margin-top: 20px;
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+  max-width: 68ch;
+  line-height: 1.55;
+}
+
+@media (max-width: 560px) {
+  .planos__grid { grid-template-columns: minmax(0, 1fr); }
+  .plano__hd { flex-direction: column; gap: 4px; }
+}
+
 .steps { display: grid; gap: 2px; margin-top: 22px; }
 .step {
   display: grid;
@@ -73,16 +199,82 @@
   font-weight: 700;
 }
 .step__t { font-size: var(--t-md); margin-bottom: 10px; }
+/* Bloco de comando com botao de copiar. O botao fica no canto superior direito
+   e aparece no hover/foco; sempre visivel em toque, porque hover nao existe
+   la. */
+.code { position: relative; }
 .step__code {
   background: var(--bg-2);
   border: 1px solid var(--line);
   border-radius: var(--r-s);
   padding: 13px 15px;
+  padding-right: 92px;
   overflow-x: auto;
   font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
   font-size: var(--t-sm);
   color: var(--tx);
 }
+
+.code__copy {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line-hi);
+  border-radius: 999px;
+  background: var(--surf-2);
+  color: var(--tx-3);
+  font: inherit;
+  font-size: var(--t-xs);
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  /* Sempre visivel, so discreto. Com opacity 0 o botao so aparecia no hover,
+     e quem nunca passou o mouse em cima do bloco nunca soube que ele
+     existia — que e o mesmo que nao ter. */
+  opacity: 0.62;
+  transition: opacity 0.18s, color 0.18s, border-color 0.18s, background 0.18s;
+}
+.code:hover .code__copy,
+.code__copy:focus-visible { opacity: 1; }
+
+.code__ico {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  position: relative;
+  flex-shrink: 0;
+}
+.code__ico::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 2px;
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid currentColor;
+  border-radius: 2px;
+  background: var(--surf-2);
+}
+.code__copy:hover { color: var(--tx); border-color: var(--tx-3); }
+
+.code__copy[data-estado="ok"] {
+  color: var(--ok);
+  border-color: oklch(0.74 0.15 152 / 0.5);
+  opacity: 1;
+}
+.code__copy[data-estado="erro"] {
+  color: var(--warn);
+  border-color: oklch(0.80 0.14 78 / 0.5);
+  opacity: 1;
+}
+.code__copy[data-estado="trabalhando"] { opacity: 1; }
+
 .step__out, .step__note { font-size: var(--t-sm); color: var(--tx-3); margin-top: 9px; }
 .step__out code, .step__note code { font-family: ui-monospace, Consolas, monospace; color: var(--tx-2); }
 

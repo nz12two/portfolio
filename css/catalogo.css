@@ -97,6 +97,39 @@
 .res__name a { color: inherit; text-decoration: none; }
 .res__name a:hover { color: var(--acc); }
 .res__desc { color: var(--tx-2); max-width: 62ch; margin-bottom: 11px; }
+/* Captura real do produto. A imagem e do site em producao, entao costuma ser
+   mais larga que a coluna: object-fit corta sem distorcer e o aspect-ratio
+   trava a altura para o layout nao pular enquanto carrega. */
+.res__foto {
+  margin: 0 0 14px;
+  border-radius: var(--r-s);
+  overflow: hidden;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  max-width: 560px;
+}
+.res__foto img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1100 / 739;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.4s var(--ease);
+}
+.res:hover .res__foto img { transform: scale(1.015); }
+
+/* Sem captura: o motivo, em vez de um retangulo vazio que parece imagem
+   quebrada. */
+.res__semfoto {
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+  border-left: 2px solid var(--line-hi);
+  padding: 2px 0 2px 12px;
+  margin: 0 0 14px;
+  max-width: 56ch;
+}
+
 .res__tags { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
 .res__stats {
   display: flex;

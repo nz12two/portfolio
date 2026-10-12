@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Baccana's Hub — NZ</title>
 <meta name="description" content="Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
+<link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/baccanas-hub.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="Baccana's Hub — NZ">
+<meta property="og:description" content="Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.">
+<meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/baccanas-hub.html">
+<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/produto.css">
 <link rel="stylesheet" href="../css/vip.css">
@@ -36,11 +48,7 @@
 
   <p class="ppage__aviso">Deploy em Vercel. Código em repositório privado: não entra no catálogo de código aberto.</p>
 
-  <section class="psec psec--acc">
-    <h2>Preço e licença</h2>
-    <p class="psec__big">sob-consulta</p>
-    <p class="psec__p">Serviço, não produto. Preço por conversa.</p>
-  </section>
+  <p class="shot shot--vazio">Codigo privado e a URL antiga (baccanas-hub.vercel.app) responde 404.</p>
 
   <section class="psec">
     <h2>Para quem é</h2>
@@ -56,7 +64,12 @@
         <div class="step__n">1</div>
         <div>
           <h3 class="step__t">Não se instala</h3>
-          <pre class="step__code"><code>abrir https://baccanas-hub.vercel.app</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>abrir https://baccanas-hub.vercel.app</code></pre>
+          </div>
           
           <p class="step__note">Serviço hospedado. O onboarding é por contato direto.</p>
         </div>
@@ -69,28 +82,67 @@
          <h2>O que está incluído</h2>
          <p class="psec__p">Configuração de servidor do zero ou revisão da que já existe.</p><p class="psec__p">Otimização: Paper, view distance, entity ticks, o que pesa de verdade no tick loop.</p><p class="psec__p">Desenvolvimento sob medida — plugins, integração com outros plugins, automação derotina do admin.</p>
        </section>
-  <section class="psec">
-         <div class="eyebrow mono">grátis</div>
-         <h2>O que já está liberado</h2>
-         <ul class="psec__ul"><li>conversa de diagnóstico do seu servidor (30 min)</li><li>lista dos 10 gargalos mais comuns de Paper</li></ul>
-       </section>
-  <section class="vip" data-slug="baccanas-hub">
-         <div class="vip__head">
-           <span class="tag tag--acc">VIP</span>
-           <h2>O que o nível VIP destrava</h2>
+  <section class="planos" data-slug="baccanas-hub">
+         <div class="eyebrow mono">planos</div>
+         <h2>O que é grátis, e o que a versão paga acrescenta</h2>
+         <p class="planos__lead">
+           O que está no GitHub continua gratuito, com a mesma licença e sem
+           conta. A versão paga não é o código trancado — é o mesmo código
+           calibrado para o seu caso, com alguém olhando junto.
+         </p>
+         <div class="planos__grid">
+           
+        <article class="plano" data-gratis="1">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Diagnóstico</h3>
+            <p class="plano__preco plano__preco--zero">R$ 0</p>
+          </header>
+          <p class="plano__resumo">Conversa de 30 minutos sobre o seu servidor e a lista dos 10 gargalos mais comuns do Paper.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>conversa de diagnóstico do seu servidor (30 min)</li><li><span class="plano__pip" aria-hidden="true"></span>lista dos 10 gargalos mais comuns de Paper</li>
+          </ul>
+          <p class="plano__dif">Você descobre o que está travando antes de pagar qualquer coisa.</p>
+        </article>
+           
+        <article class="plano">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Configuração</h3>
+            <p class="plano__preco">R$ 150</p>
+          </header>
+          <p class="plano__resumo">Configuração e otimização feitas direto no seu servidor.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>configuração e otimização feitas no seu servidor</li><li><span class="plano__pip" aria-hidden="true"></span>desenvolvimento sob medida (plugin, integração, automação)</li><li><span class="plano__pip" aria-hidden="true"></span>manutenção contínua</li>
+          </ul>
+          <p class="plano__dif">Feito no seu servidor, com medição antes e depois.</p>
+        </article>
+        <article class="plano">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Desenvolvimento</h3>
+            <p class="plano__preco">sob consulta</p>
+          </header>
+          <p class="plano__resumo">Plugin, integração ou automação sob medida, com manutenção contínua.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>configuração e otimização feitas no seu servidor</li><li><span class="plano__pip" aria-hidden="true"></span>desenvolvimento sob medida (plugin, integração, automação)</li><li><span class="plano__pip" aria-hidden="true"></span>manutenção contínua</li>
+          </ul>
+          <p class="plano__dif">Escopo definido depois do diagnóstico, com preço antes de começar.</p>
+        </article>
          </div>
-         <ul class="vip__list">
-           <li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> configuração e otimização feitas no seu servidor</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> desenvolvimento sob medida (plugin, integração, automação)</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> manutenção contínua</li>
-         </ul>
-         <div class="vip__gate" data-gate>
-           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
-           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
-           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         <div class="planos__acesso">
+           <div class="vip__gate" data-gate>
+             <p class="vip__msg">Quer ver o material do nível pago?</p>
+             <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+             <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+           </div>
+           <div class="vip__unlocked" data-unlocked hidden>
+             <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+             <a class="btn btn--acc" href="#" target="_blank" rel="noopener">Ir para o código</a>
+           </div>
          </div>
-         <div class="vip__unlocked" data-unlocked hidden>
-           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
-           <a class="btn btn--acc" href="#" target="_blank" rel="noopener">Ir para o código</a>
-         </div>
+         <p class="planos__aviso">
+           Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi
+           deixar o valor visível antes de a cobrança funcionar do que montar um
+           checkout que não entrega.
+         </p>
        </section>
 
   <div class="ppage__links">
@@ -107,5 +159,6 @@
 </footer>
 
 <script src="../js/vip.js" defer></script>
+<script src="../js/copiar.js" defer></script>
 </body>
 </html>

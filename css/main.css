@@ -88,6 +88,137 @@ body {
 ::selection { background: var(--acc); color: var(--bg); }
 
 /* ===========================================================================
+   BARRA DE LEITURA
+   Fica no topo e cresce com o scroll. É o indicador de "onde você está" sem
+   pedir uma linha de texto ao leitor.
+   =========================================================================== */
+.progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 2px;
+  z-index: 60;
+  pointer-events: none;
+}
+.progress__fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--acc);
+  transform: scaleX(0);
+  transform-origin: left;
+  /* Sem transição: a barra precisa acompanhar o scroll na hora. Suavizar
+     aqui faz a barra "atrasar" a página e passar a impressão de delay. */
+}
+
+/* ===========================================================================
+   MARCA
+   O monograma é um <svg> inline: sem request, nítido em qualquer tela e
+   dentro do fluxo do texto, o que impede o layout de pular no carregamento.
+   =========================================================================== */
+/* <a> sem reset global: cada link declara cor e sublinhado. A marca precisa dos
+   dois, senão herda o azul do navegador — era o que aparecia no header. */
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--tx);
+  text-decoration: none;
+}
+.brand:hover { color: var(--tx); }
+.brand__mark {
+  width: 26px;
+  height: 26px;
+  color: var(--acc);
+  flex-shrink: 0;
+  transition: transform 0.4s var(--ease);
+}
+.brand:hover .brand__mark { transform: rotate(-8deg) scale(1.06); }
+.brand small { color: var(--acc); font-weight: 500; }
+
+/* ===========================================================================
+   MALHA DO HERO
+   Grade que desliza devagar ao fundo. Não é decoração porachyda: é o que
+   separa "documento" de "interface", e o custo é uma propriedade de
+   background, sem elemento e sem JS.
+   =========================================================================== */
+.hero__grid-bg {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 150%;
+  pointer-events: none;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 0%, transparent 78%);
+  animation: deriva 34s linear infinite;
+}
+@keyframes deriva {
+  from { background-position: 0 0, 0 0; }
+  to   { background-position: 56px 0, 0 56px; }
+}
+
+/* ===========================================================================
+   CARTÃO "SOBRE"
+   Retrato + dados em uma coluna. Sem isso a seção "sobre" é texto solto e
+   não mostra quem fez.
+   =========================================================================== */
+.about__card {
+  align-self: start;
+  padding: 26px 24px 22px;
+  border-radius: var(--r);
+  background: var(--surf);
+  position: relative;
+  overflow: hidden;
+}
+.about__card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-hi) 35%, var(--line-hi) 65%, transparent);
+}
+.about__foto {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 18px;
+  border: 2px solid var(--line-hi);
+  background: var(--bg-2);
+}
+.about__nome { font-size: var(--t-lg); font-weight: 660; letter-spacing: -0.02em; }
+.about__papel { font-size: var(--t-sm); color: var(--tx-3); margin-top: 2px; }
+.about__fatos { display: grid; gap: 0; margin-top: 22px; }
+.about__fatos > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: baseline;
+  padding: 11px 0;
+  border-top: 1px solid var(--line);
+  font-size: var(--t-sm);
+}
+.about__fatos dt {
+  color: var(--tx-3);
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: var(--t-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.about__fatos dd { color: var(--tx-2); text-align: right; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__grid-bg { animation: none; }
+}
+
+/* ===========================================================================
    TIPOGRAFIA
    =========================================================================== */
 h1, h2, h3 { line-height: 1.08; letter-spacing: -0.035em; font-weight: 650; text-wrap: balance; }
@@ -164,9 +295,6 @@ p { text-wrap: pretty; }
 .hdr[data-stuck="1"] { border-bottom-color: var(--line); }
 .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; }
 
-.brand { display: flex; align-items: baseline; gap: 10px; font-weight: 700; letter-spacing: -0.02em; }
-.brand small { color: var(--acc); font-weight: 500; }
-
 .nav { display: flex; gap: 2px; }
 .nav a {
   padding: 8px 12px;
@@ -216,7 +344,10 @@ p { text-wrap: pretty; }
    código por linguagem. O número 1.1 MB de Java é mais convincente que
    qualquer adjetivo, e não mente.
    =========================================================================== */
-.hero { padding-top: clamp(120px, 14vw, 190px); padding-bottom: clamp(48px, 7vw, 90px); position: relative; overflow: hidden; }
+/* Sem padding-bottom: a seção seguinte já tem o dela (clamp 64-140), e os dois
+   empilhados davam 220px de vazio entre o hero e o "Produtos". O topo é
+   generoso porque quem entra na página só tem o header antes dele. */
+.hero { padding-top: clamp(120px, 14vw, 190px); position: relative; overflow: hidden; }
 
 .hero__grid {
   display: grid;
@@ -245,8 +376,9 @@ p { text-wrap: pretty; }
 .bar { display: grid; gap: 12px; }
 .bar__row { display: grid; grid-template-columns: 74px 1fr auto; align-items: center; gap: 12px; }
 .bar__name { font-size: var(--t-xs); color: var(--tx-2); text-transform: uppercase; letter-spacing: 0.05em; }
-.bar__track { height: 6px; background: var(--surf-2); border-radius: 999px; overflow: hidden; }
+.bar__track { display: block; height: 6px; background: var(--surf-2); border-radius: 999px; overflow: hidden; }
 .bar__fill {
+  display: block;
   height: 100%;
   border-radius: 999px;
   background: var(--acc);
@@ -355,14 +487,20 @@ p { text-wrap: pretty; }
 .ftr__in { display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center; }
 
 /* ===========================================================================
+/*
    REVEAL
-   ===========================================================================
-   Entrada por opacidade e deslocamento curto. Deslocamento de 24px num bloco
-   alto produz rolagem EDM o que parece falha; 10px com opacidade lê como
-   polimento.
+   O padrao e VISIVEL. A animacao e o que se tira do caminho, nao o que se
+   poe: com .rv { opacity: 0 } como padrao, qualquer falha do observer — script
+   bloqueado, JS quebrado, prefers-reduced-motion — deixa o conteudo
+   permanentemente invisivel. Aqui o JS marca .rv--wait no que ainda nao
+   apareceu, e o observer troca por .on.
    =========================================================================== */
-.rv { opacity: 0; transform: translateY(10px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
-.rv.on { opacity: 1; transform: none; }
+.rv--wait { opacity: 0; transform: translateY(10px); }
+.rv.on {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -371,7 +509,7 @@ p { text-wrap: pretty; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  .rv { opacity: 1 !important; transform: none !important; }
+  .rv--wait { opacity: 1 !important; transform: none !important; }
   .bar__fill { transform: scaleX(var(--w, 0)) !important; }
 }
 

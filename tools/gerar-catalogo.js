@@ -64,6 +64,10 @@ const itens = produtos.map((p, i) => {
     repo: p.repo,
     site: p.site,
     inicial: (p.nome[0] || "#").toUpperCase(),
+    imagem: p.imagem || null,
+    imagemAlt: p.imagem_alt || null,
+    capturadoEm: p.capturado_em || null,
+    imagemMotivo: p.imagem_motivo || null,
     temGratis: (v.gratis || []).length > 0,
     temVip: (v.vip || []).length > 0,
     nGratis: (v.gratis || []).length,
@@ -86,7 +90,15 @@ const saida = {
 
 fs.writeFileSync(path.join(DADOS, "catalogo.json"), JSON.stringify(saida, null, 2), "utf8");
 
-console.log(`${itens.length} itens -> catalogo/dados/catalogo.json`);
+// Os MESMOS dados, tambem como .js. A pagina carrega este, nao o JSON por fetch:
+// abrir o HTML direto do disco (file://) ou por caminho diferente quebra o
+// fetch com "Failed to fetch", e o catalogo inteiro some. JS atribuido em
+// window funciona em qualquer contexto, inclusive sem servidor.
+const js = "/* Gerado por tools/gerar-catalogo.js — nao editar a mao. */\n" +
+  "window.CATALOGO = " + JSON.stringify(saida) + ";\n";
+fs.writeFileSync(path.join(DADOS, "catalogo.js"), js, "utf8");
+
+console.log(`${itens.length} itens -> catalogo/dados/catalogo.json + .js`);
 console.log(`  categorias: ${saida.facetas.categoria.join(", ")}`);
 console.log(`  precos: ${saida.facetas.preco.join(", ")}`);
 console.log(`  stacks: ${saida.facetas.stack.length} distintas`);

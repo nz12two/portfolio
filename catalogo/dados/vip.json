@@ -14,6 +14,20 @@
         "suporte direto por Discord para ajuste de falso positivo",
         "builds nightly com detector novo antes do público",
         "painel web de leitura das evidências geradas"
+      ],
+      "planos": [
+        {
+          "nome": "AntiXray Community",
+          "preco": "R$ 0",
+          "resumo": "O plugin inteiro, como está no GitHub. Sem conta, sem cartão, sem expiração.",
+          "diferenca": "Você instala e roda hoje. Ideal para testar no seu servidor."
+        },
+        {
+          "nome": "AntiXray Pro",
+          "preco": "R$ 29/mês",
+          "resumo": "O mesmo plugin, calibrado para o seu servidor e com alguém olhando.",
+          "diferenca": "Detec calibrado contra falso positivo no seu hardware e número de jogadores, suporte por Discord, builds nightly com detector novo antes do público e painel web para ler as evidências."
+        }
       ]
     },
     "api-directory": {
@@ -26,11 +40,25 @@
         "monitor próprio com alerta quando uma API que você usa cai",
         "endpoint próprio com SLA e histórico de latência",
         "exportação programada para o seu formato"
+      ],
+      "planos": [
+        {
+          "nome": "Diretório",
+          "preco": "R$ 0",
+          "resumo": "Os 2085 endereços medidos, o dataset em JSON e o CI que mede latência.",
+          "diferenca": "Consulte à vontade. O CI roda uma vez ao dia sozinho."
+        },
+        {
+          "nome": "Monitor",
+          "preco": "R$ 19/mês",
+          "resumo": "O diretório watching: alerta quando uma API que você usa cai.",
+          "diferenca": "Endpoint próprio com histórico de latência, alerta de queda e exportação programada no seu formato."
+        }
       ]
     },
     "opendex": {
       "gratis": [
-        "site no ar com 122 repos e 247 pacotes indexados",
+        "site no ar com 123 repos e 249 pacotes indexados",
         "dados em aberto",
         "código do coletor"
       ],
@@ -38,6 +66,20 @@
         "seu próprio catálogo, espelhado e atualizado junto com o meu",
         "personalização de marca e domínio",
         "alerta quando o ecossistema ganha plugin relevante"
+      ],
+      "planos": [
+        {
+          "nome": "OpenDex",
+          "preco": "R$ 0",
+          "resumo": "123 repositórios, 249 pacotes, dados abertos e o coletor.",
+          "diferenca": "Tudo indexado e atualizando junto com o ecossistema."
+        },
+        {
+          "nome": "OpenDex White-label",
+          "preco": "R$ 49/mês",
+          "resumo": "O mesmo catálogo, com a sua marca e no seu domínio.",
+          "diferenca": "Espelho do catálogo mantendo a sua marca, alerta quando o ecossistema ganha plugin relevante."
+        }
       ]
     },
     "empresas-mundo": {
@@ -50,6 +92,20 @@
         "rodar a simulação na sua cidade e no seu grafo real",
         "rodar a hipótese que você quer testar, com leitura do resultado",
         "relatório de resultado e leitura do agente"
+      ],
+      "planos": [
+        {
+          "nome": "Simulação",
+          "preco": "R$ 0",
+          "resumo": "O código do agente, do motor e as instruções de setup.",
+          "diferenca": "Roda na sua máquina, com OSMnx e FastAPI."
+        },
+        {
+          "nome": "Estudo",
+          "preco": "R$ 89/estudo",
+          "resumo": "Eu rodo a sua hipótese na sua cidade e entrego a leitura.",
+          "diferenca": "Simulação no grafo real do seu contexto, relatório de resultado e análise do agente."
+        }
       ]
     },
     "baccanas-hub": {
@@ -61,7 +117,28 @@
         "configuração e otimização feitas no seu servidor",
         "desenvolvimento sob medida (plugin, integração, automação)",
         "manutenção contínua"
+      ],
+      "planos": [
+        {
+          "nome": "Diagnóstico",
+          "preco": "R$ 0",
+          "resumo": "Conversa de 30 minutos sobre o seu servidor e a lista dos 10 gargalos mais comuns do Paper.",
+          "diferenca": "Você descobre o que está travando antes de pagar qualquer coisa."
+        },
+        {
+          "nome": "Configuração",
+          "preco": "R$ 150",
+          "resumo": "Configuração e otimização feitas direto no seu servidor.",
+          "diferenca": "Feito no seu servidor, com medição antes e depois."
+        },
+        {
+          "nome": "Desenvolvimento",
+          "preco": "sob consulta",
+          "resumo": "Plugin, integração ou automação sob medida, com manutenção contínua.",
+          "diferenca": "Escopo definido depois do diagnóstico, com preço antes de começar."
+        }
       ]
     }
-  }
+  },
+  "_planos_nota": "Nome e preco de cada nivel. 'gratis' e 'vip' listam o que entra em cada um. Preco e sugestao: nada aqui cobra ninguem ainda, e a pagina diz isso — cobrar antes de ter o produto pronto e o jeito de queimar a confianca que o numero nao minta."
 }

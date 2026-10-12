@@ -1,31 +1,28 @@
 #!/usr/bin/env node
 /**
- * Paginas de produto com area VIP. Gera a partir de catalogo/dados/produtos.json
- * mais catalogo/dados/vip.json (o que cada nivel desbloqueia).
+ * Gera as paginas de produto a partir de catalogo/dados/produtos.json.
  *
- * O catalogo ate agora era 5 paginas estaticas iguais. Isso e um PDF, nao um
- * catalogo: nao da para filtrar, comparar nem abrir o que so existe para quem
- * paga. Aqui cada produto ganha do que e gratuito, do que e VIP, e uma secao de
- * downloads que so renderiza para quem entrou.
+ * Este arquivo NAO gera o indice. O indice e a pagina interativa, escrita a
+ * mao porque os controles de busca e filtro precisam estar no HTML; ela le
+ * dados/catalogo.js. Se este sobrescrevesse index.html, o catalogo voltaria a
+ * ser lista estatica — o que ja aconteceu uma vez.
  *
- * A parte honesta: o "login" e local (localStorage) porque nao existe backend
- * neste repositorio estatico. Isso NAO e seguranca — e um portao de vitrine. A
- * troca por auth de verdade (Supabase/Auth0/backend) e um arquivo so, porque a
- * fronteira esta isolada em vip.js. Digo isso na pagina em vez de fingir que
- * e conta com senha.
- *
- * Rodar: node catalogo/build.js
+ * Sem dependencia e sem framework. Rodar: node tools/build-catalogo.js
  */
 
 const fs = require("node:fs");
 const path = require("node:path");
 
 const RAIZ = path.join(__dirname, "..");
-// As paginas de produto vao em catalogo/. Antes este era __dirname, que era a
-// propria pasta do build — com o build movido para tools/ isso passou a gerar
-// HTML dentro de tools/ em vez do catalogo.
+// As paginas vao em catalogo/. Antes este era __dirname, que era a propria
+// pasta do build — quando o build se moveu para tools/ passou a gerar HTML
+// dentro de tools/ em vez do catalogo.
 const SAIDA = path.join(RAIZ, "catalogo");
 const CSS = "../css/main.css";
+// Origem publica. Canonical e og:image exigem URL absoluta; deriving do remote
+// do git mantem os dois corretos se o repo mudar de dono ou de conta.
+const SITE = "https://nz12two.github.io/portfolio";
+const DADOS = path.join(RAIZ, "catalogo", "dados");
 
 const esc = (s) =>
   String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -39,11 +36,15 @@ const EST = (p) => ESTADO[p.status] || ESTADO.estavel;
 
 function read(file, fallback) {
   try {
-    return JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "dados", file), "utf8"));
+    return JSON.parse(fs.readFileSync(path.join(DADOS, file), "utf8"));
   } catch {
     return fallback;
   }
 }
+
+// Preco zero e "gratis" no sentido do site, seja escrito R$ 0, gratuito ou
+// free. Tudo o mais e plano pago.
+const E_GRATIS = (preco) => /^(r\$\s*0|gratuito|gratis|free)$/i.test(String(preco).trim());
 
 function paginaProduto(p, vip) {
   const e = EST(p);
@@ -59,7 +60,12 @@ function paginaProduto(p, vip) {
         <div class="step__n">${esc(i.passo)}</div>
         <div>
           <h3 class="step__t">${esc(i.titulo)}</h3>
-          <pre class="step__code"><code>${esc(i.comando)}</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>${esc(i.comando)}</code></pre>
+          </div>
           ${i.saida ? `<p class="step__out">saída: <code>${esc(i.saida)}</code></p>` : ""}
           ${i.nota ? `<p class="step__note">${esc(i.nota)}</p>` : ""}
         </div>
@@ -77,32 +83,69 @@ function paginaProduto(p, vip) {
        </section>`
     : "";
 
-  const blocoVip = temVip
-    ? `<section class="vip" data-slug="${esc(p.slug)}">
-         <div class="vip__head">
-           <span class="tag tag--acc">VIP</span>
-           <h2>O que o nível VIP destrava</h2>
-         </div>
-         <ul class="vip__list">
-           ${(v.vip || []).map((x) => `<li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> ${esc(x)}</li>`).join("")}
-         </ul>
-         <div class="vip__gate" data-gate>
-           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
-           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
-           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
-         </div>
-         <div class="vip__unlocked" data-unlocked hidden>
-           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
-           <a class="btn btn--acc" href="${esc(p.repo || "#")}" target="_blank" rel="noopener">Ir para o código</a>
-         </div>
-       </section>`
-    : "";
+  // Captura real do produto, ou o motivo de nao existir. Nada de imagem gerada
+  // por codigo: fingir captura e pior que nao ter imagem.
+  const foto = p.imagem
+    ? `<figure class="shot">
+         <img src="${esc(p.imagem)}" alt="${esc(p.imagem_alt)}" width="1100" height="739" decoding="async">
+         <figcaption>
+           Captura real${p.capturado_em ? ` em ${esc(p.capturado_em)}` : ""}${p.captura_origem ? ` · <a href="${esc(p.captura_origem)}" target="_blank" rel="noopener">ver no ar</a>` : ""}
+         </figcaption>
+       </figure>`
+    : `<p class="shot shot--vazio">${esc(p.imagem_motivo || "Sem imagem.")}</p>`;
 
-  const gratis = (v.gratis || []).length
-    ? `<section class="psec">
-         <div class="eyebrow mono">grátis</div>
-         <h2>O que já está liberado</h2>
-         <ul class="psec__ul">${(v.gratis || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+  // Planos. Substituem a antiga secao "VIP": a pergunta real e "custa quanto e
+  // o que muda", e "o que o nivel destrava" nao respondia nenhuma das duas.
+  const todosPlanos = v.planos || [];
+  const gratisPlanos = todosPlanos.filter((x) => E_GRATIS(x.preco));
+  const pagosPlanos = todosPlanos.filter((x) => !E_GRATIS(x.preco));
+
+  const cardPlano = (pl, itens, gratis) => `
+        <article class="plano"${gratis ? ' data-gratis="1"' : ""}>
+          <header class="plano__hd">
+            <h3 class="plano__nome">${esc(pl.nome)}</h3>
+            <p class="plano__preco${gratis ? " plano__preco--zero" : ""}">${esc(pl.preco)}</p>
+          </header>
+          <p class="plano__resumo">${esc(pl.resumo)}</p>
+          <ul class="plano__list">
+            ${itens.map((x) => `<li><span class="plano__pip" aria-hidden="true"></span>${esc(x)}</li>`).join("")}
+          </ul>
+          ${pl.diferenca ? `<p class="plano__dif">${esc(pl.diferenca)}</p>` : ""}
+        </article>`;
+
+  const blocoPlanos = todosPlanos.length
+    ? `<section class="planos" data-slug="${esc(p.slug)}">
+         <div class="eyebrow mono">planos</div>
+         <h2>O que é grátis, e o que a versão paga acrescenta</h2>
+         <p class="planos__lead">
+           O que está no GitHub continua gratuito, com a mesma licença e sem
+           conta. A versão paga não é o código trancado — é o mesmo código
+           calibrado para o seu caso, com alguém olhando junto.
+         </p>
+         <div class="planos__grid">
+           ${gratisPlanos.map((pl) => cardPlano(pl, v.gratis || [], true)).join("")}
+           ${pagosPlanos.map((pl) => cardPlano(pl, v.vip || [], false)).join("")}
+         </div>
+         ${
+           temVip
+             ? `<div class="planos__acesso">
+           <div class="vip__gate" data-gate>
+             <p class="vip__msg">Quer ver o material do nível pago?</p>
+             <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+             <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+           </div>
+           <div class="vip__unlocked" data-unlocked hidden>
+             <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+             <a class="btn btn--acc" href="${esc(p.repo || "#")}" target="_blank" rel="noopener">Ir para o código</a>
+           </div>
+         </div>`
+             : ""
+         }
+         <p class="planos__aviso">
+           Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi
+           deixar o valor visível antes de a cobrança funcionar do que montar um
+           checkout que não entrega.
+         </p>
        </section>`
     : "";
 
@@ -118,6 +161,18 @@ function paginaProduto(p, vip) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${esc(p.nome)} — NZ</title>
 <meta name="description" content="${esc(p.tagline)}">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
+<link rel="canonical" href="${SITE}/catalogo/${esc(p.slug)}.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="${esc(p.nome)} — NZ">
+<meta property="og:description" content="${esc(p.tagline)}">
+<meta property="og:url" content="${SITE}/catalogo/${esc(p.slug)}.html">
+<meta property="og:image" content="${p.imagem ? SITE + "/" + p.imagem.replace(/^(\.\.\/)+/, "") : SITE + "/assets/social-preview.png"}">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="${CSS}">
 <link rel="stylesheet" href="../css/produto.css">
 <link rel="stylesheet" href="../css/vip.css">
@@ -149,11 +204,7 @@ function paginaProduto(p, vip) {
 
   <p class="ppage__aviso">${esc(p.status_nota)}</p>
 
-  <section class="psec psec--acc">
-    <h2>Preço e licença</h2>
-    <p class="psec__big">${esc(p.preco)}</p>
-    <p class="psec__p">${esc(p.preco_nota)}</p>
-  </section>
+  ${foto}
 
   <section class="psec">
     <h2>Para quem é</h2>
@@ -169,8 +220,7 @@ function paginaProduto(p, vip) {
   </section>
 
   ${tuto}
-  ${gratis}
-  ${blocoVip}
+  ${blocoPlanos}
 
   <div class="ppage__links">
         ${links}
@@ -185,6 +235,7 @@ function paginaProduto(p, vip) {
 </footer>
 
 <script src="../js/vip.js" defer></script>
+<script src="../js/copiar.js" defer></script>
 </body>
 </html>
 `;
@@ -193,7 +244,7 @@ function paginaProduto(p, vip) {
 function main() {
   let data;
   try {
-    data = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "dados", "produtos.json"), "utf8"));
+    data = JSON.parse(fs.readFileSync(path.join(DADOS, "produtos.json"), "utf8"));
   } catch (e) {
     console.error(`produtos.json inválido: ${e.message}`);
     process.exit(1);
@@ -205,20 +256,19 @@ function main() {
   }
   const vip = read("vip.json", null);
 
-  // So as paginas de produto sao geradas. O indice NAO e gerado: e a pagina
-  // interativa, escrita a mao porque precisa dos controles de busca e filtro no
-  // HTML. Ela consum catalogo.json e nao depende deste arquivo — se este
-  // sobrescrevesse index.html, o catalogo voltaria a ser lista estatica.
   let n = 0;
   for (const p of prods) {
     fs.writeFileSync(path.join(SAIDA, `${p.slug}.html`), paginaProduto(p, vip));
     n++;
   }
 
-  const comVip = vip ? prods.filter((p) => vip.produtos?.[p.slug]?.vip?.length).length : 0;
+  const comPlanos = vip ? prods.filter((p) => (vip.produtos?.[p.slug]?.planos || []).length).length : 0;
+  const comPagos = vip
+    ? prods.filter((p) => (vip.produtos?.[p.slug]?.planos || []).some((x) => !E_GRATIS(x.preco))).length
+    : 0;
   console.log(`${n} pagina(s) de produto -> ${path.relative(RAIZ, SAIDA)}`);
-  console.log(`  com area VIP: ${comVip}/${n}`);
-  console.log(`  index.html nao e gerado (interativo, usa dados/catalogo.json)`);
+  console.log(`  com planos: ${comPlanos}/${n} | com plano pago: ${comPagos}/${n}`);
+  console.log(`  index.html nao e gerado (interativo, usa dados/catalogo.js)`);
 }
 
 main();

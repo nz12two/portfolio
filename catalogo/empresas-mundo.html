@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EmpresasMundo — NZ</title>
 <meta name="description" content="Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
+<link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/empresas-mundo.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="EmpresasMundo — NZ">
+<meta property="og:description" content="Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.">
+<meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/empresas-mundo.html">
+<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/produto.css">
 <link rel="stylesheet" href="../css/vip.css">
@@ -36,11 +48,7 @@
 
   <p class="ppage__aviso">Roda local. Sem deploy público e sem license no repositório — GPL implícito por omissão, o que é ambíguo.</p>
 
-  <section class="psec psec--acc">
-    <h2>Preço e licença</h2>
-    <p class="psec__big">gratuito</p>
-    <p class="psec__p">Sem arquivo LICENSE. Definir antes de divulgar.</p>
-  </section>
+  <p class="shot shot--vazio">Precisa da simulacao com OSMnx rodando — nao ha URL publica para fotografar.</p>
 
   <section class="psec">
     <h2>Para quem é</h2>
@@ -56,7 +64,12 @@
         <div class="step__n">1</div>
         <div>
           <h3 class="step__t">Dependências</h3>
-          <pre class="step__code"><code>cd backend &amp;&amp; python -m venv .venv &amp;&amp; .venv\Scripts\activate &amp;&amp; pip install -r requirements.txt</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>cd backend &amp;&amp; python -m venv .venv &amp;&amp; .venv\Scripts\activate &amp;&amp; pip install -r requirements.txt</code></pre>
+          </div>
           
           <p class="step__note">Windows. Em Linux: python -m venv .venv &amp;&amp; source .venv/bin/activate.</p>
         </div>
@@ -65,7 +78,12 @@
         <div class="step__n">2</div>
         <div>
           <h3 class="step__t">Subir o servidor</h3>
-          <pre class="step__code"><code>.venv\Scripts\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>.venv\Scripts\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000</code></pre>
+          </div>
           <p class="step__out">saída: <code>http://localhost:8000</code></p>
           <p class="step__note">FastAPI + WebSocket. O frontend conecta e desenha o mapa.</p>
         </div>
@@ -78,28 +96,56 @@
          <h2>Arquitetura</h2>
          <p class="psec__p">backend/main.py — servidor FastAPI + WebSocket.</p><p class="psec__p">backend/map_data.py — carrega o grafo de ruas pelo OSMnx.</p><p class="psec__p">backend/simulation.py — motor de simulação tick a tick.</p><p class="psec__p">backend/company.py — classe Empresa, o agente com DNA.</p><p class="psec__p">frontend/ — interface, lógica de WebSocket e estilo.</p>
        </section>
-  <section class="psec">
-         <div class="eyebrow mono">grátis</div>
-         <h2>O que já está liberado</h2>
-         <ul class="psec__ul"><li>simulação completa com OSMnx e FastAPI</li><li>código do agente e do motor</li><li>instruções de setup</li></ul>
-       </section>
-  <section class="vip" data-slug="empresas-mundo">
-         <div class="vip__head">
-           <span class="tag tag--acc">VIP</span>
-           <h2>O que o nível VIP destrava</h2>
+  <section class="planos" data-slug="empresas-mundo">
+         <div class="eyebrow mono">planos</div>
+         <h2>O que é grátis, e o que a versão paga acrescenta</h2>
+         <p class="planos__lead">
+           O que está no GitHub continua gratuito, com a mesma licença e sem
+           conta. A versão paga não é o código trancado — é o mesmo código
+           calibrado para o seu caso, com alguém olhando junto.
+         </p>
+         <div class="planos__grid">
+           
+        <article class="plano" data-gratis="1">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Simulação</h3>
+            <p class="plano__preco plano__preco--zero">R$ 0</p>
+          </header>
+          <p class="plano__resumo">O código do agente, do motor e as instruções de setup.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>simulação completa com OSMnx e FastAPI</li><li><span class="plano__pip" aria-hidden="true"></span>código do agente e do motor</li><li><span class="plano__pip" aria-hidden="true"></span>instruções de setup</li>
+          </ul>
+          <p class="plano__dif">Roda na sua máquina, com OSMnx e FastAPI.</p>
+        </article>
+           
+        <article class="plano">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Estudo</h3>
+            <p class="plano__preco">R$ 89/estudo</p>
+          </header>
+          <p class="plano__resumo">Eu rodo a sua hipótese na sua cidade e entrego a leitura.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>rodar a simulação na sua cidade e no seu grafo real</li><li><span class="plano__pip" aria-hidden="true"></span>rodar a hipótese que você quer testar, com leitura do resultado</li><li><span class="plano__pip" aria-hidden="true"></span>relatório de resultado e leitura do agente</li>
+          </ul>
+          <p class="plano__dif">Simulação no grafo real do seu contexto, relatório de resultado e análise do agente.</p>
+        </article>
          </div>
-         <ul class="vip__list">
-           <li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> rodar a simulação na sua cidade e no seu grafo real</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> rodar a hipótese que você quer testar, com leitura do resultado</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> relatório de resultado e leitura do agente</li>
-         </ul>
-         <div class="vip__gate" data-gate>
-           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
-           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
-           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         <div class="planos__acesso">
+           <div class="vip__gate" data-gate>
+             <p class="vip__msg">Quer ver o material do nível pago?</p>
+             <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+             <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+           </div>
+           <div class="vip__unlocked" data-unlocked hidden>
+             <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+             <a class="btn btn--acc" href="https://github.com/nz12two/empresas-mundo" target="_blank" rel="noopener">Ir para o código</a>
+           </div>
          </div>
-         <div class="vip__unlocked" data-unlocked hidden>
-           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
-           <a class="btn btn--acc" href="https://github.com/nz12two/empresas-mundo" target="_blank" rel="noopener">Ir para o código</a>
-         </div>
+         <p class="planos__aviso">
+           Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi
+           deixar o valor visível antes de a cobrança funcionar do que montar um
+           checkout que não entrega.
+         </p>
        </section>
 
   <div class="ppage__links">
@@ -116,5 +162,6 @@
 </footer>
 
 <script src="../js/vip.js" defer></script>
+<script src="../js/copiar.js" defer></script>
 </body>
 </html>

@@ -14,7 +14,12 @@
       "repo": "https://github.com/nz12two/antixray",
       "site": null,
       "licenca": "MIT",
-      "stack": ["Java", "Gradle", "Paper API", "SQLite/MySQL/MariaDB/PostgreSQL"],
+      "stack": [
+        "Java",
+        "Gradle",
+        "Paper API",
+        "SQLite/MySQL/MariaDB/PostgreSQL"
+      ],
       "para_quem": [
         "Dono de servidor Paper que loses ores e não sabe quemminerou.",
         "Administrador que precisa de evidência, não só de kick: o plugin salva replay dos últimos 5 minutos e gera evidência automática no flag.",
@@ -52,12 +57,14 @@
           "A punishível é configurável: log, warn, kick, ban, freeze ou comando próprio. Evidence gera o relatório e Replay guarda os últimos 5 minutos de dados do jogador no momento do flag.",
           "Discord recebe embed rico por webhook, com rate limiting — para não inundar o canal de quem responde."
         ]
-      }
+      },
+      "imagem": null,
+      "imagem_motivo": "Rodar dentro de um servidor Paper 1.21.4 — nao ha URL publica para fotografar."
     },
     {
       "slug": "api-directory",
       "nome": "API Directory",
-      "tagline": "Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.",
+      "tagline": "Diretorio de 2085 APIs publicas que diz se elas respondem, com a latencia medida de fora.",
       "categoria": "Ferramenta",
       "status": "estavel",
       "status_nota": "No ar em https://nz12two.github.io/api-directory/. Vanilla JS, sem build step.",
@@ -66,7 +73,11 @@
       "repo": "https://github.com/nz12two/api-directory",
       "site": "https://nz12two.github.io/api-directory/",
       "licenca": "MIT (declarada no README, sem arquivo LICENSE)",
-      "stack": ["Python", "JavaScript", "GitHub Actions"],
+      "stack": [
+        "Python",
+        "JavaScript",
+        "GitHub Actions"
+      ],
       "para_quem": [
         "Quem procura endpoint grátis e precisa saber se ainda funciona antes de integrate.",
         "Quem já toma low-level timeout do servidor e quer separar 'fora do ar' de 'CORS bloqueando' — o site responde as duas perguntas separadamente."
@@ -94,12 +105,16 @@
           "São duas perguntas diferentes, então a sondagem responde as duas: tools/probe_apis.py no CI mede se o host responde e em quantos ms; o botão ▶ no navegador diz se dá para consumir no front.",
           "Quando o ▶ falha mas a sondagem diz HTTP 200, as duas informações aparecem lado a lado — e as duas estão certas."
         ]
-      }
+      },
+      "imagem": "../assets/produtos/api-directory.png",
+      "imagem_alt": "Catalogo do API Directory com 2085 APIs, 52 categorias e 994 sem autenticacao; cada card traz a latencia medida, como Axolotl em 571 ms e eBird em 1712 ms.",
+      "capturado_em": "2026-10-12",
+      "captura_origem": "https://nz12two.github.io/api-directory/"
     },
     {
       "slug": "opendex",
       "nome": "OpenDex",
-      "tagline": "Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.",
+      "tagline": "Catalogo e documentacao do ecossistema OpenCode: 123 repositorios reais, 249 pacotes npm, feed e ranking.",
       "categoria": "Ferramenta",
       "status": "estavel",
       "status_nota": "No ar em https://nz12two.github.io/opendex/. 380 páginas em build, 0 erros.",
@@ -108,7 +123,13 @@
       "repo": "https://github.com/nz12two/opendex",
       "site": "https://nz12two.github.io/opendex/",
       "licenca": "MIT",
-      "stack": ["Astro 7", "React 19", "TypeScript", "Tailwind", "GitHub Actions"],
+      "stack": [
+        "Astro 7",
+        "React 19",
+        "TypeScript",
+        "Tailwind",
+        "GitHub Actions"
+      ],
       "para_quem": [
         "Quem usa OpenCode e não sabia que plugin, script ou MCP existem na comunidade.",
         "Quem documenta: cada item tem página própria, gerada de dados reais."
@@ -132,12 +153,16 @@
       "tutorial": {
         "titulo": "Catálogo real, não vitrine de mentira",
         "corpo": [
-          "Plugins, scripts e MCPs derivam dos dados reais do npm (247 pacotes). Repositórios vêm de um coletor real do GitHub (122).",
+          "Plugins, scripts e MCPs derivam dos dados reais do npm (249 pacotes). Repositórios vêm de um coletor real do GitHub (123).",
           "Quando não há fonte, a página mostra empty state honesto em vez de inventar item. Essa foi a regra depois da auditoria que removeu 12 entradas fake.",
           "News é reconstruída de 9 releases reais do GitHub + 30 posts do Dev.to.",
           "O layout de catálogo, o coletor e o gerador de OG são reusados por este catálogo de produtos."
         ]
-      }
+      },
+      "imagem": "../assets/produtos/opendex.png",
+      "imagem_alt": "Pagina inicial do OpenDex: 249 pacotes npm, 1,9M estrelas de GitHub, 40,2M downloads por mes e 123 repositorios, atualizados em 14 de agosto de 2026.",
+      "capturado_em": "2026-10-12",
+      "captura_origem": "https://nz12two.github.io/opendex/"
     },
     {
       "slug": "empresas-mundo",
@@ -151,7 +176,14 @@
       "repo": "https://github.com/nz12two/empresas-mundo",
       "site": null,
       "licenca": "nenhuma",
-      "stack": ["Python", "FastAPI", "WebSocket", "OSMnx", "OpenStreetMap", "JavaScript"],
+      "stack": [
+        "Python",
+        "FastAPI",
+        "WebSocket",
+        "OSMnx",
+        "OpenStreetMap",
+        "JavaScript"
+      ],
       "para_quem": [
         "Quem quer ver agent-based modeling funcionando em mapa real: São Paulo via OSMnx.",
         "Quem estuda routing evolutionário — o DNA de cada empresa (estratégia, agressividade, velocidade) evolui ao longo das gerações."
@@ -181,7 +213,9 @@
           "backend/company.py — classe Empresa, o agente com DNA.",
           "frontend/ — interface, lógica de WebSocket e estilo."
         ]
-      }
+      },
+      "imagem": null,
+      "imagem_motivo": "Precisa da simulacao com OSMnx rodando — nao ha URL publica para fotografar."
     },
     {
       "slug": "baccanas-hub",
@@ -195,7 +229,12 @@
       "repo": null,
       "site": "https://baccanas-hub.vercel.app",
       "licenca": "proprietario",
-      "stack": ["Next.js", "TypeScript", "Tailwind", "Vercel"],
+      "stack": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind",
+        "Vercel"
+      ],
       "para_quem": [
         "Dono de servidor que quer alguém que já roda Paper em produção para cuidar do setup, da otimização e do desenvolvimento sob demanda."
       ],
@@ -215,7 +254,10 @@
           "Otimização: Paper, view distance, entity ticks, o que pesa de verdade no tick loop.",
           "Desenvolvimento sob medida — plugins, integração com outros plugins, automação derotina do admin."
         ]
-      }
+      },
+      "imagem": null,
+      "imagem_motivo": "Codigo privado e a URL antiga (baccanas-hub.vercel.app) responde 404."
     }
-  ]
+  ],
+  "_imagens": "Captura de tela real, tirada do site em producao com Chrome headless. O campo data em qual_url_respondeu. Produto sem imagem tem imagem_motiva explicando por que — nenhuma imagem e gerada por codigo para fingir captura."
 }

@@ -4,7 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OpenDex — NZ</title>
-<meta name="description" content="Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.">
+<meta name="description" content="Catalogo e documentacao do ecossistema OpenCode: 123 repositorios reais, 249 pacotes npm, feed e ranking.">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
+<link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/opendex.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="OpenDex — NZ">
+<meta property="og:description" content="Catalogo e documentacao do ecossistema OpenCode: 123 repositorios reais, 249 pacotes npm, feed e ranking.">
+<meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/opendex.html">
+<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/produtos/opendex.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="../css/main.css">
 <link rel="stylesheet" href="../css/produto.css">
 <link rel="stylesheet" href="../css/vip.css">
@@ -25,7 +37,7 @@
 
   <div class="eyebrow mono">Ferramenta</div>
   <h1>OpenDex</h1>
-  <p class="ppage__tag">Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.</p>
+  <p class="ppage__tag">Catalogo e documentacao do ecossistema OpenCode: 123 repositorios reais, 249 pacotes npm, feed e ranking.</p>
 
   <div class="item__tags">
     <span class="tag tag--ok">estável</span>
@@ -36,11 +48,12 @@
 
   <p class="ppage__aviso">No ar em https://nz12two.github.io/opendex/. 380 páginas em build, 0 erros.</p>
 
-  <section class="psec psec--acc">
-    <h2>Preço e licença</h2>
-    <p class="psec__big">gratuito</p>
-    <p class="psec__p">MIT.</p>
-  </section>
+  <figure class="shot">
+         <img src="../assets/produtos/opendex.png" alt="Pagina inicial do OpenDex: 249 pacotes npm, 1,9M estrelas de GitHub, 40,2M downloads por mes e 123 repositorios, atualizados em 14 de agosto de 2026." width="1100" height="739" decoding="async">
+         <figcaption>
+           Captura real em 2026-10-12 · <a href="https://nz12two.github.io/opendex/" target="_blank" rel="noopener">ver no ar</a>
+         </figcaption>
+       </figure>
 
   <section class="psec">
     <h2>Para quem é</h2>
@@ -56,7 +69,12 @@
         <div class="step__n">1</div>
         <div>
           <h3 class="step__t">Build</h3>
-          <pre class="step__code"><code>npm install &amp;&amp; astro build &amp;&amp; node scripts/generate-og.mjs</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>npm install &amp;&amp; astro build &amp;&amp; node scripts/generate-og.mjs</code></pre>
+          </div>
           <p class="step__out">saída: <code>dist/ (~36s, 380 páginas)</code></p>
           <p class="step__note">As OG images saem de satori + @resvg/resvg-js, 1200x630, com as fontes em scripts/fonts/.</p>
         </div>
@@ -65,7 +83,12 @@
         <div class="step__n">2</div>
         <div>
           <h3 class="step__t">Deploy</h3>
-          <pre class="step__code"><code>git push origin main</code></pre>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>git push origin main</code></pre>
+          </div>
           <p class="step__out">saída: <code>GitHub Actions publica em github.io/opendex</code></p>
           <p class="step__note">Workflow em .github/workflows/deploy.yml, dispara no push para main.</p>
         </div>
@@ -76,30 +99,58 @@
   <section class="psec">
          <div class="eyebrow mono">tutorial</div>
          <h2>Catálogo real, não vitrine de mentira</h2>
-         <p class="psec__p">Plugins, scripts e MCPs derivam dos dados reais do npm (247 pacotes). Repositórios vêm de um coletor real do GitHub (122).</p><p class="psec__p">Quando não há fonte, a página mostra empty state honesto em vez de inventar item. Essa foi a regra depois da auditoria que removeu 12 entradas fake.</p><p class="psec__p">News é reconstruída de 9 releases reais do GitHub + 30 posts do Dev.to.</p><p class="psec__p">O layout de catálogo, o coletor e o gerador de OG são reusados por este catálogo de produtos.</p>
+         <p class="psec__p">Plugins, scripts e MCPs derivam dos dados reais do npm (249 pacotes). Repositórios vêm de um coletor real do GitHub (123).</p><p class="psec__p">Quando não há fonte, a página mostra empty state honesto em vez de inventar item. Essa foi a regra depois da auditoria que removeu 12 entradas fake.</p><p class="psec__p">News é reconstruída de 9 releases reais do GitHub + 30 posts do Dev.to.</p><p class="psec__p">O layout de catálogo, o coletor e o gerador de OG são reusados por este catálogo de produtos.</p>
        </section>
-  <section class="psec">
-         <div class="eyebrow mono">grátis</div>
-         <h2>O que já está liberado</h2>
-         <ul class="psec__ul"><li>site no ar com 122 repos e 247 pacotes indexados</li><li>dados em aberto</li><li>código do coletor</li></ul>
-       </section>
-  <section class="vip" data-slug="opendex">
-         <div class="vip__head">
-           <span class="tag tag--acc">VIP</span>
-           <h2>O que o nível VIP destrava</h2>
+  <section class="planos" data-slug="opendex">
+         <div class="eyebrow mono">planos</div>
+         <h2>O que é grátis, e o que a versão paga acrescenta</h2>
+         <p class="planos__lead">
+           O que está no GitHub continua gratuito, com a mesma licença e sem
+           conta. A versão paga não é o código trancado — é o mesmo código
+           calibrado para o seu caso, com alguém olhando junto.
+         </p>
+         <div class="planos__grid">
+           
+        <article class="plano" data-gratis="1">
+          <header class="plano__hd">
+            <h3 class="plano__nome">OpenDex</h3>
+            <p class="plano__preco plano__preco--zero">R$ 0</p>
+          </header>
+          <p class="plano__resumo">123 repositórios, 249 pacotes, dados abertos e o coletor.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>site no ar com 123 repos e 249 pacotes indexados</li><li><span class="plano__pip" aria-hidden="true"></span>dados em aberto</li><li><span class="plano__pip" aria-hidden="true"></span>código do coletor</li>
+          </ul>
+          <p class="plano__dif">Tudo indexado e atualizando junto com o ecossistema.</p>
+        </article>
+           
+        <article class="plano">
+          <header class="plano__hd">
+            <h3 class="plano__nome">OpenDex White-label</h3>
+            <p class="plano__preco">R$ 49/mês</p>
+          </header>
+          <p class="plano__resumo">O mesmo catálogo, com a sua marca e no seu domínio.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>seu próprio catálogo, espelhado e atualizado junto com o meu</li><li><span class="plano__pip" aria-hidden="true"></span>personalização de marca e domínio</li><li><span class="plano__pip" aria-hidden="true"></span>alerta quando o ecossistema ganha plugin relevante</li>
+          </ul>
+          <p class="plano__dif">Espelho do catálogo mantendo a sua marca, alerta quando o ecossistema ganha plugin relevante.</p>
+        </article>
          </div>
-         <ul class="vip__list">
-           <li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> seu próprio catálogo, espelhado e atualizado junto com o meu</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> personalização de marca e domínio</li><li data-vip-item><svg class="vip__lock" aria-hidden="true">…</svg> alerta quando o ecossistema ganha plugin relevante</li>
-         </ul>
-         <div class="vip__gate" data-gate>
-           <p class="vip__msg">Conteúdo VIP. Entre para ver o download e o material completo.</p>
-           <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
-           <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+         <div class="planos__acesso">
+           <div class="vip__gate" data-gate>
+             <p class="vip__msg">Quer ver o material do nível pago?</p>
+             <button class="btn btn--acc" data-vip-open>Entrar como VIP</button>
+             <p class="vip__note">Acesso local, sem senha real: ainda não há servidor. Serve para testar a porta.</p>
+           </div>
+           <div class="vip__unlocked" data-unlocked hidden>
+             <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
+             <a class="btn btn--acc" href="https://github.com/nz12two/opendex" target="_blank" rel="noopener">Ir para o código</a>
+           </div>
          </div>
-         <div class="vip__unlocked" data-unlocked hidden>
-           <p class="vip__msg vip__msg--ok">Acesso liberado nesta máquina.</p>
-           <a class="btn btn--acc" href="https://github.com/nz12two/opendex" target="_blank" rel="noopener">Ir para o código</a>
-         </div>
+         <p class="planos__aviso">
+           Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi
+           deixar o valor visível antes de a cobrança funcionar do que montar um
+           checkout que não entrega.
+         </p>
        </section>
 
   <div class="ppage__links">
@@ -116,5 +167,6 @@
 </footer>
 
 <script src="../js/vip.js" defer></script>
+<script src="../js/copiar.js" defer></script>
 </body>
 </html>
