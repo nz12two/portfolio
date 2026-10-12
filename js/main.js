@@ -19,6 +19,63 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
+  // Secoes inteiras entram tambem. Antes so os .rv (cards) revelavam; o texto
+  // corrido — que e a maior parte da pagina — chegava pronto e sem vida.
+  // O --i escalona por secao, para a entrada ter ritmo em vez de tudo junto.
+  // Sem observer (ou com observer indisponivel) a secao ja nasce visivel: o
+  // observer e enfeite, nunca pode ser a condicao para o texto existir.
+  var temIO = 'IntersectionObserver' in window;
+  var secoes = document.querySelectorAll('main > .sec, body > section.sec');
+  // Observer separado, com threshold 0. O dos cards usa 0.12 porque card e
+  // elemento pequeno; secao alta de 3000px precisa de 12% (360px) na tela para
+  // disparar, e numa rolagem de 900px ela passa inteira entre dois quadros
+  // sem nunca atingir isso — ai fica com opacity 0 para sempre. Medido: com
+  // 0.12 as 5 secoes terminaram invisiveis depois de rolar o site inteiro.
+  // threshold 0 dispara com 1px visivel, que basta aqui: o efeito e "comecou
+  // a entrar", nao "metade entrou".
+  var ioSec = temIO ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('on');
+      ioSec.unobserve(e.target);
+    });
+  }, { threshold: 0, rootMargin: '0px 0px -8% 0px' }) : null;
+
+  Array.prototype.forEach.call(secoes, function (s, i) {
+    s.style.setProperty('--i', (i * 70) + 'ms');
+    if (ioSec) { s.classList.add('sec--motion'); ioSec.observe(s); }
+    else s.classList.add('on');
+  });
+
+  // Rede de seguranca do reveal. O observer so marca o que ele viu passar pela
+  // tela; quem salta para uma ancora ou aperta PageDown chega depois das
+  // secoes do meio, que nunca intersectaram em nenhum quadro e ficariam com
+  // opacity 0 para sempre. Medido: rolando de uma vez ate o fim, 3 das 5
+  // secoes nunca foram reveladas. Aqui, qualquer secao que ja esteja acima da
+  // dobra e marcada na hora — a animacao e enfeite, nunca pode esconder
+  // texto que o usuario pulou direto.
+  var revelarPassadas = function () {
+    var limite = window.innerHeight * 0.92;
+    Array.prototype.forEach.call(secoes, function (s) {
+      if (!s.classList.contains('sec--motion') || s.classList.contains('on')) return;
+      if (s.getBoundingClientRect().top < limite) s.classList.add('on');
+    });
+  };
+
+  // H1: cada linha sobe de baixo para dentro do proprio espaco. O <br> do
+  // HTML ja separa as linhas, entao so embrulha cada trecho — sem isso o
+  // texto subiria junto e o efeito seria um bloco subindo, nao um titulo.
+  var h1 = document.querySelector('.hero h1');
+  if (h1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var partes = h1.innerHTML.split(/<br\s*\/?>/i);
+    h1.innerHTML = partes.map(function (p, i) {
+      return '<span class="ln"><span style="--i:' + (120 + i * 130) + 'ms">' + p + '</span></span>';
+    }).join('');
+  }
+
+  // Barra de progresso de leitura, ligada ao mesmo rAF do header.
+  var bar = document.getElementById('progressFill');
+
   Array.prototype.forEach.call(rv, function (el) { io.observe(el); });
   document.querySelectorAll('.bar__fill').forEach(function (el) { io.observe(el); });
 
@@ -50,6 +107,7 @@
       var y = window.scrollY;
       hdr.dataset.stuck = y > 8 ? '1' : '0';
       if (fill) fill.style.transform = 'scaleX(' + Math.min(1, y / altura()) + ')';
+      revelarPassadas();
     });
   };
 

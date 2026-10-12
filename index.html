@@ -20,6 +20,9 @@
 <meta property="og:image:alt" content="NZ — portfólio de software com código aberto e números medidos">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/main.css">
+<link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="apple-touch-icon" href="assets/brand/app-icon-512.png">
 </head>
 <body>
 
@@ -34,12 +37,7 @@
 <header class="hdr" id="hdr">
   <div class="wrap hdr__in">
     <a href="#topo" class="brand">
-      <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-        <rect x="1" y="1" width="30" height="30" rx="8" fill="none" stroke="currentColor" stroke-width="2"/>
-        <path d="M9 22 L16 9 L23 22" fill="none" stroke="currentColor" stroke-width="2.4"
-              stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M12.2 17.6 H19.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
-      </svg>
+      <svg class="brand__mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
       <span>NZ</span>
       <small>/ build log</small>
     </a>
@@ -65,6 +63,10 @@
        painel de evidência: linguagens por byte real dos repos, que é o único
        número que não dá para falsificar sem abrir o repositório. -->
   <section class="hero wrap">
+    <!-- Barra de progresso de leitura. Numa pagina de rolagem longa nao existe
+         nenhuma leitura de "faltam tres secoes para o fim". O valor e escrito
+         por JS; no HTML fica so o trilho. -->
+    <div class="progress" aria-hidden="true"><i class="progress__fill" id="progressFill"></i></div>
     <!-- Malha de fundo que se desloca devagar. Um plano de cor puro com texto
          parado lê como documento; a grade dá profundidade sem custar nada. -->
     <div class="hero__grid-bg" aria-hidden="true"></div>
@@ -146,7 +148,9 @@
              quem fez vira uma vitrine anônima: a pessoa não tem a quem
              atribuir o que está vendo. -->
         <aside class="about__card">
-          <img class="about__foto" src="assets/avatar.jpg" alt="NZ" width="160" height="160" loading="lazy" decoding="async">
+          <span class="about__fotoWrap">
+            <img class="about__foto" src="assets/avatar.jpg" alt="NZ" width="160" height="160" loading="lazy" decoding="async">
+          </span>
           <div>
             <p class="about__nome">NZ</p>
             <p class="about__papel">Desenvolvedor · automação · servidores Minecraft</p>
@@ -158,22 +162,29 @@
           </dl>
         </aside>
 
-        <div>
-          <h2 style="font-size:var(--t-2xl);max-width:16ch">Administro servidores e escrevo o código que faltava neles</h2>
+        <div class="prosa">
+          <h2 style="font-size:var(--t-2xl);max-width:18ch">Eu construo o que estava faltando no meu servidor</h2>
           <p class="lead" style="font-size:var(--t-md);margin-top:20px">
-            Comecei por plugin de Minecraft porque era o problema que eu tinha. O que
-            me interessa é a mesma coisa em qualquer lugar: um sistema que funciona,
-            com o número medido e o passo a passo que outra pessoa consegue repetir.
+            O plugin de Minecraft anti-xray foi o primeiro: um servidor meu
+            vazava de jogadores, e a ferramenta que resolvia era paga e opaca.
+            Escrevi o meu porque precisava dele funcionando. Daí virou método —
+            <a href="catalogo/antixray.html">19 detectores</a> num plugin,
+            <a href="catalogo/api-directory.html">2.085 APIs</a> sondadas num
+            diretório, <a href="catalogo/opendex.html">372 repositórios</a>
+            mapeados num índice, e um agente com 38 verificadores que roda sem
+            ninguém babysitar.
           </p>
           <p style="color:var(--tx-2);margin-top:16px">
-            Escrevo em Java, Python, TypeScript e JavaScript. Publico o código aberto
-            porque é assim que eu confiro que funciona de verdade — e o build quebrado
-            na frente de todo mundo incomoda mais que a bug escondida.
+            O que não muda de um pro outro é a régua: número medido, não
+            adjetivo, e o passo a passo que outra pessoa consegue repetir sem me
+            perguntar nada. Se eu digo que o build passa, o Actions está aberto
+            na frente. Bug escondida me incomoda menos que build quebrado
+            publicado — por isso o código de tudo isso é aberto.
           </p>
           <p style="color:var(--tx-2);margin-top:16px">
-            Quando você fechar a conta aqui, você fala comigo. Não tem formulário
-            corporativo, não tem SDR ligando, não tem fila: a mesma pessoa que
-            escreve o plugin é quem responde.
+            Java, Python, TypeScript e JavaScript, nessa ordem de uso real.
+            E quando você fechar a conta aqui, você fala comigo: a mesma pessoa
+            que escreve o plugin é a que responde o e-mail.
           </p>
         </div>
       </div>
@@ -186,11 +197,11 @@
 <section class="sec" id="produtos">
     <div class="wrap">
       <div class="eyebrow mono">produtos</div>
-      <h2 style="font-size:var(--t-2xl);max-width:22ch">O maior número medido vem primeiro</h2>
+      <h2 style="font-size:var(--t-2xl);max-width:22ch">Produtos em destaque</h2>
       <p class="lead" style="margin-top:18px">
-        Os cards carregam o número de dentro do produto — 2.085 APIs sondadas,
-        372 repositórios — e cada um abre o repositório para conferir. Os demais
-        vêm por tipo de trabalho, com o mesmo critério.
+        O card maior é o de maior número medido, e o número vem de dentro do
+        produto: 2.085 APIs sondadas, 372 repositórios, 38 verificadores. Cada
+        um abre o repositório para conferir. Os outros entram pelo mesmo critério.
         <a href="catalogo/index.html" style="color:var(--acc)">Marketplace</a> tem busca,
         filtro e comparação sobre todos.
       </p>

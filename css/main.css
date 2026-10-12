@@ -134,7 +134,11 @@ body {
   flex-shrink: 0;
   transition: transform 0.4s var(--ease);
 }
-.brand:hover .brand__mark { transform: rotate(-8deg) scale(1.06); }
+/* O giro era da marca desenhada a mao (quadrado com N dentro). O glifo < / > do
+   kit e simetrico em espelho: rodar -8deg faz os dois chevrons apontarem para
+   direcoes diferentes e o par deixa de ler como codigo. O que fica e o mesmo
+   movimento, sem a rotacao. */
+.brand:hover .brand__mark { transform: scale(1.12); }
 .brand small { color: var(--acc); font-weight: 500; }
 
 /* ===========================================================================
@@ -580,6 +584,16 @@ p { text-wrap: pretty; }
 .items--comDestaque .item__desc { margin: 0; }
 .items--comDestaque .item__go { align-self: center; }
 
+/* Mesmo limite de 3 linhas do card do catálogo. Sem isso o card mais longo
+   estica a linha inteira da grade e os outros ficam com buraco embaixo. */
+.items--comDestaque .item__desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 /* Risco na margem: marca a linha sem empurrar nada. O ::before fica no
    padding, entao aparece sem alterar o fluxo. */
 .item::before {
@@ -775,4 +789,133 @@ p { text-wrap: pretty; }
 @media (max-width: 560px) {
   .news__link { grid-template-columns: minmax(0, 1fr) auto; }
   .news__meta { grid-column: 1 / -1; }
+}
+
+/* ===========================================================================
+   MOVIMENTO DA PAGINA
+   Tudo aqui e reveal ou resposta a interacao. Nenhum elemento pulsa,
+   brilha ou flutua sozinho: movimento que nao comunica nada vira ruido e
+   cansa antes da terceira secao. E tudo cai para zero sob
+   prefers-reduced-motion — a regra e unica e fica no fim do arquivo.
+   =========================================================================== */
+
+/* Barra de progresso de leitura. Fixa no topo, some ao voltar para o
+   comeco. Usa scaleX e nao width: transform nao causa layout, entao a barra
+   de rolagem do navegador nao recalcula a cada quadro. */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 100;
+  background: color-mix(in oklab, var(--line) 70%, transparent);
+  pointer-events: none;
+}
+.progress__fill {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, var(--acc), color-mix(in oklab, var(--acc) 45%, var(--tx)));
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.12s linear;
+}
+
+/* Secao inteira subindo ao entrar na tela. Antes so os .rv (cards) apareciam:
+   o texto corrido de cada secao — que e a maior parte da pagina — chegava
+   pronto e sem vida. Delay por --i faz a entrada escalonar em vez de tudo
+   tudo junto, que e o que da sensacao de ritmo. */
+.sec--motion { opacity: 0; transform: translateY(22px); }
+/* O observer em main.js marca `.on` — o mesmo nome que o reveal dos cards
+   usa. Escrever `.sec--on` aqui fazia o CSS esperar uma classe que ninguem
+   escreve: as 5 secoes ficavam com opacity 0 para sempre e o texto sumia
+   inteiro. O seletor precisa casar com o que o observer realmente põe. */
+.sec--motion.on {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+  transition-delay: var(--i, 0ms);
+}
+
+/* Linha do H1 entrando de baixo, uma por vez. O <br> do HTML ja separa as
+   linhas; cada vira um bloco com overflow hidden pra nada vazar por cima. */
+.hero h1 .ln {
+  display: block;
+  overflow: hidden;
+}
+.hero h1 .ln > span {
+  display: block;
+  transform: translateY(105%);
+  animation: sobe 0.95s var(--ease) forwards;
+  animation-delay: var(--i, 0ms);
+}
+@keyframes sobe { to { transform: none; } }
+
+/* Subrayado que cresce a partir do link, em vez de underline estatico. Vale
+   para link de TEXTO no corpo; botao tem formato proprio. */
+.prosa a {
+  position: relative;
+  text-decoration: none;
+  background-image: linear-gradient(var(--acc), var(--acc));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0 1px;
+  transition: background-size 0.3s var(--ease), color 0.3s var(--ease);
+}
+.prosa a:hover { background-size: 100% 1px; }
+
+/* Botao: o fundo varre de baixo pra cima. Sem deslocamento — mexer em
+   padding no hover faz o layout inteiro da linha respirar. */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  opacity: 0.07;
+  transform: translateY(101%);
+  transition: transform 0.32s var(--ease), opacity 0.32s var(--ease);
+}
+.btn:hover::after, .btn:focus-visible::after { transform: none; opacity: 1; }
+.btn > * { position: relative; z-index: 1; }
+
+/* Avatar com aro girando devagar. Lento de proposito: mais rapido que 12s
+   vira distração num elemento que esta ali para identificar, nao para
+   registrar a leitura. */
+.about__fotoWrap { position: relative; display: inline-block; }
+.about__fotoWrap::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px dashed color-mix(in oklab, var(--acc) 55%, transparent);
+  animation: girar 26s linear infinite;
+}
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* Moldura do card de tipo na home, acesa no hover. */
+.item { transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease); }
+.item:hover, .item:focus-visible {
+  border-color: var(--acc);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px -30px rgb(0 0 0 / 0.9);
+}
+
+/* Numero contando: piscar de opaco a solido quando chega no fim da contagem
+   marca o valor sem precisar de texto. */
+.contando { animation: pulsaFim 0.45s var(--ease); }
+@keyframes pulsaFim {
+  0% { opacity: 0.55; transform: translateY(2px); }
+  100% { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Regra unica e no fim do arquivo, entao vence qualquer animacao declarada
+     acima. Cada coisa que se move cai para o estado final visivel. */
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .sec--motion { opacity: 1; transform: none; }
+  .hero h1 .ln > span { transform: none; }
+  .progress__fill { transform: scaleX(0); }
 }

@@ -187,9 +187,13 @@
 .res__semfoto {
   display: grid;
   place-content: center;
-  aspect-ratio: 1100 / 520;
+  /* Mesma proporcao da foto. Divergir fazia o card com imagem e o card sem
+     imagem terem alturas diferentes, e a grade vira xadrez. 16/9 em vez de
+     1100/520: a 322px de largura sao 181px de faixa contra 217px — o card
+     inteiro cai de ~550px para ~475px e tres cabem na dobra sem rolar. */
+  aspect-ratio: 16 / 9;
   margin: 0;
-  padding: 16px;
+  padding: 14px;
   text-align: center;
   font-size: var(--t-xs);
   color: var(--tx-3);
@@ -199,7 +203,19 @@
   border-bottom: 1px solid var(--line);
 }
 .res__foto { margin: 0; border-bottom: 1px solid var(--line); max-width: none; }
-.res__foto img { aspect-ratio: 1100 / 520; }
+.res__foto img { aspect-ratio: 16 / 9; }
+
+/* Descricao em 3 linhas. O texto inteiro de cada produto no card era o que
+   fazia a altura variar entre 475 e 554px — descricao longa esticava o card
+   inteiro e a comparacao lado a lado deixava de funcionar. A descricao
+   completa continua na pagina do produto; aqui ela e resumo mesmo. */
+.res__desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 /* O card de tipo virou <label>: o checkbox mora dentro dele e some da tela,
    mas continua focavel e legivel por leitor de tela. */
@@ -451,3 +467,23 @@ mark { background: var(--acc-dim); color: var(--acc); padding: 0 2px; border-rad
   .res { grid-template-columns: 30px minmax(0, 1fr); }
   .res__stats { grid-column: 2; padding-top: 10px; }
 }
+/* ===== AJUSTES FINAIS DO CARD =====
+   Estas regras ficam no FIM do arquivo de proposito. `.res__foto img`
+   e `.res__desc` ja tem regra no meio do arquivo; com a mesma
+   especificidade, vence a ultima. Medido com elas antes: a foto seguia
+   em 1100/739 e o clamp de 3 linhas nao cortava nada — o navegador
+   mostrava os dois velhos. */
+.res__foto img { aspect-ratio: 16 / 9; }
+.res__semfoto { aspect-ratio: 16 / 9; }
+
+.res__desc {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  max-width: none;
+  margin: 0;
+}
+
+.res__fechado { -webkit-line-clamp: 2; line-clamp: 2; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; }
