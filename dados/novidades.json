@@ -1,7 +1,24 @@
 {
-  "gerado_em": "2026-10-12T15:54:30.243Z",
+  "gerado_em": "2026-10-12T17:36:01.054Z",
   "convite": "https://discord.gg/FwPq3hSmr",
-  "canal": "anúncios",
-  "total": 0,
-  "itens": []
+  "canal": "📢-anúncios",
+  "total": 2,
+  "itens": [
+    {
+      "id": "1559258346542862357",
+      "ts": "2026-10-12T17:35:59.435000+00:00",
+      "url": "https://discord.com/channels/1559216448969248770/1559253303039234119/1559258346542862357",
+      "autor": "catalogo",
+      "bot": true,
+      "texto": "**licença:** proprietário (fechado) → proprietário"
+    },
+    {
+      "id": "1559258344403767348",
+      "ts": "2026-10-12T17:35:58.925000+00:00",
+      "url": "https://discord.com/channels/1559216448969248770/1559253303039234119/1559258344403767348",
+      "autor": "catalogo",
+      "bot": true,
+      "texto": "**licença:** MIT (declarada no README, sem arquivo LICENSE) → MIT (só no README)"
+    }
+  ]
 }
