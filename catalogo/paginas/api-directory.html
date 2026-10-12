@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API Directory — Catalogo NZ</title>
+<meta name="description" content="Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.">
+<link rel="stylesheet" href="./catalogo.css">
+</head>
+<body>
+<main>
+  <a class="volta" href="./index.html">&larr; Catalogo</a>
+  <h1>API Directory</h1><p class="tagline">Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.</p><div class="meta">
+      <span class="badge" style="--c:#3fb950">Estavel</span>
+      <span class="badge neutro">Ferramenta</span>
+      <span class="badge neutro">gratuito</span>
+      <span class="badge neutro">MIT (declarada no README, sem arquivo LICENSE)</span>
+    </div><p class="aviso">No ar em https://nz12two.github.io/api-directory/. Vanilla JS, sem build step.</p>
+  <section class="preco"><h2>Preco e licenca</h2><p><strong>gratuito</strong></p><p class="nota">MIT. Atenção: o README declara MIT mas o repositório está sem arquivo LICENSE — divergência a corrigir.</p></section><section><h2>Para quem e</h2><ul><li>Quem procura endpoint grátis e precisa saber se ainda funciona antes de integrate.</li><li>Quem já toma low-level timeout do servidor e quer separar 'fora do ar' de 'CORS bloqueando' — o site responde as duas perguntas separadamente.</li></ul></section><section><h2>Instalacao</h2><ol class="passos"><li>
+        <h3><span class="num">1</span>Rodar a sondagem</h3>
+        <pre><code>python tools/probe_apis.py</code></pre>
+        <p class="saida">saida: <code>data/health.json</code></p>
+        <p class="nota">16 workers, ~3 min. Roda no CI uma vez por dia.</p>
+      </li><li>
+        <h3><span class="num">2</span>Gerar o dataset</h3>
+        <pre><code>python tools/build_dataset.py</code></pre>
+        <p class="saida">saida: <code>data/apis.json</code></p>
+        <p class="nota">Catálogo + tradução PT. O site carrega JSON estático — a tradução acontece uma vez, não no navegador de cada visitante.</p>
+      </li></ol></section><section><h2>Por que a latência não é medida no navegador</h2><p>Porque o navegador mentiria. Um fetch só entrega o corpo se o servidor mandar Access-Control-Allow-Origin; sem isso o browser bloqueia e reporta 'failed' — sem distinguir servidor fora do ar de CORS barrando.</p><p>São duas perguntas diferentes, então a sondagem responde as duas: tools/probe_apis.py no CI mede se o host responde e em quantos ms; o botão ▶ no navegador diz se dá para consumir no front.</p><p>Quando o ▶ falha mas a sondagem diz HTTP 200, as duas informações aparecem lado a lado — e as duas estão certas.</p></section><section><h2>Stack</h2><p class="chips"><span class="chip">Python</span><span class="chip">JavaScript</span><span class="chip">GitHub Actions</span></p></section>
+  <p class="links"><a class="btn" href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">Ver codigo</a><a class="btn" href="https://nz12two.github.io/api-directory/" target="_blank" rel="noopener">Abrir</a></p>
+</main>
+</body>
+</html>

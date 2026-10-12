@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EmpresasMundo — Catalogo NZ</title>
+<meta name="description" content="Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.">
+<link rel="stylesheet" href="./catalogo.css">
+</head>
+<body>
+<main>
+  <a class="volta" href="./index.html">&larr; Catalogo</a>
+  <h1>EmpresasMundo</h1><p class="tagline">Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.</p><div class="meta">
+      <span class="badge" style="--c:#3fb950">Estavel</span>
+      <span class="badge neutro">Simulação</span>
+      <span class="badge neutro">gratuito</span>
+      <span class="badge neutro">nenhuma</span>
+    </div><p class="aviso">Roda local. Sem deploy público e sem license no repositório — GPL implícito por omissão, o que é ambíguo.</p>
+  <section class="preco"><h2>Preco e licenca</h2><p><strong>gratuito</strong></p><p class="nota">Sem arquivo LICENSE. Definir antes de divulgar.</p></section><section><h2>Para quem e</h2><ul><li>Quem quer ver agent-based modeling funcionando em mapa real: São Paulo via OSMnx.</li><li>Quem estuda routing evolutionário — o DNA de cada empresa (estratégia, agressividade, velocidade) evolui ao longo das gerações.</li></ul></section><section><h2>Instalacao</h2><ol class="passos"><li>
+        <h3><span class="num">1</span>Dependências</h3>
+        <pre><code>cd backend &amp;&amp; python -m venv .venv &amp;&amp; .venv\Scripts\activate &amp;&amp; pip install -r requirements.txt</code></pre>
+        
+        <p class="nota">Windows. Em Linux: python -m venv .venv &amp;&amp; source .venv/bin/activate.</p>
+      </li><li>
+        <h3><span class="num">2</span>Subir o servidor</h3>
+        <pre><code>.venv\Scripts\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000</code></pre>
+        <p class="saida">saida: <code>http://localhost:8000</code></p>
+        <p class="nota">FastAPI + WebSocket. O frontend conecta e desenha o mapa.</p>
+      </li></ol></section><section><h2>Arquitetura</h2><p>backend/main.py — servidor FastAPI + WebSocket.</p><p>backend/map_data.py — carrega o grafo de ruas pelo OSMnx.</p><p>backend/simulation.py — motor de simulação tick a tick.</p><p>backend/company.py — classe Empresa, o agente com DNA.</p><p>frontend/ — interface, lógica de WebSocket e estilo.</p></section><section><h2>Stack</h2><p class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">WebSocket</span><span class="chip">OSMnx</span><span class="chip">OpenStreetMap</span><span class="chip">JavaScript</span></p></section>
+  <p class="links"><a class="btn" href="https://github.com/nz12two/empresas-mundo" target="_blank" rel="noopener">Ver codigo</a></p>
+</main>
+</body>
+</html>

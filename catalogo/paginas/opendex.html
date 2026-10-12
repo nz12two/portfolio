@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenDex — Catalogo NZ</title>
+<meta name="description" content="Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.">
+<link rel="stylesheet" href="./catalogo.css">
+</head>
+<body>
+<main>
+  <a class="volta" href="./index.html">&larr; Catalogo</a>
+  <h1>OpenDex</h1><p class="tagline">Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.</p><div class="meta">
+      <span class="badge" style="--c:#3fb950">Estavel</span>
+      <span class="badge neutro">Ferramenta</span>
+      <span class="badge neutro">gratuito</span>
+      <span class="badge neutro">MIT</span>
+    </div><p class="aviso">No ar em https://nz12two.github.io/opendex/. 380 páginas em build, 0 erros.</p>
+  <section class="preco"><h2>Preco e licenca</h2><p><strong>gratuito</strong></p><p class="nota">MIT.</p></section><section><h2>Para quem e</h2><ul><li>Quem usa OpenCode e não sabia que plugin, script ou MCP existem na comunidade.</li><li>Quem documenta: cada item tem página própria, gerada de dados reais.</li></ul></section><section><h2>Instalacao</h2><ol class="passos"><li>
+        <h3><span class="num">1</span>Build</h3>
+        <pre><code>npm install &amp;&amp; astro build &amp;&amp; node scripts/generate-og.mjs</code></pre>
+        <p class="saida">saida: <code>dist/ (~36s, 380 páginas)</code></p>
+        <p class="nota">As OG images saem de satori + @resvg/resvg-js, 1200x630, com as fontes em scripts/fonts/.</p>
+      </li><li>
+        <h3><span class="num">2</span>Deploy</h3>
+        <pre><code>git push origin main</code></pre>
+        <p class="saida">saida: <code>GitHub Actions publica em github.io/opendex</code></p>
+        <p class="nota">Workflow em .github/workflows/deploy.yml, dispara no push para main.</p>
+      </li></ol></section><section><h2>Catálogo real, não vitrine de mentira</h2><p>Plugins, scripts e MCPs derivam dos dados reais do npm (247 pacotes). Repositórios vêm de um coletor real do GitHub (122).</p><p>Quando não há fonte, a página mostra empty state honesto em vez de inventar item. Essa foi a regra depois da auditoria que removeu 12 entradas fake.</p><p>News é reconstruída de 9 releases reais do GitHub + 30 posts do Dev.to.</p><p>O layout de catálogo, o coletor e o gerador de OG são reusados por este catálogo de produtos.</p></section><section><h2>Stack</h2><p class="chips"><span class="chip">Astro 7</span><span class="chip">React 19</span><span class="chip">TypeScript</span><span class="chip">Tailwind</span><span class="chip">GitHub Actions</span></p></section>
+  <p class="links"><a class="btn" href="https://github.com/nz12two/opendex" target="_blank" rel="noopener">Ver codigo</a><a class="btn" href="https://nz12two.github.io/opendex/" target="_blank" rel="noopener">Abrir</a></p>
+</main>
+</body>
+</html>

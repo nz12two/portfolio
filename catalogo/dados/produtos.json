@@ -1,0 +1,221 @@
+{
+  "gerado_em": "2026-10-12",
+  "fonte": "GitHub API (api.github.com/users/nz12two) + README de cada repositório",
+  "produtos": [
+    {
+      "slug": "antixray",
+      "nome": "AntiXray",
+      "tagline": "Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.",
+      "categoria": "Minecraft",
+      "status": "beta",
+      "status_nota": "Compila e empacota (verificado em JDK 21). Em desenvolvimento: os detectores ainda precisam de ajuste de taxa de falso positivo em servidor real e o projeto não tem suíte de testes. Não use em produção sem revisar os thresholds de risco.",
+      "preco": "gratuito",
+      "preco_nota": "MIT. Licença permissiva: quem quiser pode vender uma cópia modificada. Se virar produto pago, a licença precisa mudar antes.",
+      "repo": "https://github.com/nz12two/antixray",
+      "site": null,
+      "licenca": "MIT",
+      "stack": ["Java", "Gradle", "Paper API", "SQLite/MySQL/MariaDB/PostgreSQL"],
+      "para_quem": [
+        "Dono de servidor Paper que loses ores e não sabe quemminerou.",
+        "Administrador que precisa de evidência, não só de kick: o plugin salva replay dos últimos 5 minutos e gera evidência automática no flag.",
+        "Quem integra: há API pública (AntiXrayAPI) e eventos para plugin próprio."
+      ],
+      "instalacao": [
+        {
+          "passo": "1",
+          "titulo": "Compilar o jar",
+          "comando": ".\\gradlew.bat shadowJar",
+          "saida": "build/libs/AntiXray-2.0.0.jar",
+          "nota": "Requer JDK 21. Verificado: exit 0, 909 KB."
+        },
+        {
+          "passo": "2",
+          "titulo": "Jogar na pasta plugins/",
+          "comando": "copie build/libs/AntiXray-2.0.0.jar para <servidor>/plugins/",
+          "saida": null,
+          "nota": "Reinicie o servidor. Os 18 módulos registram no console em sequência."
+        },
+        {
+          "passo": "3",
+          "titulo": "Configurar",
+          "comando": "copie config.example.yml para plugins/AntiXray/config.yml e ajuste os thresholds",
+          "saida": null,
+          "nota": "Este passo é o que separa uso em teste de uso em servidor com jogador. Os thresholds de risco são o produto, não um detalhe."
+        }
+      ],
+      "tutorial": {
+        "titulo": "Como funciona o pipeline de detecção",
+        "corpo": [
+          "A coleta (block break, movimento, sessão) alimenta a extração de features: 25+ features de mineração pré-computadas por jogador.",
+          "Os 19+ detectores rodam em 3 tiers — Fast, Medium, Heavy — com dependências entre eles. Detector rápido descarta o óbvio; o pesado só entra quando o risco já subiu.",
+          "O Risk Engine pontua de forma temporal: risco atual + anterior + histórico. Um pico isolado não pune; um padrão sustentado, sim.",
+          "A punishível é configurável: log, warn, kick, ban, freeze ou comando próprio. Evidence gera o relatório e Replay guarda os últimos 5 minutos de dados do jogador no momento do flag.",
+          "Discord recebe embed rico por webhook, com rate limiting — para não inundar o canal de quem responde."
+        ]
+      }
+    },
+    {
+      "slug": "api-directory",
+      "nome": "API Directory",
+      "tagline": "Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.",
+      "categoria": "Ferramenta",
+      "status": "estavel",
+      "status_nota": "No ar em https://nz12two.github.io/api-directory/. Vanilla JS, sem build step.",
+      "preco": "gratuito",
+      "preco_nota": "MIT. Atenção: o README declara MIT mas o repositório está sem arquivo LICENSE — divergência a corrigir.",
+      "repo": "https://github.com/nz12two/api-directory",
+      "site": "https://nz12two.github.io/api-directory/",
+      "licenca": "MIT (declarada no README, sem arquivo LICENSE)",
+      "stack": ["Python", "JavaScript", "GitHub Actions"],
+      "para_quem": [
+        "Quem procura endpoint grátis e precisa saber se ainda funciona antes de integrate.",
+        "Quem já toma low-level timeout do servidor e quer separar 'fora do ar' de 'CORS bloqueando' — o site responde as duas perguntas separadamente."
+      ],
+      "instalacao": [
+        {
+          "passo": "1",
+          "titulo": "Rodar a sondagem",
+          "comando": "python tools/probe_apis.py",
+          "saida": "data/health.json",
+          "nota": "16 workers, ~3 min. Roda no CI uma vez por dia."
+        },
+        {
+          "passo": "2",
+          "titulo": "Gerar o dataset",
+          "comando": "python tools/build_dataset.py",
+          "saida": "data/apis.json",
+          "nota": "Catálogo + tradução PT. O site carrega JSON estático — a tradução acontece uma vez, não no navegador de cada visitante."
+        }
+      ],
+      "tutorial": {
+        "titulo": "Por que a latência não é medida no navegador",
+        "corpo": [
+          "Porque o navegador mentiria. Um fetch só entrega o corpo se o servidor mandar Access-Control-Allow-Origin; sem isso o browser bloqueia e reporta 'failed' — sem distinguir servidor fora do ar de CORS barrando.",
+          "São duas perguntas diferentes, então a sondagem responde as duas: tools/probe_apis.py no CI mede se o host responde e em quantos ms; o botão ▶ no navegador diz se dá para consumir no front.",
+          "Quando o ▶ falha mas a sondagem diz HTTP 200, as duas informações aparecem lado a lado — e as duas estão certas."
+        ]
+      }
+    },
+    {
+      "slug": "opendex",
+      "nome": "OpenDex",
+      "tagline": "Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.",
+      "categoria": "Ferramenta",
+      "status": "estavel",
+      "status_nota": "No ar em https://nz12two.github.io/opendex/. 380 páginas em build, 0 erros.",
+      "preco": "gratuito",
+      "preco_nota": "MIT.",
+      "repo": "https://github.com/nz12two/opendex",
+      "site": "https://nz12two.github.io/opendex/",
+      "licenca": "MIT",
+      "stack": ["Astro 7", "React 19", "TypeScript", "Tailwind", "GitHub Actions"],
+      "para_quem": [
+        "Quem usa OpenCode e não sabia que plugin, script ou MCP existem na comunidade.",
+        "Quem documenta: cada item tem página própria, gerada de dados reais."
+      ],
+      "instalacao": [
+        {
+          "passo": "1",
+          "titulo": "Build",
+          "comando": "npm install && astro build && node scripts/generate-og.mjs",
+          "saida": "dist/ (~36s, 380 páginas)",
+          "nota": "As OG images saem de satori + @resvg/resvg-js, 1200x630, com as fontes em scripts/fonts/."
+        },
+        {
+          "passo": "2",
+          "titulo": "Deploy",
+          "comando": "git push origin main",
+          "saida": "GitHub Actions publica em github.io/opendex",
+          "nota": "Workflow em .github/workflows/deploy.yml, dispara no push para main."
+        }
+      ],
+      "tutorial": {
+        "titulo": "Catálogo real, não vitrine de mentira",
+        "corpo": [
+          "Plugins, scripts e MCPs derivam dos dados reais do npm (247 pacotes). Repositórios vêm de um coletor real do GitHub (122).",
+          "Quando não há fonte, a página mostra empty state honesto em vez de inventar item. Essa foi a regra depois da auditoria que removeu 12 entradas fake.",
+          "News é reconstruída de 9 releases reais do GitHub + 30 posts do Dev.to.",
+          "O layout de catálogo, o coletor e o gerador de OG são reusados por este catálogo de produtos."
+        ]
+      }
+    },
+    {
+      "slug": "empresas-mundo",
+      "nome": "EmpresasMundo",
+      "tagline": "Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.",
+      "categoria": "Simulação",
+      "status": "estavel",
+      "status_nota": "Roda local. Sem deploy público e sem license no repositório — GPL implícito por omissão, o que é ambíguo.",
+      "preco": "gratuito",
+      "preco_nota": "Sem arquivo LICENSE. Definir antes de divulgar.",
+      "repo": "https://github.com/nz12two/empresas-mundo",
+      "site": null,
+      "licenca": "nenhuma",
+      "stack": ["Python", "FastAPI", "WebSocket", "OSMnx", "OpenStreetMap", "JavaScript"],
+      "para_quem": [
+        "Quem quer ver agent-based modeling funcionando em mapa real: São Paulo via OSMnx.",
+        "Quem estuda routing evolutionário — o DNA de cada empresa (estratégia, agressividade, velocidade) evolui ao longo das gerações."
+      ],
+      "instalacao": [
+        {
+          "passo": "1",
+          "titulo": "Dependências",
+          "comando": "cd backend && python -m venv .venv && .venv\\Scripts\\activate && pip install -r requirements.txt",
+          "saida": null,
+          "nota": "Windows. Em Linux: python -m venv .venv && source .venv/bin/activate."
+        },
+        {
+          "passo": "2",
+          "titulo": "Subir o servidor",
+          "comando": ".venv\\Scripts\\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000",
+          "saida": "http://localhost:8000",
+          "nota": "FastAPI + WebSocket. O frontend conecta e desenha o mapa."
+        }
+      ],
+      "tutorial": {
+        "titulo": "Arquitetura",
+        "corpo": [
+          "backend/main.py — servidor FastAPI + WebSocket.",
+          "backend/map_data.py — carrega o grafo de ruas pelo OSMnx.",
+          "backend/simulation.py — motor de simulação tick a tick.",
+          "backend/company.py — classe Empresa, o agente com DNA.",
+          "frontend/ — interface, lógica de WebSocket e estilo."
+        ]
+      }
+    },
+    {
+      "slug": "baccanas-hub",
+      "nome": "Baccana's Hub",
+      "tagline": "Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.",
+      "categoria": "Minecraft",
+      "status": "em-producao",
+      "status_nota": "Deploy em Vercel. Código em repositório privado: não entra no catálogo de código aberto.",
+      "preco": "sob-consulta",
+      "preco_nota": "Serviço, não produto. Preço por conversa.",
+      "repo": null,
+      "site": "https://baccanas-hub.vercel.app",
+      "licenca": "proprietario",
+      "stack": ["Next.js", "TypeScript", "Tailwind", "Vercel"],
+      "para_quem": [
+        "Dono de servidor que quer alguém que já roda Paper em produção para cuidar do setup, da otimização e do desenvolvimento sob demanda."
+      ],
+      "instalacao": [
+        {
+          "passo": "1",
+          "titulo": "Não se instala",
+          "comando": "abrir https://baccanas-hub.vercel.app",
+          "saida": null,
+          "nota": "Serviço hospedado. O onboarding é por contato direto."
+        }
+      ],
+      "tutorial": {
+        "titulo": "O que está incluído",
+        "corpo": [
+          "Configuração de servidor do zero ou revisão da que já existe.",
+          "Otimização: Paper, view distance, entity ticks, o que pesa de verdade no tick loop.",
+          "Desenvolvimento sob medida — plugins, integração com outros plugins, automação derotina do admin."
+        ]
+      }
+    }
+  ]
+}

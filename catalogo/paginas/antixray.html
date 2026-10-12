@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AntiXray — Catalogo NZ</title>
+<meta name="description" content="Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.">
+<link rel="stylesheet" href="./catalogo.css">
+</head>
+<body>
+<main>
+  <a class="volta" href="./index.html">&larr; Catalogo</a>
+  <h1>AntiXray</h1><p class="tagline">Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.</p><div class="meta">
+      <span class="badge" style="--c:#d29922">Beta</span>
+      <span class="badge neutro">Minecraft</span>
+      <span class="badge neutro">gratuito</span>
+      <span class="badge neutro">MIT</span>
+    </div><p class="aviso">Compila e empacota (verificado em JDK 21). Em desenvolvimento: os detectores ainda precisam de ajuste de taxa de falso positivo em servidor real e o projeto não tem suíte de testes. Não use em produção sem revisar os thresholds de risco.</p>
+  <section class="preco"><h2>Preco e licenca</h2><p><strong>gratuito</strong></p><p class="nota">MIT. Licença permissiva: quem quiser pode vender uma cópia modificada. Se virar produto pago, a licença precisa mudar antes.</p></section><section><h2>Para quem e</h2><ul><li>Dono de servidor Paper que loses ores e não sabe quemminerou.</li><li>Administrador que precisa de evidência, não só de kick: o plugin salva replay dos últimos 5 minutos e gera evidência automática no flag.</li><li>Quem integra: há API pública (AntiXrayAPI) e eventos para plugin próprio.</li></ul></section><section><h2>Instalacao</h2><ol class="passos"><li>
+        <h3><span class="num">1</span>Compilar o jar</h3>
+        <pre><code>.\gradlew.bat shadowJar</code></pre>
+        <p class="saida">saida: <code>build/libs/AntiXray-2.0.0.jar</code></p>
+        <p class="nota">Requer JDK 21. Verificado: exit 0, 909 KB.</p>
+      </li><li>
+        <h3><span class="num">2</span>Jogar na pasta plugins/</h3>
+        <pre><code>copie build/libs/AntiXray-2.0.0.jar para &lt;servidor&gt;/plugins/</code></pre>
+        
+        <p class="nota">Reinicie o servidor. Os 18 módulos registram no console em sequência.</p>
+      </li><li>
+        <h3><span class="num">3</span>Configurar</h3>
+        <pre><code>copie config.example.yml para plugins/AntiXray/config.yml e ajuste os thresholds</code></pre>
+        
+        <p class="nota">Este passo é o que separa uso em teste de uso em servidor com jogador. Os thresholds de risco são o produto, não um detalhe.</p>
+      </li></ol></section><section><h2>Como funciona o pipeline de detecção</h2><p>A coleta (block break, movimento, sessão) alimenta a extração de features: 25+ features de mineração pré-computadas por jogador.</p><p>Os 19+ detectores rodam em 3 tiers — Fast, Medium, Heavy — com dependências entre eles. Detector rápido descarta o óbvio; o pesado só entra quando o risco já subiu.</p><p>O Risk Engine pontua de forma temporal: risco atual + anterior + histórico. Um pico isolado não pune; um padrão sustentado, sim.</p><p>A punishível é configurável: log, warn, kick, ban, freeze ou comando próprio. Evidence gera o relatório e Replay guarda os últimos 5 minutos de dados do jogador no momento do flag.</p><p>Discord recebe embed rico por webhook, com rate limiting — para não inundar o canal de quem responde.</p></section><section><h2>Stack</h2><p class="chips"><span class="chip">Java</span><span class="chip">Gradle</span><span class="chip">Paper API</span><span class="chip">SQLite/MySQL/MariaDB/PostgreSQL</span></p></section>
+  <p class="links"><a class="btn" href="https://github.com/nz12two/antixray" target="_blank" rel="noopener">Ver codigo</a></p>
+</main>
+</body>
+</html>
