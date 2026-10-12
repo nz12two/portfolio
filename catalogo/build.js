@@ -15,7 +15,9 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const RAIZ = path.join(__dirname, "..");
-const SAIDA = path.join(__dirname, "paginas");
+// Saida direto em catalogo/: a home linka "catalogo/antixray.html", e um
+// diretorio intermediario "paginas" transformava todo link em caminho errado.
+const SAIDA = __dirname;
 const BASE = process.env.BASE_URL || "https://nz12two.github.io/portfolio";
 
 const esc = (s) =>

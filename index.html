@@ -29,9 +29,9 @@
         <ul class="nav-menu">
           <li><a href="#inicio" class="nav-link active">Inicio</a></li>
           <li><a href="#sobre" class="nav-link">Sobre</a></li>
-          <li><a href="#automacao" class="nav-link">Automacao</a></li>
+          <li><a href="#catalogo" class="nav-link">Catalogo</a></li>
           <li><a href="#servicos" class="nav-link">Servicos</a></li>
-          <li><a href="#projetos" class="nav-link">Projetos</a></li>
+          
           <li><a href="#contato" class="nav-link">Contato</a></li>
         </ul>
         <button class="nav-toggle" aria-label="Menu">
@@ -68,7 +68,7 @@
             </p>
             <p class="hero-desc">Transformo suas ideias em solucoes digitais que geram resultados reais. Sites, sistemas, bots e automacoes.</p>
             <div class="hero-btns">
-              <a href="#projetos" class="btn primary">Ver Projetos</a>
+              <a href="#catalogo" class="btn primary">Ver Catalogo</a>
               <a href="#contato" class="btn outline">Entrar em Contato</a>
               <a href="https://wa.me/5511951999999" target="_blank" class="btn whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a>
             </div>
@@ -180,66 +180,65 @@
     <div class="section-divider"></div>
 
     <!-- AUTOMACAO -->
-    <section id="automacao" class="section">
+<!-- CATALOGO -->
+    <section id="catalogo" class="section">
       <div class="container">
         <div class="sec-head reveal">
-          <span class="sec-tag">Automacao</span>
-          <h2 class="sec-title">O que eu <span class="gtext">automatizo</span></h2>
-          <p class="sec-sub">Solucoes que desenvolvo para clientes e projetos reais</p>
+          <span class="sec-tag">Catalogo</span>
+          <h2 class="sec-title">Produtos que eu <span class="gtext">construo</span></h2>
+          <p class="sec-sub">Cada um com o que faz, para quem e, preco e como instalar</p>
         </div>
-        <div class="auto-grid">
-          <div class="auto-card reveal" style="--i:0">
-            <div class="auto-header">
-              <i class="fa-solid fa-gear auto-icon"></i>
-              <span class="auto-lang">Python</span>
-            </div>
-            <h3>Workflows & Scripts</h3>
-            <p>Automacao de tarefas repetitivas, pipelines de dados, processamento de arquivos e integracao entre sistemas.</p>
-            <ul class="auto-feats">
-              <li>Scripts automatizados</li>
-              <li>Pipelines de dados</li>
-              <li>Processamento batch</li>
+        <div class="cat-grid">
+          <a class="cat-card reveal" href="catalogo/antixray.html" style="--i:0">
+            <div class="cat-top"><h3>AntiXray</h3><span class="cat-badge cat-beta">beta</span></div>
+            <p>Deteccao de x-ray para Paper 1.21.4+ com 19+ detectores e motor de risco temporal.</p>
+            <ul class="cat-feats">
+              <li>19+ detectores em 3 tiers</li>
+              <li>Evidencia e replay automaticos</li>
+              <li>API publica e eventos</li>
             </ul>
-          </div>
-          <div class="auto-card reveal" style="--i:1">
-            <div class="auto-header">
-              <i class="fa-solid fa-robot auto-icon"></i>
-              <span class="auto-lang">Bots</span>
-            </div>
-            <h3>Bots & Assistentes</h3>
-            <p>Criacao de bots para Discord, Telegram e WhatsApp. Automacao de atendimento, moderacao e ferramentas uteis.</p>
-            <ul class="auto-feats">
-              <li>Bots de atendimento</li>
-              <li>Automacao de moderação</li>
-              <li>Ferramentas interativas</li>
+            <span class="cat-meta">Java &middot; MIT &middot; gratis</span>
+          </a>
+          <a class="cat-card reveal" href="catalogo/api-directory.html" style="--i:1">
+            <div class="cat-top"><h3>API Directory</h3><span class="cat-badge cat-ok">estavel</span></div>
+            <p>Diretorio de APIs publicas gratuitas que diz se elas respondem, com latencia medida.</p>
+            <ul class="cat-feats">
+              <li>Latencia real por API</li>
+              <li>Separa servidor fora do ar de CORS</li>
+              <li>Snippet e CSV prontos</li>
             </ul>
-          </div>
-          <div class="auto-card reveal" style="--i:2">
-            <div class="auto-header">
-              <i class="fa-solid fa-cloud auto-icon"></i>
-              <span class="auto-lang">APIs</span>
-            </div>
-            <h3>APIs & Integracoes</h3>
-            <p>Desenvolvimento de APIs REST, integracao entre servicos, webhooks e automacao de fluxos de trabalho.</p>
-            <ul class="auto-feats">
-              <li>APIs RESTful</li>
-              <li>Webhooks & eventos</li>
-              <li>Integracao de servicos</li>
+            <span class="cat-meta">Python, JavaScript &middot; MIT &middot; gratis</span>
+          </a>
+          <a class="cat-card reveal" href="catalogo/opendex.html" style="--i:2">
+            <div class="cat-top"><h3>OpenDex</h3><span class="cat-badge cat-ok">estavel</span></div>
+            <p>Catalogo e documentacao do ecossistema OpenCode: 122 repos e 247 pacotes, tudo de dado real.</p>
+            <ul class="cat-feats">
+              <li>Nada de item inventado</li>
+              <li>Feed e ranking automaticos</li>
+              <li>380 paginas em build</li>
             </ul>
-          </div>
-          <div class="auto-card reveal" style="--i:3">
-            <div class="auto-header">
-              <i class="fa-solid fa-server auto-icon"></i>
-              <span class="auto-lang">DevOps</span>
-            </div>
-            <h3>Infra & Deploy</h3>
-            <p>Automacao de deploys, configuracao de servidores, CI/CD e monitoramento de sistemas em producao.</p>
-            <ul class="auto-feats">
-              <li>CI/CD pipelines</li>
-              <li>Deploy automatizado</li>
-              <li>Monitoramento</li>
+            <span class="cat-meta">Astro, React, TypeScript &middot; MIT &middot; gratis</span>
+          </a>
+          <a class="cat-card reveal" href="catalogo/empresas-mundo.html" style="--i:3">
+            <div class="cat-top"><h3>EmpresasMundo</h3><span class="cat-badge cat-ok">estavel</span></div>
+            <p>Empresas de entrega competindo por fitness, cada uma um agente com DNA proprio, no OSM.</p>
+            <ul class="cat-feats">
+              <li>Simulacao tick a tick</li>
+              <li>Grafo real de Sao Paulo</li>
+              <li>WebSocket ao vivo</li>
             </ul>
-          </div>
+            <span class="cat-meta">Python, FastAPI &middot; sem licenca &middot; gratis</span>
+          </a>
+          <a class="cat-card reveal" href="catalogo/baccanas-hub.html" style="--i:4">
+            <div class="cat-top"><h3>Baccana&apos;s Hub</h3><span class="cat-badge cat-wip">sob consulta</span></div>
+            <p>Plataforma de servicos para servidores Minecraft: configuracao, otimizacao e desenvolvimento.</p>
+            <ul class="cat-feats">
+              <li>Setup e revisao de Paper</li>
+              <li>Otimizacao de tick loop</li>
+              <li>Desenvolvimento sob demanda</li>
+            </ul>
+            <span class="cat-meta">Next.js, TypeScript &middot; proprietario</span>
+          </a>
         </div>
       </div>
     </section>
@@ -324,47 +323,6 @@
     </section>
 
     <div class="section-divider"></div>
-
-    <!-- PROJETOS -->
-    <section id="projetos" class="section alt-bg">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">Projetos</span>
-          <h2 class="sec-title">Meus <span class="gtext">trabalhos</span></h2>
-          <p class="sec-sub">Projetos direto do meu GitHub</p>
-        </div>
-        <div id="proj-loading" class="proj-loading">
-          <i class="fas fa-spinner fa-spin"></i>
-          <p>Carregando projetos do GitHub...</p>
-        </div>
-        <div class="proj-featured reveal">
-          <div class="proj-featured-inner">
-            <div class="proj-featured-content">
-              <span class="proj-featured-tag"><i class="fas fa-star"></i> Destaque</span>
-              <h3>Baccana's Hub</h3>
-              <p>Plataforma de servicos profissionais para servidores Minecraft. Configuracao, otimizacao e desenvolvimento.</p>
-              <div class="proj-featured-techs">
-                <span>Next.js</span>
-                <span>TypeScript</span>
-                <span>Tailwind</span>
-              </div>
-              <a href="https://baccanas-hub.vercel.app" target="_blank" class="btn primary">
-                <i class="fas fa-external-link-alt"></i> Ver Projeto
-              </a>
-            </div>
-            <div class="proj-featured-visual">
-              <i class="fas fa-cube"></i>
-            </div>
-          </div>
-        </div>
-        <div id="proj-grid" class="proj-grid"></div>
-        <div class="proj-footer">
-          <a href="https://github.com/nz12two" target="_blank" class="btn outline">
-            <i class="fab fa-github"></i> Ver todos no GitHub
-          </a>
-        </div>
-      </div>
-    </section>
 
     <div class="section-divider"></div>
 
@@ -540,9 +498,9 @@
         <div class="footer-nav">
           <a href="#inicio">Inicio</a>
           <a href="#sobre">Sobre</a>
-          <a href="#automacao">Automacao</a>
+          <a href="#catalogo">Catalogo</a>
           <a href="#servicos">Servicos</a>
-          <a href="#projetos">Projetos</a>
+          <a href="#catalogo">Catalogo</a>
           <a href="#contato">Contato</a>
         </div>
         <div class="footer-social">
@@ -569,3 +527,5 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+

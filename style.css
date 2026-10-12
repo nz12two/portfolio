@@ -1,20 +1,49 @@
+/* Token layer. Os nomes antigos sao mantidos de proposito: 293 regras dependem
+   deles. A reforma troca VALORES, nao nomes — renomear seria reescrever o site
+   inteiro sem ganho visual. */
 :root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --surface2: #181820;
-  --border: rgba(255, 255, 255, 0.05);
-  --border-hover: rgba(59, 130, 246, 0.2);
-  --text: #e8e8ee;
-  --text2: #8888a0;
-  --text3: #555568;
-  --blue: #3b82f6;
-  --blue2: #60a5fa;
-  --green: #10b981;
-  --green-dim: rgba(16, 185, 129, 0.08);
-  --grad: linear-gradient(135deg, #3b82f6, #10b981);
-  --radius: 12px;
-  --radius-sm: 8px;
+  color-scheme: dark;
+
+  /* Neutros em OKLCH: mesma matiz em toda a escala, entao subir um degrau muda
+     o brilho sem deslocar o tom. Era o problema do hex solto — cada cor tinha
+     um hue proprio e o cinza do texto nao era parente do fundo. */
+  --bg: oklch(0.17 0.012 265);
+  --surface: oklch(0.20 0.014 265);
+  --surface2: oklch(0.24 0.016 265);
+  --border: oklch(0.30 0.018 265);
+  --border-hover: oklch(0.55 0.14 250 / 0.45);
+
+  /* --text3 era #555568 sobre #0a0a0f: 2.9:1, reprovava WCAG AA em texto
+     normal. Agora 4.7:1, passa. Os tres degraus sao legiveis como texto. */
+  --text: oklch(0.96 0.005 265);
+  --text2: oklch(0.74 0.016 265);
+  --text3: oklch(0.60 0.018 265);
+
+  /* Um acento so. O par azul+verde era o "dev portfolio" de 2021: duas cores
+     saturadas disputando a mesma hierarquia. Verde fica restrito a status. */
+  --blue: oklch(0.62 0.17 250);
+  --blue2: oklch(0.75 0.13 250);
+  --green: oklch(0.72 0.16 155);
+  --green-dim: oklch(0.72 0.16 155 / 0.10);
+
+  --grad: linear-gradient(135deg, oklch(0.62 0.17 250), oklch(0.70 0.15 285));
+
+  --radius: 10px;
+  --radius-sm: 6px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Espacamento: escala de 4px com um degrau de 8 entre blocos. Antes cada
+     secao tinha seu padding hardcoded e a pagina nao batia entre si. */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --sp-5: 40px;
+  --sp-6: 64px;
+  --sp-7: 100px;
+
+  --measure: 68ch;
+  --page: 1120px;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1517,4 +1546,118 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
   .proj-grid { grid-template-columns: 1fr; }
   .proj-featured-inner { padding: 24px 20px; }
   .proj-skeleton { grid-template-columns: 1fr; }
+}
+
+/* ===================================================================
+   ACESSIBILIDADE — o que faltava no site inteiro
+   =================================================================== */
+
+/* Foco visivel. Antes o foco era o outline do navegador sobre fundo escuro:
+   sumia sem aviso. :focus-visible so aparece na navegacao por teclado. */
+:focus-visible {
+  outline: 2px solid var(--blue2);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+:focus:not(:focus-visible) { outline: none; }
+
+/* prefers-reduced-motion: o site tem typing effect no hero, terminal animado,
+   contadores que sobem e reveal no scroll — quatro animacoes continuas que
+   sao gatilho real de enjoo em pessoas sensiveis a movimento. prefers-
+   reduced-motion era 0 ocorrencias no projeto inteiro. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  .hero-title, .hero-role { opacity: 1 !important; }
+  .hero-terminal { opacity: 1 !important; }
+}
+
+/* Linha de leitura: 68ch e o limite em que o olho volta ao inicio da linha
+   sem perder a proxima. Texto corrido sem medida fica cansativo em telas
+   largas — o container permite 1120px, o texto nao devia. */
+.hero-desc,
+.sec-sub,
+.servico-card p,
+.proj-card p { max-width: var(--measure); }
+
+/* Alvo de toque: 44px e o piso de WCAG 2.5.5 / Apple HIG. Os botoes compactos
+   do site ficavam abaixo disso no mobile. */
+.nav-link { min-height: 44px; display: inline-flex; align-items: center; }
+.btn { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+
+/* Respeita quem pediu fonte menor que o padrao do sistema. */
+@media (prefers-reduced-motion: no-preference) {
+  html { font-size: clamp(16px, 0.95rem + 0.2vw, 18px); }
+}
+
+/* ===================================================================
+   CATALOGO — vitrine na home. Os cards sao <a>, nao <div>: o catalogo
+   inteiro e navegavel por teclado e aparece no menu de contexto do botao
+   direito do mesmo jeito que um link comum.
+   =================================================================== */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--sp-4);
+  margin-top: var(--sp-5);
+}
+.cat-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.18s var(--ease), transform 0.18s var(--ease);
+}
+.cat-card:hover { border-color: var(--blue); transform: translateY(-2px); }
+.cat-top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.cat-card h3 { font-size: 1.15rem; letter-spacing: -0.01em; }
+.cat-card p { color: var(--text2); font-size: 0.94rem; }
+.cat-badge {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.22em 0.62em;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap;
+}
+.cat-ok   { color: var(--green); }
+.cat-beta { color: oklch(0.78 0.15 85); }
+.cat-wip  { color: var(--blue2); }
+.cat-feats { list-style: none; display: flex; flex-wrap: wrap; gap: var(--sp-1) var(--sp-3); }
+.cat-feats li {
+  font-size: 0.85rem;
+  color: var(--text3);
+  padding-left: 1em;
+  position: relative;
+}
+.cat-feats li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.62em;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.cat-meta {
+  margin-top: auto;
+  padding-top: var(--sp-3);
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: 0.78rem;
+  color: var(--text3);
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 480px) {
+  .cat-grid { grid-template-columns: 1fr; }
 }
