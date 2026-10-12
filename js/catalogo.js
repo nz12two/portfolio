@@ -241,6 +241,15 @@
     montarFacetas();
     ligar();
     desenhar();
+
+    // Rodapé com o dado que muda: quantos produtos e quando o catálogo foi
+    // gerado. Substitui uma frase fixa que não dizia nada.
+    var ftr = document.getElementById('ftrDados');
+    if (ftr) {
+      var n = DADOS.total || DADOS.itens.length;
+      ftr.textContent = n + (n === 1 ? ' produto' : ' produtos') +
+        ' · atualizado em ' + String(DADOS.gerado_em || '').slice(0, 10);
+    }
   }
 
   function falha(e) {

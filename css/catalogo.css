@@ -85,7 +85,27 @@
   align-items: start;
   padding: 20px 4px;
   border-top: 1px solid var(--line);
+  position: relative;
+  transition: background 0.18s;
 }
+/* Mesmo criterio da home: o hover muda cor, nunca geometria. Esticar a foto e
+   manter o resto parado faz o card parecer duas coisas diferentes. */
+.res::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  bottom: -1px;
+  width: 2px;
+  background: var(--acc);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.22s var(--ease);
+}
+.res:hover,
+.res:focus-within { background: var(--surf); }
+.res:hover::before,
+.res:focus-within::before { transform: scaleY(1); }
 .res:last-child { border-bottom: 1px solid var(--line); }
 .res__n { font-size: var(--t-md); color: var(--tx-3); font-variant-numeric: tabular-nums; }
 .res__name {
@@ -117,7 +137,8 @@
   object-position: top center;
   transition: transform 0.4s var(--ease);
 }
-.res:hover .res__foto img { transform: scale(1.015); }
+/* Sem zoom: a borda e o fundo ja marcam a linha. Esticar a imagem alem disso
+   e enfeite que dura 400ms e nao informa nada. */
 
 /* Sem captura: o motivo, em vez de um retangulo vazio que parece imagem
    quebrada. */

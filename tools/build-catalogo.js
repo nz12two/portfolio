@@ -229,7 +229,9 @@ function paginaProduto(p, vip) {
 
 <footer class="ftr">
   <div class="wrap ftr__in">
-    <span class="mono">NZ — construído à mão, sem template</span>
+    <!-- Rodapé com o dado do produto, nao com elogio genérico. "Construído à
+         mão, sem template" não mudava nunca e não dizia nada. -->
+    <span class="mono">${esc(p.nome)} · ${esc(p.status === "beta" ? "beta" : p.status === "em-producao" ? "em produção" : "estável")} · ${esc(p.licenca)}</span>
     <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
   </div>
 </footer>

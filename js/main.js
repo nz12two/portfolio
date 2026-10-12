@@ -22,6 +22,19 @@
   Array.prototype.forEach.call(rv, function (el) { io.observe(el); });
   document.querySelectorAll('.bar__fill').forEach(function (el) { io.observe(el); });
 
+  // A vitrine da home desenha os produtos depois deste script rodar, e esses
+  // .rv nascem invisiveis (a regra .rv--wait e o que segura). Sem uma funcao
+  // que os registre no observer, a lista inteira ficaria apagada. Passa o
+  // io em vez de recriar um: dois observers no mesmo elemento e o que faz o
+  // reveal falhar sem erro nenhum no console.
+  window.__reveal = function (raiz) {
+    var alvos = (raiz || document).querySelectorAll('.rv:not(.on)');
+    Array.prototype.forEach.call(alvos, function (el) {
+      el.classList.add('rv--wait');
+      io.observe(el);
+    });
+  };
+
   var altura = function () {
     return Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   };

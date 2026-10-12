@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NZ - constrói plugins, catálogos e agentes que rodam</title>
-<meta name="description" content="NZ constrói software que roda: plugin de detecção de x-ray para Paper 1.21.4, catálogos com auto-atualização e simulação multi-agente. Código aberto, instalado e medido.">
+<meta name="description" content="NZ constrói software que roda: servidores de Minecraft, catálogos que se atualizam sozinhos e simulação com dado real. Código aberto e número medido.">
 <link rel="canonical" href="https://nz12two.github.io/portfolio/">
 <!-- OG: é o que aparece quando o link vai para WhatsApp ou Telegram. Sem isso
      o preview é o primeiro link do texto em azul, e o portfólio perde a
@@ -12,12 +12,12 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NZ">
 <meta property="og:title" content="NZ — constrói plugins, catálogos e agentes que rodam">
-<meta property="og:description" content="5 produtos com código aberto, o número medido e o passo a passo que outra pessoa consegue repetir.">
+<meta property="og:description" content="Software com código aberto, o número medido e o passo a passo que outra pessoa consegue repetir.">
 <meta property="og:url" content="https://nz12two.github.io/portfolio/">
 <meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
 <meta property="og:image:width" content="1890">
 <meta property="og:image:height" content="910">
-<meta property="og:image:alt" content="NZ — portfólio de plugins, catálogos e agentes que rodam">
+<meta property="og:image:alt" content="NZ — portfólio de software com código aberto e números medidos">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/main.css">
 </head>
@@ -65,16 +65,28 @@
     <div class="hero__grid">
       <div>
         <h1>Eu construo coisas<br>que <em>realmente rodam</em>.</h1>
+        <!-- Sub Specifico o suficiente para nicho e amplo o bastante para o
+             proximo produto. Nomeia o QUE (rodar de verdade, codigo aberto,
+             numero medido) sem enumerar o inventario — enumerar congelava a
+             pagina no dia e travava o NZ no Minecraft. -->
         <p class="hero__sub">
-          Plugin de detecção de x-ray para Paper 1.21.4. Catálogos que se atualizam
-          sozinhos. Simulação de empresas de entrega competindo num mapa real.
-          Tudo com o código aberto, o passo a passo e o número medido.
+          Servidores de Minecraft, catálogos que se atualizam sozinhos, simulação
+          com dado real. O que não roda, eu não publico — e o que roda sai com o
+          número medido e o passo a passo, para você repetir sem me perguntar nada.
         </p>
         <div class="hero__cta">
           <a href="catalogo/index.html" class="btn btn--acc">Ver os produtos</a>
           <a href="#produtos" class="btn">Ler a lista</a>
           <a href="https://github.com/nz12two" class="btn">Código no GitHub</a>
         </div>
+        <!-- Prova viva: os numeros sao lidos do catalogo, entao crescem quando
+             entra produto novo em vez de envelhecerem congelados no HTML.
+             Sem JS, cai no texto estatico de cada elemento (data-*). -->
+        <dl class="hero__nums" id="heroNums" aria-label="Números do portfólio">
+          <div><dt>produtos</dt><dd data-num="total" data-fallback="5">5</dd></div>
+          <div><dt>linguagens</dt><dd data-num="linguagens" data-fallback="4">4</dd></div>
+          <div><dt>repos públicos</dt><dd data-num="repos" data-fallback="4">4</dd></div>
+        </dl>
       </div>
 
       <!-- Dados: bytes por linguagem, somados nos 4 repositórios públicos.
@@ -118,8 +130,9 @@
   </section>
 
   <!-- ===== PRODUTOS =====
-       Lista editorial com número, não grade de caixas iguais. Cinco produtos
-       com a mesma forma viram uma parede; numerados, viram um índice. -->
+       Lista editorial com número, não grade de caixas iguais. Produtos com a
+       mesma forma viram uma parede; numerados, viram um índice. O conteúdo
+       vem de js/vitrine.js, então a lista cresce com o catálogo. -->
   <section class="sec sec--alt" id="produtos">
     <div class="wrap">
       <div class="eyebrow mono">produtos</div>
@@ -131,96 +144,13 @@
         sobre os dados do catálogo.
       </p>
 
-      <div class="items">
-        <a class="item rv" href="catalogo/antixray.html">
-          <span class="item__n">01</span>
-          <div>
-            <h3 class="item__name">AntiXray</h3>
-            <p class="item__desc">
-              Detecção de x-ray para Paper 1.21.4 com 19+ detectores independentes,
-              motor de risco temporal e evidência automática no flag. Você recebe o
-              relatório, não só o kick.
-            </p>
-            <div class="item__tags">
-              <span class="tag tag--beta">beta</span>
-              <span class="tag">Java</span><span class="tag">Paper 1.21.4</span>
-              <span class="tag">MIT</span><span class="tag">grátis</span>
-            </div>
-          </div>
-          <span class="item__go" aria-hidden="true">&rarr;</span>
-        </a>
-
-        <a class="item rv" href="catalogo/api-directory.html">
-          <span class="item__n">02</span>
-          <div>
-            <h3 class="item__name">API Directory</h3>
-            <p class="item__desc">
-              Catálogo de APIs públicas gratuitas que diz se elas respondem, com a
-              latência medida de fora. Separa servidor fora do ar de CORS bloqueando —
-              duas perguntas que um diretório comum não responde.
-            </p>
-            <div class="item__tags">
-              <span class="tag tag--ok">estável</span>
-              <span class="tag">Python</span><span class="tag">JavaScript</span>
-              <span class="tag">MIT</span><span class="tag">grátis</span>
-            </div>
-          </div>
-          <span class="item__go" aria-hidden="true">&rarr;</span>
-        </a>
-
-        <a class="item rv" href="catalogo/opendex.html">
-          <span class="item__n">03</span>
-          <div>
-            <h3 class="item__name">OpenDex</h3>
-            <p class="item__desc">
-              Catálogo e documentação do ecossistema OpenCode: 123 repositórios e 249
-              pacotes, todos de dado real. Se não há fonte, a página mostra estado
-              vazio em vez de inventar item.
-            </p>
-            <div class="item__tags">
-              <span class="tag tag--ok">estável</span>
-              <span class="tag">Astro 7</span><span class="tag">React 19</span>
-              <span class="tag">MIT</span><span class="tag">grátis</span>
-            </div>
-          </div>
-          <span class="item__go" aria-hidden="true">&rarr;</span>
-        </a>
-
-        <a class="item rv" href="catalogo/empresas-mundo.html">
-          <span class="item__n">04</span>
-          <div>
-            <h3 class="item__name">EmpresasMundo</h3>
-            <p class="item__desc">
-              Simulação de empresas de entrega disputando rota: cada uma é um agente
-              com rede neural recorrente própria, evoluindo ao longo das gerações num
-              grafo real de São Paulo.
-            </p>
-            <div class="item__tags">
-              <span class="tag tag--ok">estável</span>
-              <span class="tag">Python</span><span class="tag">FastAPI</span>
-              <span class="tag">OSM</span><span class="tag">grátis</span>
-            </div>
-          </div>
-          <span class="item__go" aria-hidden="true">&rarr;</span>
-        </a>
-
-        <a class="item rv" href="catalogo/baccanas-hub.html">
-          <span class="item__n">05</span>
-          <div>
-            <h3 class="item__name">Baccana's Hub</h3>
-            <p class="item__desc">
-              Serviço para servidores Minecraft: configuração, otimização de tick loop
-              e desenvolvimento sob medida. Você conversa comigo antes de contratar —
-              sem formulário corporativo.
-            </p>
-            <div class="item__tags">
-              <span class="tag tag--acc">sob consulta</span>
-              <span class="tag">Next.js</span><span class="tag">TypeScript</span>
-            </div>
-          </div>
-          <span class="item__go" aria-hidden="true">&rarr;</span>
-        </a>
-      </div>
+<!-- Lista montada por js/main.js a partir de catalogo/dados/catalogo.js.
+           Os produtos viviam aqui em HTML escrito à mão, o que congelava a
+           vitrine no que existia naquele dia. A aviso abaixo é a rede: se o
+           script não rodar, a seção diz o que aconteceu em vez de mostrar
+           uma vitrine vazia sem explicação. -->
+      <div class="items" id="items"></div>
+      <p class="items__aviso" id="itemsAviso" hidden></p>
     </div>
   </section>
 
@@ -354,13 +284,20 @@
 
 <footer class="ftr">
   <div class="wrap ftr__in">
-    <span class="mono">NZ — construído à mão, sem template</span>
+    <!-- O rodapé carrega o dado que muda: o tamanho do catálogo e a data da
+         última medição. "Construído à mão, sem template" era uma frase que
+         não mudava nunca e não dizia nada — o mesmo do rodapé de qualquer
+         site. Preenchido por js/vitrine.js a partir de catalogo.js. -->
+    <span class="mono" id="ftrDados">NZ</span>
     <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
   </div>
 </footer>
 
-
+<!-- O catálogo antes dos scripts que o usam: vitrine.js lê window.CATALOGO.
+     Sem este <script>, a lista da home e o rodapé ficam vazios. -->
+<script src="catalogo/dados/catalogo.js" defer></script>
 <script src="js/main.js" defer></script>
+<script src="js/vitrine.js" defer></script>
 </body>
 </html>
 

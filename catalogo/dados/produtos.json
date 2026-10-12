@@ -59,7 +59,14 @@
         ]
       },
       "imagem": null,
-      "imagem_motivo": "Rodar dentro de um servidor Paper 1.21.4 — nao ha URL publica para fotografar."
+      "imagem_motivo": "Rodar dentro de um servidor Paper 1.21.4 — nao ha URL publica para fotografar.",
+      "home": {
+        "descricao": "Detecção de x-ray para Paper 1.21.4 com 19+ detectores independentes, motor de risco temporal e evidência automática no flag. Você recebe o relatório, não só o kick.",
+        "tags": [
+          "Java",
+          "Paper 1.21.4"
+        ]
+      }
     },
     {
       "slug": "api-directory",
@@ -109,7 +116,14 @@
       "imagem": "../assets/produtos/api-directory.png",
       "imagem_alt": "Catalogo do API Directory com 2085 APIs, 52 categorias e 994 sem autenticacao; cada card traz a latencia medida, como Axolotl em 571 ms e eBird em 1712 ms.",
       "capturado_em": "2026-10-12",
-      "captura_origem": "https://nz12two.github.io/api-directory/"
+      "captura_origem": "https://nz12two.github.io/api-directory/",
+      "home": {
+        "descricao": "Catálogo de APIs públicas gratuitas que diz se elas respondem, com a latência medida de fora. Separa servidor fora do ar de CORS bloqueando — dois erros que a mensagem de erro não distingue.",
+        "tags": [
+          "Python",
+          "JavaScript"
+        ]
+      }
     },
     {
       "slug": "opendex",
@@ -162,7 +176,14 @@
       "imagem": "../assets/produtos/opendex.png",
       "imagem_alt": "Pagina inicial do OpenDex: 249 pacotes npm, 1,9M estrelas de GitHub, 40,2M downloads por mes e 123 repositorios, atualizados em 14 de agosto de 2026.",
       "capturado_em": "2026-10-12",
-      "captura_origem": "https://nz12two.github.io/opendex/"
+      "captura_origem": "https://nz12two.github.io/opendex/",
+      "home": {
+        "descricao": "Catálogo e documentação do ecossistema OpenCode: 123 repositórios e 249 pacotes, todos de dado real. Se não há fonte, a página mostra estado vazio em vez de inventar item.",
+        "tags": [
+          "Astro 7",
+          "React 19"
+        ]
+      }
     },
     {
       "slug": "empresas-mundo",
@@ -215,7 +236,14 @@
         ]
       },
       "imagem": null,
-      "imagem_motivo": "Precisa da simulacao com OSMnx rodando — nao ha URL publica para fotografar."
+      "imagem_motivo": "Precisa da simulacao com OSMnx rodando — nao ha URL publica para fotografar.",
+      "home": {
+        "descricao": "Simulação de empresas de entrega disputando rota: cada agente é uma empresa com rede neural de decisão própria, evoluindo no grafo real de São Paulo.",
+        "tags": [
+          "Python",
+          "FastAPI"
+        ]
+      }
     },
     {
       "slug": "baccanas-hub",
@@ -256,8 +284,16 @@
         ]
       },
       "imagem": null,
-      "imagem_motivo": "Codigo privado e a URL antiga (baccanas-hub.vercel.app) responde 404."
+      "imagem_motivo": "Codigo privado e a URL antiga (baccanas-hub.vercel.app) responde 404.",
+      "home": {
+        "descricao": "Serviço para servidores Minecraft: configuração, otimização de tick loop e desenvolvimento sob medida. Você conversa comigo antes de contratar — sem formulário corporativo.",
+        "tags": [
+          "Next.js",
+          "TypeScript"
+        ]
+      }
     }
   ],
-  "_imagens": "Captura de tela real, tirada do site em producao com Chrome headless. O campo data em qual_url_respondeu. Produto sem imagem tem imagem_motiva explicando por que — nenhuma imagem e gerada por codigo para fingir captura."
+  "_imagens": "Captura de tela real, tirada do site em producao com Chrome headless. O campo data em qual_url_respondeu. Produto sem imagem tem imagem_motiva explicando por que — nenhuma imagem e gerada por codigo para fingir captura.",
+  "_home_nota": "Bloco `home`: descricao e tags do cartao da vitrine. Vivem aqui e nao no index.html porque a home nao pode ser um retrato do que existe hoje — um produto novo entra editando este arquivo, sem tocar em markup."
 }

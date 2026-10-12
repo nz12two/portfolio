@@ -73,6 +73,11 @@ const itens = produtos.map((p, i) => {
     nGratis: (v.gratis || []).length,
     nVip: (v.vip || []).length,
     passos: (p.instalacao || []).length,
+    // Bloco da vitrine da home. Vai junto porque a home e gerada a partir
+    // daqui: manter a descricao editorial no HTML obrigaria a duplicar cada
+    // texto em dois lugares, e o primeiro lugar a ser atualizado seria o
+    // errado. Sem `home`, o produto aparece na home so com a tagline.
+    home: p.home || { descricao: p.tagline, tags: (p.stack || []).slice(0, 2) },
     busca: haystack,
   };
 });
@@ -103,3 +108,7 @@ console.log(`  categorias: ${saida.facetas.categoria.join(", ")}`);
 console.log(`  precos: ${saida.facetas.preco.join(", ")}`);
 console.log(`  stacks: ${saida.facetas.stack.length} distintas`);
 console.log(`  com VIP: ${itens.filter((i) => i.temVip).length}`);
+// Sinaliza o que cai no padrao: sem `home` no JSON, a home mostra a tagline
+// curta. Silencioso, porque produto novo sem bloco home e o caminho normal.
+const semHome = itens.filter((i) => i.home.descricao === i.tagline && i.home.tags.length === 2 && !produtos.find((p) => p.slug === i.slug).home);
+if (semHome.length) console.log(`  usando tagline como descricao: ${semHome.map((i) => i.slug).join(", ")}`);

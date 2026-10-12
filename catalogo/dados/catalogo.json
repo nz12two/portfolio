@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-12T12:04:35.111Z",
+  "gerado_em": "2026-10-12T14:10:16.425Z",
   "total": 5,
   "facetas": {
     "categoria": [
@@ -67,6 +67,13 @@
       "nGratis": 4,
       "nVip": 4,
       "passos": 3,
+      "home": {
+        "descricao": "Detecção de x-ray para Paper 1.21.4 com 19+ detectores independentes, motor de risco temporal e evidência automática no flag. Você recebe o relatório, não só o kick.",
+        "tags": [
+          "Java",
+          "Paper 1.21.4"
+        ]
+      },
       "busca": "antixray detecção modular de x-ray para paper 1.21.4+, com 19+ detectores e motor de risco temporal. minecraft java gradle paper api sqlite/mysql/mariadb/postgresql dono de servidor paper que loses ores e não sabe quemminerou. administrador que precisa de evidência, não só de kick: o plugin salva replay dos últimos 5 minutos e gera evidência automática no flag. quem integra: há api pública (antixrayapi) e eventos para plugin próprio."
     },
     {
@@ -102,6 +109,13 @@
       "nGratis": 3,
       "nVip": 3,
       "passos": 2,
+      "home": {
+        "descricao": "Catálogo de APIs públicas gratuitas que diz se elas respondem, com a latência medida de fora. Separa servidor fora do ar de CORS bloqueando — dois erros que a mensagem de erro não distingue.",
+        "tags": [
+          "Python",
+          "JavaScript"
+        ]
+      },
       "busca": "api directory diretorio de 2085 apis publicas que diz se elas respondem, com a latencia medida de fora. ferramenta python javascript github actions quem procura endpoint grátis e precisa saber se ainda funciona antes de integrate. quem já toma low-level timeout do servidor e quer separar 'fora do ar' de 'cors bloqueando' — o site responde as duas perguntas separadamente."
     },
     {
@@ -141,6 +155,13 @@
       "nGratis": 3,
       "nVip": 3,
       "passos": 2,
+      "home": {
+        "descricao": "Catálogo e documentação do ecossistema OpenCode: 123 repositórios e 249 pacotes, todos de dado real. Se não há fonte, a página mostra estado vazio em vez de inventar item.",
+        "tags": [
+          "Astro 7",
+          "React 19"
+        ]
+      },
       "busca": "opendex catalogo e documentacao do ecossistema opencode: 123 repositorios reais, 249 pacotes npm, feed e ranking. ferramenta astro 7 react 19 typescript tailwind github actions quem usa opencode e não sabia que plugin, script ou mcp existem na comunidade. quem documenta: cada item tem página própria, gerada de dados reais."
     },
     {
@@ -182,6 +203,13 @@
       "nGratis": 3,
       "nVip": 3,
       "passos": 2,
+      "home": {
+        "descricao": "Simulação de empresas de entrega disputando rota: cada agente é uma empresa com rede neural de decisão própria, evoluindo no grafo real de São Paulo.",
+        "tags": [
+          "Python",
+          "FastAPI"
+        ]
+      },
       "busca": "empresasmundo simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do openstreetmap. simulação python fastapi websocket osmnx openstreetmap javascript quem quer ver agent-based modeling funcionando em mapa real: são paulo via osmnx. quem estuda routing evolutionário — o dna de cada empresa (estratégia, agressividade, velocidade) evolui ao longo das gerações."
     },
     {
@@ -219,6 +247,13 @@
       "nGratis": 2,
       "nVip": 3,
       "passos": 1,
+      "home": {
+        "descricao": "Serviço para servidores Minecraft: configuração, otimização de tick loop e desenvolvimento sob medida. Você conversa comigo antes de contratar — sem formulário corporativo.",
+        "tags": [
+          "Next.js",
+          "TypeScript"
+        ]
+      },
       "busca": "baccana's hub plataforma de serviços profissionais para servidores minecraft — configuração, otimização e desenvolvimento. minecraft next.js typescript tailwind vercel dono de servidor que quer alguém que já roda paper em produção para cuidar do setup, da otimização e do desenvolvimento sob demanda."
     }
   ]
