@@ -38,6 +38,23 @@
     Se um filtro não achar nada, é porque não existe produto assim — não é bug.
   </p>
 
+  <!-- ===== MARKETPLACE =====
+       A visao por tipo de trabalho, e o que tira a pagina da cara de "sao
+       so estes 6 produtos". Os tipos vem DECLARADOS do catalogo/dados, nao
+       derivados dos itens: um tipo sem nada publicado aparece aqui do mesmo
+       jeito, porque a pratica existe mesmo antes de abrir o item. -->
+  <section class="mkt" id="tipos" aria-labelledby="mktH">
+    <div class="mkt__hd">
+      <div>
+        <div class="eyebrow mono">o que eu faço</div>
+        <h2 id="mktH">Por tipo de trabalho</h2>
+      </div>
+      <p class="mkt__nota">Clique num tipo para filtrar. Tipo sem item aberto
+        aparece apagado: a pratica existe, ainda nao foi publicada.</p>
+    </div>
+    <div class="mkt__grid" id="mktGrid"></div>
+  </section>
+
   <!-- ===== CONTROLES =====
        Os controles ficam no HTML, não são gerados por JS: sem JS a página ainda
        mostra o catálogo. O JS só refina o que já está na tela. -->
@@ -56,8 +73,8 @@
       </fieldset>
 
       <fieldset class="fset">
-        <legend>categoria</legend>
-        <div id="fCats"></div>
+        <legend>tipo</legend>
+        <div id="fTipos"></div>
       </fieldset>
 
       <fieldset class="fset">

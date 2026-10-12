@@ -1,0 +1,63 @@
+name: discord
+
+# Duas tarefas, um workflow, nao duas: as duas commitar em main e dois jobs
+# fazendo commit ao mesmo tempo e git por cima de git. Em sequencia, so o
+# segundo commita se o primeiro mudou algo.
+on:
+  push:
+    branches: [main]
+    # So quando o catalogo ou a lista de itens do site mudam. Build dos outros
+    # repos nao pode disparar anuncio de produto.
+    paths:
+      - 'catalogo/dados/produtos.json'
+      - 'tools/aviso-discord.js'
+      - 'dados/discord-estado.json'
+  schedule:
+    # A cada 6h. Discord nao tem push; sem poll, "ultimas novidades" envelhece
+    # ate o proximo deploy do NZ.
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # Secret nao existe para ninguem antes de o NZ criar o servidor. O passo
+      # de anuncio trata isso como "impossivel avisar" e sai 1, que e o sinal
+      # certo: quem espera receber o aviso precisa ver que ele nao saiu.
+      - name: anunciar mudanca de produto
+        if: github.event_name == 'push'
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node tools/aviso-discord.js --enviar
+
+      - name: puxar novidades do canal
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CANAL_ID: ${{ vars.DISCORD_CANAL_ID }}
+          DISCORD_INVITE: ${{ vars.DISCORD_INVITE }}
+        run: node tools/puxar-novidades.js
+
+      # O script so reescreve o arquivo quando o conteudo muda, entao este passo
+      # raramente tem o que commitar. `git diff --quiet` evita o commit vazio
+      # que acordaria todo push seguinte num ping de workflow.
+      - name: commitar novidades.json
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dados/novidades.json dados/discord-estado.json
+          if git diff --cached --quiet; then
+            echo 'nada mudou no catalogo nem no feed — sem commit'
+            exit 0
+          fi
+          git commit -m 'discord: novidades e estado do catalogo'
+          git push

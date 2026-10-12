@@ -132,6 +132,21 @@
     }
 
     heroNums(dados);
+
+    // O select de assunto do formulario vem da MESMA taxonomia do marketplace.
+    // Uma lista de opcoes aqui e outra no catalogo iam divergir na primeira
+    // edicao — e o que divergiu antes: o formulario ofereceva tres coisas
+    // (plugin, catalogo, automacao) que eram os tres produtos do dia, e nao
+    // os tipos de trabalho que o NZ faz.
+    var sel = document.getElementById("v2-assunto");
+    var tipos = dados.tipos || [];
+    if (sel && tipos.length) {
+      sel.innerHTML =
+        tipos.map(function (t) {
+          return '<option value="' + esc(t.slug) + '">' + esc(t.rotulo) + "</option>";
+        }).join("") +
+        '<option value="outro">Outro — descreva abaixo</option>';
+    }
   };
 
   var falhou = function (msg) {

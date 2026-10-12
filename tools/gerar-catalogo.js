@@ -37,7 +37,12 @@ const chave = (s) =>
     .toLowerCase()
     .trim();
 
-const produtos = ler("produtos.json").produtos || [];
+// `doc` e o documento inteiro: e dele que vem a taxonomia declarada (`tipos`).
+// `produtos` e so o array. Confundir os dois fazia `tipos` sair vazio sem
+// nenhum erro — o marketplace renderizava zero tipos e o filtro, nada.
+const doc = ler("produtos.json");
+const produtos = doc.produtos || [];
+const TIPOS = doc.tipos || [];
 const vip = (ler("vip.json").produtos || {});
 
 const itens = produtos.map((p, i) => {
@@ -52,6 +57,12 @@ const itens = produtos.map((p, i) => {
     nome: p.nome,
     tagline: p.tagline,
     categoria: p.categoria,
+    // Tipo e dominio separados. `categoria` virou o rotulo legivel do tipo, e
+    // o filtro passa a casar por `tipo` — o slug, que nao muda quando o
+    // rotulo muda.
+    tipo: p.tipo || null,
+    tipoRotulo: (TIPOS).find((t) => t.slug === p.tipo)?.rotulo || p.categoria,
+    dominio: p.dominio || null,
     status: p.status,
     statusTexto: { estavel: "estável", beta: "beta", "em-producao": "em produção", privado: "fechado" }[p.status] || p.status,
     // Campos de projeto fechado. O agente entrou no catalogo com o repo null,
@@ -101,7 +112,16 @@ const itens = produtos.map((p, i) => {
 const saida = {
   gerado_em: new Date().toISOString(),
   total: itens.length,
+  // Taxonomia DECLARADA. Vem do produtos.json, nao de `new Set` sobre os
+  // produtos: derivar daria so os tipos que ja tem item publicado, que e
+  // como a pagina passou a parecer que o NZ so faz Minecraft e simulacao.
+  // Tipos com zero produto sao levados no marketplace de propósito — a
+  // pratica existe mesmo sem item aberto, e esconder isso e o opposite de
+  // "eu faco muito alem destes".
+  tipos: TIPOS,
+  dominios: [...new Set(itens.map((i) => i.dominio).filter(Boolean))].sort(),
   facetas: {
+    tipo: (TIPOS).map((t) => t.slug),
     categoria: [...new Set(itens.map((i) => i.categoria))].sort(),
     preco: [...new Set(itens.map((i) => i.precoChave))],
     stack: [...new Set(itens.flatMap((i) => i.stack))].sort(),

@@ -143,6 +143,58 @@
 /* Painel de numeros medidos. Grade de 4 colunas, numero grande e rotulo
    pequeno: o padrao de "spec sheet" que portfolio de dev usa quando tem dado
    de verdade. Fecha em 2 e depois 1 conforme a largura. */
+/* Marketplace: um card por tipo de trabalho declarado. Clique filtra; o
+   estado e o mesmo do checkbox, entao os dois nunca discordam. Tipo vazio
+   fica apagado mas NAO desaparece — a pratica existe e isso e informacao. */
+.mkt { margin: 0 0 34px; }
+.mkt__hd {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.mkt__hd h2 { font-size: var(--t-xl); letter-spacing: -0.03em; }
+.mkt__nota { font-size: var(--t-xs); color: var(--tx-2); max-width: 44ch; margin: 0; }
+
+.mkt__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+}
+.mkt__card {
+  display: grid;
+  gap: 3px;
+  text-align: left;
+  padding: 14px 15px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-s);
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.18s, background 0.18s, transform 0.18s var(--ease);
+}
+.mkt__card:hover:not(:disabled) { border-color: var(--tx-3); background: var(--surf); }
+/* Estado ligado: o cartao inteiro reage, nao so a borda — assim dá para
+   ver de relance o que esta filtrando sem descer ate os checkboxes. */
+.mkt__card[aria-pressed="true"] { border-color: var(--acc); background: var(--surf); box-shadow: inset 0 0 0 1px var(--acc); }
+.mkt__card:disabled { cursor: default; opacity: 0.45; }
+.mkt__n {
+  font-size: var(--t-lg);
+  font-weight: 640;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.mkt__rotulo { font-size: var(--t-sm); font-weight: 550; }
+.mkt__desc { font-size: var(--t-xs); color: var(--tx-3); line-height: 1.35; }
+
+/* Faceta de tipo: a contagem fica ao lado do rotulo, para o filtro dizer
+   "plugin 1" e nao so "plugin". */
+.fset__vazio { opacity: 0.45; }
+.fset i { font-style: normal; color: var(--tx-3); font-variant-numeric: tabular-nums; }
+
 .pnums {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));

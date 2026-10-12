@@ -16,7 +16,10 @@
   var count = document.getElementById("count");
   var q = document.getElementById("q");
   var sort = document.getElementById("sort");
-  var fCats = document.getElementById("fCats");
+  // O id no HTML passou de "fCats" (categoria) para "fTipos" quando a taxonomia
+  // virou declarada. A variavel ficou com o nome antigo e `fTipos` daria
+  // ReferenceError — a pagina inteira pararia em `montarFacetas`.
+  var fTipos = document.getElementById("fTipos");
   var fStacks = document.getElementById("fStacks");
   var cmpSec = document.getElementById("comparar");
   var cmpBody = document.getElementById("cmpBody");
@@ -45,12 +48,49 @@
   }
 
   // ===== FACETAS =====
+  // O filtro de tipo usa a taxonomia DECLARADA, nao os tipos que existem no
+  // catalogo. Derivar mostraria so "os tipos que tem item", que e a pagina
+  // voltando a dizer que o NZ so faz o que ja publicou.
   function montarFacetas() {
-    fCats.innerHTML = DADOS.facetas.categoria
-      .map(function (c) {
-        return '<label><input type="checkbox" name="cat" value="' + esc(c) + '"><span>' + esc(c) + "</span></label>";
+    var tipos = DADOS.tipos && DADOS.tipos.length ? DADOS.tipos : [];
+
+    fTipos.innerHTML = tipos
+      .map(function (t) {
+        var n = DADOS.itens.filter(function (i) { return i.tipo === t.slug; }).length;
+        return '<label' + (n ? "" : ' class="fset__vazio"') + '>' +
+          '<input type="checkbox" name="tipo" value="' + esc(t.slug) + '"' + (n ? "" : " disabled") + ">" +
+          "<span>" + esc(t.rotulo) + ' <i>' + n + "</i></span></label>";
       })
       .join("");
+
+    // Marketplace: um card por tipo declarado, com a contagem real. Tipo vazio
+    // entra apagado e NAO some — a pratica existe e isso e informacao.
+    var mkt = document.getElementById("mktGrid");
+    if (mkt) {
+      mkt.innerHTML = tipos
+        .map(function (t) {
+          var n = DADOS.itens.filter(function (i) { return i.tipo === t.slug; }).length;
+          return '<button type="button" class="mkt__card' + (n ? "" : " mkt__card--vazio") + '"' +
+            ' data-tipo="' + esc(t.slug) + '"' + (n ? "" : " disabled") +
+            ' aria-pressed="false">' +
+            '<span class="mkt__n">' + n + "</span>" +
+            '<span class="mkt__rotulo">' + esc(t.rotulo) + "</span>" +
+            '<span class="mkt__desc">' + esc(t.desc) + "</span>" +
+            "</button>";
+        })
+        .join("");
+
+      // Um clique no card marca o checkbox do mesmo tipo, e os dois ficam em
+      // sincronia porque os dois escrevem no mesmo estado.
+      mkt.addEventListener("click", function (e) {
+        var b = e.target.closest(".mkt__card");
+        if (!b || b.disabled) return;
+        var box = fTipos.querySelector('input[value="' + b.getAttribute("data-tipo") + '"]');
+        if (!box) return;
+        box.checked = !box.checked;
+        atualizarEVoltarAoTopo();
+      });
+    }
 
     fStacks.innerHTML = DADOS.facetas.stack
       .map(function (s) {
@@ -60,12 +100,28 @@
   }
 
   // ===== FILTRO =====
+
+  // Filtra e reaplica o estado visual do marketplace. O card e o checkbox sao
+  // o mesmo filtro visto de dois lugares: marcar um tem que acender o outro.
+  function sincronizarMarketplace() {
+    var marcados = [].slice.call(document.querySelectorAll('input[name="tipo"]:checked'))
+      .map(function (i) { return i.value; });
+    Array.prototype.forEach.call(document.querySelectorAll(".mkt__card"), function (b) {
+      b.setAttribute("aria-pressed", marcados.indexOf(b.getAttribute("data-tipo")) !== -1 ? "true" : "false");
+    });
+  }
+
+  function atualizarEVoltarAoTopo() {
+    desenhar();
+    sincronizarMarketplace();
+  }
+
   function estado() {
     return {
       q: normalizar(q.value.trim()),
       preco: [].slice.call(document.querySelectorAll('input[name="preco"]:checked')).map(function (i) { return i.value; }),
       vip: document.querySelector('input[name="vip"]').checked,
-      cat: [].slice.call(document.querySelectorAll('input[name="cat"]:checked')).map(function (i) { return i.value; }),
+      cat: [].slice.call(document.querySelectorAll('input[name="tipo"]:checked')).map(function (i) { return i.value; }),
       stack: [].slice.call(document.querySelectorAll('input[name="stack"]:checked')).map(function (i) { return normalizar(i.value); }),
     };
   }
@@ -76,7 +132,14 @@
       if (e.q && it.busca.indexOf(e.q) === -1) return false;
       if (e.preco.length && e.preco.indexOf(it.precoChave) === -1) return false;
       if (e.vip && !it.temVip) return false;
-      if (e.cat.length && e.cat.indexOf(it.categoria) === -1) return false;
+      // O checkbox carrega o SLUG do tipo ("ferramenta"); `it.categoria` e o ROTULO
+// ("Ferramenta"). Comparar os dois nunca casava, e o filtro de tipo nao
+// filtrava nada — marcava "ferramenta" e devolvia 6 de 6, parecendo quebrado.
+      // Casing aside, e o mesmo criterio: o slug do tipo contra o slug do item.
+      if (e.cat.length && e.cat.indexOf(it.tipo) === -1) return false;
+      // Itens sem tipo (devem ser raros, mas nao impossiveis) somem quando ha
+      // filtro de tipo: manter um item sem classificacao numa lista que diz
+      // "so ferramentas" seria pior que nao mostrar.
       if (e.stack.length) {
         var bate = e.stack.some(function (s) { return it.stackChaves.indexOf(s) !== -1; });
         if (!bate) return false;
@@ -217,15 +280,19 @@
   // ===== EVENTOS =====
   function ligar() {
     var t;
+    // Busca, checkbox e ordenacao passam todos por `atualizarEVoltarAoTopo`, e nao
+    // por `desenhar` cru: sem a sincronia, digitar na busca ou marcar um
+    // checkbox atualizava a lista mas deixava o card do marketplace com o
+    // estado velho — dois controles mostrando verdades diferentes.
     q.addEventListener("input", function () {
       clearTimeout(t);
-      t = setTimeout(desenhar, 90); // espera a digitacao em vez de filtrar por tecla
+      t = setTimeout(atualizarEVoltarAoTopo, 90); // espera a digitacao em vez de filtrar por tecla
     });
 
     document.querySelectorAll(".ctrl input[type=checkbox]").forEach(function (i) {
-      i.addEventListener("change", desenhar);
+      i.addEventListener("change", atualizarEVoltarAoTopo);
     });
-    sort.addEventListener("change", desenhar);
+    sort.addEventListener("change", atualizarEVoltarAoTopo);
 
     grid.addEventListener("click", function (ev) {
       var b = ev.target.closest("[data-cmp]");
@@ -234,9 +301,14 @@
 
     document.getElementById("clear").addEventListener("click", function () {
       q.value = "";
+      // O seletor antigo era ".ctrl input" — os checkboxes de tipo estao dentro de
+      // .ctrl, mas os cards do marketplace estao ACIMA de .ctrl. Sem soltar
+      // os cards aqui, "limpar" limpava os dois e deixava o marketplace
+      // marcando um tipo que nao estava filtrando nada.
       document.querySelectorAll(".ctrl input[type=checkbox]").forEach(function (i) { i.checked = false; });
       sort.value = "nome";
       desenhar();
+      sincronizarMarketplace();
       q.focus();
     });
 

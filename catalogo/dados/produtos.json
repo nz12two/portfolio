@@ -6,7 +6,7 @@
       "slug": "antixray",
       "nome": "AntiXray",
       "tagline": "Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.",
-      "categoria": "Minecraft",
+      "categoria": "Plugin",
       "status": "beta",
       "status_nota": "Compila e empacota (verificado em JDK 21). Em desenvolvimento: os detectores ainda precisam de ajuste de taxa de falso positivo em servidor real e o projeto não tem suíte de testes. Não use em produção sem revisar os thresholds de risco.",
       "preco": "gratuito",
@@ -72,7 +72,9 @@
         "unidade": "detectores de x-ray",
         "quando": "2026-10-12",
         "como": "19 detectores independentes mais motor de risco temporal, em Paper 1.21.4."
-      }
+      },
+      "tipo": "plugin",
+      "dominio": "minecraft"
     },
     {
       "slug": "api-directory",
@@ -135,7 +137,9 @@
         "unidade": "APIs sondadas",
         "quando": "2026-10-12",
         "como": "Cada entrada tem latência medida de fora; 994 rodam sem autenticação."
-      }
+      },
+      "tipo": "ferramenta",
+      "dominio": "dados"
     },
     {
       "slug": "opendex",
@@ -201,13 +205,15 @@
         "unidade": "repos e pacotes no índice",
         "quando": "2026-10-12",
         "como": "123 repositórios e 249 pacotes do ecossistema OpenCode, com a fonte citada."
-      }
+      },
+      "tipo": "ferramenta",
+      "dominio": "devtools"
     },
     {
       "slug": "empresas-mundo",
       "nome": "EmpresasMundo",
       "tagline": "Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.",
-      "categoria": "Simulação",
+      "categoria": "Jogo / simulação",
       "status": "estavel",
       "status_nota": "Roda local. Sem deploy público e sem license no repositório — GPL implícito por omissão, o que é ambíguo.",
       "preco": "gratuito",
@@ -261,13 +267,15 @@
           "Python",
           "FastAPI"
         ]
-      }
+      },
+      "tipo": "jogo",
+      "dominio": "dados"
     },
     {
       "slug": "baccanas-hub",
       "nome": "Baccana's Hub",
       "tagline": "Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.",
-      "categoria": "Minecraft",
+      "categoria": "Serviço",
       "status": "em-producao",
       "status_nota": "Deploy em Vercel. Código em repositório privado: não entra no catálogo de código aberto.",
       "preco": "sob-consulta",
@@ -309,7 +317,9 @@
           "Next.js",
           "TypeScript"
         ]
-      }
+      },
+      "tipo": "servico",
+      "dominio": "minecraft"
     },
     {
       "slug": "banzinho",
@@ -383,11 +393,64 @@
         "unidade": "verificadores de regra",
         "quando": "2026-10-12",
         "como": "Cada *.check.ts lê a constitution e falha se uma regra declarada sumir do texto. É o que impede a política de virar decoração."
-      }
+      },
+      "tipo": "agente",
+      "dominio": "devtools"
     }
   ],
   "_imagens": "Captura de tela real, tirada do site em producao com Chrome headless. O campo data em qual_url_respondeu. Produto sem imagem tem imagem_motiva explicando por que — nenhuma imagem e gerada por codigo para fingir captura.",
   "_home_nota": "Bloco `home`: descricao e tags do cartao da vitrine. Vivem aqui e nao no index.html porque a home nao pode ser um retrato do que existe hoje — um produto novo entra editando este arquivo, sem tocar em markup.",
   "_prova_nota": "`prova`: o numero de dentro do produto, com unidade e data. Sai daqui para a faixa do hero (js/vitrine.js) e para o card do catalogo. Contagem de produto/linguagem/repositorio nao entra: e bio, nao prova.",
-  "total": 6
+  "total": 6,
+  "tipos": [
+    {
+      "slug": "plugin",
+      "rotulo": "Plugin",
+      "desc": "Extensão que entra em um sistema existente e roda dentro dele",
+      "nucleo": true
+    },
+    {
+      "slug": "script",
+      "rotulo": "Script",
+      "desc": "Automação de uma tarefa, executável e versionada",
+      "nucleo": true
+    },
+    {
+      "slug": "automacao",
+      "rotulo": "Automação",
+      "desc": "Serviço que roda sozinho: coleta, organiza, reage",
+      "nucleo": true
+    },
+    {
+      "slug": "ferramenta",
+      "rotulo": "Ferramenta",
+      "desc": "Algo que resolve um trabalho pontual, sem virar sistema",
+      "nucleo": true
+    },
+    {
+      "slug": "agente",
+      "rotulo": "Agente",
+      "desc": "Programa que toma decisão sozinho e responde por ela",
+      "nucleo": true
+    },
+    {
+      "slug": "servico",
+      "rotulo": "Serviço",
+      "desc": "Trabalho sob medida para um cliente específico",
+      "nucleo": false
+    },
+    {
+      "slug": "jogo",
+      "rotulo": "Jogo / simulação",
+      "desc": "Simulação ou jogo com regra e dado real",
+      "nucleo": false
+    },
+    {
+      "slug": "biblioteca",
+      "rotulo": "Biblioteca",
+      "desc": "Código reaproveitado, sem interface e sem servidor",
+      "nucleo": false
+    }
+  ],
+  "_tipos_nota": "Taxonomia DECLARADA, nao derivada. Os tipos listados sao os tipos de trabalho que o NZ faz — plugin, script, automacao, ferramenta, agente, servico, jogo, biblioteca — e valem para o que ainda nao foi publicado. Tipo com zero produto e informacao: a pratica existe e ainda nao foi aberta. `dominio` (minecraft, dados, devtools) responde 'onde roda' e pode repetir entre tipos."
 }

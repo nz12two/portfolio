@@ -603,3 +603,56 @@ p { text-wrap: pretty; }
 @media (forced-colors: active) {
   .panel::before, .bar__fill, .tag { forced-color-adjust: none; }
 }
+
+/* ===========================================================================
+   NOVIDADES
+   ===========================================================================
+   Feed do #anuncios do Discord. Lista sem caixa e sem card: a mesma tese do
+   produto — linha com data, texto e seta. Card em cada mensagem transformaria
+   seis linhas de chat em seis caixas, que e o que faz um feed parecer marketing.
+
+   A data fica na linha de cima e em monoescala pequena porque e metadado, nao
+   conteudo: o texto do anuncio e o que a pessoa le.
+   =========================================================================== */
+.news {
+  list-style: none;
+  margin: 34px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.news__item { border-bottom: 1px solid var(--line); }
+
+.news__link {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr) auto;
+  gap: clamp(14px, 3vw, 28px);
+  align-items: baseline;
+  padding: 18px 4px;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.2s var(--ease);
+}
+
+.news__link:hover { background: var(--acc-dim); }
+
+.news__meta {
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+  letter-spacing: 0.02em;
+}
+
+/* O texto vem do Discord e pode ter qualquer coisa dentro. Serapilheira vira
+   alerta de XSS se for para innerHTML sem escape; aqui ja vai escapado pelo
+   js, e o overflow-wrap impede o feed de estourar a largura com URL longa. */
+.news__txt { color: var(--tx-2); overflow-wrap: anywhere; }
+
+.news__go { color: var(--tx-3); transition: color 0.2s, transform 0.2s var(--ease); }
+.news__link:hover .news__go { color: var(--acc); transform: translateX(4px); }
+
+.news__src { margin-top: 18px; font-size: var(--t-xs); color: var(--tx-3); }
+
+@media (max-width: 560px) {
+  .news__link { grid-template-columns: minmax(0, 1fr) auto; }
+  .news__meta { grid-column: 1 / -1; }
+}

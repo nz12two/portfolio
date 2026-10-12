@@ -45,6 +45,7 @@
     </a>
     <nav class="nav">
       <a href="#produtos">Produtos</a>
+      <a href="#novidades">Novidades</a>
       <a href="#prova">Prova</a>
       <a href="#sobre">Sobre</a>
     </nav>
@@ -156,6 +157,13 @@
     </div>
   </section>
 
+  <!-- ===== NOVIDADES =====
+     Montada por js/novidades.js a partir de dados/novidades.json, que
+     tools/puxar-novidades.js gera lendo #anuncios no Discord. Fica VAZIA de
+     proposito: sem dado a secao nao aparece e nada mais muda. Escrever aqui
+     congelaria a data — foi o defeito do rodape antes. -->
+  <section class="sec" id="novidades" hidden></section>
+
   <!-- ===== PROVA =====
        Resposta direta à pergunta que todo visitante faz em silêncio: "isso
        funciona mesmo?". Os números aqui são verificáveis abrindo o repositório
@@ -247,11 +255,25 @@
       <div class="eyebrow mono">contato</div>
       <div class="ct">
         <div>
-          <h2 style="font-size:var(--t-2xl);max-width:14ch">Me conta o problema</h2>
+          <h2 style="font-size:var(--t-2xl);max-width:16ch">Me conta o problema</h2>
           <p class="lead" style="margin-top:18px">
-            Se for plugin para servidor, automação ou catálogo com auto-atualização,
-            eu já tenho o caminho. Descreve em duas linhas e eu respondo com o que dá
-            e o que não dá.
+            Plugin, script, automação, ferramenta, agente, serviço — ou algo que
+            não cabe em nenhum desses nomes. Descreve em duas linhas e eu respondo
+            com o que dá e o que não dá. Se preferir falar antes de escrever,
+            o Discord é o caminho mais curto.
+          </p>
+          <p style="margin-top:16px">
+            <!-- O convite do Discord vem de dados/novidades.json (js/novidades.js).
+                 Sem convite publicado, o botao some e a frase abaixo diz por que —
+                 link de convite invalido e pior que nenhum, porque parece
+                 convite pronto. -->
+            <a class="btn" id="discordBtn" href="https://discord.gg/SEU-LINK" rel="noopener" hidden>
+              <span id="discordBtnTxt">Entrar no Discord</span>
+            </a>
+          </p>
+          <p id="discordAguardando" style="margin-top:16px;color:var(--tx-2)" hidden>
+            O convite sai aqui quando o servidor abrir. Até lá o canal mais
+            curto é o e-mail.
           </p>
         </div>
 
@@ -265,12 +287,15 @@
             <input id="v2-email" name="email" type="email" autocomplete="email" required>
           </div>
           <div class="field">
+            <!-- As opcoes sao a TAXONOMIA DECLARADA (catalogo/dados/produtos.json),
+                 nao os 3 produtos que ja existiam. A lista antiga travava o NZ
+                 em plugin / catalogo / automacao, que e o que o NZ reprovou:
+                 a pagina parecia um retrato do inventario. Montada por JS para
+                 nao duplicar a lista em dois lugares; sem JS o campo fica com
+                 uma opcao livre, que e o fallback honesto. -->
             <label for="v2-assunto">O que você precisa</label>
             <select id="v2-assunto" name="assunto">
-              <option value="plugin">Plugin para servidor Minecraft</option>
-              <option value="catalogo">Catálogo ou página com auto-atualização</option>
-              <option value="automacao">Automação ou bot</option>
-              <option value="outro">Outro</option>
+              <option value="outro">Outro — descreva abaixo</option>
             </select>
           </div>
           <div class="field">
@@ -300,6 +325,9 @@
 <script src="catalogo/dados/catalogo.js" defer></script>
 <script src="js/main.js" defer></script>
 <script src="js/vitrine.js" defer></script>
+<!-- Ultimo: le dados/novidades.json, que e o unico arquivo que precisa de rede.
+     Sem ele a secao fica oculta e o resto do site nao sente falta. -->
+<script src="js/novidades.js" defer></script>
 </body>
 </html>
 
