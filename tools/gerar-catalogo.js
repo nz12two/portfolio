@@ -53,7 +53,18 @@ const itens = produtos.map((p, i) => {
     tagline: p.tagline,
     categoria: p.categoria,
     status: p.status,
-    statusTexto: { estavel: "estável", beta: "beta", "em-producao": "em produção" }[p.status] || p.status,
+    statusTexto: { estavel: "estável", beta: "beta", "em-producao": "em produção", privado: "fechado" }[p.status] || p.status,
+    // Campos de projeto fechado. O agente entrou no catalogo com o repo null,
+    // e sem estes o gerador o achata num card igual aos outros — o que apagaria
+    // justo o que o NZ pediu: mostrar que e um projeto fechado que vai ser
+    // distribuido. `distribuicao` e o compromisso, sem data: prazo inventado
+    // seria numero falso.
+    privado: p.status === "privado",
+    distribuicao: p.distribuicao || null,
+    statusExtra: p.status_extra || null,
+    diferenca: p.diferenca || null,
+    oQueFaz: p.o_que_faz || [],
+    licencaNota: p.licenca_nota || null,
     preco: p.preco,
     // O valor real e "gratuito", nao "gratis": testar por "gratis" nao casava e
     // todo mundo caia em "pago". Casar a palavra que existe no dado.

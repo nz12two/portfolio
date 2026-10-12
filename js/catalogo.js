@@ -113,14 +113,33 @@
         ? '<figure class="res__foto"><img src="' + esc(it.imagem) + '" alt="' + esc(it.imagemAlt || "") + '" loading="lazy" decoding="async" width="1100" height="739"></figure>'
         : '<p class="res__semfoto">' + esc(it.imagemMotivo || "Sem imagem.") + "</p>";
 
+      // Metrica dentro do card, nao contagem ao lado. A pesquisa dos
+      // portfolios reais mostrou o padrao: Dejan Markovic poe "1M+ downloads",
+      // "13M+ users" DENTRO do item do projeto. O que a vitrine mostrava era
+      // "5 passos / 2 gratis / 1 vip" — contagem de formulario, que nao prova
+      // trabalho nenhum e so ocupa espaco. Quando o produto tem `prova`, ela
+      // entra aqui com a unidade; sem prova, cai para os numeros uteis.
+      var metricas = it.prova
+        ? ["<strong>" + esc(String(it.prova.num)) + "</strong> " + esc(it.prova.unidade)]
+        : [it.passos + " passos", it.nGratis + " grátis", it.nVip + " vip"];
+
+      // Projeto fechado: o repo nao existe ainda, e link para repo ausente e
+      // link quebrado. O cartao diz que e fechado e por que, em vez de
+      // oferecer um 404.
+      var fechado = it.privado
+        ? '<p class="res__fechado"><span class="tag tag--priv">fechado</span> ' +
+          esc(it.distribuicao || "Código privado. Vira distribuível depois.") + "</p>"
+        : "";
+
       return '<div class="res" role="listitem">' +
         '<span class="res__n">' + String(it.i).padStart(2, "0") + "</span>" +
         "<div>" +
           '<h3 class="res__name"><a href="./' + esc(it.slug) + '.html">' + marcar(it.nome, termo) + "</a></h3>" +
           '<p class="res__desc">' + marcar(it.tagline, termo) + "</p>" +
           foto +
+          fechado +
           '<div class="res__tags">' +
-            '<span class="tag tag--' + (it.status === "beta" ? "beta" : it.status === "em-producao" ? "acc" : "ok") + '">' + esc(it.statusTexto) + "</span>" +
+            '<span class="tag tag--' + (it.status === "beta" ? "beta" : it.status === "em-producao" || it.privado ? "acc" : "ok") + '">' + esc(it.statusTexto) + "</span>" +
             '<span class="tag">' + esc(it.categoria) + "</span>" +
             '<span class="tag tag--acc">' + esc(it.preco) + "</span>" +
             it.stack.slice(0, 3).map(function (s) { return '<span class="tag">' + esc(s) + "</span>"; }).join("") +
@@ -130,9 +149,7 @@
           "</button>" +
         "</div>" +
         '<div class="res__stats">' +
-          "<span>" + it.passos + " passos</span>" +
-          "<span>" + it.nGratis + " grátis</span>" +
-          "<span>" + it.nVip + " vip</span>" +
+          metricas.map(function (m) { return "<span>" + m + "</span>"; }).join("") +
         "</div>" +
       "</div>";
     }).join("");

@@ -31,6 +31,9 @@ const ESTADO = {
   estavel: { txt: "estável", cls: "ok" },
   beta: { txt: "beta", cls: "beta" },
   "em-producao": { txt: "em produção", cls: "acc" },
+  // "privado" entrou com o agente. Sem ele aqui, EST() cairia em estavel e o
+  // rodape afirmaria que um projeto fechado e "estável".
+  privado: { txt: "fechado", cls: "acc" },
 };
 const EST = (p) => ESTADO[p.status] || ESTADO.estavel;
 
@@ -74,6 +77,60 @@ function paginaProduto(p, vip) {
     .join("");
 
   const quem = (p.para_quem || []).map((x) => `<li>${esc(x)}</li>`).join("");
+
+  // Numero medido de dentro do projeto, em bloco proprio. No cartao do
+  // catalogo a metrica entra numa linha; aqui ela vira painel, porque e a
+  // pagina do produto e o numero e a unica prova que ela tem. Os rotulos sao
+  // humanizados a mao (o JSON guarda a chave crua para o JS do catalogo).
+  const ROTULO_NUM = {
+    subsistemas: "subsistemas",
+    linhas: "linhas de código",
+    verificadores: "verificadores de regra",
+    commits: "commits",
+    primeira_data: "primeiro commit",
+    sessoes_medidas: "sessões medidas",
+    tools: "tools no catálogo",
+    tools_com_contrato: "tools com contrato",
+  };
+  const numeros = p.status_extra || null;
+  const blocoNumeros = numeros
+    ? `<section class="psec">
+         <div class="eyebrow mono">medido no código</div>
+         <h2>O tamanho real, não o redigido</h2>
+         <dl class="pnums">
+           ${Object.entries(numeros)
+             .map(([k, v]) => `<div><dt>${esc(ROTULO_NUM[k] || k)}</dt><dd>${esc(String(v))}</dd></div>`)
+             .join("")}
+         </dl>
+       </section>`
+    : "";
+
+  // Projeto fechado. Aparece na pagina E no cartao: o NZ pediu para deixar
+  // claro que o codigo nao esta no GitHub e vai ser distribuido depois. O
+  // compromisso vai sem data — prazo aqui seria numero falso.
+  const blocoFechado = p.status === "privado"
+    ? `<section class="psec psec--priv">
+         <div class="eyebrow mono">projeto fechado</div>
+         <h2>Roda fechado, e isso é uma escolha</h2>
+         <p class="psec__p">${esc(p.distribuicao || "")}</p>
+         <p class="psec__p psec__p--fraco">${esc(p.preco_nota || "")}</p>
+       </section>`
+    : "";
+
+  const seccaoDiferenca = p.diferenca
+    ? `<section class="psec">
+         <div class="eyebrow mono">o diferencial</div>
+         <h2>O que este projeto faz diferente</h2>
+         <p class="psec__p">${esc(p.diferenca)}</p>
+       </section>`
+    : "";
+
+  const seccaoFaz = (p.o_que_faz || []).length
+    ? `<section class="psec">
+         <h2>O que ele faz</h2>
+         <ul class="psec__ul">${(p.o_que_faz || []).map((x) => `<li>${esc(x)}</li>`).join("")}</ul>
+       </section>`
+    : "";
 
   const tuto = p.tutorial
     ? `<section class="psec">
@@ -204,7 +261,12 @@ function paginaProduto(p, vip) {
 
   <p class="ppage__aviso">${esc(p.status_nota)}</p>
 
+  ${blocoFechado}
+  ${blocoNumeros}
   ${foto}
+
+  ${seccaoDiferenca}
+  ${seccaoFaz}
 
   <section class="psec">
     <h2>Para quem é</h2>
@@ -231,7 +293,11 @@ function paginaProduto(p, vip) {
   <div class="wrap ftr__in">
     <!-- Rodapé com o dado do produto, nao com elogio genérico. "Construído à
          mão, sem template" não mudava nunca e não dizia nada. -->
-    <span class="mono">${esc(p.nome)} · ${esc(p.status === "beta" ? "beta" : p.status === "em-producao" ? "em produção" : "estável")} · ${esc(p.licenca)}</span>
+    <!-- O rodape repete o status com o MESMO mapa que a vitrine usa. Antes
+         caia num ternario que so conhecia beta e em-producao, e todo produto
+         novo virava "estavel" — foi o que aconteceu com o agente, que e
+         fechado, e o rodape afirmava que era estavel. -->
+    <span class="mono">${esc(p.nome)} · ${esc(EST(p).txt)} · ${esc(p.licenca)}</span>
     <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
   </div>
 </footer>

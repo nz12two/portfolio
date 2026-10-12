@@ -310,9 +310,84 @@
           "TypeScript"
         ]
       }
+    },
+    {
+      "slug": "banzinho",
+      "nome": "Banzinho",
+      "tagline": "Agente de engenharia que roda no meu computador: 28 subsistemas, 38 verificadores que quebram a build se uma regra da constitution sumir.",
+      "categoria": "Agente",
+      "status": "privado",
+      "status_nota": "Projeto fechado e em uso diário. Não está no GitHub — roda local, a constitution, os skills e os hooks são privados. Vira distribuível depois; prazo definido depois.",
+      "preco": "sob-consulta",
+      "preco_nota": "Sem licença e sem preço definidos enquanto é fechado. Não contrate antes de o código existir publicamente.",
+      "repo": null,
+      "site": null,
+      "licenca": "proprietário (fechado)",
+      "stack": [
+        "TypeScript",
+        "Node.js",
+        "Bun",
+        "Obsidian/Vault"
+      ],
+      "para_quem": [
+        "Quem quer um agente que não alucina estado",
+        "Quem cansou de pedir de novo a mesma tarefa",
+        "Quem precisa que a regra seja verificada, não pedida"
+      ],
+      "status_extra": {
+        "subsistemas": 28,
+        "linhas": 18263,
+        "verificadores": 38,
+        "commits": 47,
+        "primeira_data": "2026-09-28",
+        "sessoes_medidas": 552,
+        "tools": 41,
+        "tools_com_contrato": 9
+      },
+      "distribuicao": "Fechado agora. Vira distribuível quando o código sair do meu computador — sem prazo, e o prazo só entra quando for real.",
+      "o_que_faz": [
+        "Guarda estado entre sessões — o que já foi feito, o que falhou, o que não repetir",
+        "Verifica a si mesmo: 38 checagens que param a build se uma regra escrita for removida do texto",
+        "Memória que responde 'como você resolveu isso antes' com recibo, não com memória de chat",
+        "Isola arquivos entre sessões com claim, para duas ideias não sobrescrevessem"
+      ],
+      "diferenca": "A parte rara não é o agente escrever código: é ele recusar. Contrato que não tem como provar não entra, número que não foi medido não sai, e a política dele é verificável — 38 verificadores leem a constitution e quebram se alguém tirar uma linha.",
+      "passos": [
+        [
+          "Instalar",
+          "Roda em Node/Bun, configura no ~/.config/opencode, sem servidor e sem conta."
+        ],
+        [
+          "Ligar a constitution",
+          "As regras do agente vivem em um arquivo de texto versionado. Cada regra vira um check."
+        ],
+        [
+          "Rodar os checks",
+          "bun run-checks.mjs — se uma regra sumiu, a suíte fica vermelha. É o teste que protege a política."
+        ],
+        [
+          "Usar e acumular",
+          "Cada sessão grava o que fez e o que falhou. A próxima já começa sabendo."
+        ]
+      ],
+      "licenca_nota": "Nenhuma licença pública ainda. O README não promete o que o código não provou.",
+      "home": {
+        "descricao": "Meu próprio agente de engenharia, rodando fechado. 28 subsistemas em 18 mil linhas e 38 verificadores que quebram a build se alguém remover uma regra da constitution. Vira distribuível depois.",
+        "tags": [
+          "TypeScript",
+          "Node.js"
+        ]
+      },
+      "prova": {
+        "num": 38,
+        "unidade": "verificadores de regra",
+        "quando": "2026-10-12",
+        "como": "Cada *.check.ts lê a constitution e falha se uma regra declarada sumir do texto. É o que impede a política de virar decoração."
+      }
     }
   ],
   "_imagens": "Captura de tela real, tirada do site em producao com Chrome headless. O campo data em qual_url_respondeu. Produto sem imagem tem imagem_motiva explicando por que — nenhuma imagem e gerada por codigo para fingir captura.",
   "_home_nota": "Bloco `home`: descricao e tags do cartao da vitrine. Vivem aqui e nao no index.html porque a home nao pode ser um retrato do que existe hoje — um produto novo entra editando este arquivo, sem tocar em markup.",
-  "_prova_nota": "`prova`: o numero de dentro do produto, com unidade e data. Sai daqui para a faixa do hero (js/vitrine.js) e para o card do catalogo. Contagem de produto/linguagem/repositorio nao entra: e bio, nao prova."
+  "_prova_nota": "`prova`: o numero de dentro do produto, com unidade e data. Sai daqui para a faixa do hero (js/vitrine.js) e para o card do catalogo. Contagem de produto/linguagem/repositorio nao entra: e bio, nao prova.",
+  "total": 6
 }

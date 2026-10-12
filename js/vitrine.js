@@ -28,6 +28,7 @@
   var TAG_STATUS = {
     beta: { txt: "beta", cls: "tag--beta" },
     "em-producao": { txt: "em produção", cls: "tag--acc" },
+    privado: { txt: "fechado", cls: "tag--priv" },
   };
   var TAG_PRECO = {
     gratis: { txt: "grátis", cls: "tag--ok" },
@@ -45,12 +46,28 @@
       tags.push({ txt: t, cls: "" });
     });
 
+    // Projeto fechado precisa dizer na home, e nao so na pagina dele. A pessoa
+    // le a vitrine primeiro: um cartao sem aviso que leva a uma pagina sem
+    // link de repo parece quebrado, e nao parece um projeto fechado de
+    // proposito.
+    var fechado = it.privado
+      ? '<p class="item__fechado">Código fechado, sem repo ainda. Vira distribuível quando sair do meu computador.</p>'
+      : "";
+
+    // Metrica de dentro do produto, no card. Sem ela, a vitrine contaria
+    // produtos e o NZ ja reprovou essa conta.
+    var prova = it.prova
+      ? '<p class="item__prova"><strong>' + esc(String(it.prova.num)) + "</strong> " + esc(it.prova.unidade) + "</p>"
+      : "";
+
     return (
       '<a class="item rv" href="catalogo/' + esc(it.slug) + '.html">' +
       '<span class="item__n">' + String(it.i).padStart(2, "0") + "</span>" +
       "<div>" +
       '<h3 class="item__name">' + esc(it.nome) + "</h3>" +
       '<p class="item__desc">' + esc(it.home ? it.home.descricao : it.tagline) + "</p>" +
+      prova +
+      fechado +
       '<div class="item__tags">' +
       tags.map(function (t) {
         return '<span class="tag' + (t.cls ? " " + t.cls : "") + '">' + esc(t.txt) + "</span>";

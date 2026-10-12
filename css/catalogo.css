@@ -140,6 +140,54 @@
 /* Sem zoom: a borda e o fundo ja marcam a linha. Esticar a imagem alem disso
    e enfeite que dura 400ms e nao informa nada. */
 
+/* Painel de numeros medidos. Grade de 4 colunas, numero grande e rotulo
+   pequeno: o padrao de "spec sheet" que portfolio de dev usa quando tem dado
+   de verdade. Fecha em 2 e depois 1 conforme a largura. */
+.pnums {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 18px 24px;
+  margin: 0;
+}
+.pnums dt {
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+  text-transform: lowercase;
+  margin-bottom: 2px;
+}
+.pnums dd {
+  margin: 0;
+  font-size: var(--t-xl);
+  font-weight: 640;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Projeto fechado: a borda a esquerda marca a secao sem precisar de caixa,
+   e o aviso e o que impede "cadê o repo?" — a duvida previsivel de quem ve
+   um projeto sem link de codigo. */
+.psec--priv { border-left: 2px solid var(--acc); padding-left: 20px; }
+.psec__p--fraco { color: var(--tx-2); font-size: var(--t-sm); }
+
+/* Metrica de dentro do produto. O numero e grande e a unidade e pequena: e a
+   mesma leitura do portfolio do Dejan, onde o item traz "13M+ users" e nao um
+   painel de estatisticas separado. */
+.res__stats strong { font-weight: 640; color: var(--tx); font-variant-numeric: tabular-nums; }
+
+/* Projeto fechado: o NZ pediu para deixar claro que o agente nao esta no
+   GitHub e vai ser distribuido depois. O cartao mostra o compromisso sem
+   prometer data — prazo aqui seria o numero falso que ele mandou nao
+   publicar. */
+.res__fechado {
+  font-size: var(--t-xs);
+  color: var(--tx-2);
+  border-left: 2px solid var(--acc);
+  padding-left: 12px;
+  margin: 0 0 12px;
+  max-width: 62ch;
+}
+.tag--priv { background: var(--acc); color: oklch(0.16 0.01 62); border-color: var(--acc); }
+
 /* Sem captura: o motivo, em vez de um retangulo vazio que parece imagem
    quebrada. */
 .res__semfoto {
