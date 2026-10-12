@@ -9,12 +9,91 @@ Identidades prontas:
   View Channel + Read History` aqui, e é ele que lê o `#anúncios`.
 - Webhook **`portfolio-push`** no `#anúncios` — é o que posta produto novo.
 
-Canais que existem hoje: `#regras #geral #anúncios #antixray #ferramentas
-#minecraft #feedback #sem-categoria` e o canal de voz `Geral`.
+## Estrutura que existe hoje
+
+A **categoria** de cada canal vem do campo `categoria` de `produtos.json` — o
+tipo de trabalho, não o assunto. `🌐 Sites` junta api-directory e opendex porque
+os dois são o mesmo tipo de entrega; canal separado para cada um seria o mesmo
+assunto em dois lugares. `🔌 Plugins` e `🤖 Agentes` são tipos que ninguém
+confundiria mesmo em canais distintos.
+
+Tradução do rótulo declarado para o nome da categoria:
+
+| `categoria` no JSON | categoria no Discord |
+|---|---|
+| Plugin | 🔌 Plugins |
+| Ferramenta | 🌐 Sites |
+| Serviço | ⚙️ Otimizações |
+| Jogo / simulação | 🎮 Jogos |
+| Agente | 🤖 Agentes |
+
+Duas traduções merecem justificativa: `Serviço` virou **Otimizações** porque a
+tagline do Baccana's Hub é otimização de servidor Paper, e `Ferramenta` virou
+**Sites** porque as duas ferramentas do catálogo são catálogos web já no ar. O
+rótulo do produto não muda — muda o nome da prateleira onde ele fica.
+
+```
+Info
+   📢 anúncios        texto, somente leitura — o webhook é o único que escreve
+   🎨 regras          texto, mensagem fixada
+   📌 informações     texto — o mapa do servidor, sem pergunta e sem bug
+   🗣️ geral           texto — apresentação; dúvida de produto vai no fórum
+
+🔌 Plugins
+   🛡️ antixray        fórum — Bug, Dúvida, Configuração, Falso positivo
+
+⚙️ Otimizações
+   🔧 baccanas-hub    fórum — Orçamento, Suporte, Dúvida
+
+🌐 Sites
+   📚 api-directory   fórum — API fora do ar, Dúvida, Item faltando
+   📦 opendex         fórum — Dúvida, Item faltando, Erro
+
+🤖 Agentes
+   🤖 banzinho        fórum — Dúvida, Sugestão
+
+🎮 Jogos
+   🏙️ empresas-mundo  fórum — Dúvida, Modelo, Erro
+
+💬 Comunidade
+   📣 feedback        fórum — Funcionalidade, Bug, Outro
+   🛠️ solicitar       fórum — Serviço, Parceria
+   💡 sugestões       fórum — Sugestão, Melhoria
+   🗂️ sem-categoria  texto
+
+🔊 Voz
+   🔊 Geral
+```
+
+**Por que fórum e não texto.** Em canal de texto, o bug de janeiro e o de
+outubro ficam na mesma pilha e ninguém acha o antigo. Em fórum, cada assunto é
+uma página com título próprio, tag e status de respondida — e o canal mostra
+quantas há sem ninguém precisar ler. Foi a decisão que mudou o servidor de
+"lista de canais" para estrutura.
+
+Cada fórum de produto tem **tópico igual à tagline** que o cartão da vitrine
+mostra, mais a prova e o link. Canal e página contam a mesma coisa: mesma fonte,
+dois lugares, nenhuma versão para manter em dia.
+
+`#anúncios` está com `@everyone` sem permissão de enviar. O aviso entra por
+webhook, que tem permissão própria — se o canal aceitasse escrita humana, ele
+seria mais um lugar onde atualização envelhece.
+
+**Onboarding** gravado e **desligado**: uma pergunta ("O que te trouxe aqui?")
+com os nove fóruns como opção, entrada por `#regras` e `#informações`, e uma
+etapa explicando as regras. O Discord recusa ligar sozinho com `350000
+requirements are not met` — a checagem é dele, não é campo inválido, e insistir
+no mesmo `PUT` não muda a resposta. Ligar é um interruptor em
+`Configurações do servidor → Ativação`, e ele já está com tudo preenchido.
+
+Papel `membro`: o Discord exige que cada opção de onboarding aponte para um
+papel que exista, e `@everyone` responde `UNKNOWN_ROLE` para o bot. Um papel só
+serve para as nove opções — ele marca "passou pelo onboarding" e não cria nove
+cargos para depois não saber o que fazer com eles.
 
 Falta criar: nada. Os secrets `DISCORD_WEBHOOK_URL` e `DISCORD_BOT_TOKEN` e as
 variables `DISCORD_CANAL_ID` e `DISCORD_INVITE` já estão no repositório, e o
-workflow foi testado ponta a ponta com um post real no `#anúncios`.
+circuito webhook → post → leitura pelo bot foi medido ponta a ponta.
 
 Por que este documento: o portfólio é estático e o `catalogo/dados/produtos.json`
 é a fonte de verdade dos produtos. Um Discord separado disso vira o segundo lugar
@@ -43,20 +122,30 @@ canal é o produto; o canal genérico é onde o assunto vai morrer.
 
 ```
 #regras          as três regras abaixo, fixadas.
-#anúncios        produto novo, versão nova, mudança de status. Só NZ.
-                É este canal que a página lê (dados/novidades.json).
-#antixray        uso, detecção, falso positivo, thresholds.
-#ferramentas     api-directory, opendex: dúvida de dado e de integração.
-#minecraft      Baccana's Hub, administração de servidor, plugins sob medida.
-#feedback        o que está faltando. Post do NZ responde em 24h ou o issue
-                vira produto — e volta pro produtos.json.
-#sem-categoria   o que não coube em lugar nenhum. Fecha ou vira canal.
+#anúncios        produto novo, versão nova, mudança de status. Só o webhook
+                escreve. É este canal que a página lê (dados/novidades.json).
+#geral           apresentação e conversa solta, não suporte.
+
+fórum por produto, um assunto por postagem:
+  antixray        uso, detecção, falso positivo, thresholds.
+  baccanas-hub    orçamento, suporte, otimização de servidor.
+  api-directory   API fora do ar, dúvida de dado.
+  opendex         item faltando, erro, dúvida de integração.
+  empresas-mundo  modelo, grafo, simulação.
+  banzinho        dúvida e sugestão sobre o agente.
+  feedback        o que está faltando. Post do NZ responde em 24h ou o issue
+                  vira produto — e volta pro produtos.json.
 ```
 
 Categorias e domínios já existem como taxonomia declarada em `produtos.json`
-(`tipo`, `dominio`) — o canal não é invenção nova, é a mesma taxonomia com outro
-formato. Se um produto novo entra com `tipo` que não tem canal, ele cai em
-`#sem-categoria` até o NZ decidir.
+(`tipo`, `categoria`, `dominio`) — o canal não é invenção nova, é a mesma
+taxonomia com outro formato. A categoria usa **`categoria`** (o tipo de
+trabalho), não `dominio` (onde o produto roda): `minecraft` e `dados` são o
+assunto, e assunto é assunto de fórum, não de prateleira. Produto novo cujo
+`categoria` ainda não tem prateleira cai em `#sem-categoria` até o NZ decidir.
+
+A lista com categoria e tópico de cada canal é o **estado** e fica no topo deste
+documento; esta seção é a **regra** que justifica o estado.
 
 ### Papéis
 
@@ -66,7 +155,9 @@ formato. Se um produto novo entra com `tipo` que não tem canal, ele cai em
 
 ### Regras — três linhas, no canal de regras
 
-1. Pergunta de produto vai no canal do produto. `geral` não existe de propósito.
+1. Pergunta de produto vai no fórum do produto. `#geral` existe para apresentação
+   e conversa solta, não para suporte — a diferença é que ninguém com a resposta
+   está lendo `#geral`.
 2. Bug: o que você fez, o que esperava, o log. Sem log eu não consigo responder.
 3. Nada de link de servidor de terceiros. Um spam em servidor pequeno mata o
    sinal e o NZ para de olhar.
