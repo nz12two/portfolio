@@ -17,7 +17,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const REPOS = ["antixray", "empresas-mundo", "api-directory", "opendex"];
-const SAIDA = path.join(__dirname, "..", "v2", "evidencia.json");
+const SAIDA = path.join(__dirname, "..", "dados", "evidencia.json");
 const UA = { "User-Agent": "nz12two-portfolio", Accept: "application/vnd.github+json" };
 
 const MB = 1024 * 1024;

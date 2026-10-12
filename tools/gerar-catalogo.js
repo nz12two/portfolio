@@ -18,7 +18,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-const DADOS = path.join(__dirname, "dados");
+const DADOS = path.join(__dirname, "..", "catalogo", "dados");
 
 const ler = (f) => {
   try {

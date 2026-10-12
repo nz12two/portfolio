@@ -1,535 +1,314 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="NZ - Desenvolvedor Full Stack. Transformo ideias em solucoes digitais: sites, sistemas, bots e automacoes que geram resultados reais para seu negocio.">
-  <meta name="author" content="NZ">
-  <meta property="og:title" content="NZ - Desenvolvedor Full Stack">
-  <meta property="og:description" content="Desenvolvedor Full Stack especializado em sistemas, automacoes e sites rapidos e estaveis.">
-  <meta property="og:image" content="https://raw.githubusercontent.com/nz12two/portfolio/main/github/social-preview.png">
-  <meta property="og:url" content="https://nz12two.github.io/portfolio/">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:type" content="website">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-  <title>NZ - Desenvolvedor Full Stack</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NZ — constrói plugins, catálogos e agentes que rodam</title>
+<meta name="description" content="NZ constrói software que roda: plugin de detecção de x-ray para Paper 1.21.4, catálogos com auto-atualização e simulação multi-agente. Código aberto, instalado e medido.">
+<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-  <!-- NAV -->
-  <header>
+<!-- ===== HEADER ===== -->
+<header class="hdr" id="hdr">
+  <div class="wrap hdr__in">
+    <a href="#topo" class="brand">NZ <small>/ build log</small></a>
     <nav class="nav">
-      <div class="nav-inner">
-        <a href="#inicio" class="nav-logo">NZ</a>
-        <ul class="nav-menu">
-          <li><a href="#inicio" class="nav-link active">Inicio</a></li>
-          <li><a href="#sobre" class="nav-link">Sobre</a></li>
-          <li><a href="#catalogo" class="nav-link">Catalogo</a></li>
-          <li><a href="#servicos" class="nav-link">Servicos</a></li>
-          
-          <li><a href="#contato" class="nav-link">Contato</a></li>
-        </ul>
-        <button class="nav-toggle" aria-label="Menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
+      <a href="#produtos">Produtos</a>
+      <a href="#prova">Prova</a>
+      <a href="#sobre">Sobre</a>
     </nav>
-  </header>
+    <a href="#contato" class="btn btn--acc">Contato</a>
+  </div>
+</header>
 
-  <main>
+<main id="topo">
 
-    <!-- HERO -->
-    <section id="inicio" class="hero">
-      <div class="hero-grid">
-        <div class="hero-bg-grid"></div>
+  <!-- ===== HERO =====
+       Sem degradê, sem digitando, sem terminal animando. A atenção vem do
+       painel de evidência: linguagens por byte real dos repos, que é o único
+       número que não dá paraIFICAR sem abrir o repositório. -->
+  <section class="hero wrap">
+    <div class="hero__grid">
+      <div>
+        <h1>Eu construo coisas<br>que <em>realmente rodam</em>.</h1>
+        <p class="hero__sub">
+          Plugin de detecção de x-ray para Paper 1.21.4. Catálogos que se atualizam
+          sozinhos. Simulação de empresas de entrega competindo num mapa real.
+          Tudo com o código aberto, o passo a passo e o número medido.
+        </p>
+        <div class="hero__cta">
+          <a href="catalogo/index.html" class="btn btn--acc">Ver os produtos</a>
+          <a href="#produtos" class="btn">Ler a lista</a>
+          <a href="https://github.com/nz12two" class="btn">Código no GitHub</a>
+        </div>
       </div>
-      <div class="container">
-        <div class="hero-inner">
-          <div class="hero-text">
-            <div class="hero-badge">
-              <span class="badge-dot"></span>
-              <span class="badge-text">Disponivel para projetos</span>
-            </div>
-            <h1 class="hero-title">
-              <span class="hero-name">NZ</span>
-              <span class="hero-role" id="hero-role">Full Stack Developer</span>
-            </h1>
-            <p class="hero-focus">
-              <span class="focus-accent">Automacao</span>
-              <span class="focus-sep">/</span>
-              <span>Sistemas</span>
-              <span class="focus-sep">/</span>
-              <span>Bots</span>
+
+      <!-- Dados: bytes por linguagem, somados nos 4 repositórios públicos.
+           O HTML carrega um valor conhecido para quem abrir sem JS; o fetch
+           substitui pelo dado atual. Fonte: tools/update-evidence.js -->
+      <aside class="panel proof" id="proof">
+        <div class="proof__hd">
+          <span class="mono">código publicado</span>
+          <span class="proof__num" id="proofTotal">1.91<span> MB</span></span>
+        </div>
+        <div class="bar" id="proofBar">
+          <div class="bar__row">
+            <span class="bar__name">Java</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.291"></span></span>
+            <span class="bar__val">567 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name" title="TypeScript">TypeScr</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.274"></span></span>
+            <span class="bar__val">535 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name">Astro</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.191"></span></span>
+            <span class="bar__val">372 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name">Python</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.100"></span></span>
+            <span class="bar__val">196 KB</span>
+          </div>
+          <div class="bar__row">
+            <span class="bar__name">Outros</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.144"></span></span>
+            <span class="bar__val">281 KB</span>
+          </div>
+        </div>
+        <p class="proof__src" id="proofSrc">medido na API do GitHub</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ===== PRODUTOS =====
+       Lista editorial com número, não grade de caixas iguais. Cinco produtos
+       com a mesma forma viram uma parede; numerados, viram um índice. -->
+  <section class="sec sec--alt" id="produtos">
+    <div class="wrap">
+      <div class="eyebrow mono">produtos</div>
+      <h2 style="font-size:var(--t-2xl);max-width:20ch">O que está pronto para você usar hoje</h2>
+      <p class="lead" style="margin-top:18px">
+        Cada item tem página com o que faz, para quem é e como instalar.
+        Sem waitlist, sem “em breve”. Tem também
+        <a href="catalogo/index.html" style="color:var(--acc)">busca, filtro e comparação</a>
+        sobre os dados do catálogo.
+      </p>
+
+      <div class="items">
+        <a class="item rv" href="catalogo/antixray.html">
+          <span class="item__n">01</span>
+          <div>
+            <h3 class="item__name">AntiXray</h3>
+            <p class="item__desc">
+              Detecção de x-ray para Paper 1.21.4 com 19+ detectores independentes,
+              motor de risco temporal e evidência automática no flag. Você recebe o
+              relatório, não só o kick.
             </p>
-            <p class="hero-desc">Transformo suas ideias em solucoes digitais que geram resultados reais. Sites, sistemas, bots e automacoes.</p>
-            <div class="hero-btns">
-              <a href="#catalogo" class="btn primary">Ver Catalogo</a>
-              <a href="#contato" class="btn outline">Entrar em Contato</a>
-              <a href="https://wa.me/5511951999999" target="_blank" class="btn whatsapp"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#whatsapp"></use></svg> WhatsApp</a>
+            <div class="item__tags">
+              <span class="tag tag--beta">beta</span>
+              <span class="tag">Java</span><span class="tag">Paper 1.21.4</span>
+              <span class="tag">MIT</span><span class="tag">grátis</span>
             </div>
           </div>
-          <div class="hero-media">
-            <div class="hero-card">
-              <div class="hero-avatar-wrap">
-                <div class="hero-avatar-glow"></div>
-                <img src="assets/icon.jpg" alt="NZ" class="hero-avatar-img">
-              </div>
-              <div class="hero-terminal" id="hero-terminal">
-                <div class="term-line">
-                  <span class="term-prompt">$</span>
-                  <span class="term-text"></span>
-                  <span class="term-cursor" style="display:none">▊</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="hero-scroll">
-        <span>Role para explorar</span>
-        <div class="scroll-line"></div>
-      </div>
-    </section>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
 
-    <div class="section-divider"></div>
-
-    <!-- SOBRE -->
-    <section id="sobre" class="section alt-bg">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">Sobre</span>
-          <h2 class="sec-title">Quem <span class="gtext">sou</span></h2>
-        </div>
-        <div class="sobre-grid">
-          <div class="sobre-content reveal">
-            <p class="sobre-destaque">Desenvolvedor full stack focado em criar solucoes praticas, rapidas e confiaveis.</p>
-            <p class="sobre-texto">Desenvolvo APIs, bots, automacoes e sites que funcionam de forma estavel e eficiente. Meu foco e entregar solucoes prontas para uso, com performance e confiabilidade.</p>
-            <div class="skills">
-              <span class="skill">JavaScript</span>
-              <span class="skill">Python</span>
-              <span class="skill">React</span>
-              <span class="skill">Integracoes</span>
-              <span class="skill">APIs</span>
-              <span class="skill">Automacoes</span>
-              <span class="skill">Bots</span>
-              <span class="skill">Otimizacoes</span>
-              <span class="skill">Sistemas Web</span>
-            </div>
-            <div class="sobre-skills-bars">
-              <div class="skill-bar-group">
-                <div class="skill-bar-label"><span>JavaScript / React</span><span>80%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
-              </div>
-              <div class="skill-bar-group">
-                <div class="skill-bar-label"><span>Python / Automacao</span><span>75%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="75"></div></div>
-              </div>
-              <div class="skill-bar-group">
-                <div class="skill-bar-label"><span>APIs / Integracoes</span><span>85%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="85"></div></div>
-              </div>
-              <div class="skill-bar-group">
-                <div class="skill-bar-label"><span>Bots / Automacao</span><span>70%</span></div>
-                <div class="skill-bar-track"><div class="skill-bar-fill" data-width="70"></div></div>
-              </div>
+        <a class="item rv" href="catalogo/api-directory.html">
+          <span class="item__n">02</span>
+          <div>
+            <h3 class="item__name">API Directory</h3>
+            <p class="item__desc">
+              Catálogo de APIs públicas gratuitas que diz se elas respondem, com a
+              latência medida de fora. Separa servidor fora do ar de CORS bloqueando —
+              duas perguntas que um diretório comum não responde.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--ok">estável</span>
+              <span class="tag">Python</span><span class="tag">JavaScript</span>
+              <span class="tag">MIT</span><span class="tag">grátis</span>
             </div>
           </div>
-          <div class="stats reveal">
-            <!-- Substitui "5 clientes satisfeitos", que nao tinha como ser
-                 provado. Estes numeros sao contaveis no momento: um clique em
-                 cada card do catalogo leva a pagina do produto. -->
-            <div class="stat-item">
-              <div class="stat-num" data-num="5">5</div>
-              <div class="stat-label">Produtos no catalogo</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num" data-num="5">5</div>
-              <div class="stat-label">Repos publicos</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-num" data-num="4">4</div>
-              <div class="stat-label">Linguagens em uso</div>
-            </div>
-          </div>
-        </div>
-        <div class="tech-carousel reveal">
-          <div class="tech-track">
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#js"></use></svg> JavaScript</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#python"></use></svg> Python</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#react"></use></svg> React</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#node"></use></svg> Node.js</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#code-branch"></use></svg> Git</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#database"></use></svg> APIs</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#robot"></use></svg> Bots</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#cloud"></use></svg> Integracoes</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#js"></use></svg> JavaScript</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#python"></use></svg> Python</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#react"></use></svg> React</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#node"></use></svg> Node.js</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#code-branch"></use></svg> Git</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#database"></use></svg> APIs</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#robot"></use></svg> Bots</span>
-            <span class="tech-item"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#cloud"></use></svg> Integracoes</span>
-          </div>
-        </div>
-      </div>
-    </section>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
 
-    <div class="section-divider"></div>
-
-    <!-- AUTOMACAO -->
-<!-- CATALOGO -->
-    <section id="catalogo" class="section">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">Catalogo</span>
-          <h2 class="sec-title">Produtos que eu <span class="gtext">construo</span></h2>
-          <p class="sec-sub">Cada um com o que faz, para quem e, preco e como instalar</p>
-        </div>
-        <div class="cat-grid">
-          <a class="cat-card reveal" href="catalogo/antixray.html" style="--i:0">
-            <div class="cat-top"><h3>AntiXray</h3><span class="cat-badge cat-beta">beta</span></div>
-            <p>Deteccao de x-ray para Paper 1.21.4+ com 19+ detectores e motor de risco temporal.</p>
-            <ul class="cat-feats">
-              <li>19+ detectores em 3 tiers</li>
-              <li>Evidencia e replay automaticos</li>
-              <li>API publica e eventos</li>
-            </ul>
-            <span class="cat-meta">Java &middot; MIT &middot; gratis</span>
-          </a>
-          <a class="cat-card reveal" href="catalogo/api-directory.html" style="--i:1">
-            <div class="cat-top"><h3>API Directory</h3><span class="cat-badge cat-ok">estavel</span></div>
-            <p>Diretorio de APIs publicas gratuitas que diz se elas respondem, com latencia medida.</p>
-            <ul class="cat-feats">
-              <li>Latencia real por API</li>
-              <li>Separa servidor fora do ar de CORS</li>
-              <li>Snippet e CSV prontos</li>
-            </ul>
-            <span class="cat-meta">Python, JavaScript &middot; MIT &middot; gratis</span>
-          </a>
-          <a class="cat-card reveal" href="catalogo/opendex.html" style="--i:2">
-            <div class="cat-top"><h3>OpenDex</h3><span class="cat-badge cat-ok">estavel</span></div>
-            <p>Catalogo e documentacao do ecossistema OpenCode: 122 repos e 247 pacotes, tudo de dado real.</p>
-            <ul class="cat-feats">
-              <li>Nada de item inventado</li>
-              <li>Feed e ranking automaticos</li>
-              <li>380 paginas em build</li>
-            </ul>
-            <span class="cat-meta">Astro, React, TypeScript &middot; MIT &middot; gratis</span>
-          </a>
-          <a class="cat-card reveal" href="catalogo/empresas-mundo.html" style="--i:3">
-            <div class="cat-top"><h3>EmpresasMundo</h3><span class="cat-badge cat-ok">estavel</span></div>
-            <p>Empresas de entrega competindo por fitness, cada uma um agente com DNA proprio, no OSM.</p>
-            <ul class="cat-feats">
-              <li>Simulacao tick a tick</li>
-              <li>Grafo real de Sao Paulo</li>
-              <li>WebSocket ao vivo</li>
-            </ul>
-            <span class="cat-meta">Python, FastAPI &middot; sem licenca &middot; gratis</span>
-          </a>
-          <a class="cat-card reveal" href="catalogo/baccanas-hub.html" style="--i:4">
-            <div class="cat-top"><h3>Baccana&apos;s Hub</h3><span class="cat-badge cat-wip">sob consulta</span></div>
-            <p>Plataforma de servicos para servidores Minecraft: configuracao, otimizacao e desenvolvimento.</p>
-            <ul class="cat-feats">
-              <li>Setup e revisao de Paper</li>
-              <li>Otimizacao de tick loop</li>
-              <li>Desenvolvimento sob demanda</li>
-            </ul>
-            <span class="cat-meta">Next.js, TypeScript &middot; proprietario</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- SERVICOS -->
-    <section id="servicos" class="section alt-bg">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">Servicos</span>
-          <h2 class="sec-title">O que <span class="gtext">faco</span></h2>
-          <p class="sec-sub">Solucoes que desenvolvo para clientes e projetos reais</p>
-        </div>
-        <div class="servicos-grid">
-          <div class="servico-card reveal" style="--i:0">
-            <span class="servico-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#globe"></use></svg></span>
-            <h3>Sites e Dashboards</h3>
-            <p>Desenvolvimento de sites, dashboards de bots e sistemas web simples.</p>
-          </div>
-          <div class="servico-card reveal" style="--i:1">
-            <span class="servico-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#robot"></use></svg></span>
-            <h3>Bots e Automacoes</h3>
-            <p>Criacao de bots, automacoes basicas e integracoes.</p>
-          </div>
-          <div class="servico-card reveal" style="--i:2">
-            <span class="servico-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#server"></use></svg></span>
-            <h3>Servidores de Minecraft</h3>
-            <p>Configuracao de plugins, otimizacao de performance e manutencao.</p>
-          </div>
-          <div class="servico-card reveal" style="--i:3">
-            <span class="servico-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#code"></use></svg></span>
-            <h3>Programacao</h3>
-            <p>Desenvolvimento em JavaScript e Python, criacao de plugins e scripts.</p>
-          </div>
-          <div class="servico-card reveal" style="--i:4">
-            <span class="servico-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#cogs"></use></svg></span>
-            <h3>Plugins Personalizados</h3>
-            <p>Criacao e customizacao de plugins para servidores de Minecraft.</p>
-          </div>
-          <div class="servico-card reveal" style="--i:5">
-            <span class="servico-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#chart-line"></use></svg></span>
-            <h3>Otimizacao e Performance</h3>
-            <p>Melhoria de performance em sites, bots e servidores.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- DIFERENCIAIS -->
-    <section class="section">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">Diferenciais</span>
-          <h2 class="sec-title">Por que <span class="gtext">trabalhar comigo?</span></h2>
-        </div>
-        <div class="diffs-grid">
-          <div class="diff-item reveal" style="--i:0">
-            <span class="diff-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#bolt"></use></svg></span>
-            <h4>Entrega rapida</h4>
-            <p>Projetos entregues no prazo, sem atrasos.</p>
-          </div>
-          <div class="diff-item reveal" style="--i:1">
-            <span class="diff-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#shield"></use></svg></span>
-            <h4>Codigo confiavel</h4>
-            <p>Solucoes estaveis e prontas para uso real.</p>
-          </div>
-          <div class="diff-item reveal" style="--i:2">
-            <span class="diff-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#headset"></use></svg></span>
-            <h4>Suporte apos entrega</h4>
-            <p>Ajuda e manutencao quando necessario.</p>
-          </div>
-          <div class="diff-item reveal" style="--i:3">
-            <span class="diff-icon"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#chart-line"></use></svg></span>
-            <h4>Alta performance</h4>
-            <p>Sistemas rapidos e otimizados.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <div class="section-divider"></div>
-
-    <!-- DEPOIMENTOS -->
-    <section class="section">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">Feedback</span>
-          <h2 class="sec-title">O que <span class="gtext">dizem</span></h2>
-        </div>
-        <div class="dep-grid">
-          <div class="dep-card reveal" style="--i:0">
-            <span class="dep-quote"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#quote-left"></use></svg></span>
-            <p>"Com a automacao implementada, o processo ficou 50% mais rapido e eficiente. Entregou no prazo e o suporte foi excelente."</p>
-            <h4>&mdash; Cliente, Projeto Automacao Comercial</h4>
-          </div>
-          <div class="dep-card reveal" style="--i:1">
-            <span class="dep-quote"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#quote-left"></use></svg></span>
-            <p>"O site apresentou excelente performance e estabilidade, exatamente como precisava. Recomendo o trabalho."</p>
-            <h4>&mdash; Cliente, Site Institucional</h4>
-          </div>
-          <div class="dep-card reveal" style="--i:2">
-            <span class="dep-quote"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#quote-left"></use></svg></span>
-            <p>"A integracao de bots melhorou o atendimento e reduziu erros manuais significativamente. Profissional dedicado."</p>
-            <h4>&mdash; Cliente, Bot de Atendimento</h4>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- FAQ -->
-    <section class="section alt-bg">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">FAQ</span>
-          <h2 class="sec-title">Perguntas <span class="gtext">frequentes</span></h2>
-        </div>
-        <div class="faq-list">
-          <div class="faq-item">
-            <div class="faq-q">
-              <span>Como funciona o processo de desenvolvimento?</span>
-              <svg class="i faq-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#plus"></use></svg>
-            </div>
-            <div class="faq-a">
-              <p>Apos o contato, analiso suas necessidades, apresento uma proposta, e apos a aprovacao, inicio o desenvolvimento com entregas parciais para validacao.</p>
+        <a class="item rv" href="catalogo/opendex.html">
+          <span class="item__n">03</span>
+          <div>
+            <h3 class="item__name">OpenDex</h3>
+            <p class="item__desc">
+              Catálogo e documentação do ecossistema OpenCode: 122 repositórios e 247
+              pacotes, todos de dado real. Se não há fonte, a página mostra estado
+              vazio em vez de inventar item.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--ok">estável</span>
+              <span class="tag">Astro 7</span><span class="tag">React 19</span>
+              <span class="tag">MIT</span><span class="tag">grátis</span>
             </div>
           </div>
-          <div class="faq-item">
-            <div class="faq-q">
-              <span>Qual o prazo medio para entregar?</span>
-              <svg class="i faq-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#plus"></use></svg>
-            </div>
-            <div class="faq-a">
-              <p>Depende da complexidade. Sites simples: 1-2 semanas. Sistemas complexos: 3-8 semanas. Sempre alinhamos prazos realistas.</p>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="item rv" href="catalogo/empresas-mundo.html">
+          <span class="item__n">04</span>
+          <div>
+            <h3 class="item__name">EmpresasMundo</h3>
+            <p class="item__desc">
+              Simulação de empresas de entrega disputando rota: cada uma é um agente
+              com rede neural recorrente própria, evoluindo ao longo das gerações num
+              grafo real de São Paulo.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--ok">estável</span>
+              <span class="tag">Python</span><span class="tag">FastAPI</span>
+              <span class="tag">OSM</span><span class="tag">grátis</span>
             </div>
           </div>
-          <div class="faq-item">
-            <div class="faq-q">
-              <span>Voce oferece suporte apos a entrega?</span>
-              <svg class="i faq-icon" aria-hidden="true" focusable="false"><use href="assets/icons.svg#plus"></use></svg>
-            </div>
-            <div class="faq-a">
-              <p>Sim! Ofereco 30 dias de suporte gratuito e planos de manutencao continua para quem precisa de acompanhamento.</p>
+          <span class="item__go" aria-hidden="true">&rarr;</span>
+        </a>
+
+        <a class="item rv" href="catalogo/baccanas-hub.html">
+          <span class="item__n">05</span>
+          <div>
+            <h3 class="item__name">Baccana's Hub</h3>
+            <p class="item__desc">
+              Serviço para servidores Minecraft: configuração, otimização de tick loop
+              e desenvolvimento sob medida. Você conversa comigo antes de contratar —
+              sem formulário corporativo.
+            </p>
+            <div class="item__tags">
+              <span class="tag tag--acc">sob consulta</span>
+              <span class="tag">Next.js</span><span class="tag">TypeScript</span>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- CONTATO -->
-    <section id="contato" class="section">
-      <div class="container">
-        <div class="sec-head reveal">
-          <span class="sec-tag">Contato</span>
-          <h2 class="sec-title">Vamos <span class="gtext">conversar</span></h2>
-          <p class="sec-sub">Descreva seu projeto e eu te retorno com a melhor solucao</p>
-        </div>
-        <div class="contato-grid reveal">
-          <div class="contato-form">
-            <div class="form-grupo">
-              <label class="form-label" for="ctt-name"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#user"></use></svg> Seu nome</label>
-              <input type="text" id="ctt-name" class="form-input" placeholder="Como voce se chama?" required>
-            </div>
-            <div class="form-grupo">
-              <label class="form-label" for="ctt-email"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#envelope"></use></svg> Seu e-mail</label>
-              <input type="email" id="ctt-email" class="form-input" placeholder="seu@email.com" required>
-            </div>
-            <div class="form-grupo">
-              <label class="form-label" for="ctt-purpose"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#bullseye"></use></svg> Qual o objetivo?</label>
-              <div class="select-box">
-                <select id="ctt-purpose">
-                  <option value="orcamento">Orcamento de Projeto</option>
-                  <option value="duvida">Duvida Tecnica</option>
-                  <option value="proposta">Proposta de Trabalho</option>
-                  <option value="reuniao">Agendar Reuniao</option>
-                  <option value="outro">Outro Assunto</option>
-                </select>
-                <svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#chevron-down"></use></svg>
-              </div>
-            </div>
-            <div class="form-grupo">
-              <label class="form-label" for="ctt-message"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#comment"></use></svg> Descreva seu projeto</label>
-              <textarea id="ctt-message" class="form-textarea" placeholder="Conte um pouco sobre o que voce precisa..." rows="4" required></textarea>
-            </div>
-            <button id="ctt-btn" class="btn primary btn-full">
-              Enviar Mensagem <svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#paper-plane"></use></svg>
-            </button>
-            <div class="form-obs">
-              <svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#info-circle"></use></svg>
-              <span>Respondo em ate 24h uteis</span>
-            </div>
-          </div>
-          <div class="contato-links">
-  
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=nzjr123@gmail.com" target="_blank" class="ctt-link ctt-mail">
-              <span class="ctt-ico"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#envelope"></use></svg></span>
-              <span class="ctt-info">
-                <strong>E-mail</strong>
-                <span>nzjr123@gmail.com</span>
-                <span class="ctt-status">Resposta em 24h</span>
-              </span>
-              <svg class="i ctt-arrow" aria-hidden="true" focusable="false"><use href="assets/icons.svg#arrow-right"></use></svg>
-            </a>
-            <a href="https://github.com/nz12two" target="_blank" class="ctt-link ctt-gh">
-              <span class="ctt-ico"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#github"></use></svg></span>
-              <span class="ctt-info">
-                <strong>GitHub</strong>
-                <span>@nz12two</span>
-                <span class="ctt-status">Codigo aberto</span>
-              </span>
-              <svg class="i ctt-arrow" aria-hidden="true" focusable="false"><use href="assets/icons.svg#arrow-right"></use></svg>
-            </a>
-            <a href="https://wa.me/5511951999999" target="_blank" class="ctt-link ctt-wa">
-              <span class="ctt-ico"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#whatsapp"></use></svg></span>
-              <span class="ctt-info">
-                <strong>WhatsApp</strong>
-                <span>(11) 95199-9999</span>
-                <span class="ctt-status">Resposta rapida</span>
-              </span>
-              <svg class="i ctt-arrow" aria-hidden="true" focusable="false"><use href="assets/icons.svg#arrow-right"></use></svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- CTA -->
-    <section class="cta">
-      <div class="container">
-        <h2 class="cta-titulo reveal">Pronto para transformar sua ideia em <span class="gtext">realidade</span>?</h2>
-        <p class="cta-sub reveal">Seu projeto merece um desenvolvimento serio, rapido e bem feito.</p>
-        <a href="#contato" class="btn primary reveal">
-          <svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#rocket"></use></svg> Vamos conversar!
+          <span class="item__go" aria-hidden="true">&rarr;</span>
         </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- ===== PROVA =====
+       Resposta direta à pergunta que todo visitante faz em silêncio: "isso
+       funciona mesmo?". Os números aqui são verificáveis abrindo o repositório
+       — foi por isso que tirei "5 clientes satisfeitos". -->
+  <section class="sec" id="prova">
+    <div class="wrap">
+      <div class="eyebrow mono">prova</div>
+      <h2 style="font-size:var(--t-2xl);max-width:22ch">Cada afirmação aqui abre um repositório</h2>
+      <p class="lead" style="margin-top:18px">
+        Nada de depoimento ou número de vitrine. Se eu afirmo que funciona, o código
+        está aberto e o build está no Actions.
+      </p>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <div class="footer-brand">
-          <h3 class="gtext">NZ</h3>
-          <p>Desenvolvimento com proposito</p>
+      <div class="about__list" style="margin-top:44px">
+        <div class="about__row">
+          <span class="about__k">AntiXray compila e empacota</span>
+          <span class="about__v">JDK 21 · exit 0 · jar 909 KB</span>
         </div>
-        <div class="footer-nav">
-          <a href="#inicio">Inicio</a>
-          <a href="#sobre">Sobre</a>
-          <a href="#catalogo">Catalogo</a>
-          <a href="#servicos">Servicos</a>
-          <a href="#catalogo">Catalogo</a>
-          <a href="#contato">Contato</a>
+        <div class="about__row">
+          <span class="about__k">OpenDex gera páginas em build</span>
+          <span class="about__v">380 páginas · 0 erros · ~36s</span>
         </div>
-        <div class="footer-social">
-          <a href="https://github.com/nz12two" target="_blank" aria-label="GitHub"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#github"></use></svg></a>
-          <!-- instagram removido -->
-          <a href="https://discord.com/users/1223791822795575400" target="_blank" aria-label="Discord"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#discord"></use></svg></a>
+        <div class="about__row">
+          <span class="about__k">API Directory mede latência de verdade</span>
+          <span class="about__v">16 workers · 1x ao dia no CI</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">EmpresasMundo simula em mapa real</span>
+          <span class="about__v">OSMnx · FastAPI · WebSocket</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">Zero dependência de terceiros no site</span>
+          <span class="about__v">sprite SVG local · sem CDN</span>
         </div>
       </div>
-      <div class="footer-bottom">
-        <p>&copy; 2026 NZ &mdash; Desenvolvedor Full Stack</p>
+
+      <div style="margin-top:38px">
+        <a href="https://github.com/nz12two" class="btn btn--acc">Abrir o GitHub</a>
       </div>
     </div>
-  </footer>
+  </section>
 
-  <button id="back-top" aria-label="Voltar ao topo">
-    <svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#chevron-up"></use></svg>
-  </button>
+  <!-- ===== SOBRE ===== -->
+  <section class="sec sec--alt" id="sobre">
+    <div class="wrap">
+      <div class="eyebrow mono">sobre</div>
+      <div class="about">
+        <div>
+          <h2 style="font-size:var(--t-2xl);max-width:16ch">Administro servidores e escrevo o código que faltava neles</h2>
+        </div>
+        <div>
+          <p class="lead" style="font-size:var(--t-md)">
+            Comecei por plugin de Minecraft porque era o problema que eu tinha. O que
+            me interessa é a mesma coisa em qualquer lugar: um sistema que funciona,
+            com o número medido e o passo a passo que outra pessoa consegue repetir.
+          </p>
+          <p style="color:var(--tx-2);margin-top:16px">
+            Escrevo em Java, Python, TypeScript e JavaScript. Publico o código aberto
+            porque é assim que eu confiro que funciona de verdade — e o build quebrado
+            na frente de todo mundo incomoda mais que a bug escondida.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/5511951999999" target="_blank" class="whatsapp-float" aria-label="Fale pelo WhatsApp">
-    <svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#whatsapp"></use></svg>
-  </a>
+  <!-- ===== CONTATO ===== -->
+  <section class="sec" id="contato">
+    <div class="wrap">
+      <div class="eyebrow mono">contato</div>
+      <div class="ct">
+        <div>
+          <h2 style="font-size:var(--t-2xl);max-width:14ch">Me conta o problema</h2>
+          <p class="lead" style="margin-top:18px">
+            Se for plugin para servidor, automação ou catálogo com auto-atualização,
+            eu já tenho o caminho. Descreve em duas linhas e eu respondo com o que dá
+            e o que não dá.
+          </p>
+        </div>
 
-  <script src="script.js"></script>
+        <form class="panel" style="padding:26px" novalidate>
+          <div class="field">
+            <label for="v2-nome">Seu nome</label>
+            <input id="v2-nome" name="nome" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="v2-email">Seu e-mail</label>
+            <input id="v2-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="v2-assunto">O que você precisa</label>
+            <select id="v2-assunto" name="assunto">
+              <option value="plugin">Plugin para servidor Minecraft</option>
+              <option value="catalogo">Catálogo ou página com auto-atualização</option>
+              <option value="automacao">Automação ou bot</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="v2-msg">Detalha em duas linhas</label>
+            <textarea id="v2-msg" name="mensagem" rows="4" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--acc" style="width:100%">Enviar mensagem</button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <span class="mono">NZ — construído à mão, sem template</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
+
+<script src="js/main.js" defer></script>
 </body>
 </html>
-
-
-
 

@@ -21,8 +21,11 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const RAIZ = path.join(__dirname, "..");
-const SAIDA = __dirname;
-const CSS = "../v2/v2.css";
+// As paginas de produto vao em catalogo/. Antes este era __dirname, que era a
+// propria pasta do build — com o build movido para tools/ isso passou a gerar
+// HTML dentro de tools/ em vez do catalogo.
+const SAIDA = path.join(RAIZ, "catalogo");
+const CSS = "../css/main.css";
 
 const esc = (s) =>
   String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -36,7 +39,7 @@ const EST = (p) => ESTADO[p.status] || ESTADO.estavel;
 
 function read(file, fallback) {
   try {
-    return JSON.parse(fs.readFileSync(path.join(__dirname, "dados", file), "utf8"));
+    return JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "dados", file), "utf8"));
   } catch {
     return fallback;
   }
@@ -116,22 +119,22 @@ function paginaProduto(p, vip) {
 <title>${esc(p.nome)} — NZ</title>
 <meta name="description" content="${esc(p.tagline)}">
 <link rel="stylesheet" href="${CSS}">
-<link rel="stylesheet" href="pagina.css">
-<link rel="stylesheet" href="vip.css">
+<link rel="stylesheet" href="../css/produto.css">
+<link rel="stylesheet" href="../css/vip.css">
 </head>
 <body>
 
 <header class="hdr">
   <div class="wrap hdr__in">
-    <a href="../v2/index.html" class="brand">NZ <small>/ ${esc(p.nome)}</small></a>
-    <nav class="nav"><a href="../v2/index.html">Produtos</a></nav>
+    <a href="../index.html" class="brand">NZ <small>/ ${esc(p.nome)}</small></a>
+    <nav class="nav"><a href="../index.html">Produtos</a></nav>
     <button class="btn btn--acc" data-vip-open>VIP</button>
   </div>
 </header>
 
 <main class="wrap ppage">
 
-  <a href="../v2/index.html" class="ppage__volta">← catálogo</a>
+  <a href="../index.html" class="ppage__volta">← catálogo</a>
 
   <div class="eyebrow mono">${esc(p.categoria)}</div>
   <h1>${esc(p.nome)}</h1>
@@ -181,7 +184,7 @@ function paginaProduto(p, vip) {
   </div>
 </footer>
 
-<script src="vip.js"></script>
+<script src="../js/vip.js" defer></script>
 </body>
 </html>
 `;
@@ -190,7 +193,7 @@ function paginaProduto(p, vip) {
 function main() {
   let data;
   try {
-    data = JSON.parse(fs.readFileSync(path.join(__dirname, "dados", "produtos.json"), "utf8"));
+    data = JSON.parse(fs.readFileSync(path.join(RAIZ, "catalogo", "dados", "produtos.json"), "utf8"));
   } catch (e) {
     console.error(`produtos.json inválido: ${e.message}`);
     process.exit(1);
