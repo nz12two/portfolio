@@ -1,0 +1,40 @@
+/* viz — timeline, distribuicao e estatisticas. Dados de catalogo.json apenas. */
+.viz { background: var(--bg); color: var(--tx); padding: var(--t-2xl) var(--gut); }
+.viz h2 { text-align: center; margin-bottom: var(--t-xl); }
+
+/* Timeline */
+.timeline { position: relative; margin-top: var(--t-xl); }
+.timeline svg { width: 100%; height: auto; overflow: visible; }
+.timeline-line { stroke: var(--line); stroke-width: 2; fill: none; }
+.timeline-circle { fill: var(--acc); stroke: var(--acc-line); stroke-width: 2; r: 6; transition: r .15s ease; }
+.timeline-label { font-size: .75rem; fill: var(--tx-2); }
+.timeline-num { font-size: .65rem; fill: var(--tx-3); }
+
+/* Distribuicao */
+.dist-row { display: flex; align-items: center; gap: .5rem; margin-bottom: .35rem; }
+.dist-label { width: 7rem; flex-shrink: 0; font-size: .85rem; color: var(--tx-2); text-align: right; }
+.dist-bar-wrap { flex: 1; height: .9rem; background: var(--surf-2); border-radius: var(--r-s); overflow: hidden; }
+.dist-bar { height: 100%; background: var(--acc); border-radius: var(--r-s); transform-origin: left; }
+.dist-count { width: 2.5rem; flex-shrink: 0; font-size: .8rem; color: var(--tx-2); text-align: right; }
+
+/* Estatisticas */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 1rem; margin-top: var(--t-lg); }
+.stat-card { position: relative; background: var(--surf); border: 1px solid var(--line); border-radius: var(--r); padding: 1rem; text-align: center; }
+.stat-num { font-size: 2rem; font-weight: 700; color: var(--acc); line-height: 1.1; }
+.stat-desc { font-size: .8rem; color: var(--tx-2); margin-top: .25rem; }
+.stat-tooltip { position: absolute; bottom: calc(100% + .35rem); left: 50%; transform: translateX(-50%); background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-s); padding: .35rem .6rem; font-size: .75rem; color: var(--tx-2); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity .15s ease; z-index: 10; }
+.stat-card:hover .stat-tooltip, .stat-card:focus-within .stat-tooltip { opacity: 1; }
+
+/* Tooltip explicativo detalhado para timeline */
+.detail-box { background: var(--surf); border: 1px solid var(--line); border-radius: var(--r); padding: .75rem 1rem; margin-top: .5rem; font-size: .85rem; color: var(--tx-2); }
+
+/* Reducao de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .timeline-circle { transition: none; }
+  .dist-bar { transition: none; }
+  /* Remove a transicao, mas NAO forca opacity: 1. Com movimento reduzido os
+     cinco tooltips ficavam permanentemente abertos empilhados sobre o
+     conteudo. Quem manda na visibilidade e o hover e o foco. */
+  .stat-tooltip { transition: none; }
+  .timeline .anim-in { animation: none !important; }
+}

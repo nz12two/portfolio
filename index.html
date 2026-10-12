@@ -20,6 +20,10 @@
 <meta property="og:image:alt" content="NZ — portfólio de software com código aberto e números medidos">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/navega.css">
+<link rel="stylesheet" href="css/lab.css">
+<link rel="stylesheet" href="css/viz.css">
 <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="assets/brand/app-icon-512.png">
@@ -50,11 +54,19 @@
       <a href="#sobre">Sobre</a>
       <a href="#produtos">Produtos</a>
       <a href="catalogo/index.html#tipos">Marketplace</a>
+      <a href="#lab">Lab</a>
+      <a href="#dados">Dados</a>
       <a href="#prova">Prova</a>
     </nav>
     <div class="hdr__acoes">
+      <button type="button" class="btn btn--search" aria-label="Buscar produtos e tecnologias" title="Buscar (Ctrl+K)">
+        <span aria-hidden="true">⌕</span><span class="btn__rot">Buscar</span>
+      </button>
       <a href="#contato" class="btn">Contato</a>
       <a href="conta.html" class="btn btn--acc" data-conta-open aria-label="Entrar na sua conta">entrar</a>
+      <button type="button" class="btn btn--menu" aria-label="Abrir menu" aria-expanded="false">
+        <span aria-hidden="true">☰</span>
+      </button>
     </div>
   </div>
 </header>
@@ -73,6 +85,7 @@
     <!-- Malha de fundo que se desloca devagar. Um plano de cor puro com texto
          parado lê como documento; a grade dá profundidade sem custar nada. -->
     <div class="hero__grid-bg" aria-hidden="true"></div>
+<canvas class="hero__canvas" aria-hidden="true"></canvas>
     <div class="hero__grid">
       <div>
         <!-- Headline segue o padrão dos heroes SaaS que a pesquisa levantou:
@@ -219,6 +232,48 @@
     </div>
   </section>
 
+  <section class="lab sec" id="lab">
+    <div class="wrap">
+      <div class="lab__eyebrow">laboratório</div>
+      <h2 class="lab__h2">Experiências com os dados reais</h2>
+      <p class="lab__lead">Três visualizações construídas a partir de <code>catalogo/dados/catalogo.json</code> — nada inventado, nada simulado sem aviso.</p>
+
+      <div class="lab__grid">
+        <article class="lab__painel" id="grafoPainel">
+          <h3>Grafo de stack compartilhada</h3>
+          <p class="desc">Cada nó é uma tecnologia do catálogo. Arestas ligam as que aparecem juntas em pelo menos um produto.</p>
+          <div class="grafo-wrap">
+            <canvas id="grafoCanvas" class="grafo-canvas" role="img" aria-label="Grafo das tecnologias usadas em conjunto pelos produtos do catálogo"></canvas>
+            <div id="grafoTooltip" class="grafo-tooltip" role="tooltip" hidden></div>
+          </div>
+          <p class="lab__nota">Clique num nó para ver os produtos que o usam.</p>
+          <div id="grafoLista" class="grafo-legend" aria-live="polite"></div>
+        </article>
+
+        <div class="lab__duplo">
+          <article class="lab__painel" id="medidorPainel">
+            <h3>Explorador de medição</h3>
+            <p class="desc">Cada produto com número medido. O botão troca o medidor.</p>
+            <div class="medidor">
+              <span class="medidor__num" id="medidorNum">0</span>
+              <span class="medidor__meta" id="medidorMeta">Carregando do catálogo…</span>
+            </div>
+            <div class="medidor__botoes" id="medidorBtns" aria-label="Produtos com prova medida"></div>
+          </article>
+
+          <article class="lab__painel">
+            <h3>Demonstração técnica</h3>
+            <p class="desc">Partículas que reagem ao cursor e ao clique. <strong>Não é dado de projeto</strong>.</p>
+            <canvas id="particulasCanvas" class="particulas-canvas" role="img" aria-label="Demonstração técnica de partículas interativas, sem dado de projeto"></canvas>
+            <p class="particulas-label">Demonstração de técnica — não representa dado real de nenhum projeto.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="viz sec" id="dados"></section>
+
   <!-- ===== NOVIDADES =====
      Montada por js/novidades.js a partir de dados/novidades.json, que
      tools/puxar-novidades.js gera lendo #anuncios no Discord. Fica VAZIA de
@@ -350,6 +405,10 @@
      corpo do IIFE. -->
 <script src="js/auth-config.js"></script>
 <script src="js/auth.js" defer></script>
+<script src="js/hero.js" defer></script>
+<script src="js/navega.js" defer></script>
+<script src="js/lab.js" defer></script>
+<script src="js/viz.js" defer></script>
 </body>
 </html>
 

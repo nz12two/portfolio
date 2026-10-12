@@ -1,0 +1,53 @@
+/* Hero interativo — constelacao, parallax, ripple, entrada. */
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.04);
+  animation: heroCanvasIn 900ms var(--ease) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes heroCanvasIn {
+  to { opacity: 1; transform: scale(1); }
+}
+
+.hero__grid {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.5s var(--ease);
+}
+
+/* Entrada coreografada da coluna direita */
+.hero__grid > aside,
+.hero__grid > :nth-child(2) {
+  opacity: 0;
+  animation: heroRightIn 700ms var(--ease) 120ms both;
+}
+
+@keyframes heroRightIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Ripple para botoes no hero */
+.hero .btn { position: relative; overflow: hidden; }
+.hero .btn .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  transform: scale(0);
+  pointer-events: none;
+  width: 120px; height: 120px;
+  margin-left: -60px; margin-top: -60px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__canvas { animation: none; opacity: 1; transform: scale(1); }
+  .hero__grid > aside,
+  .hero__grid > :nth-child(2) { animation: none; opacity: 1; }
+  .hero__canvas { animation-duration: 0.01ms !important; }
+  *, .hero__grid { transition-duration: 0.01ms !important; }
+}
