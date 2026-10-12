@@ -61,38 +61,38 @@
     );
   };
 
-  // Hero: numeros do portfolio, lidos do catalogo. Promessa de hero nao se
-  // acredita; "2085 APIs, 52 categorias" se acredita porque abre o repo. Estes
-  // crescem quando entra produto novo, em vez de envelhecerem no HTML.
-  //
-  // "Linguagens" conta so linguagens de programacao de verdade. Contar as
-  // facetas de stack dava 17 e chamava Gradle, Paper API e SQLite de
-  // linguagem — numero bonito e falso. A lista e curta de proposito: e o
-  // conjunto de linguagens que o NZ realmente usa, nao o que casaria por
-  // substring (TypeScript casaria em "JS" e contaria duas vezes).
-  var LINGUAGENS = ["Java", "JavaScript", "TypeScript", "Python", "C", "C++", "C#",
-    "Go", "Rust", "PHP", "Ruby", "SQL", "Shell", "Kotlin", "Swift", "Dart"];
-
+  // Hero: prova de dentro de cada produto, lida do catalogo.
+//
+// A faixa anterior contava "5 produtos / 4 linguagens / 4 repos". Isso e bio do
+// portfolio, nao prova de trabalho — e o NZ leu e nao acreditou em nada. Estes
+// numeros sao de dentro dos produtos (2085 APIs sondadas, 19 detectores, 372
+// repos e pacotes) e cada um da para conferir abrindo o repo. E o mesmo truque
+// do hero da Vercel, que prova com cliente porque tem cliente: o NZ prova com
+// codigo, que e o que ele tem.
+//
+// A faixa se monta com ate 3 provas, na ordem em que os produtos aparecem no
+// catalogo — entra um produto com `prova` novo e ele ocupa a faixa, sem
+// editar HTML. Sem `prova` em nenhum produto, a faixa some em vez de mostrar
+// zero ou texto generico.
   var heroNums = function (dados) {
     var el = document.getElementById("heroNums");
     if (!el) return;
-    var usados = {};
-    dados.itens.forEach(function (i) {
-      (i.stack || []).forEach(function (s) {
-        var nome = String(s).split("/")[0].split(" ")[0]; // "SQLite/MySQL" -> "SQLite", "Astro 7" -> "Astro"
-        if (LINGUAGENS.indexOf(nome) >= 0) usados[nome] = 1;
-      });
-    });
-    var comRepo = dados.itens.filter(function (i) { return i.repo; }).length;
-    var vals = {
-      total: dados.total || dados.itens.length,
-      linguagens: Object.keys(usados).length,
-      repos: comRepo,
-    };
-    Array.prototype.forEach.call(el.querySelectorAll("[data-num]"), function (dd) {
-      var v = vals[dd.getAttribute("data-num")];
-      if (typeof v === "number") dd.textContent = String(v);
-    });
+
+    var comProva = dados.itens.filter(function (i) { return i.prova && i.prova.num; });
+    if (!comProva.length) {
+      el.hidden = true;
+      return;
+    }
+    el.hidden = false;
+
+    el.innerHTML = comProva.slice(0, 3).map(function (i) {
+      var pr = i.prova;
+      // numero grande e unidade embaixo; o "como" fica como title para o
+      // hover, senão a faixa vira um paragrafo e perde a leitura de 2s.
+      return "<div title=\"" + esc(pr.como || "") + "\">" +
+        "<dt>" + esc(pr.unidade) + "</dt>" +
+        "<dd>" + esc(String(pr.num)) + "</dd></div>";
+    }).join("");
   };
 
   var montar = function (dados) {

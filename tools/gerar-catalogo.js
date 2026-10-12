@@ -78,6 +78,11 @@ const itens = produtos.map((p, i) => {
     // texto em dois lugares, e o primeiro lugar a ser atualizado seria o
     // errado. Sem `home`, o produto aparece na home so com a tagline.
     home: p.home || { descricao: p.tagline, tags: (p.stack || []).slice(0, 2) },
+    // Prova de dentro do produto. Vai para o catalogo e para a faixa de numeros
+    // do hero. Sem ela aqui, o hero so teria os numeros que eu escrevi no
+    // HTML — que foi exatamente o defeito que o NZ reprovou: numero
+    // congelado que envelhece sem ninguem mexer.
+    prova: p.prova || null,
     busca: haystack,
   };
 });

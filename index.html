@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NZ - constrói plugins, catálogos e agentes que rodam</title>
-<meta name="description" content="NZ constrói software que roda: servidores de Minecraft, catálogos que se atualizam sozinhos e simulação com dado real. Código aberto e número medido.">
+<meta name="description" content="Software com repositório aberto e número medido dentro: de plugin de Minecraft a catálogo de 2085 APIs. Você confere antes de instalar.">
 <link rel="canonical" href="https://nz12two.github.io/portfolio/">
 <!-- OG: é o que aparece quando o link vai para WhatsApp ou Telegram. Sem isso
      o preview é o primeiro link do texto em azul, e o portfólio perde a
@@ -64,29 +64,31 @@
     <div class="hero__grid-bg" aria-hidden="true"></div>
     <div class="hero__grid">
       <div>
-        <h1>Eu construo coisas<br>que <em>realmente rodam</em>.</h1>
-        <!-- Sub Specifico o suficiente para nicho e amplo o bastante para o
-             proximo produto. Nomeia o QUE (rodar de verdade, codigo aberto,
-             numero medido) sem enumerar o inventario — enumerar congelava a
-             pagina no dia e travava o NZ no Minecraft. -->
+        <!-- Headline segue o padrão dos heroes SaaS que a pesquisa levantou:
+             Linear nomeia categoria + audiencia, Stripe nomeia o resultado,
+             Copilot afirma e prova na linha seguinte. Nenhum promete — todos
+             dao um motivo verificável. "Eu construo coisas que realmente
+             rodam" prometia: nao havia botao para checar "realmente".
+             Aqui a promessa e o repo aberto: pode conferir antes de ler o
+             resto. E o H1 nao enumera produtos, para nao congelar quando
+             entrar o proximo. -->
+        <h1>Você abre o código<br>e vê <em>se roda</em>.</h1>
         <p class="hero__sub">
-          Servidores de Minecraft, catálogos que se atualizam sozinhos, simulação
-          com dado real. O que não roda, eu não publico — e o que roda sai com o
-          número medido e o passo a passo, para você repetir sem me perguntar nada.
+          Software com o repositório aberto e o número medido dentro — de um
+          plugin de Minecraft a um catálogo de APIs. Cada produto mostra o que
+          faz, para quem é e o que ainda não funciona, antes de você instalar
+          qualquer coisa.
         </p>
         <div class="hero__cta">
-          <a href="catalogo/index.html" class="btn btn--acc">Ver os produtos</a>
-          <a href="#produtos" class="btn">Ler a lista</a>
-          <a href="https://github.com/nz12two" class="btn">Código no GitHub</a>
+          <a href="https://github.com/nz12two" class="btn btn--acc">Abrir no GitHub</a>
+          <a href="catalogo/index.html" class="btn">Ver os produtos</a>
         </div>
-        <!-- Prova viva: os numeros sao lidos do catalogo, entao crescem quando
-             entra produto novo em vez de envelhecerem congelados no HTML.
-             Sem JS, cai no texto estatico de cada elemento (data-*). -->
-        <dl class="hero__nums" id="heroNums" aria-label="Números do portfólio">
-          <div><dt>produtos</dt><dd data-num="total" data-fallback="5">5</dd></div>
-          <div><dt>linguagens</dt><dd data-num="linguagens" data-fallback="4">4</dd></div>
-          <div><dt>repos públicos</dt><dd data-num="repos" data-fallback="4">4</dd></div>
-        </dl>
+        <!-- Faixa de prova. Fica VAZIA no HTML de proposito: e montada por
+             js/vitrine.js a partir do campo `prova` de cada produto no
+             catalogo. Escrever os numeros aqui seriaCongela-los — foi o que
+             aconteceu antes e o que o NZ reprovou. Sem JS, a faixa simplesmente
+             nao aparece; o resto do hero continua de pe. -->
+        <dl class="hero__nums" id="heroNums" aria-label="Prova medida em cada produto" hidden></dl>
       </div>
 
       <!-- Dados: bytes por linguagem, somados nos 4 repositórios públicos.

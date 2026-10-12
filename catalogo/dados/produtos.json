@@ -66,6 +66,12 @@
           "Java",
           "Paper 1.21.4"
         ]
+      },
+      "prova": {
+        "num": 19,
+        "unidade": "detectores de x-ray",
+        "quando": "2026-10-12",
+        "como": "19 detectores independentes mais motor de risco temporal, em Paper 1.21.4."
       }
     },
     {
@@ -123,6 +129,12 @@
           "Python",
           "JavaScript"
         ]
+      },
+      "prova": {
+        "num": 2085,
+        "unidade": "APIs sondadas",
+        "quando": "2026-10-12",
+        "como": "Cada entrada tem latência medida de fora; 994 rodam sem autenticação."
       }
     },
     {
@@ -183,6 +195,12 @@
           "Astro 7",
           "React 19"
         ]
+      },
+      "prova": {
+        "num": 372,
+        "unidade": "repos e pacotes no índice",
+        "quando": "2026-10-12",
+        "como": "123 repositórios e 249 pacotes do ecossistema OpenCode, com a fonte citada."
       }
     },
     {
@@ -295,5 +313,6 @@
     }
   ],
   "_imagens": "Captura de tela real, tirada do site em producao com Chrome headless. O campo data em qual_url_respondeu. Produto sem imagem tem imagem_motiva explicando por que — nenhuma imagem e gerada por codigo para fingir captura.",
-  "_home_nota": "Bloco `home`: descricao e tags do cartao da vitrine. Vivem aqui e nao no index.html porque a home nao pode ser um retrato do que existe hoje — um produto novo entra editando este arquivo, sem tocar em markup."
+  "_home_nota": "Bloco `home`: descricao e tags do cartao da vitrine. Vivem aqui e nao no index.html porque a home nao pode ser um retrato do que existe hoje — um produto novo entra editando este arquivo, sem tocar em markup.",
+  "_prova_nota": "`prova`: o numero de dentro do produto, com unidade e data. Sai daqui para a faixa do hero (js/vitrine.js) e para o card do catalogo. Contagem de produto/linguagem/repositorio nao entra: e bio, nao prova."
 }
