@@ -221,25 +221,27 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
   margin-bottom: 16px;
 }
 
+/* O nome usava gradiente recortado em texto (background-clip: text) com
+   weight 900 e -0.06em. Esse trio e o que grita "portfolio de 2020": a
+   hierarquia vinha do peso e do truque visual, nao do espaco. Agora a
+   hierarquia vem de tamanho e respiro, e o acento fica no texto de apoio. */
 .hero-name {
   display: block;
-  font-size: clamp(3.2rem, 10vw, 5.5rem);
-  font-weight: 900;
-  letter-spacing: -0.06em;
-  line-height: 1;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 4px;
+  font-size: clamp(2.6rem, 7.5vw, 4.25rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 0.15em;
+  text-wrap: balance;
 }
 
 .hero-role {
   display: block;
-  font-size: clamp(1rem, 3vw, 1.5rem);
-  font-weight: 500;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-weight: 450;
   color: var(--text2);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   min-height: 1.6em;
 }
 
@@ -1661,3 +1663,27 @@ header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
 @media (max-width: 480px) {
   .cat-grid { grid-template-columns: 1fr; }
 }
+
+/* ===================================================================
+   ICONES — sprite SVG local, substitui Font Awesome por CDN
+   =================================================================== */
+
+/* O FA dava tamanho pela classe (fa-lg etc.) e o SVG nao: sem esta regra os
+   <svg> herdariam auto e colapsariam. 1em casa com o font-size do contexto,
+   que e como o FA se comportava. */
+svg.i {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+svg.i-lg { width: 1.333em; height: 1.333em; }
+svg.i-xl { width: 2em; height: 2em; }
+
+/* Classes que o FA aplicava por nome e o CSS antigo usava; precisam casar
+   com o tamanho que o FA dava, senao o layout muda. */
+.servico-icon svg.i { font-size: 1.4rem; color: var(--blue2); }
+.term-text svg.i { font-size: 0.95em; }
+.nav-link svg.i { font-size: 0.9rem; }
