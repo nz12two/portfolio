@@ -194,7 +194,7 @@
       "capturado_em": "2026-10-12",
       "captura_origem": "https://nz12two.github.io/opendex/",
       "home": {
-        "descricao": "Catálogo e documentação do ecossistema OpenCode: 123 repositórios e 249 pacotes, todos de dado real. Se não há fonte, a página mostra estado vazio em vez de inventar item.",
+        "descricao": "Catálogo pesquisável do ecossistema OpenCode: plugin, script e MCP com a fonte de cada um. 123 repositórios e 249 pacotes mapeados, com feed e ranking. Cada item ganha página própria gerada do dado real — e onde não há fonte, a página mostra estado vazio em vez de inventar item.",
         "tags": [
           "Astro 7",
           "React 19"

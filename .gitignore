@@ -1,1 +1,3 @@
 node_modules/
+# Backup manual de sessao anterior: identico ao arquivo vivo, zero informacao
+*.bak

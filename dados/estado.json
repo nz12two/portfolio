@@ -1,0 +1,836 @@
+{
+  "schema": "portfolio.estado.v1",
+  "gerado_em": "2026-10-12T20:54:53.278Z",
+  "fonte": "~/.banzinho/{state,logs} — estado vivo do runtime, agregado",
+  "execucao": {
+    "eventos_lidos": 59789,
+    "janela": {
+      "de": "2026-10-11T01:02:54.690+00:00",
+      "ate": "2026-10-12T20:54:52.262+00:00"
+    },
+    "chamadas_medidas": 12231,
+    "com_erro": 417,
+    "taxa_erro_global": 0.034,
+    "boots_de_teste_fake": 21,
+    "ferramentas": [
+      {
+        "tool": "shell",
+        "chamadas": 5400,
+        "erros": 35,
+        "taxa_erro": 0.006,
+        "mediana_ms": 3468,
+        "p95_ms": 68531,
+        "mais_lenta_ms": 1767250
+      },
+      {
+        "tool": "edit",
+        "chamadas": 2015,
+        "erros": 209,
+        "taxa_erro": 0.104,
+        "mediana_ms": 219,
+        "p95_ms": 641,
+        "mais_lenta_ms": 12750
+      },
+      {
+        "tool": "read",
+        "chamadas": 1759,
+        "erros": 34,
+        "taxa_erro": 0.019,
+        "mediana_ms": 31,
+        "p95_ms": 281,
+        "mais_lenta_ms": 10311
+      },
+      {
+        "tool": "execute",
+        "chamadas": 1600,
+        "erros": 4,
+        "taxa_erro": 0.003,
+        "mediana_ms": 343,
+        "p95_ms": 13250,
+        "mais_lenta_ms": 614264
+      },
+      {
+        "tool": "write",
+        "chamadas": 677,
+        "erros": 36,
+        "taxa_erro": 0.053,
+        "mediana_ms": 234,
+        "p95_ms": 1968,
+        "mais_lenta_ms": 11484
+      },
+      {
+        "tool": "grep",
+        "chamadas": 431,
+        "erros": 10,
+        "taxa_erro": 0.023,
+        "mediana_ms": 93,
+        "p95_ms": 2250,
+        "mais_lenta_ms": 34046
+      },
+      {
+        "tool": "glob",
+        "chamadas": 135,
+        "erros": 4,
+        "taxa_erro": 0.03,
+        "mediana_ms": 109,
+        "p95_ms": 2218,
+        "mais_lenta_ms": 30422
+      },
+      {
+        "tool": "subagent",
+        "chamadas": 104,
+        "erros": 54,
+        "taxa_erro": 0.519,
+        "mediana_ms": 66436,
+        "p95_ms": 350139,
+        "mais_lenta_ms": 1612657
+      },
+      {
+        "tool": "skill",
+        "chamadas": 10,
+        "erros": 2,
+        "taxa_erro": 0.2,
+        "mediana_ms": 15,
+        "p95_ms": 62,
+        "mais_lenta_ms": 62
+      },
+      {
+        "tool": "search",
+        "chamadas": 10,
+        "erros": 10,
+        "taxa_erro": 1,
+        "mediana_ms": 0,
+        "p95_ms": 15,
+        "mais_lenta_ms": 15
+      },
+      {
+        "tool": "webfetch",
+        "chamadas": 5,
+        "erros": 5,
+        "taxa_erro": 1,
+        "mediana_ms": 16,
+        "p95_ms": 2750,
+        "mais_lenta_ms": 2750
+      },
+      {
+        "tool": "websearch",
+        "chamadas": 3,
+        "erros": 3,
+        "taxa_erro": 1,
+        "mediana_ms": 0,
+        "p95_ms": 31,
+        "mais_lenta_ms": 31
+      },
+      {
+        "tool": "question",
+        "chamadas": 2,
+        "erros": 1,
+        "taxa_erro": 0.5,
+        "mediana_ms": 368983,
+        "p95_ms": 368983,
+        "mais_lenta_ms": 368983
+      },
+      {
+        "tool": "computer",
+        "chamadas": 2,
+        "erros": 2,
+        "taxa_erro": 1,
+        "mediana_ms": 15,
+        "p95_ms": 15,
+        "mais_lenta_ms": 15
+      },
+      {
+        "tool": "clamp_claim",
+        "chamadas": 1,
+        "erros": 1,
+        "taxa_erro": 1,
+        "mediana_ms": 47,
+        "p95_ms": 47,
+        "mais_lenta_ms": 47
+      },
+      {
+        "tool": "bash",
+        "chamadas": 1,
+        "erros": 1,
+        "taxa_erro": 1,
+        "mediana_ms": 0,
+        "p95_ms": 0,
+        "mais_lenta_ms": 0
+      },
+      {
+        "tool": "computer_open_app",
+        "chamadas": 1,
+        "erros": 1,
+        "taxa_erro": 1,
+        "mediana_ms": 31,
+        "p95_ms": 31,
+        "mais_lenta_ms": 31
+      },
+      {
+        "tool": "?",
+        "chamadas": 0,
+        "erros": 5,
+        "taxa_erro": 0,
+        "mediana_ms": null,
+        "p95_ms": null,
+        "mais_lenta_ms": null
+      }
+    ]
+  },
+  "falhas": [
+    {
+      "tool": "edit",
+      "classe": "argumento inválido na chamada da ferramenta",
+      "ocorrencias": 747,
+      "sessoes_distintas": 1,
+      "primeira": 1791765816.9556124,
+      "ultima": 1791838409.2712755
+    },
+    {
+      "tool": "edit",
+      "classe": "oldString não encontrado — o texto procurado não bateu",
+      "ocorrencias": 230,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.0052826,
+      "ultima": 1791838023.142865
+    },
+    {
+      "tool": "shell",
+      "classe": "execução interrompida",
+      "ocorrencias": 84,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.0355408,
+      "ultima": 1791837583.1883514
+    },
+    {
+      "tool": "subagent",
+      "classe": "limite de profundidade de subagente",
+      "ocorrencias": 66,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.4890761,
+      "ultima": 1791825052.5850308
+    },
+    {
+      "tool": "search",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 55,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.5286915,
+      "ultima": 1791820677.8111265
+    },
+    {
+      "tool": "write",
+      "classe": "recorte tentou sair do escopo declarado",
+      "ocorrencias": 51,
+      "sessoes_distintas": 1,
+      "primeira": 1791813257.3979857,
+      "ultima": 1791824008.0684135
+    },
+    {
+      "tool": "write",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 45,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.5690422,
+      "ultima": 1791837933.3023744
+    },
+    {
+      "tool": "edit",
+      "classe": "edição sem mudança real — oldString e newString iguais",
+      "ocorrencias": 45,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.8187196,
+      "ultima": 1791837765.2244196
+    },
+    {
+      "tool": "shell",
+      "classe": "teto de passos do subagente estourado",
+      "ocorrencias": 36,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.5851724,
+      "ultima": 1791833451.9776616
+    },
+    {
+      "tool": "edit",
+      "classe": "edição sem leitura prévia — o guarda pediu grep/read antes",
+      "ocorrencias": 28,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.105389,
+      "ultima": 1791836744.5685015
+    },
+    {
+      "tool": "shell",
+      "classe": "permissão negada",
+      "ocorrencias": 28,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.7760167,
+      "ultima": 1791834718.562048
+    },
+    {
+      "tool": "read",
+      "classe": "File not found: <path>",
+      "ocorrencias": 15,
+      "sessoes_distintas": 1,
+      "primeira": 1791765816.9330735,
+      "ultima": 1791837967.5720527
+    },
+    {
+      "tool": "edit",
+      "classe": "permissão negada",
+      "ocorrencias": 15,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.835295,
+      "ultima": 1791834757.789059
+    },
+    {
+      "tool": "webfetch",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 15,
+      "sessoes_distintas": 1,
+      "primeira": 1791774908.2759788,
+      "ultima": 1791820105.779946
+    },
+    {
+      "tool": "write",
+      "classe": "Tool call arguments were not completed and were not executed. Re-issue the tool call with complete arguments.",
+      "ocorrencias": 15,
+      "sessoes_distintas": 1,
+      "primeira": 1791776265.393859,
+      "ultima": 1791822148.3339314
+    },
+    {
+      "tool": "subagent",
+      "classe": "Subagent failed (sessionID: <ses>): OpenCode's free tier can only be used from within OpenCode",
+      "ocorrencias": 14,
+      "sessoes_distintas": 1,
+      "primeira": 1791765816.9918807,
+      "ultima": 1791836691.5470538
+    },
+    {
+      "tool": "subagent",
+      "classe": "Subagent failed (sessionID: <ses>): Rate limit exceeded: free-models-per-day. Add 10 credits to unlock 1000...",
+      "ocorrencias": 14,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.6989765,
+      "ultima": 1791765818.319392
+    },
+    {
+      "tool": "edit",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 10,
+      "sessoes_distintas": 1,
+      "primeira": 1791816310.3415127,
+      "ultima": 1791834317.2413678
+    },
+    {
+      "tool": "subagent",
+      "classe": "execução interrompida",
+      "ocorrencias": 7,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.6088486,
+      "ultima": 1791833943.0206447
+    },
+    {
+      "tool": "execute",
+      "classe": "execução interrompida",
+      "ocorrencias": 7,
+      "sessoes_distintas": 1,
+      "primeira": 1791806484.0370982,
+      "ultima": 1791819812.0106447
+    },
+    {
+      "tool": "websearch",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 6,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.4839158,
+      "ultima": 1791820069.2905176
+    },
+    {
+      "tool": "read",
+      "classe": "teto de passos do subagente estourado",
+      "ocorrencias": 6,
+      "sessoes_distintas": 1,
+      "primeira": 1791765819.4849408,
+      "ultima": 1791822479.556708
+    },
+    {
+      "tool": "grep",
+      "classe": "teto de passos do subagente estourado",
+      "ocorrencias": 6,
+      "sessoes_distintas": 1,
+      "primeira": 1791765820.0101495,
+      "ultima": 1791765820.047859
+    },
+    {
+      "tool": "read",
+      "classe": "Offset 172 is out of range for this file (0 lines)",
+      "ocorrencias": 6,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.650996,
+      "ultima": 1791837146.666196
+    },
+    {
+      "tool": "read",
+      "classe": "File not found: <path> Did you mean one of these? <path>",
+      "ocorrencias": 5,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.4490447,
+      "ultima": 1791837948.5115633
+    },
+    {
+      "tool": "read",
+      "classe": "Offset 100 is out of range for this file (99 lines)",
+      "ocorrencias": 5,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.650996,
+      "ultima": 1791814709.1414108
+    },
+    {
+      "tool": "subagent",
+      "classe": "Subagent failed (sessionID: <ses>): Provider returned error",
+      "ocorrencias": 4,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.9858897,
+      "ultima": 1791833790.4691288
+    },
+    {
+      "tool": "?",
+      "classe": "execução interrompida",
+      "ocorrencias": 4,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.7355626,
+      "ultima": 1791765819.5922103
+    },
+    {
+      "tool": "read",
+      "classe": "Offset 9 is out of range for this file (8 lines)",
+      "ocorrencias": 4,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.650996,
+      "ultima": 1791814621.9666965
+    },
+    {
+      "tool": "computer",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.5048187,
+      "ultima": 1791765818.134985
+    },
+    {
+      "tool": "write",
+      "classe": "permissão negada",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.7287648,
+      "ultima": 1791765819.9913917
+    },
+    {
+      "tool": "write",
+      "classe": "edição sem leitura prévia — o guarda pediu grep/read antes",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.515954,
+      "ultima": 1791765818.6865616
+    },
+    {
+      "tool": "grep",
+      "classe": "Search path does not exist: <path>",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.9156926,
+      "ultima": 1791816383.27852
+    },
+    {
+      "tool": "read",
+      "classe": "Offset 232 is out of range for this file (224 lines)",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.650996,
+      "ultima": 1791765819.2411573
+    },
+    {
+      "tool": "edit",
+      "classe": "Found 2 matches for oldString, but expected exactly one. Add more surrounding context to make oldString uni...",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791765819.3309772,
+      "ultima": 1791833393.0060656
+    },
+    {
+      "tool": "shell",
+      "classe": "Interaction cancelled because the location shut down",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791813973.693716,
+      "ultima": 1791813975.040864
+    },
+    {
+      "tool": "grep",
+      "classe": "tempo esgotado",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791822160.3021038,
+      "ultima": 1791822160.5812852
+    },
+    {
+      "tool": "write",
+      "classe": "teto de passos do subagente estourado",
+      "ocorrencias": 3,
+      "sessoes_distintas": 1,
+      "primeira": 1791822540.733126,
+      "ultima": 1791833479.9613523
+    },
+    {
+      "tool": "read",
+      "classe": "Offset 173 is out of range for this file (170 lines)",
+      "ocorrencias": 2,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.650996,
+      "ultima": 1791765817.8905394
+    },
+    {
+      "tool": "glob",
+      "classe": "Search path does not exist: <path>",
+      "ocorrencias": 2,
+      "sessoes_distintas": 1,
+      "primeira": 1791774900.5362582,
+      "ultima": 1791837753.9227703
+    },
+    {
+      "tool": "edit",
+      "classe": "claim-guard: COMPROMETIDO: claim viva de outra sessao. arquivo : <path> sessao : <ses> trabalho: write tomo...",
+      "ocorrencias": 2,
+      "sessoes_distintas": 1,
+      "primeira": 1791834585.9792266,
+      "ultima": 1791834604.259386
+    },
+    {
+      "tool": "skill",
+      "classe": "Unable to load skill OpenCode",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765816.910398,
+      "ultima": 1791765816.910398
+    },
+    {
+      "tool": "bash",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.0750308,
+      "ultima": 1791765817.0750308
+    },
+    {
+      "tool": "subagent",
+      "classe": "Subagent failed (sessionID: <ses>): This request requires more credits, or fewer max_tokens. You requested ...",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.3698962,
+      "ultima": 1791765817.3698962
+    },
+    {
+      "tool": "subagent",
+      "classe": "Subagent failed (sessionID: <ses>): The model `groq/compound-mini` does not exist or you do not have access...",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.3885372,
+      "ultima": 1791765817.3885372
+    },
+    {
+      "tool": "subagent",
+      "classe": "Subagent failed (sessionID: <ses>): Model exo-free has been deprecated.",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.4190645,
+      "ultima": 1791765817.4190645
+    },
+    {
+      "tool": "subagent",
+      "classe": "Subagent failed (sessionID: <ses>): `reasoning_format` is not supported with this model",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.4704819,
+      "ultima": 1791765817.4704819
+    },
+    {
+      "tool": "computer_open_app",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.5432897,
+      "ultima": 1791765817.5432897
+    },
+    {
+      "tool": "read",
+      "classe": "Offset 1620 is out of range for this file (1618 lines)",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.650996,
+      "ultima": 1791765817.650996
+    },
+    {
+      "tool": "grep",
+      "classe": "permissão negada",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.7190268,
+      "ultima": 1791765817.7190268
+    },
+    {
+      "tool": "read",
+      "classe": "permissão negada",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765817.8126488,
+      "ultima": 1791765817.8126488
+    },
+    {
+      "tool": "read",
+      "classe": "File not found: .team/openrouter-cota-findings.md Did you mean one of these? .team\\findings.md",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.382834,
+      "ultima": 1791765818.382834
+    },
+    {
+      "tool": "edit",
+      "classe": "teto de passos do subagente estourado",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.6007564,
+      "ultima": 1791765818.6007564
+    },
+    {
+      "tool": "skill",
+      "classe": "Unable to load skill Report",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.6151204,
+      "ultima": 1791765818.6151204
+    },
+    {
+      "tool": "shell",
+      "classe": "gate: decidido pelo NZ",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.7892783,
+      "ultima": 1791765818.7892783
+    },
+    {
+      "tool": "edit",
+      "classe": "File not found: <path> - Index\\Rascunho\\b64url+.md",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765818.8969262,
+      "ultima": 1791765818.8969262
+    },
+    {
+      "tool": "?",
+      "classe": "The user declined this tool call",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765819.1477478,
+      "ultima": 1791765819.1477478
+    },
+    {
+      "tool": "glob",
+      "classe": "teto de passos do subagente estourado",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765819.519253,
+      "ultima": 1791765819.519253
+    },
+    {
+      "tool": "?",
+      "classe": "Subagent failed (sessionID: <ses>): Provider returned error",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765819.5534546,
+      "ultima": 1791765819.5534546
+    },
+    {
+      "tool": "edit",
+      "classe": "claim-guard: COMPROMETIDO: claim viva de outra sessao. arquivo : <path> sessao : <ses> trabalho: checkpoint...",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791765819.6336868,
+      "ultima": 1791765819.6336868
+    },
+    {
+      "tool": "question",
+      "classe": "execução interrompida",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791775522.7726016,
+      "ultima": 1791775522.7726016
+    },
+    {
+      "tool": "glob",
+      "classe": "tempo esgotado",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791805421.1848772,
+      "ultima": 1791805421.1848772
+    },
+    {
+      "tool": "grep",
+      "classe": "Interaction cancelled because the location shut down",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791806511.3045902,
+      "ultima": 1791806511.3045902
+    },
+    {
+      "tool": "write",
+      "classe": "Interaction cancelled because the location shut down",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791806515.298924,
+      "ultima": 1791806515.298924
+    },
+    {
+      "tool": "read",
+      "classe": "Artefato declarado por subagente nao existe: <path> O filho reportou ter escrito nele e o path nao esta em ...",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791806559.8373709,
+      "ultima": 1791806559.8373709
+    },
+    {
+      "tool": "write",
+      "classe": "Artefato declarado por subagente nao existe: <path> O filho reportou ter escrito nele e o path nao esta em ...",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791806569.6365674,
+      "ultima": 1791806569.6365674
+    },
+    {
+      "tool": "clamp_claim",
+      "classe": "ferramenta pedida não existe no catálogo",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791816399.2925613,
+      "ultima": 1791816399.2925613
+    },
+    {
+      "tool": "write",
+      "classe": "argumento inválido na chamada da ferramenta",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791823393.215027,
+      "ultima": 1791823393.215027
+    },
+    {
+      "tool": "write",
+      "classe": "claim-guard: COMPROMETIDO: claim viva de outra sessao. arquivo : <path> sessao : <ses> trabalho: caminho un...",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791830497.884863,
+      "ultima": 1791830497.884863
+    },
+    {
+      "tool": "shell",
+      "classe": "argumento inválido na chamada da ferramenta",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791831216.8637204,
+      "ultima": 1791831216.8637204
+    },
+    {
+      "tool": "shell",
+      "classe": "recorte tentou sair do escopo declarado",
+      "ocorrencias": 1,
+      "sessoes_distintas": 1,
+      "primeira": 1791836591.7953181,
+      "ultima": 1791836591.7953181
+    }
+  ],
+  "auto_auditoria": {
+    "ok": false,
+    "total": 8,
+    "por_severidade": {
+      "medium": 3,
+      "low": 1,
+      "high": 4
+    },
+    "checks": [
+      {
+        "check_id": "subagent.filho_orfao",
+        "n": 6,
+        "severidade": "high"
+      },
+      {
+        "check_id": "runlog.campo_sem_produtor",
+        "n": 1,
+        "severidade": "medium"
+      },
+      {
+        "check_id": "vault.rascunho_acumulado",
+        "n": 1,
+        "severidade": "low"
+      }
+    ],
+    "achados": [
+      {
+        "check_id": "runlog.campo_sem_produtor",
+        "severidade": "medium",
+        "mensagem": "o check levantou e foi engolido: AttributeError: 'str' object has no attribute 'read_text'",
+        "confianca": "certain"
+      },
+      {
+        "check_id": "vault.rascunho_acumulado",
+        "severidade": "low",
+        "mensagem": "45 notas em `00 - Index/Rascunho` (limite 30). Rascunho que nunca virou decisao e nunca foi arquivado. Podar agora e' possivel: `vault_archive` move para 90-Archive/ com corpo byte-identico e grava archived_reason — nunca `rm`.",
+        "confianca": "certain"
+      },
+      {
+        "check_id": "subagent.filho_orfao",
+        "severidade": "high",
+        "mensagem": "2 subagent(s) sem resultado no turno: 0 lancado(s) sem filha, 2 interrompido(s)",
+        "confianca": "certain"
+      },
+      {
+        "check_id": "subagent.filho_orfao",
+        "severidade": "high",
+        "mensagem": "2 subagent(s) sem resultado no turno: 0 lancado(s) sem filha, 2 interrompido(s)",
+        "confianca": "certain"
+      },
+      {
+        "check_id": "subagent.filho_orfao",
+        "severidade": "high",
+        "mensagem": "2 subagent(s) sem resultado no turno: 0 lancado(s) sem filha, 2 interrompido(s)",
+        "confianca": "certain"
+      },
+      {
+        "check_id": "subagent.filho_orfao",
+        "severidade": "high",
+        "mensagem": "2 subagent(s) sem resultado no turno: 0 lancado(s) sem filha, 2 interrompido(s)",
+        "confianca": "certain"
+      },
+      {
+        "check_id": "subagent.filho_orfao",
+        "severidade": "medium",
+        "mensagem": "1 subagent(s) sem resultado no turno: 1 lancado(s) sem filha, 0 interrompido(s)",
+        "confianca": "certain"
+      },
+      {
+        "check_id": "subagent.filho_orfao",
+        "severidade": "medium",
+        "mensagem": "1 subagent(s) sem resultado no turno: 0 lancado(s) sem filha, 1 interrompido(s)",
+        "confianca": "certain"
+      }
+    ]
+  },
+  "portoes": {
+    "registros": 26,
+    "por_decisao": {
+      "once": 4,
+      "?": 20,
+      "always": 1,
+      "reject": 1
+    },
+    "sem_resolucao": 20
+  }
+}

@@ -25,6 +25,11 @@ const path = require("node:path");
 const RAIZ = path.join(__dirname, "..");
 const SAIDA = path.join(RAIZ, "dados", "novidades.json");
 const API = "https://discord.com/api/v10";
+/* Linha de auditoria que o aviso-discord.js gera: "**campo:** antes → depois".
+   * Nao e novidade de produto — e o diff do catalogo, que ja tem pagina propria
+   * em catalogo/<slug>.html. Passar isso para o feed gasta as tres posicoes com
+   * "MIT (no README) -> MIT (só no README)", que e o mesmo valor duas vezes. */
+const AUDITORIA = /^\*\*(status|preço|descrição|licença|prova):\*\*/i;
 const LIMITE = 12;
 
 // Discord limita o corpo da mensagem em 2000; o card da home nao quer o texto
@@ -69,6 +74,7 @@ async function main() {
     .map((m) => {
       const texto = limpar(m.content || (m.embeds && m.embeds[0] && m.embeds[0].description) || "");
       if (!texto) return null;
+      if (AUDITORIA.test(texto)) return null;
       return {
         id: m.id,
         ts: m.timestamp,

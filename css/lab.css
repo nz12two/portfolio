@@ -4,50 +4,104 @@
 .lab__eyebrow { color: var(--acc); font-family: monospace; font-size: var(--t-xs); letter-spacing: 0.08em; text-transform: uppercase; }
 .lab__h2 { font-size: var(--t-2xl); margin-top: 8px; max-width: 22ch; }
 .lab__lead { color: var(--tx-2); font-size: var(--t-md); margin-top: 12px; max-width: 52ch; }
-
 /* Painéis */
 .lab__painel { background: var(--surf); border-top: 1px solid var(--line-hi); border-radius: var(--r); padding: 28px; }
 .lab__painel + .lab__painel { margin-top: 28px; }
 .lab__painel h3 { font-size: var(--t-lg); margin-bottom: 6px; }
 .lab__painel .desc { color: var(--tx-2); font-size: var(--t-sm); margin-bottom: 14px; }
-
-/* Grafo */
-.grafo-wrap { position: relative; }
-.grafo-canvas { display: block; width: 100%; height: 420px; border-radius: var(--r-s); }
-.grafo-legend { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
-.grafo-legend a { display: inline-block; padding: 6px 12px; background: var(--surf-2); border: 1px solid var(--line); border-radius: 999px; font-size: var(--t-xs); color: var(--tx-2); text-decoration: none; }
-.grafo-legend a:hover { color: var(--acc); border-color: var(--acc-line); }
-.grafo-tooltip { position: absolute; pointer-events: none; background: var(--surf-2); border: 1px solid var(--line-hi); border-radius: var(--r-s); padding: 8px 12px; font-size: var(--t-xs); color: var(--tx); opacity: 0; transition: opacity .15s ease; z-index: 10; }
-.grafo-tooltip.visible { opacity: 1; }
-.grafo-tooltip strong { color: var(--acc); font-weight: 600; }
-
-/* Medidor */
-.medidor { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
-.medidor__num { font-size: var(--t-3xl); font-weight: 700; color: var(--acc); line-height: 1; letter-spacing: -0.03em; }
-.medidor__meta { font-size: var(--t-sm); color: var(--tx-2); }
-.medidor__meta .data { color: var(--tx-3); font-size: var(--t-xs); }
-.medidor__botoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
-.medidor__btn { padding: 8px 14px; border: 1px solid var(--line); border-radius: var(--r-s); background: var(--bg-2); color: var(--tx); font-size: var(--t-xs); cursor: pointer; transition: border-color .15s ease, color .15s ease; }
-.medidor__btn:hover { border-color: var(--acc-line); color: var(--tx); }
-.medidor__btn.ativo { border-color: var(--acc); color: var(--acc); background: var(--acc-dim); }
-
-/* Partículas */
-.particulas-canvas { display: block; width: 100%; height: 320px; border-radius: var(--r); background: var(--surf); }
-.particulas-label { margin-top: 8px; color: var(--tx-3); font-size: var(--t-xs); }
-
-/* Responsivo */
-@media (min-width: 1100px) {
-  .lab__grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
-  .lab__duplo { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+/* Lista de stack. Sem canvas e sem fisica: a leitura e uma lista
+   ordenada que abre e fecha, e nao precisa de layout calculado. */
+.stack { list-style: none; display: grid; gap: 2px; margin-top: 14px; }
+.stack__resumo { color: var(--tx-2); font-size: var(--t-xs); padding: 0 0 10px; }
+.stack__it { border-bottom: 1px solid var(--surf-2); }
+.stack__it:last-of-type { border-bottom: 0; }
+.stack__b {
+  display: flex; width: 100%; align-items: baseline; gap: 10px;
+  padding: 7px 2px; background: none; border: 0; cursor: pointer;
+  color: inherit; text-align: left; font: inherit;
 }
-@media (max-width: 760px) {
-  .grafo-canvas { height: 300px; }
-  .particulas-canvas { height: 220px; }
-  .lab__duplo > * + * { margin-top: 28px; }
+.stack__b:hover .stack__nome { color: var(--acc); }
+.stack__b:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
+.stack__nome { flex: 1 1 auto; font-size: var(--t-sm); }
+.stack__n {
+  flex: 0 0 auto; font-size: var(--t-xs); color: var(--tx-2);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.stack__n--so { color: var(--tx-3); }
+.stack__b[aria-expanded="true"] .stack__n { color: var(--acc); }
+.stack__prods { list-style: none; display: grid; gap: 4px; padding: 0 2px 10px 2px; }
+/* display:grid ganha do [hidden]{display:none} do navegador, entao a regra de
+   fecha precisa vir depois — sem isto toda linha nasce aberta. */
+.stack__prods[hidden] { display: none; }
+.stack__prods a { color: var(--tx-2); font-size: var(--t-xs); }
+.stack__prods a:hover { color: var(--acc); }
+/* Fluxo do Banzinho: <details> nativo em vez de botao + JS. Teclado e
+   leitor de tela ja funcionam, e nao ha estado para manter. Por isso este
+   painel nao aparece em js/lab.js. */
+.fluxo { display: grid; gap: 6px; margin-top: 16px; }
+.fluxo__et { border: 1px solid var(--surf-2); border-radius: var(--r); background: var(--surf); }
+.fluxo__et > summary {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px; cursor: pointer; list-style: none;
+}
+.fluxo__et > summary::-webkit-details-marker { display: none; }
+.fluxo__et > summary::after { content: "+"; margin-left: auto; color: var(--tx-3); }
+.fluxo__et[open] > summary::after { content: "\2212"; }
+.fluxo__et > summary:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+.fluxo__n {
+  display: inline-grid; place-items: center; flex: 0 0 20px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--surf-2); color: var(--tx-2); font-size: var(--t-xs);
+}
+.fluxo__et > p { margin: 0 12px 12px 42px; color: var(--tx-2); }
+.fluxo__et code { font-size: 0.92em; }
+
+/* Painel de estado: numeros grandes em linha e lista de falhas. */
+/* Snapshot velho: o numero continua verdadeiro para a janela declarada,
+   mas nao e o de hoje. A cor diz isso; o rodape diz a data. */
+.estado--velho { border-color: var(--warn); }
+.estado--velho::before {
+  content: "snapshot desatualizado";
+  display: inline-block; margin-bottom: 8px; padding: 2px 8px;
+  border: 1px solid var(--warn); border-radius: 999px;
+  font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--warn);
 }
 
-/* Prefers reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .grafo-canvas, .particulas-canvas { animation: none !important; }
-  .grafo-tooltip { transition: none !important; }
+.lab__painel--largo { grid-column: 1 / -1; }
+.sub { font-size: var(--t-sm); color: var(--tx-2); margin: 20px 0 8px; font-weight: 600; }
+.duas { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+@media (max-width: 720px) { .duas { grid-template-columns: 1fr; } }
+
+.tiles {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  margin: 18px 0 0; background: var(--surf-2); border: 1px solid var(--surf-2);
+  border-radius: var(--r); overflow: hidden;
 }
+@media (max-width: 720px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+.tile {
+  background: var(--surf); padding: 14px 14px 13px;
+  display: flex; flex-direction: column; gap: 3px;
+}
+.tile__n {
+  font-size: var(--t-2xl); font-weight: 700; font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.tile--ruim .tile__n { color: var(--warn); }
+.tile__r { font-size: var(--t-xs); color: var(--tx-3); }
+
+.falhas { list-style: none; display: grid; gap: 8px; }
+.falha { display: grid; gap: 3px; }
+.falha__cab { display: flex; align-items: baseline; gap: 8px; font-size: var(--t-xs); }
+.falha__tool { flex: 0 0 auto; color: var(--tx-3); }
+.falha__classe { flex: 1 1 auto; color: var(--tx-2); }
+.falha__n { flex: 0 0 auto; color: var(--tx-3); font-variant-numeric: tabular-nums; }
+.falha__trilha { display: block; height: 3px; background: var(--surf-2); border-radius: 999px; }
+.falha__barra { display: block; height: 100%; background: var(--acc); border-radius: 999px; }
+.falha__vazio { color: var(--tx-3); font-size: var(--t-xs); }
+
+.achados { list-style: none; display: grid; gap: 7px; }
+.achado { display: grid; grid-template-columns: 62px 1fr; gap: 9px; align-items: baseline; font-size: var(--t-xs); }
+.achado__sev { font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tx-3); }
+.achado--high .achado__sev, .achado--critical .achado__sev { color: var(--acc); }
+.achado__msg { color: var(--tx-2); }

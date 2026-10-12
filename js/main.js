@@ -62,6 +62,25 @@
     });
   };
 
+  // A MESMA REDE PARA OS CARDS .rv. As secoes ganham `revelarPassadas` acima
+  // porque observer e enfeite: quem salta para uma ancora ou aperta PageDown
+  // chega depois do elemento, que nunca intersectou em nenhum quadro e ficaria
+  // com opacity 0 para sempre. Os cards ficaram sem essa rede, e medido em
+  // `medir-reveal.mjs`: rolando de 30% para 100% da pagina em saltos de meio
+  // segundo, os 6 cards de produto terminaram TODOS com `rv--wait` e opacity 0
+  // — os seis cards de produto invisiveis. Rolar devagar revela (medido: on=5
+  // de 6 ao centralizar a secao); o que quebra e o salto, porque o observer so
+  // avalia nos quadros em que a pagina esta parada.
+  var revelarCardsPassados = function () {
+    var limite = window.innerHeight * 0.92;
+    Array.prototype.forEach.call(document.querySelectorAll('.rv.rv--wait'), function (el) {
+      if (el.getBoundingClientRect().top < limite) {
+        el.classList.add('on');
+        el.classList.remove('rv--wait');
+      }
+    });
+  };
+
   // H1: cada linha sobe de baixo para dentro do proprio espaco. O <br> do
   // HTML ja separa as linhas, entao so embrulha cada trecho — sem isso o
   // texto subiria junto e o efeito seria um bloco subindo, nao um titulo.
@@ -108,6 +127,7 @@
       hdr.dataset.stuck = y > 8 ? '1' : '0';
       if (fill) fill.style.transform = 'scaleX(' + Math.min(1, y / altura()) + ')';
       revelarPassadas();
+      revelarCardsPassados();
     });
   };
 

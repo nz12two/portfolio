@@ -42,7 +42,7 @@ const ENVIAR = process.argv.includes("--enviar");
 const CANAIS = {
   // `mudou` e `saiu` sao o mesmo caminho de destino: uma mudanca de produto
   // chega no canal de anuncios como "o que mudou", e o valor novo fica no
-  // corpo. Nao ha um canal "saiu" â€” um produto que sai do catalogo nao tem
+  // corpo. Nao ha um canal "saiu" — um produto que sai do catalogo nao tem
   // shelf onde ficar.
   produto_novo: "anuncios",
   mudou: "anuncios",
@@ -68,10 +68,10 @@ const COR = {
 const ROTULO = {
   produto_novo: "Produto novo",
   mudou: "Mudou",
-  saiu: "Saiu do catÃ¡logo",
-  versao: "VersÃ£o nova",
+  saiu: "Saiu do catálogo",
+  versao: "Versão nova",
   status: "Status",
-  numero: "NÃºmero mudou",
+  numero: "Número mudou",
   lead: "Lead",
 };
 
@@ -128,9 +128,9 @@ function montar(x) {
         fields: [
           prod.prova ? { name: "Prova", value: prod.prova.num + " " + prod.prova.unidade, inline: true } : null,
           { name: "Tipo", value: prod.categoria || prod.tipo || "-", inline: true },
-          { name: "LicenÃ§a", value: prod.licenca || "-", inline: true },
+          { name: "Licença", value: prod.licenca || "-", inline: true },
         ].filter(Boolean),
-        footer: { text: "NZ Studios Â· o nÃºmero vem do repositÃ³rio aberto" },
+        footer: { text: "NZ Studios · o número vem do repositório aberto" },
       }],
       allowed_mentions: { parse: [] },
     };
@@ -140,12 +140,12 @@ function montar(x) {
     return {
       username: "NZ Portfolio",
       embeds: [{
-        title: prod ? prod.nome : "NÃºmero",
+        title: prod ? prod.nome : "Número",
         description: x.antes != null && x.depois != null
-          ? "**" + x.antes + "** â†’ **" + x.depois + "**"
+          ? "**" + x.antes + "** → **" + x.depois + "**"
           : (x.corpo || ""),
         color: COR.numero,
-        footer: { text: "medido no repositÃ³rio aberto Â· " + new Date().toISOString().slice(0, 10) },
+        footer: { text: "medido no repositório aberto · " + new Date().toISOString().slice(0, 10) },
       }],
       allowed_mentions: { parse: [] },
     };
@@ -154,7 +154,7 @@ function montar(x) {
   return {
     username: "NZ Portfolio",
     embeds: [{
-      title: x.titulo || ROTULO[x.tipo] || "AnÃºncio",
+      title: x.titulo || ROTULO[x.tipo] || "Anúncio",
       description: [x.corpo, ...(Array.isArray(x.linha) ? x.linha : [])].filter(Boolean).join("\n"),
       url: x.link || undefined,
       color: COR[x.tipo] ?? COR.post,
@@ -190,8 +190,8 @@ async function postar(canal, payload) {
   }
 
   // Forum nao aceita mensagem: 50008 "Cannot send messages in a non-text channel".
-  // A apresentacao de um fÃ³rum e um TOPICO, que e onde a conversa acontece
-  // mesmo -- e o post inicial do tÃ³pico Ã© a apresentacao do produto.
+  // A apresentacao de um fórum e um TOPICO, que e onde a conversa acontece
+  // mesmo -- e o post inicial do tópico é a apresentacao do produto.
   if (canal.type === 15) {
     const r = await fetch(API + "/channels/" + canal.id + "/threads", {
       method: "POST",
@@ -223,14 +223,14 @@ async function postar(canal, payload) {
 }
 
 async function main() {
-  if (ENVIAR && !TOKEN) throw new Error("DISCORD_BOT_TOKEN vazio: nÃ£o hÃ¡ quem poste");
+  if (ENVIAR && !TOKEN) throw new Error("DISCORD_BOT_TOKEN vazio: não há quem poste");
   const cs = await canaisDoServidor();
 
   if (P.tipo === "apresentacao" && P.todos) {
-    console.log("apresentaÃ§Ã£o dos produtos existentes:");
+    console.log("apresentação dos produtos existentes:");
     for (const prod of PRODUTOS) {
       const c = await acharCanal(cs, canalDoProduto(prod.slug));
-      if (!c) { console.log("   #" + prod.slug + "   sem canal correspondente â€” pulado"); continue; }
+      if (!c) { console.log("   #" + prod.slug + "   sem canal correspondente — pulado"); continue; }
       await postar(c, montar({ tipo: "apresentacao", produto: prod.slug }));
     }
     return;
@@ -246,14 +246,14 @@ async function main() {
     // `--produto` tem duas leituras e misturar as duas manda mudanca de
     // catalogo para o canal do produto em vez do canal de anuncios. Medido:
     // "antiXray mudou de preco" foi para #antixray e nao chegou em #anuncios,
-    // enquanto o script dizia "1 anuncio enviado" â€” sucesso sem efeito.
+    // enquanto o script dizia "1 anuncio enviado" — sucesso sem efeito.
     //   - tipo tem destino canonico -> o produto so rotula o embed
     //   - tipo NAO tem (apresentacao) -> o produto escolhe o canal
     const canonico = CANAIS[x.tipo];
     const nome = x.canal || (canonico ? canonico : x.produto ? canalDoProduto(x.produto) : null);
-    if (!nome) throw new Error("nÃ£o sei onde postar: tipo " + x.tipo + " sem --canal e sem --produto");
+    if (!nome) throw new Error("não sei onde postar: tipo " + x.tipo + " sem --canal e sem --produto");
     const canal = await acharCanal(cs, nome);
-    if (!canal) throw new Error("canal nÃ£o encontrado: " + nome);
+    if (!canal) throw new Error("canal não encontrado: " + nome);
     await postar(canal, montar(x));
     if (i < payloads.length - 1) await new Promise((r) => setTimeout(r, 250));
   }

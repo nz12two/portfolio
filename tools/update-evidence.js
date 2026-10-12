@@ -46,16 +46,11 @@ async function main() {
   // As 4 maiores linguagens viram barras; o resto soma como "outros".
   const top = ordenado.slice(0, 4);
   const resto = ordenado.slice(4).reduce((a, [, v]) => a + v, 0);
-  // Rótulo curto para a coluna estreita: 7 caracteres cabem sem cortar o nome.
-  // Antes era 6 e "TypeScript" virava "TypeSc", que parece nome de linguagem.
-  const curto = (nome) => {
-    if (nome.length <= 7) return nome;
-    return {
-      TypeScript: "TypeScr",
-      JavaScript: "JavaScr",
-      "C++": "C++",
-    }[nome] || nome.slice(0, 7);
-  };
+  // Nome inteiro. Cortar em 7 caracteres punha "TypeScr" e "JavaScr" na tela,
+  // que o visitante le como palavra quebrada e nao como sigla. A coluna nao tem
+  // largura fixa — .bar__name so define font-size e uppercase em main.css —,
+  // entao o nome completo nao empurra o trilho.
+  const curto = (nome) => nome;
 
   const barras = top.map(([nome, b]) => ({
     nome: curto(nome),

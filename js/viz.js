@@ -94,7 +94,7 @@
       const facetas = [['tipo', 'tipo'], ['status', 'status'], ['preco', 'precoChave']];
     const distWrap = document.createElement('div');
     distWrap.style.marginTop = '2.5rem';
-    distWrap.innerHTML = '<h3>Distribuicao</h3><p style="font-size:.8rem;color:var(--tx-3);">Contagens reais dos itens do catalogo. Sem filtro.</p>';
+    distWrap.innerHTML = '<h3>Distribuição</h3><p style="font-size:.8rem;color:var(--tx-3);">Contagens reais dos itens do catalogo. Sem filtro.</p>';
     facetas.forEach(par => {
       const f = par[0], campo = par[1];
       const valores = c.facetas[f] || [];
@@ -123,7 +123,7 @@
     const statsWrap = document.createElement('div');
     statsWrap.className = 'stats-grid';
     const numeros = [
-      { num: Math.max(...itensComProva.map(i => Number(i.prova.num) || 0)).toString(), desc: 'Maior prova.num no catalogo', tooltip: 'Derivado de prova.num em cada item com prova; maximo encontrado.' },
+      { num: Math.max(...itensComProva.map(i => Number(i.prova.num) || 0)).toString(), desc: 'Maior número medido no catálogo', tooltip: 'Derivado de prova.num em cada item com prova; máximo encontrado.' },
       { num: c.total.toString(), desc: 'Total de itens no catalogo', tooltip: 'Campo catalogo.total.' },
       { num: c.itens.filter(i => i.repo).length.toString(), desc: 'Itens com repo publico', tooltip: 'Contagem de itens onde o campo repo existe e nao esta vazio.' },
       { num: c.itens.filter(i => i.status === 'privado').length.toString(), desc: 'Itens privados', tooltip: 'Contagem de itens com status == "privado".' },

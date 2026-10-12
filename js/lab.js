@@ -17,266 +17,91 @@
     var itens = C.itens || [];
 
     /* ============================================================
-       1. GRAFO DE STACK COMPARTILHADA — DADO REAL
+       1. ONDE A STACK SE REPETE
+
+       Substitui o grafo de forca. Motivo medido: das 44 arestas que
+       o grafo desenhava, 42 se apoiavam num unico produto -- ou seja,
+       a linha existia porque os dois itens estavam no mesmo projeto, e
+       o painel a chamava de "stack compartilhada". Das 20 tecnologias,
+       15 aparecem num projeto so e so 1 aparece em tres ou mais. Com
+       seis projetos o desenho nao tinha o que dizer, e os rotulos se
+       cobriam ("GitHub Actions" sobre "Node.js", "SQLite" sobre
+       "MySQL"). Virou lista ordenada: quantos produtos usam cada
+       tecnologia, e quais, abrindo a linha.
        ============================================================ */
-    var stackFac = (C.facetas && C.facetas.stack) ? C.facetas.stack : [];
-    // Se facetas.stack vazio, extrai de itens[].stack unicos
-    var techs = stackFac.slice();
-    if (!techs.length) {
-      var s = {};
-      itens.forEach(function(it) {
-        (it.stack || []).forEach(function(t) { s[t] = true; });
-      });
-      techs = Object.keys(s);
-    }
-    // Frequencia de uso por tech
-    var freq = {};
-    techs.forEach(function(t) { freq[t] = 0; });
-    itens.forEach(function(it) {
-      (it.stack || []).forEach(function(t) {
-        if (freq[t] !== undefined) freq[t] += 1;
-      });
-    });
-
-    // Matriz de co-ocorrencia (quantos produtos usam ambas)
-    var co = {};
-    techs.forEach(function(a) {
-      co[a] = {};
-      techs.forEach(function(b) {
-        co[a][b] = 0;
-      });
-    });
-    itens.forEach(function(it) {
-      var st = (it.stack || []).filter(function(t) { return freq[t] !== undefined; });
-      for (var i = 0; i < st.length; i++) {
-        for (var j = i + 1; j < st.length; j++) {
-          co[st[i]][st[j]] = (co[st[i]][st[j]] || 0) + 1;
-          co[st[j]][st[i]] = (co[st[j]][st[i]] || 0) + 1;
-        }
-      }
-    });
-
-    // Arestas: ordena por peso, corta em ~60
-    var arestas = [];
-    techs.forEach(function(a) {
-      techs.forEach(function(b) {
-        if (a >= b) return; // so uma vez
-        var w = co[a][b] || 0;
-        if (w > 0) arestas.push({a: a, b: b, w: w});
-      });
-    });
-    arestas.sort(function(x, y) { return y.w - x.w; });
-    if (arestas.length > 60) arestas = arestas.slice(0, 60);
-
-    // Nos
-    var nos = techs.map(function(t) {
-      return {
-        id: t,
-        label: t,
-        freq: freq[t] || 0,
-        x: Math.random() * 800,
-        y: Math.random() * 360
-      };
-    });
-
-    // Canvas do grafo
-    var canvas = document.getElementById('grafoCanvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var tooltip = document.getElementById('grafoTooltip');
-    var wrap = canvas.parentElement;
-    var W = 0, H = 0;
-
-    function resize() {
-      var r = wrap.getBoundingClientRect();
-      W = r.width; H = 420;
-      var dpr = Math.min(2, window.devicePixelRatio || 1);
-      canvas.width = W * dpr; canvas.height = H * dpr;
-      canvas.style.width = W + 'px';
-      canvas.style.height = H + 'px';
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
-    }
-    resize();
-    // Atribuir canvas.width ZERA o buffer. O ResizeObserver dispara uma vez
-    // logo apos observe(), ou seja DEPOIS do desenho sincrono abaixo — e o
-    // grafo sumia inteiro. Com movimento ligado o rAF redivia e nobody via;
-    // com prefers-reduced-motion so desenha uma vez, entao ficava vazio para
-    // sempre. Redesenha no resize.
-    new ResizeObserver(function () {
-      resize();
-      if (REDUZ) { passoForca(); desenha(); }
-    }).observe(wrap);
-
-    // Forca simples
-    var ITER = 300;
-    var cool = 1.0;
-    function passoForca() {
-      for (var it = 0; it < ITER; it++) {
-        var c = cool / ITER;
-        // Repulsao entre todos os nos
-        for (var i = 0; i < nos.length; i++) {
-          var a = nos[i];
-          for (var j = i + 1; j < nos.length; j++) {
-            var b = nos[j];
-            var dx = a.x - b.x, dy = a.y - b.y;
-            var dist = Math.sqrt(dx * dx + dy * dy) || 0.1;
-            var f = 80 / (dist * dist + 5);
-            if (f > 10) f = 10;
-            var nx = dx / dist, ny = dy / dist;
-            a.x += nx * f * c;
-            a.y += ny * f * c;
-            b.x -= nx * f * c;
-            b.y -= ny * f * c;
+    var listaStack = document.getElementById('stackLista');
+    if (listaStack) {
+      quandoCatalogo(function (C) {
+        var itens = C.itens || [];
+        var uso = new Map();
+        for (var i = 0; i < itens.length; i++) {
+          var st = itens[i].stack || [];
+          for (var k = 0; k < st.length; k++) {
+            if (!uso.has(st[k])) uso.set(st[k], []);
+            uso.get(st[k]).push(itens[i]);
           }
         }
-        // Atracao nas arestas
-        arestas.forEach(function(ar) {
-          var a = nos.find(function(n) { return n.id === ar.a; });
-          var b = nos.find(function(n) { return n.id === ar.b; });
-          if (!a || !b) return;
-          var dx = b.x - a.x, dy = b.y - a.y;
-          var dist = Math.sqrt(dx * dx + dy * dy) || 0.1;
-          var f = dist * 0.008;
-          var nx = dx / dist, ny = dy / dist;
-          a.x += nx * f * c;
-          a.y += ny * f * c;
-          b.x -= nx * f * c;
-          b.y -= ny * f * c;
+        var linhas = Array.from(uso.entries()).sort(function (a, b) {
+          return b[1].length - a[1].length || a[0].localeCompare(b[0]);
         });
-        // Limita ao container
-        nos.forEach(function(n) {
-          var r = Math.sqrt(Math.max(1, n.freq)) * 6 + 10;
-          n.x = Math.max(r, Math.min(W - r, n.x));
-          n.y = Math.max(r, Math.min(H - r, n.y));
-        });
-        cool *= 0.97;
-      }
-    }
+        var repetem = 0, tresOuMais = 0;
+        listaStack.textContent = '';
+        for (var n = 0; n < linhas.length; n++) {
+          (function (nome, ps) {
+            var ul = document.createElement('ul');
+            ul.className = 'stack__prods';
+            ul.hidden = true;
+            for (var m = 0; m < ps.length; m++) {
+              var pl = document.createElement('li');
+              var link = document.createElement('a');
+              link.href = 'catalogo/' + ps[m].slug + '.html';
+              link.textContent = ps[m].nome;
+              pl.appendChild(link);
+              ul.appendChild(pl);
+            }
 
-    // Se reduzido, desenha uma vez estaticamente
-    if (!REDUZ) {
-      var frame = 0;
-      function anima() {
-        if (document.hidden) { requestAnimationFrame(anima); return; }
-        passoForca();
-        desenha();
-        frame++;
-        if (frame < 300) requestAnimationFrame(anima);
-      }
-      requestAnimationFrame(anima);
-    } else {
-      passoForca();
-      desenha();
-    }
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'stack__b';
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-controls', 'stack-' + nome.replace(/[^\w-]/g, ''));
+            ul.id = btn.getAttribute('aria-controls');
 
-    function desenha() {
-      ctx.clearRect(0, 0, W, H);
-      // Arestas
-      ctx.lineWidth = 1.5;
-      arestas.forEach(function(ar) {
-        var a = nos.find(function(n) { return n.id === ar.a; });
-        var b = nos.find(function(n) { return n.id === ar.b; });
-        if (!a || !b) return;
-        var alpha = Math.min(0.6, 0.08 + ar.w * 0.08);
-        ctx.strokeStyle = 'rgba(255,255,255,' + alpha + ')';
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-      });
-      // Nos
-      nos.forEach(function(n) {
-        var raio = Math.sqrt(Math.max(1, n.freq)) * 6 + 10;
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, raio, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255,255,255,0.06)';
-        ctx.fill();
-        ctx.lineWidth = 1.5;
-        ctx.strokeStyle = 'rgba(255,255,255,0.25)';
-        ctx.stroke();
-        // Label interno
-        ctx.fillStyle = 'rgba(255,255,255,0.85)';
-        ctx.font = 'bold 10px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        // Quebra se muito longo
-        var label = n.id.length > 14 ? n.id.slice(0, 13) + '…' : n.id;
-        ctx.fillText(label, n.x, n.y);
+            var rot = document.createElement('span');
+            rot.className = 'stack__nome';
+            rot.textContent = nome;
+
+            var cont = document.createElement('span');
+            cont.className = ps.length === 1 ? 'stack__n stack__n--so' : 'stack__n';
+            cont.textContent = ps.length + (ps.length === 1 ? ' projeto' : ' projetos');
+
+            // Um so listener: aria-expanded, a classe e a lista saem juntos.
+            btn.addEventListener('click', function () {
+              var aberto = btn.getAttribute('aria-expanded') === 'true';
+              btn.setAttribute('aria-expanded', aberto ? 'false' : 'true');
+              ul.hidden = aberto;
+            });
+
+            var li = document.createElement('li');
+            li.className = 'stack__it';
+            btn.appendChild(rot);
+            btn.appendChild(cont);
+            li.appendChild(btn);
+            li.appendChild(ul);
+            listaStack.appendChild(li);
+          })(linhas[n][0], linhas[n][1]);
+        }
+        for (var r = 0; r < linhas.length; r++) {
+          if (linhas[r][1].length >= 2) repetem++;
+          if (linhas[r][1].length >= 3) tresOuMais++;
+        }
+        var resumo = document.createElement('li');
+        resumo.className = 'stack__resumo';
+        resumo.textContent = repetem + ' das ' + linhas.length +
+          ' tecnologias aparecem em dois ou mais projetos; ' + tresOuMais + ' em três ou mais.';
+        listaStack.insertBefore(resumo, listaStack.firstChild);
       });
     }
-
-    // Interacao: hover no no acende vizinhos
-    var hovered = null;
-    canvas.addEventListener('mousemove', function(e) {
-      if (!tooltip) return;
-      var rect = canvas.getBoundingClientRect();
-      var mx = e.clientX - rect.left;
-      var my = e.clientY - rect.top;
-      var hit = nos.find(function(n) {
-        var r = Math.sqrt(Math.max(1, n.freq)) * 6 + 10;
-        return Math.sqrt((mx - n.x) * (mx - n.x) + (my - n.y) * (my - n.y)) <= r;
-      });
-      if (hit) {
-        hovered = hit.id;
-        // Tooltip
-        var vizinhos = arestas.filter(function(ar) { return ar.a === hit.id || ar.b === hit.id; }).map(function(ar) { return ar.a === hit.id ? ar.b : ar.a; });
-        var unicos = [];
-        vizinhos.forEach(function(v) { if (unicos.indexOf(v) === -1) unicos.push(v); });
-        var produtos = unicos.map(function(t) {
-          return itens.filter(function(it) { return (it.stack || []).indexOf(t) > -1; }).map(function(it) { return it.nome; });
-        }).reduce(function(acc, arr) { return acc.concat(arr); }, []);
-        var prodUnicos = produtos.filter(function(p, i, a) { return a.indexOf(p) === i; });
-        tooltip.style.left = (e.clientX - rect.left + 14) + 'px';
-        tooltip.style.top = (e.clientY - rect.top - 8) + 'px';
-        tooltip.innerHTML = '<strong>' + hit.id + '</strong> &mdash; usada em ' + hit.freq + ' produto(s)<br>Produtos vizinhos: ' + (prodUnicos.length ? prodUnicos.join(', ') : '—');
-        tooltip.classList.add('visible');
-        desenha();
-      } else {
-        hovered = null;
-        tooltip.classList.remove('visible');
-        desenha();
-      }
-    });
-    canvas.addEventListener('mouseleave', function() {
-      hovered = null;
-      tooltip.classList.remove('visible');
-      desenha();
-    });
-
-    // Clique no no: lista produtos abaixo
-    var lista = document.getElementById('grafoLista');
-    canvas.addEventListener('click', function(e) {
-      var rect = canvas.getBoundingClientRect();
-      var mx = e.clientX - rect.left;
-      var my = e.clientY - rect.top;
-      var hit = nos.find(function(n) {
-        var r = Math.sqrt(Math.max(1, n.freq)) * 6 + 10;
-        return Math.sqrt((mx - n.x) * (mx - n.x) + (my - n.y) * (my - n.y)) <= r;
-      });
-      if (!hit || !lista) return;
-      var prods = itens.filter(function(it) { return (it.stack || []).indexOf(hit.id) > -1; });
-      lista.innerHTML = '';
-      if (!prods.length) {
-        lista.innerHTML = '<p style="color:var(--tx-3);font-size:var(--t-sm)">Nenhum produto usa esta tecnologia.</p>';
-        return;
-      }
-      prods.forEach(function(it) {
-        var a = document.createElement('a');
-        a.href = 'catalogo/' + it.slug + '.html';
-        a.textContent = it.nome + (it.prova ? ' — prova: ' + it.prova.num + ' ' + it.prova.unidade : '');
-        a.style.display = 'inline-block';
-        a.style.margin = '4px 8px';
-        a.style.padding = '6px 12px';
-        a.style.background = 'var(--surf-2)';
-        a.style.border = '1px solid var(--line)';
-        a.style.borderRadius = '999px';
-        a.style.fontSize = 'var(--t-xs)';
-        a.style.color = 'var(--tx)';
-        a.style.textDecoration = 'none';
-        lista.appendChild(a);
-      });
-    });
 
     /* ============================================================
        2. EXPLORADOR DE MEDICAO — DADO REAL
@@ -335,113 +160,152 @@
         });
       }
     }
+  });
 
     /* ============================================================
-       3. CAMPO DE PARTICULAS — DEMONSTRACAO (NAO DADO REAL)
+       0. ESTADO REAL DO RUNTIME
+       Le dados/estado.json, gerado por tools/exportar-estado.js a
+       partir de ~/.banzinho/{state,logs}. Substitui o grafo de forca:
+       aquele desenhava 44 arestas das quais 42 eram "os dois itens no
+       mesmo produto" e chamava isso de stack compartilhada. Aqui cada
+       numero sai de uma chamada que aconteceu.
        ============================================================ */
-    var partCanvas = document.getElementById('particulasCanvas');
-    if (partCanvas) {
-      var pctx = partCanvas.getContext('2d');
-      var pW = 0, pH = 0;
-      var particulas = [];
-      var mouse = { x: -1000, y: -1000 };
-      var onda = { x: 0, y: 0, t: 0 };
+    var painelEstado = document.getElementById('estadoPainel');
+    if (painelEstado) {
+      var tiles = document.getElementById('estadoTiles');
+      var listaFalhas = document.getElementById('estadoFalhas');
+      var listaAchados = document.getElementById('estadoAchados');
+      var notaEstado = document.getElementById('estadoNota');
 
-      function desenhaParticulas() {
-        pctx.clearRect(0, 0, pW, pH);
-        particulas.forEach(function(p) {
-          pctx.beginPath();
-          pctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          pctx.fillStyle = 'rgba(255,255,255,0.35)';
-          pctx.fill();
-        });
-      }
-
-      function resizePart() {
-        var r = partCanvas.getBoundingClientRect();
-        pW = r.width; pH = r.height;
-        var dpr = Math.min(2, window.devicePixelRatio || 1);
-        partCanvas.width = pW * dpr; partCanvas.height = pH * dpr;
-        partCanvas.style.width = pW + 'px'; partCanvas.style.height = pH + 'px';
-        pctx.setTransform(1, 0, 0, 1, 0, 0);
-        pctx.scale(dpr, dpr);
-      }
-      resizePart();
-      // Mesmo motivo do grafo: atribuir width limpa o buffer e o observer
-      // dispara depois do quadro unico do modo reduzido.
-      new ResizeObserver(function () {
-        resizePart();
-        if (REDUZ) { pctx.clearRect(0, 0, pW, pH); desenhaParticulas(); }
-      }).observe(partCanvas);
-
-      for (var k = 0; k < 120; k++) {
-        particulas.push({
-          x: Math.random() * 800,
-          y: Math.random() * 300,
-          vx: (Math.random() - 0.5) * 1.5,
-          vy: (Math.random() - 0.5) * 1.5,
-          r: 1.5 + Math.random() * 2
-        });
-      }
-
-      partCanvas.addEventListener('mousemove', function(e) {
-        var rect = partCanvas.getBoundingClientRect();
-        mouse.x = e.clientX - rect.left;
-        mouse.y = e.clientY - rect.top;
-      });
-      partCanvas.addEventListener('mouseleave', function() {
-        mouse.x = -1000; mouse.y = -1000;
-      });
-      partCanvas.addEventListener('click', function(e) {
-        var rect = partCanvas.getBoundingClientRect();
-        onda.x = e.clientX - rect.left;
-        onda.y = e.clientY - rect.top;
-        onda.t = 30;
-      });
-
-      function animaPart() {
-        if (document.hidden) { requestAnimationFrame(animaPart); return; }
-        if (!REDUZ) {
-          pctx.clearRect(0, 0, pW, pH);
-          particulas.forEach(function(p) {
-            // Repulsao do cursor
-            var dx = p.x - mouse.x, dy = p.y - mouse.y;
-            var dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < 120 && dist > 1) {
-              var f = (120 - dist) / 120 * 2.5;
-              p.vx += (dx / dist) * f * 0.08;
-              p.vy += (dy / dist) * f * 0.08;
-            }
-            p.x += p.vx;
-            p.y += p.vy;
-            // Atrito
-            p.vx *= 0.96; p.vy *= 0.96;
-            // Limites
-            if (p.x < 0 || p.x > pW) p.vx *= -1;
-            if (p.y < 0 || p.y > pH) p.vy *= -1;
-            p.x = Math.max(0, Math.min(pW, p.x));
-            p.y = Math.max(0, Math.min(pH, p.y));
-          });
-          // Onda do clique
-          if (onda.t > 0) {
-            pctx.strokeStyle = 'rgba(255,255,255,0.15)';
-            pctx.lineWidth = 2;
-            pctx.beginPath();
-            var rOnda = (30 - onda.t) * 3;
-            pctx.arc(onda.x, onda.y, rOnda, 0, Math.PI * 2);
-            pctx.stroke();
-            onda.t--;
+      fetch('dados/estado.json')
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) {
+          if (!d || !d.execucao) {
+            if (notaEstado) notaEstado.textContent = 'Sem snapshot em dados/estado.json — rode node tools/exportar-estado.js.';
+            return;
           }
-          // Desenhar particulas
-          desenhaParticulas();
-          requestAnimationFrame(animaPart);
-        } else {
-          // Reduzido: um quadro estatico
-          desenhaParticulas();
-        }
-      }
-      if (!REDUZ) requestAnimationFrame(animaPart);
-      else animaPart();
+          var ex = d.execucao;
+          var dc = d.auto_auditoria || {};
+          var sev = dc.por_severidade || {};
+          var nAlta = (sev.high || 0) + (sev.critical || 0);
+
+          // tiles: numero medido, rotulo curto. Sem "MB de codigo" e sem
+          // numero que nao responda pergunta.
+          var nums = [
+            [ex.chamadas_medidas, 'chamadas medidas', ''],
+            [ex.ferramentas.length, 'ferramentas distintas', ''],
+            [(ex.taxa_erro_global * 100).toFixed(1) + '%', 'taxa de erro', ex.taxa_erro_global > 0.05 ? 'tile--ruim' : ''],
+            [dc.total || 0, 'achados abertos', nAlta > 0 ? 'tile--ruim' : ''],
+          ];
+          for (var i = 0; i < nums.length; i++) {
+            // div, nao dt/dd: num <dl> de 4 colunas cada dt e cada dd ocupa uma
+            // celula, e o numero acabava na linha ao lado do proprio rotulo.
+            var box = document.createElement('div');
+            box.className = 'tile' + (nums[i][2] ? ' ' + nums[i][2] : '');
+            var dt = document.createElement('span');
+            dt.className = 'tile__n';
+            dt.textContent = String(nums[i][0]);
+            var dd = document.createElement('span');
+            dd.className = 'tile__r';
+            dd.textContent = nums[i][1];
+            box.appendChild(dt);
+            box.appendChild(dd);
+            tiles.appendChild(box);
+          }
+
+          // falhas por classe, ja agrupadas pelo gerador
+          var fal = (d.falhas || []).slice(0, 10);
+          var max = fal.length ? fal[0].ocorrencias : 1;
+          for (var f2 = 0; f2 < fal.length; f2++) {
+            var li = document.createElement('li');
+            li.className = 'falha';
+            var cab = document.createElement('div');
+            cab.className = 'falha__cab';
+            var tool = document.createElement('span');
+            tool.className = 'falha__tool mono';
+            tool.textContent = fal[f2].tool;
+            var classe = document.createElement('span');
+            classe.className = 'falha__classe';
+            classe.textContent = fal[f2].classe;
+            var n = document.createElement('span');
+            n.className = 'falha__n';
+            n.textContent = fal[f2].ocorrencias;
+            cab.appendChild(tool);
+            cab.appendChild(classe);
+            cab.appendChild(n);
+            var trilha = document.createElement('span');
+            trilha.className = 'falha__trilha';
+            var barra = document.createElement('span');
+            barra.className = 'falha__barra';
+            barra.style.width = Math.max(2, Math.round((fal[f2].ocorrencias / max) * 100)) + '%';
+            trilha.appendChild(barra);
+            li.appendChild(cab);
+            li.appendChild(trilha);
+            listaFalhas.appendChild(li);
+          }
+          if (!fal.length) {
+            var vazio = document.createElement('li');
+            vazio.className = 'falha__vazio';
+            vazio.textContent = 'Nenhuma falha registrada na janela.';
+            listaFalhas.appendChild(vazio);
+          }
+
+          // achados da auto-auditoria: o que o proprio runtime acusa nele mesmo.
+// Deduplica por mensagem — o doctor emite o mesmo achado uma vez por
+// instancia, e quatro linhas iguais na tela leem como quatro problemas.
+          var vistos = new Set();
+          var unicos = [];
+          for (var q = 0; q < (dc.achados || []).length; q++) {
+            var m = dc.achados[q].mensagem;
+            if (vistos.has(m)) continue;
+            vistos.add(m);
+            unicos.push(dc.achados[q]);
+          }
+          var ach = unicos.slice(0, 8);
+          for (var a2 = 0; a2 < ach.length; a2++) {
+            var li2 = document.createElement('li');
+            li2.className = 'achado achado--' + ach[a2].severidade;
+            var selo = document.createElement('span');
+            selo.className = 'achado__sev mono';
+            selo.textContent = ach[a2].severidade;
+            var txt = document.createElement('span');
+            txt.className = 'achado__msg';
+            txt.textContent = ach[a2].mensagem;
+            li2.appendChild(selo);
+            li2.appendChild(txt);
+            listaAchados.appendChild(li2);
+          }
+          if (!ach.length) {
+            var v2 = document.createElement('li');
+            v2.className = 'falha__vazio';
+            v2.textContent = 'Auto-auditoria sem achado aberto.';
+            listaAchados.appendChild(v2);
+          }
+
+          var j = ex.janela;
+          // O snapshot e um arquivo commitado, nao um feed: ele envelhece sem
+          // ninguem mexer. A data vai no rodape sempre, e acima de 30 dias o
+          // painel avisa em vez de deixar o numero parecer de agora.
+          var gerado = d.gerado_em ? Date.parse(d.gerado_em) : 0;
+          var idadeDias = gerado ? Math.floor((Date.now() - gerado) / 86400000) : null;
+          if (idadeDias === null) {
+            painelEstado.classList.add('estado--velho');
+          } else if (idadeDias > 30) {
+            painelEstado.classList.add('estado--velho');
+          }
+          if (notaEstado) {
+            notaEstado.textContent =
+              (idadeDias === null ? 'Snapshot sem data.' : idadeDias === 0 ? 'Snapshot de hoje.' :
+               idadeDias === 1 ? 'Snapshot de ontem.' : 'Snapshot de ' + idadeDias + ' dias atrás.') +
+              ' Janela ' + (j ? j.de.slice(0, 10) + ' a ' + j.ate.slice(0, 10) : '?') +
+              ' · ' + ex.eventos_lidos + ' eventos lidos · ' +
+              (d.portoes ? d.portoes.registros + ' pedidos de portão registrados' : '') +
+              ' · caminho, sessão e comando são redigidos no gerador';
+          }
+        })
+        .catch(function () {
+          if (notaEstado) notaEstado.textContent = 'Nao foi possivel ler dados/estado.json.';
+        });
     }
-  });
+
 })();

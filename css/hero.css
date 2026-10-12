@@ -1,18 +1,9 @@
-/* Hero interativo — constelacao, parallax, ripple, entrada. */
-.hero__canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(1.04);
-  animation: heroCanvasIn 900ms var(--ease) forwards;
-  will-change: opacity, transform;
-}
+/* Hero — spotlight do cursor, entrada da coluna e ripple do clique.
 
-@keyframes heroCanvasIn {
-  to { opacity: 1; transform: scale(1); }
-}
+   Saiu daqui a constelação de partículas (`.hero__canvas` + `heroCanvasIn` +
+   o motor em js/hero.js): 92 nós e arestas desenhadas entre eles que não
+   representam nada de projeto. O NZ pediu para tirar, e com razão — era
+   demonstração com o próprio rótulo de demonstração. */
 
 .hero__grid {
   position: relative;
@@ -44,10 +35,18 @@
   margin-left: -60px; margin-top: -60px;
 }
 
+/* Resposta ao clique sem movimento: o circulo aparece e some, sem escala.
+   `prefers-reduced-motion` pede menos MOVIMENTO, nao menos confirmacao — e a
+   animated keyframe e o que incomoda. O padding de escala some junto, senao
+   o elemento fica invisivel para sempre (transform: scale(0) sem animacao). */
+.hero .btn .ripple--estatico {
+  transform: none;
+  opacity: 0.35;
+  transition: opacity 180ms linear;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .hero__canvas { animation: none; opacity: 1; transform: scale(1); }
   .hero__grid > aside,
   .hero__grid > :nth-child(2) { animation: none; opacity: 1; }
-  .hero__canvas { animation-duration: 0.01ms !important; }
   *, .hero__grid { transition-duration: 0.01ms !important; }
 }

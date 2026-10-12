@@ -1,0 +1,170 @@
+/* Preview animado e painel de detalhes dos cards.
+   Fica em folha propria em vez de no fim de main.css: o bloco de ajustes la
+   existe para vencer regras com a mesma especificidade, e nada aqui precisa
+   disso. */
+
+/* Faixa de preview no topo do card. Altura fixa: preview com altura variavel
+   faz o card pular quando a fonte carrega. */
+.prev {
+  position: relative;
+  width: 100%;
+  height: 84px;
+  margin: -2px 0 12px;
+  border-radius: var(--r-s);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  pointer-events: none;
+}
+.prev__cv { display: block; width: 100%; height: 100%; }
+.prev__vazio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: var(--t-xs);
+  letter-spacing: 0.06em;
+  color: var(--tx-3);
+  text-transform: lowercase;
+}
+
+/* Brilho que acende no hover — leitura de profundidade, sem mexer na
+   geometria interna do card. */
+.prev::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--acc);
+  opacity: 0;
+  transition: opacity 0.28s var(--ease);
+  pointer-events: none;
+}
+.item:hover .prev::after, .item:focus-within .prev::after { opacity: 0.06; }
+
+/* ---------------------------------------------------------- painel de detalhe */
+
+.det {
+  grid-column: 1 / -1;
+  margin-top: 12px;
+  padding: 16px;
+  border: 1px solid var(--acc-line);
+  border-radius: var(--r-s);
+  background: var(--bg-2);
+}
+.det__prova {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.det__num {
+  font-size: var(--t-xl);
+  font-weight: 700;
+  color: var(--acc);
+  line-height: 1;
+}
+.det__prova small { color: var(--tx-3); font-size: var(--t-xs); }
+.det__como {
+  flex-basis: 100%;
+  margin: 6px 0 0;
+  font-size: var(--t-sm);
+  color: var(--tx-2);
+  line-height: 1.5;
+}
+
+.det__bloco { margin-bottom: 14px; }
+.det__bloco h4 {
+  margin: 0 0 7px;
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: var(--t-xs);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--tx-3);
+  font-weight: 500;
+}
+.det__bloco ul { margin: 0; padding-left: 18px; }
+.det__bloco li { font-size: var(--t-sm); color: var(--tx-2); line-height: 1.5; margin-bottom: 5px; }
+
+.det__dl {
+  display: grid;
+  grid-template-columns: minmax(76px, auto) 1fr;
+  gap: 4px 12px;
+  margin: 0;
+}
+.det__dl dt { font-size: var(--t-xs); color: var(--tx-3); text-transform: lowercase; }
+.det__dl dd { margin: 0; font-size: var(--t-sm); color: var(--tx); }
+
+.det__stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.det__links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.det__links .btn { min-height: 38px; font-size: var(--t-sm); }
+
+/* ----------------------------------------------------------- botao detalhes */
+
+.item__mais {
+  background: transparent;
+  border: 1px solid var(--line-hi);
+  border-radius: var(--r-s);
+  color: var(--tx-3);
+  font: inherit;
+  font-size: var(--t-xs);
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  padding: 7px 11px;
+  cursor: pointer;
+  transition: color 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+.item__mais:hover, .item__mais:focus-visible {
+  color: var(--acc);
+  border-color: var(--acc-line);
+}
+
+/* O card deixou de ser <a> para poder conter um botao — aninhar botao em
+   ancora e HTML invalido e quebra a navegacao por teclado. O titulo segue
+   sendo o link principal, entao Tab cai no link e depois no botao. */
+.item__link { color: inherit; text-decoration: none; }
+.item__link:hover, .item__link:focus-visible { color: var(--acc); }
+
+@media (prefers-reduced-motion: reduce) {
+  .prev::after { transition: none; }
+  .item__mais { transition: none; }
+}
+
+/* ============================================================
+   AJUSTES DE CASCATA
+
+   main.css tem `.items--comDestaque .item > div { flex: 1; ... }` (0,2,1),
+   escrito quando o card tinha um div so. Com o preview o card ganhou quatro
+   filhos e essa regra passou a esticar .prev, .item__pe e .det tambem.
+
+   Estas regras tem especificidade MAIOR que a original de proposito, e esta
+   folha carrega depois de main.css. Resolver aqui em vez de editar main.css
+   evita duas sessoes escrevendo no mesmo arquivo.
+   ============================================================ */
+
+.items--comDestaque .item > .item__corpo { flex: 1; display: flex; flex-direction: column; gap: 7px; }
+.items--comDestaque .item > .prev { flex: 0 0 auto; }
+.items--comDestaque .item > .item__pe { flex: 0 0 auto; }
+.items--comDestaque .item > .det { flex: 0 0 auto; }
+
+.items--comDestaque .item__pe {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.items--comDestaque .item__pe .item__go { align-self: auto; }
+
+/* O preview do destaque ocupa mais altura: e o card maior da grade. */
+.prev--alto { height: 150px; margin-bottom: 14px; }
+.destaque .prev { margin-bottom: 16px; }
+.destaque .prev::after { opacity: 0; }
+
+/* O destaque e grid de TRAS colunas (conteudo | numero | seta). O preview virou
+   o primeiro filho e, sem isto, ocupava a coluna 1fr e espremia o titulo
+   enquanto a seta transbordava para uma quarta coluna na linha de baixo —
+   medida em x=193, y=761, a 300px do conteudo. Em 1/-1 os tres filhos
+   restantes voltam para as tres colunas originais. */
+.destaque > .prev { grid-column: 1 / -1; margin: 0; }

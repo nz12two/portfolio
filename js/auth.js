@@ -176,15 +176,8 @@
   function aplicar() {
     var ativo = estado === "autenticado";
 
-    // A interface e a MESMA que o vip.js usava. Quem escreve as paginas nao
-    // sabe qual dos dois esta rodando.
-    document.querySelectorAll(".vip").forEach(function (sec) {
-      sec.dataset.locked = ativo ? "0" : "1";
-      sec.dataset.unlocked = ativo ? "1" : "0";
-    });
     document.querySelectorAll("[data-gate]").forEach(function (g) { g.hidden = ativo; });
     document.querySelectorAll("[data-unlocked]").forEach(function (g) { g.hidden = !ativo; });
-    document.querySelectorAll("[data-vip-item]").forEach(function (el) { el.style.opacity = ativo ? "1" : "0.75"; });
 
     // Botao do header: vira "sair" com sessao, e ganha o nome quando estah
     // logado, para nao ser um botao sem dono.

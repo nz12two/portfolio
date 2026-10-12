@@ -61,10 +61,12 @@
       : "";
 
     return (
-      '<a class="item rv" href="catalogo/' + esc(it.slug) + '.html">' +
+      '<article class="item rv" data-slug="' + esc(it.slug) + '">' +
+      '<div class="prev" data-cena hidden aria-hidden="true"></div>' +
       '<span class="item__n">' + String(it.i).padStart(2, "0") + "</span>" +
-      "<div>" +
-      '<h3 class="item__name">' + esc(it.nome) + "</h3>" +
+      '<div class="item__corpo">' +
+      '<h3 class="item__name"><a class="item__link" href="catalogo/' + esc(it.slug) + '.html">' +
+      esc(it.nome) + "</a></h3>" +
       '<p class="item__desc">' + esc(it.home ? it.home.descricao : it.tagline) + "</p>" +
       prova +
       fechado +
@@ -73,8 +75,13 @@
         return '<span class="tag' + (t.cls ? " " + t.cls : "") + '">' + esc(t.txt) + "</span>";
       }).join("") +
       "</div></div>" +
+      '<div class="item__pe">' +
+      '<button type="button" class="item__mais" data-det aria-expanded="false" aria-controls="det-' +
+      esc(it.slug) + '">detalhes</button>' +
       '<span class="item__go" aria-hidden="true">&rarr;</span>' +
-      "</a>"
+      "</div>" +
+      '<div class="det" id="det-' + esc(it.slug) + '" data-det-painel hidden></div>' +
+      "</article>"
     );
   };
 
@@ -126,7 +133,8 @@
     if (pr) tags.push(pr.txt);
 
     return (
-      '<a class="destaque rv" href="catalogo/' + esc(it.slug) + '.html">' +
+      '<article class="destaque rv" data-slug="' + esc(it.slug) + '">' +
+      '<div class="prev prev--alto" data-cena hidden aria-hidden="true"></div>' +
       '<div class="destaque__mid">' +
       '<span class="destaque__selo">maior número medido</span>' +
       '<h3 class="destaque__name">' + esc(it.nome) + "</h3>" +
@@ -143,7 +151,7 @@
       "<span>" + esc(it.prova.unidade) + "</span>" +
       "</div>" +
       '<span class="item__go" aria-hidden="true">&rarr;</span>' +
-      "</a>"
+      "</article>"
     );
   };
 

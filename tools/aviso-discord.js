@@ -4,18 +4,18 @@
  *
  * Por que: o catalogo ja tem um gerador (tools/gerar-catalogo.js) que leva o
  * JSON ate a pagina. Faltava a outra metade: quando um produto muda de status,
- * de preco, ou entra novo, ninguem e avisado â€” e um canal que so recebe
+ * de preco, ou entra novo, ninguem e avisado — e um canal que so recebe
  * anuncio manual envelhece mais rapido que a pagina. Aqui o Discord e
  * consumidor do mesmo JSON, entao nao existe segundo lugar onde o produto
  * muda por tras do catalogo.
  *
  * O que posta: so a diferenca contra dados/discord-estado.json. Republicar o
  * catalogo inteiro a cada push e o caminho para o canal virar ruido e ninguem
- * desligar as notificacoes â€” que e o estado final de qualquer comunidade.
+ * desligar as notificacoes — que e o estado final de qualquer comunidade.
  *
  * Quem entrega: este arquivo descobre a mudanca e delega a `anunciar.js`, que
  * e o caminho unico de saida. Antes cada coisa que falasse no Discord abria o
- * seu proprio jeito de postar â€” este por webhook, outro pelo token do bot â€” e
+ * seu proprio jeito de postar — este por webhook, outro pelo token do bot — e
  * dois caminhos sao duas credenciais, das quais a segunda quase sempre quebra
  * depois da primeira funcionar sem ninguem ver. Aqui a logica e o envio estao
  * em arquivos separados: decidir o que mudou nao e o mesmo trabalho que
@@ -45,12 +45,13 @@ const ENVIAR = process.argv.includes("--enviar");
 
 // Um campo so quando ele muda e a pessoa ve. `stack` foi deixado de fora de
 // proposito: acrescentar uma dependencia e' mudanca de ruido, e ruido treina o
-// canal a ser ignorado.
+// canal a ser ignorado. `licenca` saiu pelo mesmo motivo — e dado que ja tem
+// lugar proprio na pagina do produto, e anunciar "MIT -> MIT" consome a coluna
+// de novidades com um diff que nao mudou nada.
 const CAMPOS = [
   { chave: "status", rotulo: "status" },
-  { chave: "preco", rotulo: "preÃ§o" },
-  { chave: "tagline", rotulo: "descriÃ§Ã£o" },
-  { chave: "licenca", rotulo: "licenÃ§a" },
+  { chave: "preco", rotulo: "preço" },
+  { chave: "tagline", rotulo: "descrição" },
   { chave: "prova", rotulo: "prova", deriva: (p) => (p.prova ? String(p.prova.num) + " " + p.prova.unidade : null) },
 ];
 
@@ -70,7 +71,7 @@ function diferencas(antes, agora) {
         linhas: [
           esc(p.tagline),
           p.tipo ? "tipo: " + esc(p.tipo) : null,
-          p.dominio ? "domÃ­nio: " + esc(p.dominio) : null,
+          p.dominio ? "domínio: " + esc(p.dominio) : null,
         ].filter(Boolean),
       });
       continue;
@@ -79,14 +80,14 @@ function diferencas(antes, agora) {
       const novo = c.deriva ? c.deriva(p) : esc(p[c.chave]);
       const velho_ = c.deriva ? c.deriva(velho) : esc(velho[c.chave]);
       if (novo === velho_ || (!novo && !velho_)) return null;
-      return "**" + c.rotulo + ":** " + (velho_ || "â€”") + " â†’ " + (novo || "â€”");
+      return "**" + c.rotulo + ":** " + (velho_ || "—") + " → " + (novo || "—");
     }).filter(Boolean);
     if (linhas.length) lista.push({ kind: "mudou", slug: p.slug, titulo: p.nome, linhas });
   }
 
   for (const v of antes) {
     if (!agora.find((p) => p.slug === v.slug)) {
-      lista.push({ kind: "saiu", slug: v.slug, titulo: v.nome, linhas: ["saiu do catÃ¡logo"] });
+      lista.push({ kind: "saiu", slug: v.slug, titulo: v.nome, linhas: ["saiu do catálogo"] });
     }
   }
 
@@ -94,7 +95,7 @@ function diferencas(antes, agora) {
 }
 
 /* Entrega cada mudanca pelo caminho unico. Chamar o outro script como
- * processo â€” e nao importar o modulo â€” porque o ciclo de vida dele (token,
+ * processo — e nao importar o modulo — porque o ciclo de vida dele (token,
  * canal por nome, dry-run) e o de um comando, nao o de uma funcao. */
 async function enviar(mudancas) {
   if (!process.env.DISCORD_BOT_TOKEN) return false;
@@ -106,7 +107,7 @@ async function enviar(mudancas) {
   const payload = mudancas.map((m) => ({
     tipo: m.kind,
     produto: m.slug,
-    titulo: m.titulo + " â€” " + (m.kind === "saiu" ? "saiu" : m.kind === "produto_novo" ? "novo" : "mudou"),
+    titulo: m.titulo + " — " + (m.kind === "saiu" ? "saiu" : m.kind === "produto_novo" ? "novo" : "mudou"),
     linha: m.linhas,
     link: SITE + "/catalogo/" + m.slug + ".html",
   }));
@@ -137,7 +138,7 @@ async function main() {
     // Primeira execucao: e uma primeira listagem, nao uma mudanca. Sem estado
     // anterior, comparar tudo contra vazio anunciaria os 6 produtos de hoje
     // como se fossem lancamentos.
-    console.log("sem dados/discord-estado.json â€” registro o catalogo atual sem anunciar");
+    console.log("sem dados/discord-estado.json — registro o catalogo atual sem anunciar");
     fs.writeFileSync(
       ESTADO,
       JSON.stringify({ gerado_em: new Date().toISOString(), produtos: agora }, null, 2),
@@ -149,7 +150,7 @@ async function main() {
   const mudancas = diferencas(antes, agora);
 
   if (!mudancas.length) {
-    console.log("nenhuma mudanca no catalogo â€” nada a anunciar");
+    console.log("nenhuma mudanca no catalogo — nada a anunciar");
     return;
   }
 
@@ -165,12 +166,12 @@ async function main() {
 
   const ok = await enviar(mudancas);
   if (!ok) {
-    console.error("\nsem DISCORD_BOT_TOKEN â€” nada foi enviado e o estado NAO foi avancado");
+    console.error("\nsem DISCORD_BOT_TOKEN — nada foi enviado e o estado NAO foi avancado");
     process.exit(1);
   }
 
   // O estado so avanca depois do post. Falhou o envio, volta a comparar no
-  // proximo push: e o comportamento correto para mudanca de produto â€” melhor
+  // proximo push: e o comportamento correto para mudanca de produto — melhor
   // anunciar duas vezes do que perder uma.
   fs.writeFileSync(
     ESTADO,

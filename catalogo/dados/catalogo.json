@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-12T17:00:39.990Z",
+  "gerado_em": "2026-10-12T20:30:30.691Z",
   "total": 6,
   "tipos": [
     {
@@ -283,7 +283,7 @@
       "nVip": 3,
       "passos": 2,
       "home": {
-        "descricao": "Catálogo e documentação do ecossistema OpenCode: 123 repositórios e 249 pacotes, todos de dado real. Se não há fonte, a página mostra estado vazio em vez de inventar item.",
+        "descricao": "Catálogo pesquisável do ecossistema OpenCode: plugin, script e MCP com a fonte de cada um. 123 repositórios e 249 pacotes mapeados, com feed e ranking. Cada item ganha página própria gerada do dado real — e onde não há fonte, a página mostra estado vazio em vez de inventar item.",
         "tags": [
           "Astro 7",
           "React 19"

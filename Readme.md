@@ -39,6 +39,7 @@ Sem framework e sem build step de front. `node` regenera o que muda:
 
 ```
 tools/update-evidence.js   -> dados/evidencia.json      (números da API do GitHub)
+tools/exportar-estado.js   -> dados/estado.json         (estado real do runtime)
 tools/gerar-catalogo.js    -> catalogo/dados/catalogo.json
 tools/build-catalogo.js    -> catalogo/*.html
 ```
@@ -46,14 +47,42 @@ tools/build-catalogo.js    -> catalogo/*.html
 Estrutura:
 
 ```
-index.html          home
+index.html          home (vitrine, lab, novidades ao vivo)
+conta.html          login/cadastro — único lugar que usa js/auth.js
 catalogo/           índice interativo + páginas de produto (geradas)
-css/                main, produto, catalogo, vip
-js/                 main, catalogo, vip
-dados/              evidencia.json
-assets/             avatar, social-preview
+dados/              evidencia.json (GitHub API), estado.json (runtime),
+                    novidades.json e discord-estado.json (bot do Discord)
+css/                main, hero, navega, lab, viz, vitrine-prev, produto,
+                    catalogo, conta, vip
+js/                 main, hero, navega, lab, viz, vitrine, previews, catalogo,
+                    copiar, novidades, auth-config + auth (Supabase REST)
+assets/             avatar, social-preview, brand/, produtos/
 tools/              geradores — nada aqui é servido
+.github/workflows/  bot do Discord (aviso de mudança de produto + novidades)
 ```
+
+### `dados/estado.json` é local, e isso é proposital
+
+`exportar-estado.js` lê `~/.banzinho/{state,logs}` — o estado do runtime que roda
+o agente na máquina do NZ. Um runner do GitHub Actions não tem esse diretório,
+então **essa ferramenta não roda no CI**: ela roda aqui, o arquivo gerado é
+commitado, e o painel do laboratório lê o arquivo. Mesmo caminho de
+`evidencia.json`, com a diferença de que o número do GitHub qualquer runner
+busca e este só a máquina dele tem.
+
+O gerador também é a barreira de privacidade. Ele redige caminho absoluto,
+`sessionID` e porta para `<path>`, `<ses>` e `:<porta>`, e **aborta com código 2**
+se algum desses vazar para o arquivo gravado. `tool-faults.jsonl` guarda a
+chamada inteira da ferramenta com o código que tentou escrever; o gerador corta
+antes dos argumentos e publica só a classe do erro.
+
+O painel declara a idade do snapshot no rodapé e marca em amarelo acima de 30
+dias, para o número não parecer de hoje quando não é.
+
+Não existe `package.json` de propósito: o site é HTML/CSS/JS sem build de
+front, e as ferramentas rodam em Node só com a stdlib (`node:`). Se um dia
+aparecer `require("algo")` fora de `node:`, é dependência faltando e o
+`package.json` precisa existir.
 
 ## Contato
 
