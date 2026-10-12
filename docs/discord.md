@@ -1,5 +1,21 @@
 # Discord — plano e sincronia com o portfólio
 
+**Servidor criado em 2026-10-12.** Nome: **NZ Studios**. Convite:
+<https://discord.gg/FwPq3hSmr>. Guild id `1559216448969248770` (confirmado pela
+API — o id da barra de endereço do browser não era o mesmo).
+
+Identidades prontas:
+- Bot **`Banz`** (o bot do Banzinho) tem `Manage Channels + Manage Webhooks +
+  View Channel + Read History` aqui, e é ele que lê o `#anúncios`.
+- Webhook **`portfolio-push`** no `#anúncios` — é o que posta produto novo.
+
+Canais que existem hoje: `#regras #geral #anúncios #antixray #ferramentas
+#minecraft #feedback #sem-categoria` e o canal de voz `Geral`.
+
+Falta criar: nada. Os secrets `DISCORD_WEBHOOK_URL` e `DISCORD_BOT_TOKEN` e as
+variables `DISCORD_CANAL_ID` e `DISCORD_INVITE` já estão no repositório, e o
+workflow foi testado ponta a ponta com um post real no `#anúncios`.
+
 Por que este documento: o portfólio é estático e o `catalogo/dados/produtos.json`
 é a fonte de verdade dos produtos. Um Discord separado disso vira o segundo lugar
 onde o produto muda — e o primeiro lugar a divergir. Aqui o Discord é **destino
@@ -26,6 +42,7 @@ onde atualização morre: ninguém abre, e o dado envelhece sem ninguém percebe
 canal é o produto; o canal genérico é onde o assunto vai morrer.
 
 ```
+#regras          as três regras abaixo, fixadas.
 #anúncios        produto novo, versão nova, mudança de status. Só NZ.
                 É este canal que a página lê (dados/novidades.json).
 #antixray        uso, detecção, falso positivo, thresholds.
@@ -73,20 +90,29 @@ mecânica, entra quando existir a primeira tag.
 
 ---
 
-## Configuração (NZ faz uma vez)
+## Configuração — feito em 2026-10-12
 
-1. Criar o servidor, criar os canais acima.
-2. `Servidor → Configurações → Integrações → Webhooks → Novo Webhook`, colar em
-   `#anúncios`. Guardar a URL como secret `DISCORD_WEBHOOK_URL`.
-3. Criar um bot em <https://discord.com/developers/applications>, convidar no
-   servidor com permissão `View Channels` + `Read Message History` em
-   `#anúncios` **e nada mais**. Token como secret `DISCORD_BOT_TOKEN`.
-4. Convidar de convite (`/convite`), gravar a URL como `DISCORD_INVITE` no
-   `tools/puxar-novidades.js` (ou variable do repo).
-5. Subir o workflow.
+Servidor, canais e webhook saíram pela API depois que o bot entrou; o que ficou
+gravado no repositório:
 
-Credencial que só o NZ tem: token e webhook. É o caso 5 de parada — eu deixo o
-código pronto e ele roda quando colar os dois valores. Nada mais fica bloqueado.
+| onde | valor |
+|---|---|
+| secret `DISCORD_WEBHOOK_URL` | webhook `portfolio-push` do `#anúncios` |
+| secret `DISCORD_BOT_TOKEN` | token do bot `Banz` (`BANZ_TOKEN`) |
+| variable `DISCORD_CANAL_ID` | `1559216733506764821` (id do `#anúncios`) |
+| variable `DISCORD_INVITE` | <https://discord.gg/FwPq3hSmr> |
+
+Reutilizar o token do `Banzinho` em vez de criar um aplicativo "NZ Studios" é
+uma troca deliberada: mesmo token, um lugar a menos para vazar credencial. O
+custo é que o bot que lê o feed também é o que atende o NZ no servidor — se
+ele cair, o feed cai junto. Quando der, trocar por token dedicado no
+Developer Portal é uma variável nova, não uma mudança de desenho.
+
+Para reautorizar o bot depois de trocar o token:
+
+```
+https://discord.com/oauth2/authorize?client_id=1503083764178227342&scope=bot&permissions=74756
+```
 
 ---
 
@@ -102,9 +128,10 @@ lê esse arquivo e, se ele não existir ou estiver velho, **a seção não apare
 Feed de atualização quebrado na home é pior que feed ausente: a pessoa vê um
 card de 3 semanas e pensa que o produto parou.
 
-O botão "Entrar no Discord" sai do `convite` que vem no mesmo arquivo. Enquanto
-não houver convite publicado, o botão some e a frase diz que está em breve — e
-não fica um `discord.gg/SEU-LINK` clicável apontando para invite inválido.
+O botão "Entrar no Discord" tem o convite no `index.html`, porque o servidor
+existe e o link é válido — esperar o bot para publicar o link deixaria a home sem
+botão por causa de uma credencial. Quando `novidades.json` trouxer um `convite`,
+ele sobrescreve o `href`; nunca esconde um botão que já funciona.
 
 ---
 

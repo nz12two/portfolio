@@ -17,7 +17,6 @@
   var sec = document.getElementById("novidades");
   var btn = document.getElementById("discordBtn");
   var btnTxt = document.getElementById("discordBtnTxt");
-  var aguardo = document.getElementById("discordAguardando");
 
   var esc = function (s) {
     return String(s == null ? "" : s)
@@ -60,17 +59,14 @@
         "</div>";
     }
 
-    // O convite vem do mesmo arquivo. Enquanto nao existir, o botao fica
-    // escondido em vez de apontar para discord.gg/SEU-LINK — link de convite
-    // invalido e pior que link nenhum, porque parece convite pronto.
-    if (btn) {
-      if (d.convite) {
-        btn.href = d.convite;
-        if (btnTxt) btnTxt.textContent = "Entrar no Discord";
-      } else {
-        btn.hidden = true;
-        if (aguardo) aguardo.hidden = false;
-      }
+    // O convite vem do mesmo arquivo, quando o bot já roda. O HTML tem um
+    // convite válido desde que o servidor existe, então aqui nunca se esconde
+    // botão: só se troca o href se o dado trouxer outro. Apagar um link que
+    // funciona porque um arquivo ainda não foi gerado seria trocar um
+    // caminho por um nullptr.
+    if (btn && d.convite) {
+      btn.href = d.convite;
+      if (btnTxt) btnTxt.textContent = "Entrar no Discord";
     }
   };
 

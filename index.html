@@ -268,17 +268,14 @@
             o Discord é o caminho mais curto.
           </p>
           <p style="margin-top:16px">
-            <!-- O convite do Discord vem de dados/novidades.json (js/novidades.js).
-                 Sem convite publicado, o botao some e a frase abaixo diz por que —
-                 link de convite invalido e pior que nenhum, porque parece
-                 convite pronto. -->
-            <a class="btn" id="discordBtn" href="https://discord.gg/SEU-LINK" rel="noopener" hidden>
+            <!-- Convite real, colado aqui: o servidor existe (NZ Studios) e
+                 esperar o bot para publicar o link deixaria a home sem botão
+                 por causa de uma credencial. js/novidades.js SOBRESCREVE este
+                 href quando dados/novidades.json trouxer um convite, mas nunca
+                 esconde um botão que já funciona. -->
+            <a class="btn" id="discordBtn" href="https://discord.gg/FwPq3hSmr" rel="noopener">
               <span id="discordBtnTxt">Entrar no Discord</span>
             </a>
-          </p>
-          <p id="discordAguardando" style="margin-top:16px;color:var(--tx-2)" hidden>
-            O convite sai aqui quando o servidor abrir. Até lá o canal mais
-            curto é o e-mail.
           </p>
         </div>
 
