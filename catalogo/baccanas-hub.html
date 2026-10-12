@@ -3,26 +3,84 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Baccana's Hub — Catalogo NZ</title>
+<title>Baccana's Hub — NZ</title>
 <meta name="description" content="Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.">
-<link rel="stylesheet" href="./catalogo.css">
+<link rel="stylesheet" href="../v2/v2.css">
+<link rel="stylesheet" href="pagina.css">
 </head>
 <body>
-<main>
-  <a class="volta" href="./index.html">&larr; Catalogo</a>
-  <h1>Baccana's Hub</h1><p class="tagline">Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.</p><div class="meta">
-      <span class="badge" style="--c:#58a6ff">Em producao</span>
-      <span class="badge neutro">Minecraft</span>
-      <span class="badge neutro">sob-consulta</span>
-      <span class="badge neutro">proprietario</span>
-    </div><p class="aviso">Deploy em Vercel. Código em repositório privado: não entra no catálogo de código aberto.</p>
-  <section class="preco"><h2>Preco e licenca</h2><p><strong>sob-consulta</strong></p><p class="nota">Serviço, não produto. Preço por conversa.</p></section><section><h2>Para quem e</h2><ul><li>Dono de servidor que quer alguém que já roda Paper em produção para cuidar do setup, da otimização e do desenvolvimento sob demanda.</li></ul></section><section><h2>Instalacao</h2><ol class="passos"><li>
-        <h3><span class="num">1</span>Não se instala</h3>
-        <pre><code>abrir https://baccanas-hub.vercel.app</code></pre>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a href="../v2/index.html" class="brand">NZ <small>/ Baccana's Hub</small></a>
+    <nav class="nav"><a href="../v2/index.html">Produtos</a></nav>
+    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
+  </div>
+</header>
+
+<main class="wrap ppage">
+
+  <a href="../v2/index.html" class="ppage__volta">← catálogo</a>
+
+  <div class="eyebrow mono">Minecraft</div>
+  <h1>Baccana's Hub</h1>
+  <p class="ppage__tag">Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.</p>
+
+  <div class="item__tags">
+    <span class="tag tag--acc">em produção</span>
+    <span class="tag tag--acc">sob-consulta</span>
+    <span class="tag">proprietario</span>
+    <span class="tag">Next.js</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">Vercel</span>
+  </div>
+
+  <p class="ppage__aviso">Deploy em Vercel. Código em repositório privado: não entra no catálogo de código aberto.</p>
+
+  <section class="psec psec--acc">
+    <h2>Preço e licença</h2>
+    <p class="psec__big">sob-consulta</p>
+    <p class="psec__p">Serviço, não produto. Preço por conversa.</p>
+  </section>
+
+  <section class="psec">
+    <h2>Para quem é</h2>
+    <ul class="psec__ul"><li>Dono de servidor que quer alguém que já roda Paper em produção para cuidar do setup, da otimização e do desenvolvimento sob demanda.</li></ul>
+  </section>
+
+  <section class="psec">
+    <div class="eyebrow mono">instalação</div>
+    <h2>Passo a passo</h2>
+    <div class="steps">
+      
+      <div class="step">
+        <div class="step__n">1</div>
+        <div>
+          <h3 class="step__t">Não se instala</h3>
+          <pre class="step__code"><code>abrir https://baccanas-hub.vercel.app</code></pre>
+          
+          <p class="step__note">Serviço hospedado. O onboarding é por contato direto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="psec">
+         <div class="eyebrow mono">tutorial</div>
+         <h2>O que está incluído</h2>
+         <p class="psec__p">Configuração de servidor do zero ou revisão da que já existe.</p><p class="psec__p">Otimização: Paper, view distance, entity ticks, o que pesa de verdade no tick loop.</p><p class="psec__p">Desenvolvimento sob medida — plugins, integração com outros plugins, automação derotina do admin.</p>
+       </section>
+
+  <div class="ppage__links">
         
-        <p class="nota">Serviço hospedado. O onboarding é por contato direto.</p>
-      </li></ol></section><section><h2>O que está incluído</h2><p>Configuração de servidor do zero ou revisão da que já existe.</p><p>Otimização: Paper, view distance, entity ticks, o que pesa de verdade no tick loop.</p><p>Desenvolvimento sob medida — plugins, integração com outros plugins, automação derotina do admin.</p></section><section><h2>Stack</h2><p class="chips"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">Tailwind</span><span class="chip">Vercel</span></p></section>
-  <p class="links"><a class="btn" href="https://baccanas-hub.vercel.app" target="_blank" rel="noopener">Abrir</a></p>
+        <a class="btn" href="https://baccanas-hub.vercel.app" target="_blank" rel="noopener">Abrir</a>
+  </div>
 </main>
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <span class="mono">NZ — construído à mão, sem template</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
 </body>
 </html>

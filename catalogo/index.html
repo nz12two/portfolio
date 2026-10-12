@@ -3,46 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catalogo — NZ</title>
-<meta name="description" content="Produtos que eu faco: plugin Paper, catalogos de API, simulacao multi-agente e servicos para servidor Minecraft.">
-<link rel="stylesheet" href="./catalogo.css">
+<title>Catálogo — NZ</title>
+<meta name="description" content="Produtos que eu construo, com o que fazem, para quem são e como instalar.">
+<link rel="stylesheet" href="../v2/v2.css">
+<link rel="stylesheet" href="pagina.css">
 </head>
 <body>
-<main>
-  <h1>Catalogo</h1>
-  <p class="tagline">Produtos que eu construo, com o que eles fazem, para quem sao e como instalar.</p>
-  <div class="grid">
-<a class="card" href="./antixray.html">
-        <span class="badge" style="--c:#d29922">Beta</span>
-        <h2>AntiXray</h2>
-        <p>Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.</p>
-        <span class="card-meta">Minecraft · gratuito · MIT</span>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a href="../v2/index.html" class="brand">NZ <small>/ catálogo</small></a>
+    <nav class="nav"><a href="../v2/index.html">Voltar</a></nav>
+    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
+  </div>
+</header>
+
+<main class="wrap ppage">
+  <div class="eyebrow mono">catálogo</div>
+  <h1 style="max-width:18ch">O que está pronto para você usar hoje</h1>
+  <p class="ppage__tag" style="max-width:52ch">Cada produto tem o que faz, para quem é, quanto custa e como instalar. Sem waitlist.</p>
+  <div class="items">
+      <a class="item" href="./antixray.html">
+        <span class="item__n">01</span>
+        <div>
+          <h3 class="item__name">AntiXray</h3>
+          <p class="item__desc">Detecção modular de x-ray para Paper 1.21.4+, com 19+ detectores e motor de risco temporal.</p>
+          <div class="item__tags">
+            <span class="tag tag--beta">beta</span>
+            <span class="tag">Minecraft</span>
+            <span class="tag tag--acc">gratuito</span>
+          </div>
+        </div>
+        <span class="item__go" aria-hidden="true">&rarr;</span>
       </a>
-<a class="card" href="./api-directory.html">
-        <span class="badge" style="--c:#3fb950">Estavel</span>
-        <h2>API Directory</h2>
-        <p>Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.</p>
-        <span class="card-meta">Ferramenta · gratuito · MIT (declarada no README, sem arquivo LICENSE)</span>
+      <a class="item" href="./api-directory.html">
+        <span class="item__n">02</span>
+        <div>
+          <h3 class="item__name">API Directory</h3>
+          <p class="item__desc">Diretório de APIs públicas gratuitas que diz se elas respondem, com latência medida.</p>
+          <div class="item__tags">
+            <span class="tag tag--ok">estável</span>
+            <span class="tag">Ferramenta</span>
+            <span class="tag tag--acc">gratuito</span>
+          </div>
+        </div>
+        <span class="item__go" aria-hidden="true">&rarr;</span>
       </a>
-<a class="card" href="./opendex.html">
-        <span class="badge" style="--c:#3fb950">Estavel</span>
-        <h2>OpenDex</h2>
-        <p>Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.</p>
-        <span class="card-meta">Ferramenta · gratuito · MIT</span>
+      <a class="item" href="./opendex.html">
+        <span class="item__n">03</span>
+        <div>
+          <h3 class="item__name">OpenDex</h3>
+          <p class="item__desc">Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.</p>
+          <div class="item__tags">
+            <span class="tag tag--ok">estável</span>
+            <span class="tag">Ferramenta</span>
+            <span class="tag tag--acc">gratuito</span>
+          </div>
+        </div>
+        <span class="item__go" aria-hidden="true">&rarr;</span>
       </a>
-<a class="card" href="./empresas-mundo.html">
-        <span class="badge" style="--c:#3fb950">Estavel</span>
-        <h2>EmpresasMundo</h2>
-        <p>Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.</p>
-        <span class="card-meta">Simulação · gratuito · nenhuma</span>
+      <a class="item" href="./empresas-mundo.html">
+        <span class="item__n">04</span>
+        <div>
+          <h3 class="item__name">EmpresasMundo</h3>
+          <p class="item__desc">Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.</p>
+          <div class="item__tags">
+            <span class="tag tag--ok">estável</span>
+            <span class="tag">Simulação</span>
+            <span class="tag tag--acc">gratuito</span>
+          </div>
+        </div>
+        <span class="item__go" aria-hidden="true">&rarr;</span>
       </a>
-<a class="card" href="./baccanas-hub.html">
-        <span class="badge" style="--c:#58a6ff">Em producao</span>
-        <h2>Baccana's Hub</h2>
-        <p>Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.</p>
-        <span class="card-meta">Minecraft · sob-consulta · proprietario</span>
+      <a class="item" href="./baccanas-hub.html">
+        <span class="item__n">05</span>
+        <div>
+          <h3 class="item__name">Baccana's Hub</h3>
+          <p class="item__desc">Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento.</p>
+          <div class="item__tags">
+            <span class="tag tag--acc">em produção</span>
+            <span class="tag">Minecraft</span>
+            <span class="tag tag--acc">sob-consulta</span>
+          </div>
+        </div>
+        <span class="item__go" aria-hidden="true">&rarr;</span>
       </a>
   </div>
 </main>
+
 </body>
 </html>

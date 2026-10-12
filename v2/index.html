@@ -44,39 +44,41 @@
       </div>
 
       <!-- Dados: bytes por linguagem, somados nos 4 repositórios públicos.
-           Total medido em 2026-10-12. -->
-      <aside class="panel proof">
+           O HTML carrega um valor conhecido para quem abrir sem JS; o fetch
+           substitui pelo dado atual. Fonte: tools/update-evidence.js -->
+      <aside class="panel proof" id="proof">
         <div class="proof__hd">
           <span class="mono">código publicado</span>
-          <span class="proof__num">1.2<span> MB</span></span>
+          <span class="proof__num" id="proofTotal">1.91<span> MB</span></span>
         </div>
-        <div class="bar">
+        <div class="bar" id="proofBar">
           <div class="bar__row">
             <span class="bar__name">Java</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.53"></span></span>
-            <span class="bar__val">580 KB</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.291"></span></span>
+            <span class="bar__val">567 KB</span>
           </div>
           <div class="bar__row">
-            <span class="bar__name">Typesc</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.50"></span></span>
-            <span class="bar__val">548 KB</span>
+            <span class="bar__name" title="TypeScript">TypeScr</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.274"></span></span>
+            <span class="bar__val">535 KB</span>
           </div>
           <div class="bar__row">
             <span class="bar__name">Astro</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.35"></span></span>
-            <span class="bar__val">381 KB</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.191"></span></span>
+            <span class="bar__val">372 KB</span>
           </div>
           <div class="bar__row">
             <span class="bar__name">Python</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.16"></span></span>
-            <span class="bar__val">176 KB</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.100"></span></span>
+            <span class="bar__val">196 KB</span>
           </div>
           <div class="bar__row">
             <span class="bar__name">Outros</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.12"></span></span>
-            <span class="bar__val">143 KB</span>
+            <span class="bar__track"><span class="bar__fill" style="--w:.144"></span></span>
+            <span class="bar__val">281 KB</span>
           </div>
         </div>
+        <p class="proof__src" id="proofSrc">medido na API do GitHub</p>
       </aside>
     </div>
   </section>
@@ -318,11 +320,36 @@
   onScroll();
   addEventListener('scroll', onScroll, { passive: true });
 
-  // Navegação por âncora rola suave mas o observer precisa reagir depois.
+  // Navegacao por ancora rola suave; o observer precisa reagir depois.
   document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     a.addEventListener('click', function () { setTimeout(onScroll, 120); });
   });
 })();
+  // Evidencia ao vivo: substitui os numeros pelo dado atual de evidencia.json,
+  // gerado por tools/update-evidence.js. O HTML ja vem com um valor conhecido —
+  // aqui so refresca. Se o fetch falhar o HTML permanece: ficar com o ultimo
+  // numero conhecido e melhor que apagar a prova.
+  fetch('evidencia.json')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.barras) return;
+      var tot = document.getElementById('proofTotal');
+      var src = document.getElementById('proofSrc');
+      if (tot && d.totalFormatado) tot.innerHTML = d.totalFormatado.replace(/^([\d.]+) (.+)$/, '$1<span> $2</span>');
+      if (src) src.textContent = 'medido em ' + d.gerado_em.slice(0, 10) + ' · ' + d.totalFormatado + ' em ' + d.repos + ' repos';
+
+      var bar = document.getElementById('proofBar');
+      if (!bar) return;
+      bar.innerHTML = d.barras.map(function (b) {
+        return '<div class="bar__row">' +
+          '<span class="bar__name" title="' + b.nomeCompleto + '">' + b.nome + '</span>' +
+          '<span class="bar__track"><span class="bar__fill" style="--w:' + b.pct + '"></span></span>' +
+          '<span class="bar__val">' + b.valor + '</span>' +
+          '</div>';
+      }).join('');
+      bar.querySelectorAll('.bar__fill').forEach(function (el) { io.observe(el); });
+    })
+    .catch(function () { /* sem evidencia nova: fica o HTML */ });
 </script>
 </body>
 </html>

@@ -1,0 +1,96 @@
+{
+  "gerado_em": "2026-10-12T03:53:14.656Z",
+  "totalBytes": 1997996,
+  "totalFormatado": "1.91 MB",
+  "repos": 4,
+  "barras": [
+    {
+      "nome": "Java",
+      "nomeCompleto": "Java",
+      "bytes": 580447,
+      "pct": 0.291,
+      "valor": "567 KB"
+    },
+    {
+      "nome": "TypeScr",
+      "nomeCompleto": "TypeScript",
+      "bytes": 548186,
+      "pct": 0.274,
+      "valor": "535 KB"
+    },
+    {
+      "nome": "Astro",
+      "nomeCompleto": "Astro",
+      "bytes": 381107,
+      "pct": 0.191,
+      "valor": "372 KB"
+    },
+    {
+      "nome": "Python",
+      "nomeCompleto": "Python",
+      "bytes": 200477,
+      "pct": 0.1,
+      "valor": "196 KB"
+    },
+    {
+      "nome": "outros",
+      "nomeCompleto": "5 linguagens",
+      "bytes": 287779,
+      "pct": 0.144,
+      "valor": "281 KB"
+    }
+  ],
+  "porRepo": {
+    "antixray": {
+      "nome": "antixray",
+      "desc": "AntiXray v2: deteccao de x-ray modular para Paper 1.21.4 - 19+ detectores, engine de risco temporal, 18 modulos (Java 21, Folia-ready)",
+      "bytes": 229376,
+      "langs": {
+        "Java": 580447
+      },
+      "soma": 580447,
+      "push": "2026-10-11T18:40:16Z"
+    },
+    "empresas-mundo": {
+      "nome": "empresas-mundo",
+      "desc": "Simulacao de empresas de entrega competindo por fitness: cada uma e um agente com rede neural recorrente propria num grafo do OpenStreetMap",
+      "bytes": 163840,
+      "langs": {
+        "Python": 176240,
+        "JavaScript": 51182,
+        "CSS": 24886,
+        "HTML": 5058,
+        "Batchfile": 186
+      },
+      "soma": 257552,
+      "push": "2026-10-11T23:48:43Z"
+    },
+    "api-directory": {
+      "nome": "api-directory",
+      "desc": "Catalogo de APIs publicas gratuitas com auto-atualizacao, busca, filtros e favoritos. Vanilla JS, sem build step",
+      "bytes": 381952,
+      "langs": {
+        "JavaScript": 48074,
+        "CSS": 39450,
+        "Python": 24237,
+        "HTML": 13178
+      },
+      "soma": 124939,
+      "push": "2026-10-12T01:46:08Z"
+    },
+    "opendex": {
+      "nome": "opendex",
+      "desc": "Catálogo e documentação do ecossistema OpenCode — 122 repos reais, feed, ranking e docs (Astro 7 + React 19)",
+      "bytes": 3849216,
+      "langs": {
+        "TypeScript": 548186,
+        "Astro": 381107,
+        "JavaScript": 50825,
+        "MDX": 46669,
+        "CSS": 8271
+      },
+      "soma": 1035058,
+      "push": "2026-10-11T21:31:28Z"
+    }
+  }
+}

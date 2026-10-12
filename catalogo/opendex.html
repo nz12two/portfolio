@@ -3,31 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenDex — Catalogo NZ</title>
+<title>OpenDex — NZ</title>
 <meta name="description" content="Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.">
-<link rel="stylesheet" href="./catalogo.css">
+<link rel="stylesheet" href="../v2/v2.css">
+<link rel="stylesheet" href="pagina.css">
 </head>
 <body>
-<main>
-  <a class="volta" href="./index.html">&larr; Catalogo</a>
-  <h1>OpenDex</h1><p class="tagline">Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.</p><div class="meta">
-      <span class="badge" style="--c:#3fb950">Estavel</span>
-      <span class="badge neutro">Ferramenta</span>
-      <span class="badge neutro">gratuito</span>
-      <span class="badge neutro">MIT</span>
-    </div><p class="aviso">No ar em https://nz12two.github.io/opendex/. 380 páginas em build, 0 erros.</p>
-  <section class="preco"><h2>Preco e licenca</h2><p><strong>gratuito</strong></p><p class="nota">MIT.</p></section><section><h2>Para quem e</h2><ul><li>Quem usa OpenCode e não sabia que plugin, script ou MCP existem na comunidade.</li><li>Quem documenta: cada item tem página própria, gerada de dados reais.</li></ul></section><section><h2>Instalacao</h2><ol class="passos"><li>
-        <h3><span class="num">1</span>Build</h3>
-        <pre><code>npm install &amp;&amp; astro build &amp;&amp; node scripts/generate-og.mjs</code></pre>
-        <p class="saida">saida: <code>dist/ (~36s, 380 páginas)</code></p>
-        <p class="nota">As OG images saem de satori + @resvg/resvg-js, 1200x630, com as fontes em scripts/fonts/.</p>
-      </li><li>
-        <h3><span class="num">2</span>Deploy</h3>
-        <pre><code>git push origin main</code></pre>
-        <p class="saida">saida: <code>GitHub Actions publica em github.io/opendex</code></p>
-        <p class="nota">Workflow em .github/workflows/deploy.yml, dispara no push para main.</p>
-      </li></ol></section><section><h2>Catálogo real, não vitrine de mentira</h2><p>Plugins, scripts e MCPs derivam dos dados reais do npm (247 pacotes). Repositórios vêm de um coletor real do GitHub (122).</p><p>Quando não há fonte, a página mostra empty state honesto em vez de inventar item. Essa foi a regra depois da auditoria que removeu 12 entradas fake.</p><p>News é reconstruída de 9 releases reais do GitHub + 30 posts do Dev.to.</p><p>O layout de catálogo, o coletor e o gerador de OG são reusados por este catálogo de produtos.</p></section><section><h2>Stack</h2><p class="chips"><span class="chip">Astro 7</span><span class="chip">React 19</span><span class="chip">TypeScript</span><span class="chip">Tailwind</span><span class="chip">GitHub Actions</span></p></section>
-  <p class="links"><a class="btn" href="https://github.com/nz12two/opendex" target="_blank" rel="noopener">Ver codigo</a><a class="btn" href="https://nz12two.github.io/opendex/" target="_blank" rel="noopener">Abrir</a></p>
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a href="../v2/index.html" class="brand">NZ <small>/ OpenDex</small></a>
+    <nav class="nav"><a href="../v2/index.html">Produtos</a></nav>
+    <a href="../v2/index.html#contato" class="btn btn--acc">Contato</a>
+  </div>
+</header>
+
+<main class="wrap ppage">
+
+  <a href="../v2/index.html" class="ppage__volta">← catálogo</a>
+
+  <div class="eyebrow mono">Ferramenta</div>
+  <h1>OpenDex</h1>
+  <p class="ppage__tag">Catálogo e documentação do ecossistema OpenCode: 122 repositórios reais, 247 pacotes npm, feed e ranking.</p>
+
+  <div class="item__tags">
+    <span class="tag tag--ok">estável</span>
+    <span class="tag tag--acc">gratuito</span>
+    <span class="tag">MIT</span>
+    <span class="tag">Astro 7</span><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Tailwind</span><span class="tag">GitHub Actions</span>
+  </div>
+
+  <p class="ppage__aviso">No ar em https://nz12two.github.io/opendex/. 380 páginas em build, 0 erros.</p>
+
+  <section class="psec psec--acc">
+    <h2>Preço e licença</h2>
+    <p class="psec__big">gratuito</p>
+    <p class="psec__p">MIT.</p>
+  </section>
+
+  <section class="psec">
+    <h2>Para quem é</h2>
+    <ul class="psec__ul"><li>Quem usa OpenCode e não sabia que plugin, script ou MCP existem na comunidade.</li><li>Quem documenta: cada item tem página própria, gerada de dados reais.</li></ul>
+  </section>
+
+  <section class="psec">
+    <div class="eyebrow mono">instalação</div>
+    <h2>Passo a passo</h2>
+    <div class="steps">
+      
+      <div class="step">
+        <div class="step__n">1</div>
+        <div>
+          <h3 class="step__t">Build</h3>
+          <pre class="step__code"><code>npm install &amp;&amp; astro build &amp;&amp; node scripts/generate-og.mjs</code></pre>
+          <p class="step__out">saída: <code>dist/ (~36s, 380 páginas)</code></p>
+          <p class="step__note">As OG images saem de satori + @resvg/resvg-js, 1200x630, com as fontes em scripts/fonts/.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">2</div>
+        <div>
+          <h3 class="step__t">Deploy</h3>
+          <pre class="step__code"><code>git push origin main</code></pre>
+          <p class="step__out">saída: <code>GitHub Actions publica em github.io/opendex</code></p>
+          <p class="step__note">Workflow em .github/workflows/deploy.yml, dispara no push para main.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="psec">
+         <div class="eyebrow mono">tutorial</div>
+         <h2>Catálogo real, não vitrine de mentira</h2>
+         <p class="psec__p">Plugins, scripts e MCPs derivam dos dados reais do npm (247 pacotes). Repositórios vêm de um coletor real do GitHub (122).</p><p class="psec__p">Quando não há fonte, a página mostra empty state honesto em vez de inventar item. Essa foi a regra depois da auditoria que removeu 12 entradas fake.</p><p class="psec__p">News é reconstruída de 9 releases reais do GitHub + 30 posts do Dev.to.</p><p class="psec__p">O layout de catálogo, o coletor e o gerador de OG são reusados por este catálogo de produtos.</p>
+       </section>
+
+  <div class="ppage__links">
+        <a class="btn btn--acc" href="https://github.com/nz12two/opendex" target="_blank" rel="noopener">Ver código</a>
+        <a class="btn" href="https://nz12two.github.io/opendex/" target="_blank" rel="noopener">Abrir</a>
+  </div>
 </main>
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <span class="mono">NZ — construído à mão, sem template</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
 </body>
 </html>

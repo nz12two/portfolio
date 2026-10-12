@@ -1,0 +1,94 @@
+/* Só o que a página de produto usa e a home v2 não define. O resto vem de
+   ../v2/v2.css — um sistema só, não dois. Estas regras existediam em
+   catalogo.css antes; a home nova mantinha as mesmas classes com aparência
+   diferente, e era isso que quebrava a leitura. */
+
+.ppage { padding-top: clamp(110px, 12vw, 160px); padding-bottom: clamp(64px, 9vw, 130px); }
+.ppage__volta {
+  display: inline-block;
+  margin-bottom: 34px;
+  color: var(--tx-3);
+  text-decoration: none;
+  font-size: var(--t-sm);
+  transition: color 0.18s;
+}
+.ppage__volta:hover { color: var(--acc); }
+
+.ppage h1 { font-size: var(--t-2xl); margin-bottom: 0.2em; }
+.ppage__tag { font-size: var(--t-lg); color: var(--tx-2); max-width: 52ch; margin-bottom: 26px; }
+.ppage .item__tags { margin-bottom: 22px; }
+
+/* Status em destaque. O aviso é a parte mais importante da página: é o que
+   separa "compila" de "pronto para produção". */
+.ppage__aviso {
+  border-left: 2px solid var(--warn);
+  padding: 4px 0 4px 18px;
+  color: var(--tx-2);
+  max-width: 62ch;
+  margin-bottom: 46px;
+}
+
+.psec { margin-top: clamp(46px, 6vw, 74px); }
+.psec h2 { font-size: var(--t-lg); margin-bottom: 16px; }
+.psec__p { color: var(--tx-2); max-width: 64ch; margin-bottom: 13px; }
+.psec__big { font-size: var(--t-xl); font-weight: 640; letter-spacing: -0.03em; margin-bottom: 10px; }
+.psec__ul { padding-left: 20px; color: var(--tx-2); max-width: 64ch; }
+.psec__ul li { margin-bottom: 9px; }
+
+/* Preço como bloco: é a pergunta que todo visitante faz e a que estava
+   diluída no texto corrido. */
+.psec--acc {
+  background: var(--surf);
+  border-radius: var(--r);
+  padding: 26px 28px;
+  position: relative;
+  overflow: hidden;
+}
+.psec--acc::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--acc-line) 35%, var(--acc-line) 65%, transparent);
+}
+
+.steps { display: grid; gap: 2px; margin-top: 22px; }
+.step {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 18px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+.step:last-child { border-bottom: 1px solid var(--line); }
+.step__n {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--acc);
+  color: oklch(0.16 0.01 62);
+  font-size: var(--t-sm);
+  font-weight: 700;
+}
+.step__t { font-size: var(--t-md); margin-bottom: 10px; }
+.step__code {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-s);
+  padding: 13px 15px;
+  overflow-x: auto;
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: var(--t-sm);
+  color: var(--tx);
+}
+.step__out, .step__note { font-size: var(--t-sm); color: var(--tx-3); margin-top: 9px; }
+.step__out code, .step__note code { font-family: ui-monospace, Consolas, monospace; color: var(--tx-2); }
+
+.ppage__links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(52px, 7vw, 86px); }
+
+@media (max-width: 560px) {
+  .step { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .ppage__aviso { padding-left: 13px; }
+}

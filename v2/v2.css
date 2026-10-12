@@ -294,6 +294,17 @@ p { text-wrap: pretty; }
 
 .item__go { color: var(--tx-3); font-size: var(--t-xl); transition: color 0.2s, transform 0.2s var(--ease); }
 
+/* Data de origem. Sem isso o número parece estático, e estático é justamente o
+   defeito que o painel existe para evitar. */
+.proof__src {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-family: ui-monospace, "JetBrains Mono", Consolas, monospace;
+  font-size: var(--t-xs);
+  color: var(--tx-3);
+}
+
 /* ===========================================================================
    PROVA / SOBRE
    =========================================================================== */
