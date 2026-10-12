@@ -297,11 +297,21 @@ p { text-wrap: pretty; }
   transition: border-color 0.25s var(--ease);
 }
 .hdr[data-stuck="1"] { border-bottom-color: var(--line); }
+/* Três grupos, não quatro filhos soltos: com space-between e quatro filhos a
+   marca ficava na esquerda, o nav no meio e os DOIS botoes grudados na
+   direita, com o gap de 24px caindo entre eles em vez de entre os grupos. */
 .hdr__in { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 68px; }
+.hdr__acoes { display: flex; align-items: center; gap: 10px; }
 
-.nav { display: flex; gap: 2px; }
+.nav { display: flex; gap: 2px; align-items: center; }
+/* Link de nav com a MESMA altura do botao. Medido antes: link 40px, botao
+   46px, topo 14 contra 11 — tres pixels de desnivel entre o link e o botao ao
+   lado. Duas alturas diferentes na mesma linha e o olho le como defeito. */
 .nav a {
-  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  padding: 0 12px;
   border-radius: var(--r-s);
   color: var(--tx-2);
   text-decoration: none;
@@ -317,7 +327,7 @@ p { text-wrap: pretty; }
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 46px;
+  min-height: 42px;
   padding: 0 22px;
   border: 1px solid var(--line-hi);
   border-radius: var(--r-s);
@@ -372,11 +382,20 @@ p { text-wrap: pretty; }
 /* Cobre ate a dobra, mas suaviza embaixo para nao brigar com a secao clara. */
 .hero .hero__grid-bg { mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%); -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%); }
 
+/* A largura da pagina mora AQUI, nao na secao. Com .wrap na <section> o
+   max-width de 1180px apertava a secao inteira e a malha de fundo media
+   1180px comecando em left:123 — o fundo do hero parava 123px antes da borda
+   em vez de cobrir a tela. A secao agora ocupa tudo e so o conteudo tem
+   largura de leitura. */
 .hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   gap: clamp(32px, 5vw, 76px);
   align-items: end;
+  width: 100%;
+  max-width: var(--page);
+  margin: 0 auto;
+  padding-inline: var(--gut);
 }
 
 .hero h1 { font-size: var(--t-3xl); margin-bottom: 0.22em; }
@@ -890,8 +909,10 @@ p { text-wrap: pretty; }
 }
 .prosa a:hover { background-size: 100% 1px; }
 
-/* Botao: o fundo varre de baixo pra cima. Sem deslocamento — mexer em
-   padding no hover faz o layout inteiro da linha respirar. */
+/* Botao: um brilho sutil sobe de baixo pra cima. A opacidade FICA em 0.07
+   nos dois estados — subir para 1 no hover transformava o overlay na cor do
+   texto do proprio botao (oklch escuro) em 100% opaco, e o botao ficava
+   preto com o texto do mesmo preto por cima. */
 .btn { position: relative; overflow: hidden; }
 .btn::after {
   content: "";
@@ -900,15 +921,23 @@ p { text-wrap: pretty; }
   background: currentColor;
   opacity: 0.07;
   transform: translateY(101%);
-  transition: transform 0.32s var(--ease), opacity 0.32s var(--ease);
+  transition: transform 0.32s var(--ease);
 }
-.btn:hover::after, .btn:focus-visible::after { transform: none; opacity: 1; }
+.btn:hover::after, .btn:focus-visible::after { transform: none; }
 .btn > * { position: relative; z-index: 1; }
 
 /* Avatar com aro girando devagar. Lento de proposito: mais rapido que 12s
    vira distração num elemento que esta ali para identificar, nao para
    registrar a leitura. */
-.about__fotoWrap { position: relative; display: inline-block; }
+/* line-height:0 e img display:block fazem a caixa do wrapper ter EXATAMENTE
+   o tamanho da foto. Sem isso o inline-block deixava os 18px da baseline
+   sobrando embaixo (medido: wrapper 96x114, foto 96x96) e o anel de inset:-8px
+   saia ~13px para fora da imagem. */
+/* A causa da caixa maior era margin-bottom:18px na propria imagem, nao a
+   baseline: o wrapper media 96x114 contra 96x96 da foto. A margem sai da img
+   e vai para o wrapper, que e quem precisa dela. */
+.about__fotoWrap { position: relative; display: inline-block; line-height: 0; margin-bottom: 18px; }
+.about__fotoWrap .about__foto { display: block; margin-bottom: 0; }
 .about__fotoWrap::before {
   content: "";
   position: absolute;

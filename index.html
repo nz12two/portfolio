@@ -52,12 +52,10 @@
       <a href="catalogo/index.html#tipos">Marketplace</a>
       <a href="#prova">Prova</a>
     </nav>
-    <a href="#contato" class="btn">Contato</a>
-    <!-- Botao de conta. O texto e reescrito por js/auth.js: "entrar" anonimo,
-         o nome da pessoa com sessao, "sair" depois. Sem sessao e sem
-         configuracao ele leva para conta.html, onde a falta de configuracao
-         e explicada em vez de fingida. -->
-    <a href="conta.html" class="btn btn--acc" data-conta-open aria-label="Entrar na sua conta">entrar</a>
+    <div class="hdr__acoes">
+      <a href="#contato" class="btn">Contato</a>
+      <a href="conta.html" class="btn btn--acc" data-conta-open aria-label="Entrar na sua conta">entrar</a>
+    </div>
   </div>
 </header>
 
@@ -67,7 +65,7 @@
        Sem degradê, sem digitando, sem terminal animando. A atenção vem do
        painel de evidência: linguagens por byte real dos repos, que é o único
        número que não dá para falsificar sem abrir o repositório. -->
-  <section class="hero wrap">
+  <section class="hero">
     <!-- Barra de progresso de leitura. Numa pagina de rolagem longa nao existe
          nenhuma leitura de "faltam tres secoes para o fim". O valor e escrito
          por JS; no HTML fica so o trilho. -->
