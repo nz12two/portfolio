@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-12T14:28:28.238Z",
+  "gerado_em": "2026-10-12T15:49:41.360Z",
   "total": 6,
   "tipos": [
     {
@@ -77,6 +77,24 @@
     "preco": [
       "gratis",
       "consulta"
+    ],
+    "status": [
+      "beta",
+      "estavel",
+      "em-producao",
+      "privado"
+    ],
+    "licenca": [
+      "MIT",
+      "MIT (declarada no README, sem arquivo LICENSE)",
+      "nenhuma",
+      "proprietario",
+      "proprietário (fechado)"
+    ],
+    "dominio": [
+      "dados",
+      "devtools",
+      "minecraft"
     ],
     "stack": [
       "Astro 7",

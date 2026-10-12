@@ -124,6 +124,13 @@ const saida = {
     tipo: (TIPOS).map((t) => t.slug),
     categoria: [...new Set(itens.map((i) => i.categoria))].sort(),
     preco: [...new Set(itens.map((i) => i.precoChave))],
+    // Eixos que o marketplace ganhou depois. Status e licenca sao o que a
+    // pessoa olha antes de instalar: estavel ou beta, MIT ou fechado.
+    // Dominio responde "onde roda" e e o eixo que separa dois plugins que
+    // ficam igual no card.
+    status: [...new Set(itens.map((i) => i.status))],
+    licenca: [...new Set(itens.map((i) => i.licenca))].sort(),
+    dominio: [...new Set(itens.map((i) => i.dominio).filter(Boolean))].sort(),
     stack: [...new Set(itens.flatMap((i) => i.stack))].sort(),
   },
   itens,

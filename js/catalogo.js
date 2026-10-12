@@ -54,14 +54,86 @@
   function montarFacetas() {
     var tipos = DADOS.tipos && DADOS.tipos.length ? DADOS.tipos : [];
 
+    // Todas as opcoes com a contagem de quem casa com o resto do filtro atual.
+    // Faceta sem numero ("JavaScript") e uma lista morta: nao da para saber se
+    // voce esta escolhendo 1 de 20 ou 1 de 2, e marketplace que mostra so o
+    // rotulo nao ajuda ninguem a escolher.
+    var conta = function (campo) {
+      var base = filtrar().filter(function (i) { return !isAtivo(i, campo); });
+      var m = {};
+      base.forEach(function (i) {
+        var v = i[campo];
+        if (v == null || v === "") return;
+        m[v] = (m[v] || 0) + 1;
+      });
+      return m;
+    };
+
+    // Quando o filtro X esta ligado, a contagem dos OUTROS e que importa; o
+    // proprio X precisa contar contra o resto, senao marcar "tipo: plugin"
+    // zeraria a opcao e ela sumiria de onde voce acabou de clicar.
+    var ativo = function (campo) {
+      if (campo === "precoChave") return eAtual.preco.length > 0;
+      if (campo === "status") return eAtual.status.length > 0;
+      if (campo === "licenca") return eAtual.licenca.length > 0;
+      if (campo === "dominio") return eAtual.dominio.length > 0;
+      if (campo === "tipo") return eAtual.tipo.length > 0;
+      return false;
+    };
+    var isAtivo = function (i, campo) {
+      if (campo === "precoChave") return eAtual.preco.indexOf(i.precoChave) !== -1;
+      if (campo === "status") return eAtual.status.indexOf(i.status) !== -1;
+      if (campo === "licenca") return eAtual.licenca.indexOf(i.licenca) !== -1;
+      if (campo === "dominio") return eAtual.dominio.indexOf(i.dominio) !== -1;
+      if (campo === "tipo") return eAtual.tipo.indexOf(i.tipo) !== -1;
+      return false;
+    };
+
+    // Estado corrente, guardado para as contagens. Antes ficava so em
+    // estado() e a faceta nao conseguia saber o que ja estava ligado.
+    eAtual = {
+      q: normalizar(q.value.trim()),
+      preco: marcados("preco"),
+      vip: !!document.querySelector('input[name="vip"]:checked'),
+      tipo: marcados("tipo"),
+      status: marcados("status"),
+      licenca: marcados("licenca"),
+      dominio: marcados("dominio"),
+      stack: marcados("stack"),
+    };
+
+    var campoDe = {
+      tipo: tipos.map(function (t) { return t.slug; }),
+      status: DADOS.facetas.status,
+      licenca: DADOS.facetas.licenca,
+      dominio: DADOS.facetas.dominio,
+    };
+
     fTipos.innerHTML = tipos
       .map(function (t) {
-        var n = DADOS.itens.filter(function (i) { return i.tipo === t.slug; }).length;
+        var n = conta("tipo")[t.slug] || 0;
         return '<label' + (n ? "" : ' class="fset__vazio"') + '>' +
           '<input type="checkbox" name="tipo" value="' + esc(t.slug) + '"' + (n ? "" : " disabled") + ">" +
-          "<span>" + esc(t.rotulo) + ' <i>' + n + "</i></span></label>";
+          "<span>" + esc(t.rotulo) + " <i>" + n + "</i></span></label>";
       })
       .join("");
+
+    // Status e licenca: eixos que o marketplace nao tinha. Licenca importa
+    // para quem vai instalar (MIT, proprietário, nenhuma); status importa para
+    // quem vai confiar (estavel, beta, em producao, fechado).
+    ["status", "licenca", "dominio"].forEach(function (campo) {
+      var box = document.getElementById("f" + campo.charAt(0).toUpperCase() + campo.slice(1));
+      if (!box) return;
+      var m = conta(campo);
+      box.innerHTML = campoDe[campo]
+        .map(function (v) {
+          var n = m[v] || 0;
+          return '<label' + (n ? "" : ' class="fset__vazio"') + ">" +
+            '<input type="checkbox" name="' + campo + '" value="' + esc(v) + '"' + (n ? "" : " disabled") + ">" +
+            "<span>" + esc(v) + " <i>" + n + "</i></span></label>";
+        })
+        .join("");
+    });
 
     // Marketplace: um card por tipo declarado, com a contagem real. Tipo vazio
     // entra apagado e NAO some — a pratica existe e isso e informacao.
@@ -101,29 +173,96 @@
 
   // ===== FILTRO =====
 
+  // Estado corrente em um objeto so. `estado()` devolvia um objeto novo a
+  // cada chamada, e a contagem das facetas precisa dele antes e depois de cada
+  // mudanca — sem isso, "JavaScript (n)" so contaria contra um estado velho.
+  var eAtual = { q: "", preco: [], vip: false, tipo: [], status: [], licenca: [], dominio: [], stack: [] };
+  var marcados = function (nome) {
+    return [].slice.call(document.querySelectorAll('input[name="' + nome + '"]:checked'))
+      .map(function (i) { return i.value; });
+  };
+
   // Filtra e reaplica o estado visual do marketplace. O card e o checkbox sao
   // o mesmo filtro visto de dois lugares: marcar um tem que acender o outro.
   function sincronizarMarketplace() {
-    var marcados = [].slice.call(document.querySelectorAll('input[name="tipo"]:checked'))
-      .map(function (i) { return i.value; });
+    var marcado = marcados("tipo");
     Array.prototype.forEach.call(document.querySelectorAll(".mkt__card"), function (b) {
-      b.setAttribute("aria-pressed", marcados.indexOf(b.getAttribute("data-tipo")) !== -1 ? "true" : "false");
+      b.setAttribute("aria-pressed", marcado.indexOf(b.getAttribute("data-tipo")) !== -1 ? "true" : "false");
     });
   }
 
   function atualizarEVoltarAoTopo() {
+    // O estado e lido UMA vez e guardado: as contagens das facetas e o desenho
+    // da lista precisam concordar sobre qual e o filtro atual. Se cada um
+    // lesse os checkboxes por conta propria, a contagem mostraria o estado
+    // anterior e contaria opcoes que o resultado nao tem.
+    eAtual = {
+      q: normalizar(q.value.trim()),
+      preco: marcados("preco"),
+      vip: !!document.querySelector('input[name="vip"]:checked'),
+      tipo: marcados("tipo"),
+      status: marcados("status"),
+      licenca: marcados("licenca"),
+      dominio: marcados("dominio"),
+      stack: marcados("stack"),
+    };
     desenhar();
+    atualizarContagens();
     sincronizarMarketplace();
   }
 
   function estado() {
-    return {
-      q: normalizar(q.value.trim()),
-      preco: [].slice.call(document.querySelectorAll('input[name="preco"]:checked')).map(function (i) { return i.value; }),
-      vip: document.querySelector('input[name="vip"]').checked,
-      cat: [].slice.call(document.querySelectorAll('input[name="tipo"]:checked')).map(function (i) { return i.value; }),
-      stack: [].slice.call(document.querySelectorAll('input[name="stack"]:checked')).map(function (i) { return normalizar(i.value); }),
+    return eAtual;
+  }
+
+  // Recalcula so os numeros das opcoes, sem recriar os <label>. Recriar tudo a
+  // cada tecla destroi o foco de quem está marcando um filtro e pisca a lista.
+  function atualizarContagens() {
+    var conta = function (campo, ignorar) {
+      var base = DADOS.itens.filter(function (i) {
+        if (ignorar && ignorar.indexOf(i[campo]) !== -1) return false;
+        if (eAtual.tipo.length && eAtual.tipo.indexOf(i.tipo) === -1) return false;
+        if (eAtual.status.length && eAtual.status.indexOf(i.status) === -1) return false;
+        if (eAtual.licenca.length && eAtual.licenca.indexOf(i.licenca) === -1) return false;
+        if (eAtual.dominio.length && eAtual.dominio.indexOf(i.dominio) === -1) return false;
+        if (eAtual.preco.length && eAtual.preco.indexOf(i.precoChave) === -1) return false;
+        if (eAtual.stack.length) {
+          var bate = eAtual.stack.some(function (s) { return i.stackChaves.indexOf(s) !== -1; });
+          if (!bate) return false;
+        }
+        if (eAtual.vip && !i.temVip) return false;
+        if (eAtual.q && i.busca.indexOf(eAtual.q) === -1) return false;
+        return true;
+      });
+      var m = {};
+      base.forEach(function (i) {
+        var v = i[campo];
+        if (v == null || v === "") return;
+        m[v] = (m[v] || 0) + 1;
+      });
+      return m;
     };
+
+    var aplicar = function (sel, campo, ignorar) {
+      var m = conta(campo, ignorar);
+      Array.prototype.forEach.call(document.querySelectorAll(sel + ' input'), function (input) {
+        var n = m[input.value] || 0;
+        var i = input.parentNode.querySelector("i");
+        if (i) i.textContent = n;
+        input.disabled = n === 0 && input.value !== eAtual[campoPlural(campo)][0];
+        input.parentNode.classList.toggle("fset__vazio", n === 0);
+      });
+    };
+
+    var campoPlural = function (campo) {
+      return campo === "precoChave" ? "preco" : campo;
+    };
+
+    aplicar("#fTipos", "tipo");
+    aplicar("#fStatus", "status");
+    aplicar("#fLicenca", "licenca");
+    aplicar("#fDominio", "dominio");
+    aplicar("#fStacks", "stack");
   }
 
   function filtrar() {
@@ -136,10 +275,10 @@
 // ("Ferramenta"). Comparar os dois nunca casava, e o filtro de tipo nao
 // filtrava nada — marcava "ferramenta" e devolvia 6 de 6, parecendo quebrado.
       // Casing aside, e o mesmo criterio: o slug do tipo contra o slug do item.
-      if (e.cat.length && e.cat.indexOf(it.tipo) === -1) return false;
-      // Itens sem tipo (devem ser raros, mas nao impossiveis) somem quando ha
-      // filtro de tipo: manter um item sem classificacao numa lista que diz
-      // "so ferramentas" seria pior que nao mostrar.
+      if (e.tipo.length && e.tipo.indexOf(it.tipo) === -1) return false;
+      if (e.status.length && e.status.indexOf(it.status) === -1) return false;
+      if (e.licenca.length && e.licenca.indexOf(it.licenca) === -1) return false;
+      if (e.dominio.length && e.dominio.indexOf(it.dominio) === -1) return false;
       if (e.stack.length) {
         var bate = e.stack.some(function (s) { return it.stackChaves.indexOf(s) !== -1; });
         if (!bate) return false;
