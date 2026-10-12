@@ -44,10 +44,15 @@
       <small>/ build log</small>
     </a>
     <nav class="nav">
-      <a href="#produtos">Produtos</a>
-      <a href="#novidades">Novidades</a>
-      <a href="#prova">Prova</a>
+      <!-- Ordem igual a ordem da pagina: quem le o nav le o caminho da
+           leitura. "Sobre" vem antes de "Produtos" porque a apresentacao vem
+           antes do catalogo — link que aponta para a ordem antiga reforçava o
+           defeito que o NZ apontou. Marketplace e link de verdade para a
+           pagina com os filtros, nao ancora dentro desta. -->
       <a href="#sobre">Sobre</a>
+      <a href="#produtos">Produtos</a>
+      <a href="catalogo/index.html#tipos">Marketplace</a>
+      <a href="#prova">Prova</a>
     </nav>
     <a href="#contato" class="btn btn--acc">Contato</a>
   </div>
@@ -132,80 +137,6 @@
     </div>
   </section>
 
-  <!-- ===== PRODUTOS =====
-       Lista editorial com número, não grade de caixas iguais. Produtos com a
-       mesma forma viram uma parede; numerados, viram um índice. O conteúdo
-       vem de js/vitrine.js, então a lista cresce com o catálogo. -->
-  <section class="sec sec--alt" id="produtos">
-    <div class="wrap">
-      <div class="eyebrow mono">produtos</div>
-      <h2 style="font-size:var(--t-2xl);max-width:20ch">O que está pronto para você usar hoje</h2>
-      <p class="lead" style="margin-top:18px">
-        Cada item tem página com o que faz, para quem é e como instalar.
-        Sem waitlist, sem “em breve”. Tem também
-        <a href="catalogo/index.html" style="color:var(--acc)">busca, filtro e comparação</a>
-        sobre os dados do catálogo.
-      </p>
-
-<!-- Lista montada por js/main.js a partir de catalogo/dados/catalogo.js.
-           Os produtos viviam aqui em HTML escrito à mão, o que congelava a
-           vitrine no que existia naquele dia. A aviso abaixo é a rede: se o
-           script não rodar, a seção diz o que aconteceu em vez de mostrar
-           uma vitrine vazia sem explicação. -->
-      <div class="items" id="items"></div>
-      <p class="items__aviso" id="itemsAviso" hidden></p>
-    </div>
-  </section>
-
-  <!-- ===== NOVIDADES =====
-     Montada por js/novidades.js a partir de dados/novidades.json, que
-     tools/puxar-novidades.js gera lendo #anuncios no Discord. Fica VAZIA de
-     proposito: sem dado a secao nao aparece e nada mais muda. Escrever aqui
-     congelaria a data — foi o defeito do rodape antes. -->
-  <section class="sec" id="novidades" hidden></section>
-
-  <!-- ===== PROVA =====
-       Resposta direta à pergunta que todo visitante faz em silêncio: "isso
-       funciona mesmo?". Os números aqui são verificáveis abrindo o repositório
-       — foi por isso que tirei "5 clientes satisfeitos". -->
-  <section class="sec" id="prova">
-    <div class="wrap">
-      <div class="eyebrow mono">prova</div>
-      <h2 style="font-size:var(--t-2xl);max-width:22ch">Cada afirmação aqui abre um repositório</h2>
-      <p class="lead" style="margin-top:18px">
-        Nada de depoimento ou número de vitrine. Se eu afirmo que funciona, o código
-        está aberto e o build está no Actions.
-      </p>
-
-      <div class="about__list" style="margin-top:44px">
-        <div class="about__row">
-          <span class="about__k">AntiXray compila e empacota</span>
-          <span class="about__v">JDK 21 · exit 0 · jar 909 KB</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">OpenDex gera páginas em build</span>
-          <span class="about__v">380 páginas · 0 erros · ~36s</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">API Directory mede latência de verdade</span>
-          <span class="about__v">16 workers · 1x ao dia no CI</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">EmpresasMundo simula em mapa real</span>
-          <span class="about__v">OSMnx · FastAPI · WebSocket</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">Zero dependência de terceiros no site</span>
-          <span class="about__v">sprite SVG local · sem CDN</span>
-        </div>
-      </div>
-
-      <div style="margin-top:38px">
-        <a href="https://github.com/nz12two" class="btn btn--acc">Abrir o GitHub</a>
-      </div>
-    </div>
-  </section>
-
   <!-- ===== SOBRE ===== -->
   <section class="sec sec--alt" id="sobre">
     <div class="wrap">
@@ -248,6 +179,80 @@
       </div>
     </div>
   </section>
+  <!-- ===== PRODUTOS =====
+       Lista editorial com número, não grade de caixas iguais. Produtos com a
+       mesma forma viram uma parede; numerados, viram um índice. O conteúdo
+       vem de js/vitrine.js, então a lista cresce com o catálogo. -->
+<section class="sec" id="produtos">
+    <div class="wrap">
+      <div class="eyebrow mono">produtos</div>
+      <h2 style="font-size:var(--t-2xl);max-width:20ch">O que está pronto para você usar hoje</h2>
+      <p class="lead" style="margin-top:18px">
+        Cada item tem página com o que faz, para quem é e como instalar.
+        Sem waitlist, sem “em breve”. Tem também
+        <a href="catalogo/index.html" style="color:var(--acc)">busca, filtro e comparação</a>
+        sobre os dados do catálogo.
+      </p>
+
+<!-- Lista montada por js/main.js a partir de catalogo/dados/catalogo.js.
+           Os produtos viviam aqui em HTML escrito à mão, o que congelava a
+           vitrine no que existia naquele dia. A aviso abaixo é a rede: se o
+           script não rodar, a seção diz o que aconteceu em vez de mostrar
+           uma vitrine vazia sem explicação. -->
+      <div class="items" id="items"></div>
+      <p class="items__aviso" id="itemsAviso" hidden></p>
+    </div>
+  </section>
+
+  <!-- ===== NOVIDADES =====
+     Montada por js/novidades.js a partir de dados/novidades.json, que
+     tools/puxar-novidades.js gera lendo #anuncios no Discord. Fica VAZIA de
+     proposito: sem dado a secao nao aparece e nada mais muda. Escrever aqui
+     congelaria a data — foi o defeito do rodape antes. -->
+  <section class="sec" id="novidades" hidden></section>
+
+  <!-- ===== PROVA =====
+       Resposta direta à pergunta que todo visitante faz em silêncio: "isso
+       funciona mesmo?". Os números aqui são verificáveis abrindo o repositório
+       — foi por isso que tirei "5 clientes satisfeitos". -->
+  <section class="sec sec--alt" id="prova">
+    <div class="wrap">
+      <div class="eyebrow mono">prova</div>
+      <h2 style="font-size:var(--t-2xl);max-width:22ch">Cada afirmação aqui abre um repositório</h2>
+      <p class="lead" style="margin-top:18px">
+        Nada de depoimento ou número de vitrine. Se eu afirmo que funciona, o código
+        está aberto e o build está no Actions.
+      </p>
+
+      <div class="about__list" style="margin-top:44px">
+        <div class="about__row">
+          <span class="about__k">AntiXray compila e empacota</span>
+          <span class="about__v">JDK 21 · exit 0 · jar 909 KB</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">OpenDex gera páginas em build</span>
+          <span class="about__v">380 páginas · 0 erros · ~36s</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">API Directory mede latência de verdade</span>
+          <span class="about__v">16 workers · 1x ao dia no CI</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">EmpresasMundo simula em mapa real</span>
+          <span class="about__v">OSMnx · FastAPI · WebSocket</span>
+        </div>
+        <div class="about__row">
+          <span class="about__k">Zero dependência de terceiros no site</span>
+          <span class="about__v">sprite SVG local · sem CDN</span>
+        </div>
+      </div>
+
+      <div style="margin-top:38px">
+        <a href="https://github.com/nz12two" class="btn btn--acc">Abrir o GitHub</a>
+      </div>
+    </div>
+  </section>
+
 
   <!-- ===== CONTATO ===== -->
   <section class="sec" id="contato">
