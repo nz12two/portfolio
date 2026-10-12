@@ -163,27 +163,32 @@ document.addEventListener('DOMContentLoaded', function () {
   // ===================================================================
   // STAT COUNTER
   // ===================================================================
+  // O numero fica no HTML, nao só no data-num. Antes o <div> nascia com "0" e
+  // dependia do IntersectionObserver para trocar: quem chega com JS desligado,
+  // com leitor de tela que nao rola, ou antes do observer disparar, le "0".
+  // Nao e numero de catalogo nenhum — e o pior numero possivel neste perfil.
   var statEls = document.querySelectorAll('.stat-num[data-num]')
   for (var i = 0; i < statEls.length; i++) {
     (function (el) {
+      var target = parseInt(el.getAttribute('data-num')) || 0
+      el.textContent = String(target)
+
       var obs = new IntersectionObserver(function (entries) {
-        if (entries[0].isIntersecting) {
-          obs.unobserve(el)
-          var target = parseInt(el.getAttribute('data-num')) || 0
-          var cur = 0
-          var step = Math.max(1, Math.floor(target / 40))
-          function countUp() {
-            cur += step
-            if (cur >= target) {
-              el.textContent = target + '+'
-              return
-            }
-            el.textContent = cur
-            requestAnimationFrame(function () { setTimeout(countUp, 16) })
+        if (!entries[0].isIntersecting) return
+        obs.unobserve(el)
+        var cur = 0
+        var step = Math.max(1, Math.floor(target / 40))
+        function countUp() {
+          cur += step
+          if (cur >= target) {
+            el.textContent = String(target)
+            return
           }
-          countUp()
+          el.textContent = String(cur)
+          requestAnimationFrame(function () { setTimeout(countUp, 16) })
         }
-      }, { threshold: 0.5 })
+        countUp()
+      }, { threshold: 0.3 })
       obs.observe(el)
     })(statEls[i])
   }

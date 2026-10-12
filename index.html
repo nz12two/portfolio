@@ -139,17 +139,20 @@
             </div>
           </div>
           <div class="stats reveal">
+            <!-- Substitui "5 clientes satisfeitos", que nao tinha como ser
+                 provado. Estes numeros sao contaveis no momento: um clique em
+                 cada card do catalogo leva a pagina do produto. -->
             <div class="stat-item">
-              <div class="stat-num" data-num="5">0</div>
-              <div class="stat-label">Projetos Entregues</div>
+              <div class="stat-num" data-num="5">5</div>
+              <div class="stat-label">Produtos no catalogo</div>
             </div>
             <div class="stat-item">
-              <div class="stat-num" data-num="5">0</div>
-              <div class="stat-label">Clientes Satisfeitos</div>
+              <div class="stat-num" data-num="5">5</div>
+              <div class="stat-label">Repos publicos</div>
             </div>
             <div class="stat-item">
-              <div class="stat-num" data-num="1">0</div>
-              <div class="stat-label">Anos de Experiencia</div>
+              <div class="stat-num" data-num="4">4</div>
+              <div class="stat-label">Linguagens em uso</div>
             </div>
           </div>
         </div>
@@ -406,15 +409,15 @@
         <div class="contato-grid reveal">
           <div class="contato-form">
             <div class="form-grupo">
-              <label class="form-label"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#user"></use></svg> Seu nome</label>
+              <label class="form-label" for="ctt-name"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#user"></use></svg> Seu nome</label>
               <input type="text" id="ctt-name" class="form-input" placeholder="Como voce se chama?" required>
             </div>
             <div class="form-grupo">
-              <label class="form-label"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#envelope"></use></svg> Seu e-mail</label>
+              <label class="form-label" for="ctt-email"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#envelope"></use></svg> Seu e-mail</label>
               <input type="email" id="ctt-email" class="form-input" placeholder="seu@email.com" required>
             </div>
             <div class="form-grupo">
-              <label class="form-label"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#bullseye"></use></svg> Qual o objetivo?</label>
+              <label class="form-label" for="ctt-purpose"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#bullseye"></use></svg> Qual o objetivo?</label>
               <div class="select-box">
                 <select id="ctt-purpose">
                   <option value="orcamento">Orcamento de Projeto</option>
@@ -427,7 +430,7 @@
               </div>
             </div>
             <div class="form-grupo">
-              <label class="form-label"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#comment"></use></svg> Descreva seu projeto</label>
+              <label class="form-label" for="ctt-message"><svg class="i" aria-hidden="true" focusable="false"><use href="assets/icons.svg#comment"></use></svg> Descreva seu projeto</label>
               <textarea id="ctt-message" class="form-textarea" placeholder="Conte um pouco sobre o que voce precisa..." rows="4" required></textarea>
             </div>
             <button id="ctt-btn" class="btn primary btn-full">
@@ -526,5 +529,7 @@
   <script src="script.js"></script>
 </body>
 </html>
+
+
 
 
