@@ -1,16 +1,7 @@
 {
-  "gerado_em": "2026-10-13T14:22:45.377Z",
+  "gerado_em": "2026-10-14T04:59:59.793Z",
   "convite": "https://discord.gg/FwPq3hSmr",
   "canal": "📢-anúncios",
-  "total": 1,
-  "itens": [
-    {
-      "id": "1559284094192590981",
-      "ts": "2026-10-12T19:18:18.153000+00:00",
-      "url": "https://discord.com/channels/1559216448969248770/1559253303039234119/1559284094192590981",
-      "autor": "Banz",
-      "bot": true,
-      "texto": "**descriÃ§Ã£o:** prova de CI: prova-ci-611319 â†’ Catalogo e documentacao do ecossistema OpenCode: 123 repositorios reais, 249 pacotes npm, feed e ranking."
-    }
-  ]
+  "total": 0,
+  "itens": []
 }
