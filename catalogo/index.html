@@ -3,152 +3,87 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo — NZ</title>
-<meta name="description" content="Catálogo navegável dos produtos que eu construo: busca, filtro por categoria, preço e stack.">
-<!-- Canonical + OG: faltavam nesta página e ela é a porta de entrada do
-     catálogo. Sem canonical o mesmo conteúdo existe em /catalogo/ e em
-     /catalogo/index.html e o buscador escolhe qual dos dois indexa. -->
-<link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/">
+<title>Catálogo completo — NZ Studios</title>
+<meta name="description" content="Todo o catálogo do NZ Studios: busca, filtro e prova medida em cima de catalogo/dados/catalogo.js. Se o filtro achar nada, é porque não existe produto assim — não é bug.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Catálogo — NZ">
-<meta property="og:description" content="Busca, filtro por categoria, preço e comparação sobre os dados do catálogo.">
-<meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/">
-<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../css/main.css">
+<meta property="og:site_name" content="NZ Studios">
+<meta property="og:title" content="Catálogo completo — NZ Studios">
+<meta property="og:description" content="Busca e filtro com a medida de cada produto. Dado real, estado vazio em vez de inventar.">
+<link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/">
 <link rel="icon" href="../assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="../assets/brand/favicon-16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="../assets/brand/app-icon-512.png">
+<link rel="stylesheet" href="../css/studio.css">
 <link rel="stylesheet" href="../css/catalogo.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header class="hdr">
-  <div class="wrap hdr__in">
-    <a href="../index.html" class="brand"><svg class="brand__mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
-      NZ <small>/ catálogo</small></a>
-    <nav class="nav">
-      <a href="#tipos">Marketplace</a>
-      <a href="../index.html">Produtos</a>
-      <a href="#comparar">Comparar</a>
+<header class="bar" id="bar">
+  <div class="bar__in">
+    <a href="../index.html" class="brand" aria-label="Voltar para o NZ Studios">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
+      NZ Studios
+      <span class="backset mono">↙ catálogo</span>
+    </a>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="index.html#resultado">Produtos</a>
     </nav>
-    <a href="../index.html#contato" class="btn btn--acc">Contato</a>
   </div>
 </header>
 
-<main class="wrap cpage">
-
-  <div class="eyebrow mono">catálogo</div>
-  <h1 class="cpage__h1">O que está pronto para você usar hoje</h1>
-  <p class="cpage__sub">
-    Busca, filtro e comparação em cima dos dados de <code>catalogo/dados/catalogo.js</code>.
-    Se um filtro não achar nada, é porque não existe produto assim — não é bug.
+<main>
+<section class="cabecalho">
+  <p class="hero__ov mono ae"><i></i> o inventário inteiro, uma tela</p>
+  <h1 class="ae">Catálogo completo</h1>
+  <p class="cabecalho__sub ae" id="cabecalhoSub">
+    Busca e filtro em cima do dado real. Um filtro que acha nada significa que
+    não existe produto assim — estado vazio é informação, não bug.
+    Aperte <kbd>/</kbd> para buscar.
   </p>
+</section>
 
-  <!-- ===== MARKETPLACE =====
-       A visao por tipo de trabalho, e o que tira a pagina da cara de "sao
-       so estes 6 produtos". Os tipos vem DECLARADOS do catalogo/dados, nao
-       derivados dos itens: um tipo sem nada publicado aparece aqui do mesmo
-       jeito, porque a pratica existe mesmo antes de abrir o item. -->
-  <section class="mkt" id="tipos" aria-labelledby="mktH">
-    <div class="mkt__hd">
-      <div>
-        <div class="eyebrow mono">o que eu faço</div>
-        <h2 id="mktH">Por tipo de trabalho</h2>
-      </div>
-      <p class="mkt__nota">Estes cards SÃO o filtro por tipo — clique e os produtos
-        abaixo ja ficam filtrados. Tipo sem item aberto aparece apagado: a pratica
-        existe, ainda nao foi publicada.</p>
-    </div>
-    <div class="mkt__grid" id="mktGrid"></div>
-  </section>
+<section class="sec" id="resultado">
+  <div class="sec__top rv">
+    <span class="n mono" id="contagem">produtos</span>
+    <h2 id="veredicto">Todos os produtos</h2>
+  </div>
 
-  <!-- ===== CONTROLES =====
-       Os controles ficam no HTML, não são gerados por JS: sem JS a página ainda
-       mostra o catálogo. O JS só refina o que já está na tela. -->
-  <section class="ctrl" aria-label="Filtros do catálogo">
-    <div class="ctrl__search">
-      <input type="search" id="q" placeholder="Buscar por nome, stack ou problema…" aria-label="Buscar produtos" autocomplete="off">
-      <span class="ctrl__count" id="count" role="status" aria-live="polite">—</span>
-    </div>
-
-    <div class="ctrl__grid">
-      <fieldset class="fset">
-        <legend>preço</legend>
-        <label><input type="checkbox" name="preco" value="gratis"><span>grátis</span></label>
-        <label><input type="checkbox" name="preco" value="consulta"><span>sob consulta</span></label>
-        <label><input type="checkbox" name="vip" value="1"><span>tem VIP</span></label>
-      </fieldset>
-
-      <fieldset class="fset">
-        <legend>status</legend>
-        <div id="fStatus"></div>
-      </fieldset>
-
-      <fieldset class="fset">
-        <legend>licença</legend>
-        <div id="fLicenca"></div>
-      </fieldset>
-
-      <fieldset class="fset">
-        <legend>domínio</legend>
-        <div id="fDominio"></div>
-      </fieldset>
-
-      <fieldset class="fset">
-        <legend>stack</legend>
-        <div id="fStacks"></div>
-      </fieldset>
-    </div>
-
-    <div class="ctrl__chips" id="chips" hidden>
-      <span class="ctrl__chipsLabel">filtrando por</span>
-      <div class="ctrl__chipsRow" id="chipsRow"></div>
-      <button type="button" class="btn btn--sm" id="clearAll">limpar tudo</button>
-    </div>
-
-    <div class="ctrl__foot">
-      <label class="ctrl__sort">
-        <span>ordenar</span>
-        <select id="sort">
-          <option value="nome" selected>nome</option>
-          <option value="categoria">categoria</option>
-          <option value="preco">preço</option>
-          <option value="vip">mais VIP</option>
+  <!-- console único de filtragem: tipos segmentados + grupos raros no dropdown -->
+  <div class="console rv">
+    <div class="console__linha">
+      <label class="busca" for="q">
+        <input id="q" type="search" placeholder="busca: nome, medida, stack…  (tecla / )" autocomplete="off">
+      </label>
+      <div class="seg" id="segTipo" role="group" aria-label="Filtrar por tipo"></div>
+      <details class="mais-f" id="maisF">
+        <summary>mais filtros <i id="maisCnt"></i></summary>
+        <div class="mais-f__drop" id="painelChips"></div>
+      </details>
+      <label class="ordem" for="ordem">
+        <span class="mono">ordenar</span>
+        <select id="ordem">
+          <option value="catálogo">ordem do catálogo</option>
           <option value="prova">maior prova primeiro</option>
+          <option value="nome">nome alfabético</option>
         </select>
       </label>
-      <button type="button" class="btn btn--sm" id="clear">limpar</button>
+      <button class="limpar mono" id="limpar" type="button" hidden>limpar ×</button>
     </div>
-  </section>
-
-  <!-- Resultados. aria-live para o leitor de tela anunciar a contagem. -->
-  <div class="items" id="grid" role="list"></div>
-  <div class="cpage__empty" id="empty" hidden>
-    <p>Nenhum produto com esses filtros.</p>
-    <button type="button" class="btn btn--sm" id="emptyClear">limpar os filtros</button>
   </div>
 
-  <!-- ===== COMPARAR =====
-       Até 3 lado a lado. Comparar é a pergunta real de quem decide: "qual dos
-       dois eu instalo?" Uma tabela de 3 colunas responde; cinco cards não. -->
-  <section class="cmp" id="comparar" hidden>
-    <div class="cmp__hd">
-      <h2>Comparar</h2>
-      <button type="button" class="btn btn--sm" id="cmpClear">limpar comparação</button>
-    </div>
-    <div class="cmp__body" id="cmpBody"></div>
-  </section>
+  <div class="grid-proj" id="grid"></div>
+</section>
 </main>
 
-<footer class="ftr">
-  <div class="wrap ftr__in">
-    <span class="mono" id="ftrDados">NZ</span>
-    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
-  </div>
+<footer>
+  <span class="mono" id="rodapeDados">NZ Studios</span>
+  <a class="mono" href="https://github.com/nz12two" target="_blank" rel="noopener">github.com/nz12two</a>
 </footer>
 
-<script src="dados/catalogo.js"></script>
-<script src="../js/catalogo.js" defer></script>
+<script src="dados/catalogo.js" defer></script>
+<script src="../js/catalogo.js?v=3" defer></script>
 </body>
 </html>

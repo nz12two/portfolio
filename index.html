@@ -3,521 +3,154 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NZ - constrói plugins, catálogos e agentes que rodam</title>
-<meta name="description" content="Software com repositório aberto e número medido dentro: de plugin de Minecraft a catálogo de 2085 APIs. Você confere antes de instalar.">
+<title>NZ Studios — software com número medido</title>
+<meta name="description" content="Do plugin que vigia x-ray ao catálogo de 2.085 APIs: todo produto do NZ Studios tem código aberto, medida real e a página que outra pessoa repete. Você confere antes de instalar.">
 <link rel="canonical" href="https://nz12two.github.io/portfolio/">
-<!-- OG: é o que aparece quando o link vai para WhatsApp ou Telegram. Sem isso
-     o preview é o primeiro link do texto em azul, e o portfólio perde a
-     identidade no canal por onde ele mais circula. -->
+<!-- OG: o preview que circula em WhatsApp/Telegram. Mesma identidade, cara nova. -->
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="NZ">
-<meta property="og:title" content="NZ — constrói plugins, catálogos e agentes que rodam">
-<meta property="og:description" content="Software com código aberto, o número medido e o passo a passo que outra pessoa consegue repetir.">
+<meta property="og:site_name" content="NZ Studios">
+<meta property="og:title" content="NZ Studios — software com número medido">
+<meta property="og:description" content="Do plugin que vigia x-ray ao catálogo de 2.085 APIs. Código aberto, número medido, passo a passo repetível.">
 <meta property="og:url" content="https://nz12two.github.io/portfolio/">
 <meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
 <meta property="og:image:width" content="1890">
 <meta property="og:image:height" content="910">
-<meta property="og:image:alt" content="NZ — portfólio de software com código aberto e números medidos">
+<meta property="og:image:alt" content="NZ Studios — portfólio de software com código aberto e números medidos">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/hero.css">
-<link rel="stylesheet" href="css/navega.css">
-<!-- Os icones saem de um conjunto so (js/icones.js). Antes o botao de busca
-     carregava duas lupas: a do ::before abaixo e o caractere U+2315 dentro
-     do botao. O ::before saiu; a lupa vem do conjunto, como todo o resto. -->
-<link rel="stylesheet" href="css/icones.css">
-<link rel="stylesheet" href="css/lab.css">
-<link rel="stylesheet" href="css/viz.css">
-<link rel="stylesheet" href="css/vitrine-prev.css">
+<link rel="stylesheet" href="css/studio.css">
 <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="assets/brand/app-icon-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Barra de leitura. Um site longo sem indicador de onde você está é um site
-     longo em que ninguém chega ao fim. Fica no topo, 2px, e é a única coisa
-     que se move enquanto o texto está parado. -->
-<div class="progress" aria-hidden="true"><span class="progress__fill" id="progressFill"></span></div>
+<div class="progress" aria-hidden="true"><i id="progressFill"></i></div>
 
-<!-- ===== HEADER =====
-     O monograma é um SVG inline em vez de imagem: sem request extra, nítido em
-     qualquer densidade de tela e dentro do stream de texto. -->
-<header class="hdr" id="hdr">
-  <div class="wrap hdr__in">
-    <a href="#topo" class="brand">
-      <svg class="brand__mark" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
-      <span>NZ</span>
-      <small>/ build log</small>
+<header class="bar" id="bar">
+  <div class="bar__in">
+    <a href="#" class="brand" aria-label="NZ Studios — topo">
+      <!-- mesmo marca do site antigo: continuidade de identidade -->
+      <svg viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
+      NZ Studios
     </a>
-    <nav class="nav">
-      <!-- Ordem igual a ordem da pagina: quem le o nav le o caminho da
-           leitura. "Sobre" vem antes de "Produtos" porque a apresentacao vem
-           antes do catalogo — link que aponta para a ordem antiga reforçava o
-           defeito que o NZ apontou. Marketplace e link de verdade para a
-           pagina com os filtros, nao ancora dentro desta. -->
-      <a href="#sobre" data-ico="sobre">Sobre</a>
-      <a href="#produtos" data-ico="produtos">Produtos</a>
-      <a href="catalogo/index.html#tipos" data-ico="marketplace">Marketplace</a>
-      <a href="#lab" data-ico="lab">Lab</a>
-      <a href="#dados" data-ico="dados">Dados</a>
-      <a href="#prova" data-ico="prova">Prova</a>
+    <nav>
+      <a href="#projetos">Projetos</a>
+      <a href="#stack">Stack</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
     </nav>
-    <div class="hdr__acoes">
-      <button type="button" class="btn btn--search" data-ico="busca" aria-label="Buscar produtos e tecnologias" title="Buscar (Ctrl+K)">
-        <span class="btn__rot">Buscar</span>
-      </button>
-      <a href="#contato" class="btn">Contato</a>
-      <a href="conta.html" class="btn btn--acc" data-ico="conta" data-conta-open aria-label="Entrar na sua conta"><span class="btn__rot">entrar</span></a>
-      <button type="button" class="btn btn--menu" data-ico="menu" aria-label="Abrir menu" aria-expanded="false"></button>
-    </div>
+    <a class="gh" href="https://github.com/nz12two" target="_blank" rel="noopener" aria-label="GitHub de nz12two">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+    </a>
   </div>
 </header>
 
-<main id="topo">
-
-  <!-- ===== HERO =====
-       Sem degradê, sem digitando, sem terminal animando. A atenção vem do
-       painel de evidência: linguagens por byte real dos repos, que é o único
-       número que não dá para falsificar sem abrir o repositório. -->
-  <section class="hero">
-    <!-- Trilho decorativo do topo do hero. NAO e a barra de leitura: essa e a
-         da linha 37, e o JS escreve nela pelo id — com dois ids iguais na pagina
-         o getElementById so acha o primeiro, e este aqui ficaria parado em
-         scaleX(0) para sempre. Por isso nao leva id. -->
-    <div class="progress" aria-hidden="true"><i class="progress__fill"></i></div>
-    <!-- Malha de fundo que se desloca devagar. Um plano de cor puro com texto
-         parado lê como documento; a grade dá profundidade sem custar nada. -->
-    <div class="hero__grid-bg" aria-hidden="true"></div>
-    <div class="hero__grid">
-      <div>
-        <!-- Headline segue o padrão dos heroes SaaS que a pesquisa levantou:
-             Linear nomeia categoria + audiencia, Stripe nomeia o resultado,
-             Copilot afirma e prova na linha seguinte. Nenhum promete — todos
-             dao um motivo verificável. "Eu construo coisas que realmente
-             rodam" prometia: nao havia botao para checar "realmente".
-             Aqui a promessa e o repo aberto: pode conferir antes de ler o
-             resto. E o H1 nao enumera produtos, para nao congelar quando
-             entrar o proximo. -->
-        <h1>Você abre o código<br>e vê <em>se roda</em>.</h1>
-        <p class="hero__sub">
-          Software com o repositório aberto e o número medido dentro — de um
-          plugin de Minecraft a um catálogo de APIs. Cada produto mostra o que
-          faz, para quem é e o que ainda não funciona, antes de você instalar
-          qualquer coisa.
-        </p>
-        <div class="hero__cta">
-          <a href="https://github.com/nz12two" class="btn btn--acc">Abrir no GitHub</a>
-          <a href="catalogo/index.html" class="btn">Ver os produtos</a>
-        </div>
-        <!-- Faixa de prova. Fica VAZIA no HTML de proposito: e montada por
-             js/vitrine.js a partir do campo `prova` de cada produto no
-             catalogo. Escrever os numeros aqui seriaCongela-los — foi o que
-             aconteceu antes e o que o NZ reprovou. Sem JS, a faixa simplesmente
-             nao aparece; o resto do hero continua de pe. -->
-        <dl class="hero__nums" id="heroNums" aria-label="Prova medida em cada produto" hidden></dl>
-      </div>
+<main>
+<section class="hero" id="hero">
+  <div class="hero__txt">
+    <p class="hero__ov ae mono"><i></i> estúdio de software — do Minecraft ao agente</p>
+    <h1 class="ae">NZ Studios<span class="ponto">.</span></h1>
+    <p class="hero__sub ae">Software com <b>número medido dentro</b> — e a medida aberta pra você conferir: prova em cada item abaixo.</p>
+    <div class="hero__cta ae">
+      <a class="btn btn--solo" href="#projetos">Ver projetos
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg>
+      </a>
+      <a class="btn btn--fantasma" href="catalogo/index.html">catálogo completo</a>
     </div>
-  </section>
-  
-  <!-- ===== PRODUTOS =====
-       Lista editorial com número, não grade de caixas iguais. Produtos com a
-       mesma forma viram uma parede; numerados, viram um índice. O conteúdo
-       vem de js/vitrine.js, então a lista cresce com o catálogo. -->
-<section class="sec" id="produtos">
-    <div class="wrap">
-      <div class="eyebrow mono">produtos</div>
-      <h2 style="font-size:var(--t-2xl);max-width:22ch">Produtos em destaque</h2>
-      <p class="lead" style="margin-top:18px">
-        O card maior é o de maior número medido, e o número vem de dentro do
-        produto: 2.085 APIs sondadas, 123 repositórios e 249 pacotes
-        indexados, 38 verificadores. Cada card mostra a evidência que existe:
-        os quatro primeiros abrem o repositório, e a Baccana's Hub e o Banzinho
-        dizem no card que não têm código público, em vez de mandar para o ar
-        um link quebrado. Os outros entram pelo mesmo critério.
-        <a href="catalogo/index.html" style="color:var(--acc)">Marketplace</a> tem busca,
-        filtro e comparação sobre todos.
-      </p>
+    <p class="prova-linha ae" id="provaLinha"></p>
+  </div>
+  <div class="term" id="term" aria-hidden="true">
+    <div class="term__hd"><i></i><i></i><i></i><span class="mono">nz@studios ~ ssh</span></div>
+    <div class="term__body" id="termBody"></div>
+  </div>
+</section>
 
-<!-- Lista montada por js/main.js a partir de catalogo/dados/catalogo.js.
-           Os produtos viviam aqui em HTML escrito à mão, o que congelava a
-           vitrine no que existia naquele dia. A aviso abaixo é a rede: se o
-           script não rodar, a seção diz o que aconteceu em vez de mostrar
-           uma vitrine vazia sem explicação. -->
-      <div class="items" id="items"></div>
-      <p class="items__aviso" id="itemsAviso" hidden></p>
+<section class="sec" id="projetos">
+  <div class="sec__top rv">
+    <span class="n mono">01 / vitrine</span>
+    <h2>Tudo que saiu daqui roda em produção</h2>
+    <a class="mais" href="catalogo/index.html">catálogo completo com filtros ↗</a>
+    <p>Cada card abre a página própria, com o código, a medida e o passo a passo. Filtre pelo tipo.</p>
+  </div>
+  <nav class="filtros rv" id="filtros" aria-label="Filtrar por tipo"></nav>
+  <div class="grid-proj" id="grid">
+    <p class="vazio">Carregando o catálogo… se ficar vazio, a fonte é <span class="mono">catalogo/dados/catalogo.js</span>.</p>
+  </div>
+</section>
+
+<section class="sec" id="stack">
+  <div class="sec__top rv">
+    <span class="n mono">02 / stack</span>
+    <h2>Stack compartilhada</h2>
+    <p>Em quantos produtos cada tecnologia aparece — contagem do catálogo, não aspiração.</p>
+  </div>
+  <div class="stack rv" id="stackLista"></div>
+</section>
+
+<section class="sec" id="sobre">
+  <div class="sec__top rv">
+    <span class="n mono">03 / estúdio</span>
+    <h2>Sobre e serviços</h2>
+  </div>
+  <div class="duo rv">
+    <div>
+      <p><b>Sou o NZ.</b> Construo o que estava faltando no meu servidor — de plugin de Minecraft a agente que executa tarefas inteiras de engenharia. O padrão de tudo: repositório aberto e número medido dentro.</p>
+      <p>Cada produto tem a página de detalhe com a medida e a fonte. O que não tem número medido, o card não declara.</p>
     </div>
-  </section>
-  
-  <section class="lab sec" id="lab">
-    <div class="wrap">
-      <div class="lab__eyebrow">laboratório</div>
-      <h2 class="lab__h2">Experiências com os dados reais</h2>
-      <p class="lab__lead">Duas leituras do mesmo <code>catalogo/dados/catalogo.json</code> e um diagrama de processo — nada inventado, nada simulado sem aviso.</p>
-
-        <!-- Estado real do runtime. Sai de tools/exportar-estado.js, que le
-             ~/.banzinho/{state,logs}: chamadas medidas, classes de falha e o
-             resultado da auto-auditoria. Agregado e sem caminho, sessao ou
-             comando — o portfolio mostra a forma, nao o endereco. -->
-        <article class="lab__painel lab__painel--largo" id="estadoPainel">
-          <h3>O que o agente realmente fez</h3>
-          <p class="desc">Contagem de chamadas numa janela de execução real, o tipo de erro que mais frequente e o que a auto-auditoria achou. Nada aqui é cenário: sai do log do runtime que escreveu esta página.</p>
-          <dl class="tiles" id="estadoTiles"></dl>
-          <div class="duas">
-            <div>
-              <h4 class="sub">Falhas por classe</h4>
-              <ul class="falhas" id="estadoFalhas"></ul>
-            </div>
-            <div>
-              <h4 class="sub">Auto-auditoria</h4>
-              <ul class="achados" id="estadoAchados"></ul>
-            </div>
-          </div>
-          <p class="lab__nota" id="estadoNota"></p>
-        </article>
-
-      <div class="lab__grid">
-        <article class="lab__painel">
-          <h3>Onde a stack se repete</h3>
-          <p class="desc">As 20 tecnologias do catálogo e em quantos projetos cada uma aparece. Abra uma linha para ver quem usa.</p>
-          <ul class="stack" id="stackLista" aria-live="polite"></ul>
-          <p class="lab__nota">Contagem por <code>catalogo/dados/catalogo.json</code>. <code>SQLite/MySQL/MariaDB/PostgreSQL</code> é uma entrada só no catálogo, então conta como uma tecnologia. Uma tecnologia que aparece num projeto só não é stack compartilhada — é o inventário daquele projeto.</p>
-        </article>
-
-        <div class="lab__duplo">
-          <article class="lab__painel" id="medidorPainel">
-            <h3>Explorador de medição</h3>
-            <p class="desc">Cada produto com número medido. O botão troca o medidor.</p>
-            <div class="medidor">
-              <span class="medidor__num" id="medidorNum">0</span>
-              <span class="medidor__meta" id="medidorMeta">Carregando do catálogo…</span>
-            </div>
-            <div class="medidor__botoes" id="medidorBtns" aria-label="Produtos com prova medida"></div>
-          </article>
-
-            <article class="lab__painel">
-              <h3>Como o Banzinho executa uma tarefa</h3>
-              <p class="desc">As cinco etapas que toda tarefa atravessa. Abra uma para ver o que acontece nela.</p>
-              <div class="fluxo">
-                <details class="fluxo__et">
-                  <summary><span class="fluxo__n mono">1</span> Solicitação</summary>
-                  <p>O pedido entra como camada 1 da precedência; a política do agente é a 2, a do subsistema a 3, o estado de trabalho a 4. A ordem é definida, não resolvida na hora — é o que faz a mesma entrada virar a mesma decisão em qualquer sessão.</p>
-                </details>
-                <details class="fluxo__et">
-                  <summary><span class="fluxo__n mono">2</span> Planejamento</summary>
-                  <p>Objetivo, hipótese aberta e próxima ação vão para o estado antes de qualquer ferramenta. Se a chamada seguinte depende da anterior, ela espera; se não, dispara em paralelo. Plano escrito não é entrega.</p>
-                </details>
-                <details class="fluxo__et">
-                  <summary><span class="fluxo__n mono">3</span> Ferramentas</summary>
-                  <p>A chamada é escolhida pelo contrato declarado, não por tentativa. Quando ela falha, a regra é trocar de classe de abordagem: repetir a mesma tentativa com outro parâmetro não é estratégia nova, é o defeito de novo.</p>
-                </details>
-                <details class="fluxo__et">
-                  <summary><span class="fluxo__n mono">4</span> Execução</summary>
-                  <p>A ação executada não é o resultado: o artefato é conferido. <code>clamp_claim</code> verifica a afirmação antes de ela sair ao leitor; <code>autotest_check</code> roda o teste do que foi editado e devolve só a diferença contra a linha de base.</p>
-                </details>
-                <details class="fluxo__et">
-                  <summary><span class="fluxo__n mono">5</span> Validação</summary>
-                  <p>Os 38 verificadores leem a constitution e quebram a build se uma regra declarada sumir do texto. O estado é gravado antes de o turno fechar; o que sobrou em aberto vai escrito no estado, não na memória.</p>
-                </details>
-              </div>
-              <p class="particulas-label">Diagrama do caminho real, não simulação de resultado: os 28 subsistemas e os 38 verificadores do <a href="catalogo/banzinho.html">Banzinho</a>.</p>
-            </article>
-        </div>
-      </div>
+    <div>
+      <div class="svc"><h4>Setup e otimização de servidor</h4><p>Minecraft Paper: configuração, tick loop, plugins e performance.</p></div>
+      <div class="svc"><h4>Desenvolvimento sob medida</h4><p>Plugin de jogo, ferramenta de dados ou automação rodando sozinha.</p></div>
+      <div class="svc"><h4>Diagnóstico com número</h4><p>Audito o sistema e devolvo a medida — onde mana, onde falta.</p></div>
     </div>
-  </section>
-  
-  <!-- ===== PROJETOS E EXPERIMENTOS =====
-       O catalogo completo: os 6 produtos com busca, filtro por categoria,
-       preco e stack, e comparacao lado a lado. A vitrine acima mostra os
-       destaques; aqui esta tudo, e da para filtrar. -->
-  <section class="sec sec--alt" id="experimentos">
-    <div class="wrap">
-      <div class="eyebrow mono">projetos e experimentos</div>
-      <h2 style="font-size:var(--t-2xl);max-width:24ch">Tudo o que está no catálogo, filtrável</h2>
-      <p class="lead" style="margin-top:18px">
-        Busca por nome, stack ou problema; filtro por categoria, preço e status;
-        6 itens e 20 tecnologias distintas. Cada linha abre a página do produto com
-        o que ele faz, como foi construído e em que estado está.
-      </p>
-      <div style="margin-top:32px">
-        <a href="catalogo/index.html" class="btn btn--acc">Abrir o catálogo</a>
-      </div>
-    </div>
-  </section>
-  
-  <!-- ===== COMPETENCIAS =====
-       Saiu do hero: o painel de bytes e a distribuicao de linguagem nao
-       contestam nada sobre o trabalho, e disputavam atencao com a promessa
-       principal. O total de MB saiu do cabecalho — volumen de codigo nao
-       demonstra qualidade — e o grafico continua mostrando onde o peso esta. -->
-  <section class="sec" id="skills">
-    <div class="wrap">
-      <div class="eyebrow mono">competências técnicas</div>
-      <h2 style="font-size:var(--t-2xl);max-width:22ch">Onde está o código, por linguagem</h2>
-      <p class="lead" style="margin-top:18px">
-        Bytes somados nos 4 repositórios públicos. Serve para mostrar o peso de
-        cada linguagem no trabalho — não como medida de qualidade.
-      </p>
-      <!-- Dados: bytes por linguagem, somados nos 4 repositórios públicos.
-           O HTML carrega um valor conhecido para quem abrir sem JS; o fetch
-           substitui pelo dado atual. Fonte: tools/update-evidence.js -->
-      <aside class="panel proof" id="proof">
-        <div class="proof__hd">
-          <span class="mono">código publicado</span>
-        </div>
-        <div class="bar" id="proofBar">
-          <div class="bar__row">
-            <span class="bar__name">Java</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.291"></span></span>
-            <span class="bar__val">567 KB</span>
-          </div>
-          <div class="bar__row">
-            <span class="bar__name" title="TypeScript">TypeScript</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.274"></span></span>
-            <span class="bar__val">535 KB</span>
-          </div>
-          <div class="bar__row">
-            <span class="bar__name">Astro</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.191"></span></span>
-            <span class="bar__val">372 KB</span>
-          </div>
-          <div class="bar__row">
-            <span class="bar__name">Python</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.100"></span></span>
-            <span class="bar__val">196 KB</span>
-          </div>
-          <div class="bar__row">
-            <span class="bar__name">Outros</span>
-            <span class="bar__track"><span class="bar__fill" style="--w:.144"></span></span>
-            <span class="bar__val">281 KB</span>
-          </div>
-        </div>
-        <p class="proof__src" id="proofSrc">medido na API do GitHub</p>
-      </aside>
-    </div>
-  </section>
-  
-  <section class="viz sec" id="dados"></section>
-  
-  <!-- ===== NOVIDADES =====
-     Montada por js/novidades.js a partir de dados/novidades.json, que
-     tools/puxar-novidades.js gera lendo #anuncios no Discord. Fica VAZIA de
-     proposito: sem dado a secao nao aparece e nada mais muda. Escrever aqui
-     congelaria a data — foi o defeito do rodape antes. -->
-  <section class="sec" id="novidades" hidden></section>
-  
-  <!-- ===== PROVA =====
-       Resposta direta à pergunta que todo visitante faz em silêncio: "isso
-       funciona mesmo?". Os números aqui são verificáveis abrindo o repositório
-       — foi por isso que tirei "5 clientes satisfeitos". -->
-  <section class="sec sec--alt" id="prova">
-    <div class="wrap">
-      <div class="eyebrow mono">prova</div>
-      <h2 style="font-size:var(--t-2xl);max-width:22ch">Cada projeto apresenta as evidências disponíveis para conferência</h2>
-      <p class="lead" style="margin-top:18px">
-        Nada de depoimento ou número de vitrine. Se eu afirmo que funciona, o código
-        está aberto e o build está no Actions.
-      </p>
+  </div>
+</section>
 
-      <div class="about__list" style="margin-top:44px">
-        <div class="about__row">
-          <span class="about__k">AntiXray compila e empacota</span>
-          <span class="about__v">JDK 21 · exit 0 · jar 909 KB</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">OpenDex gera páginas em build</span>
-          <span class="about__v">380 páginas · 0 erros · ~36s</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">API Directory mede latência de verdade</span>
-          <span class="about__v">16 workers · 1x ao dia no CI</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">EmpresasMundo simula em mapa real</span>
-          <span class="about__v">OSMnx · FastAPI · WebSocket</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">Zero dependência de terceiros no site</span>
-          <span class="about__v">sprite SVG local · sem CDN</span>
-        </div>
-      </div>
+<section class="sec" id="catalogo" style="padding-top:0">
+  <div class="band rv">
+    <div>
+      <span class="n mono">o inventário completo</span>
+      <h2>Catálogo completo</h2>
+      <p>Busca, filtro por tipo/stack/status e a medida de cada produto — a mesma tela que você viu aqui, com o resto.</p>
+    </div>
+    <div class="band__cta">
+      <a class="btn btn--solo" href="catalogo/index.html">Abrir o catálogo
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
 
-      <div style="margin-top:38px">
-        <a href="https://github.com/nz12two" class="btn btn--acc">Abrir o GitHub</a>
-      </div>
+<section class="sec final" id="contato">
+  <div class="rv">
+    <span class="n mono">04 / contato</span>
+    <h2>Me conta o problema</h2>
+    <p>Plugin, script, automação ou coisa sem nome ainda. Descreve em duas linhas — eu respondo com o que dá e o que não dá.</p>
+    <div class="hero__cta">
+      <!-- convite real do servidor NZ Studios, herdado da home antiga -->
+      <a class="btn btn--solo" href="https://discord.gg/FwPq3hSmr" target="_blank" rel="noopener">Entrar no Discord
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg>
+      </a>
+      <a class="btn btn--fantasma" href="https://github.com/nz12two" target="_blank" rel="noopener">github.com/nz12two</a>
     </div>
-  </section>
-  
-  <!-- ===== SOBRE ===== -->
-  <section class="sec sec--alt" id="sobre">
-    <div class="wrap">
-      <div class="eyebrow mono">sobre</div>
-      <div class="about">
-        <!-- Rosto e nome. Um portfólio que só mostra produto e nunca mostra
-             quem fez vira uma vitrine anônima: a pessoa não tem a quem
-             atribuir o que está vendo. -->
-        <aside class="about__card">
-          <span class="about__fotoWrap">
-            <img class="about__foto" src="assets/avatar.jpg" alt="NZ" width="160" height="160" loading="lazy" decoding="async">
-          </span>
-          <div>
-            <p class="about__nome">NZ</p>
-            <p class="about__papel">Desenvolvedor · automação · servidores Minecraft</p>
-          </div>
-          <dl class="about__fatos">
-            <div><dt>linguagens</dt><dd>Java · Python · TypeScript</dd></div>
-            <div><dt>no GitHub</dt><dd><a href="https://github.com/nz12two" style="color:var(--acc)">nz12two</a></dd></div>
-            <div><dt>base</dt><dd>Brasil</dd></div>
-          </dl>
-        </aside>
-
-        <div class="prosa">
-          <h2 style="font-size:var(--t-2xl);max-width:18ch">Eu construo o que estava faltando no meu servidor</h2>
-          <p class="lead" style="font-size:var(--t-md);margin-top:20px">
-            Construo ferramentas para resolver problemas reais. O plugin de
-            detecção para servidores Minecraft foi o primeiro; depois vieram um
-            diretório com <a href="catalogo/api-directory.html">2.085 APIs</a>
-            sondadas de fora, um índice com
-            <a href="catalogo/opendex.html">123 repositórios e 249 pacotes</a> do
-            ecossistema OpenCode, e um agente com 38 verificadores que roda sem
-            ninguém babysitar.
-          </p>
-          <p style="color:var(--tx-2);margin-top:16px">
-            O que não muda de um pro outro é a régua: número medido, não
-            adjetivo, e o passo a passo que outra pessoa consegue repetir sem me
-            perguntar nada. Cada projeto documenta seu propósito, suas tecnologias
-            e seu estado atual, com as evidências técnicas que existem e são
-            públicas — e diz o que não é público, em vez de fingir que é.
-          </p>
-          <p style="color:var(--tx-2);margin-top:16px">
-            Java, Python, TypeScript e JavaScript, nessa ordem de uso real.
-            Meu foco é construir software útil, verificável e que dê para manter
-            e aprimorar depois.
-          </p>
-        </div>
-      </div>
+    <div class="links">
+      <a href="#projetos">projetos</a>
+      <a href="#stack">stack</a>
+      <a href="catalogo/index.html">catálogo completo</a>
     </div>
-  </section>
-  
-  <!-- ===== SERVICOS =====
-       Servico nao e produto: nao tem repositorio para abrir, e o card diz
-       isso. Fica em secao propria para nao parecer que faltou um link. -->
-  <section class="sec" id="servicos">
-    <div class="wrap">
-      <div class="eyebrow mono">serviços</div>
-      <h2 style="font-size:var(--t-2xl);max-width:20ch">Setup e otimização de servidor Minecraft</h2>
-      <p class="lead" style="margin-top:18px">
-        Plataforma de serviços profissionais para servidores Minecraft — configuração, otimização e desenvolvimento. Esse é o único item do catálogo sem
-        repositório público, e é de propósito: serviço é trabalho entregue no
-        seu servidor, não código aberto.
-      </p>
-      <div class="about__list" style="margin-top:32px">
-        <div class="about__row">
-          <span class="about__k">Stack</span>
-          <span class="about__v">Next.js · TypeScript · Tailwind · Vercel</span>
-        </div>
-        <div class="about__row">
-          <span class="about__k">Status</span>
-          <span class="about__v">em produção</span>
-        </div>
-      </div>
-      <div style="margin-top:30px">
-        <a href="catalogo/baccanas-hub.html" class="btn btn--acc">Ver o serviço</a>
-        <a href="contato.html" class="btn" style="margin-left:10px">Falar com o NZ</a>
-      </div>
-    </div>
-  </section>
-  
-  <!-- ===== CONTATO ===== -->
-  <section class="sec" id="contato">
-    <div class="wrap">
-      <div class="eyebrow mono">contato</div>
-      <div class="ct">
-        <div>
-          <h2 style="font-size:var(--t-2xl);max-width:16ch">Me conta o problema</h2>
-          <p class="lead" style="margin-top:18px">
-            Plugin, script, automação, ferramenta, agente, serviço — ou algo que
-            não cabe em nenhum desses nomes. Descreve em duas linhas e eu respondo
-            com o que dá e o que não dá. Se preferir falar antes de escrever,
-            o Discord é o caminho mais curto.
-          </p>
-          <p style="margin-top:16px">
-            <!-- Convite real, colado aqui: o servidor existe (NZ Studios) e
-                 esperar o bot para publicar o link deixaria a home sem botão
-                 por causa de uma credencial. js/novidades.js SOBRESCREVE este
-                 href quando dados/novidades.json trouxer um convite, mas nunca
-                 esconde um botão que já funciona. -->
-            <a class="btn" id="discordBtn" href="https://discord.gg/FwPq3hSmr" rel="noopener">
-              <span id="discordBtnTxt">Entrar no Discord</span>
-            </a>
-          </p>
-        </div>
-
-        <form class="panel" style="padding:26px" novalidate>
-          <div class="field">
-            <label for="v2-nome">Seu nome</label>
-            <input id="v2-nome" name="nome" type="text" autocomplete="name" required>
-          </div>
-          <div class="field">
-            <label for="v2-email">Seu e-mail</label>
-            <input id="v2-email" name="email" type="email" autocomplete="email" required>
-          </div>
-          <div class="field">
-            <!-- As opcoes sao a TAXONOMIA DECLARADA (catalogo/dados/produtos.json),
-                 nao os 3 produtos que ja existiam. A lista antiga travava o NZ
-                 em plugin / catalogo / automacao, que e o que o NZ reprovou:
-                 a pagina parecia um retrato do inventario. Montada por JS para
-                 nao duplicar a lista em dois lugares; sem JS o campo fica com
-                 uma opcao livre, que e o fallback honesto. -->
-            <label for="v2-assunto">O que você precisa</label>
-            <select id="v2-assunto" name="assunto">
-              <option value="outro">Outro — descreva abaixo</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="v2-msg">Detalha em duas linhas</label>
-            <textarea id="v2-msg" name="mensagem" rows="4" required></textarea>
-          </div>
-          <button type="submit" class="btn btn--acc" style="width:100%">Enviar mensagem</button>
-        </form>
-      </div>
-    </div>
-  </section>
-  
+  </div>
+</section>
 </main>
 
-<footer class="ftr">
-  <div class="wrap ftr__in">
-    <!-- O rodapé carrega o dado que muda: o tamanho do catálogo e a data da
-         última medição. "Construído à mão, sem template" era uma frase que
-         não mudava nunca e não dizia nada — o mesmo do rodapé de qualquer
-         site. Preenchido por js/vitrine.js a partir de catalogo.js. -->
-    <span class="mono" id="ftrDados">NZ</span>
-    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
-  </div>
+<footer>
+  <span class="mono">NZ Studios — código aberto, número medido</span>
+  <a class="mono" href="https://github.com/nz12two" target="_blank" rel="noopener">github.com/nz12two</a>
 </footer>
 
-<!-- O catálogo antes dos scripts que o usam: vitrine.js lê window.CATALOGO.
-     Sem este <script>, a lista da home e o rodapé ficam vazios. -->
+<!-- O catálogo entra antes do script que o lê -->
 <script src="catalogo/dados/catalogo.js" defer></script>
-<script src="js/icones.js" defer></script>
-<script src="js/main.js" defer></script>
-<script src="js/vitrine.js" defer></script>
-<!-- Depois da vitrine: le os slugs que ela acabou de pintar e monta o preview
-     e o painel de detalhes em cima. -->
-<script src="js/previews.js" defer></script>
-<!-- Ultimo: le dados/novidades.json, que e o unico arquivo que precisa de rede.
-     Sem ele a secao fica oculta e o resto do site nao sente falta. -->
-<script src="js/novidades.js" defer></script>
-<!-- Autenticacao por ultimo: precisa do catalogo pronto para pintar os gates
-    VIP de acao. js/auth-config.js vem antes porque auth.js le a config no
-     corpo do IIFE. -->
-<script src="js/auth-config.js"></script>
-<script src="js/auth.js" defer></script>
-<script src="js/hero.js" defer></script>
-<script src="js/navega.js" defer></script>
-<script src="js/lab.js" defer></script>
-<script src="js/viz.js" defer></script>
+<script src="js/studio.js?v=3" defer></script>
 </body>
 </html>

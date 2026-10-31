@@ -1,147 +1,144 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Conta — NZ</title>
-  <meta name="description" content="Entrar ou criar conta para acessar o conteúdo VIP do catálogo.">
-  <link rel="canonical" href="https://nz12two.github.io/portfolio/conta.html">
-  <!-- OG: faltavam nesta pagina, e e ela que o NZ cola no chat quando alguem
-     pergunta do catalogo. So a index e as paginas de produto tinham. -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Conta — NZ">
-  <meta property="og:description" content="Entrar ou criar conta para acessar o conteudo VIP do catalogo.">
-  <meta property="og:url" content="https://nz12two.github.io/portfolio/conta.html">
-  <meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
-  <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/vip.css">
-  <link rel="stylesheet" href="css/conta.css">
-  <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16" type="image/png">
-  <link rel="apple-touch-icon" href="assets/brand/app-icon-512.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conta — NZ Studios</title>
+<meta name="description" content="Entrar ou criar conta para acessar o material pago do catálogo.">
+<link rel="canonical" href="https://nz12two.github.io/portfolio/conta.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NZ Studios">
+<meta property="og:title" content="Conta — NZ Studios">
+<meta property="og:description" content="Entrar ou criar conta para acessar o material pago do catálogo.">
+<meta property="og:url" content="https://nz12two.github.io/portfolio/conta.html">
+<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="css/studio.css">
+<link rel="stylesheet" href="css/produto.css">
+<link rel="stylesheet" href="css/conta.css">
+<link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="hdr">
-    <div class="wrap hdr__in">
-      <a href="index.html" class="brand">NZ <small>/ conta</small></a>
-      <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="catalogo/index.html">Marketplace</a>
-      </nav>
-      <a href="index.html" class="btn">Voltar</a>
+
+<header class="bar" id="bar">
+  <div class="bar__in">
+    <a href="index.html" class="brand" aria-label="NZ Studios — home">
+      <svg viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
+      NZ Studios
+      <span class="p-head__backset mono">/ conta</span>
+    </a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="catalogo/index.html">Catálogo</a>
+    </nav>
+  </div>
+</header>
+
+<main class="conta">
+  <section class="p-head">
+    <div class="p-head__volta"><a href="catalogo/index.html">↙ catálogo completo</a></div>
+    <p class="hero__ov mono"><i></i> conta</p>
+    <h1>Entrar</h1>
+    <p class="p-head__tag">A conta serve para o material pago do catálogo. Não pede pagamento aqui: o pagamento é combinado antes.</p>
+  </section>
+
+  <div class="conta__caixa">
+    <div class="p-aviso" id="semConfig" hidden>
+      <b>Autenticação não configurada neste deploy.</b>
+      <p>A conta só funciona depois de apontar <code class="mono">js/auth-config.js</code> para um projeto. Sem isso os botões ficam desligados — em vez de fingir um login que aceitaria qualquer senha.</p>
     </div>
-  </header>
 
-  <main class="wrap cpage">
-    <div class="eyebrow mono">conta</div>
-    <h1 class="cpage__h1">Entrar</h1>
-    <p class="cpage__sub">A conta serve para o conteúdo VIP do catálogo. Não
-      pede pagamento aqui: o pagamento é combinado antes.</p>
+    <form class="conta__form" id="form" novalidate>
+      <label class="conta__campo">
+        <span class="mono">e-mail</span>
+        <input type="email" id="email" name="email" autocomplete="email" required placeholder="voce@exemplo.com" spellcheck="false">
+      </label>
 
-    <!-- Estado sem configuração. Aparece sozinho quando js/auth-config.js está
-         vazio — o botão de login fica desligado e explica o motivo, em vez de
-         aceitar qualquer senha. -->
-    <div class="acct__aviso" id="semConfig" hidden>
-      <strong>Autenticação não configurada neste deploy.</strong>
-      <p>A conta só funciona depois de apontar <code>js/auth-config.js</code> para um
-        projeto. Sem isso os botões ficam desligados — em vez de fingir um login
-        que aceitaria qualquer senha.</p>
-    </div>
+      <label class="conta__campo">
+        <span class="mono">senha</span>
+        <input type="password" id="senha" name="senha" autocomplete="current-password" required minlength="8" placeholder="mínimo de 8 caracteres">
+      </label>
 
-    <section class="acct" aria-labelledby="acctH">
-      <h2 id="acctH" class="sr-only">Entrar ou criar conta</h2>
+      <p class="conta__erro" id="erro" role="alert" hidden></p>
 
-      <form class="acct__form" id="form" novalidate>
-        <label class="acct__campo">
-          <span>e-mail</span>
-          <input type="email" id="email" name="email" autocomplete="email" required
-                 placeholder="voce@exemplo.com" spellcheck="false">
-        </label>
-
-        <label class="acct__campo">
-          <span>senha</span>
-          <input type="password" id="senha" name="senha" autocomplete="current-password"
-                 required minlength="8" placeholder="mínimo de 8 caracteres">
-        </label>
-
-        <p class="acct__erro" id="erro" role="alert" hidden></p>
-
-        <div class="acct__botoes">
-          <button type="submit" class="btn btn--acc" id="btnEntrar">Entrar</button>
-          <button type="button" class="btn" id="btnCriar">Criar conta</button>
-        </div>
-
-        <p class="acct__nota">Mínimo de 8 caracteres. Criar conta não dá acesso
-          VIP sozinho — isso é liberado depois, à mão.</p>
-      </form>
-
-      <!-- Painel de quem já entrou. some para anonimo. -->
-      <div class="acct__painel" id="painel" hidden>
-        <p class="acct__rotulo">sessão ativa</p>
-        <p class="acct__email" data-conta-email></p>
-        <button type="button" class="btn" data-conta-sair>Sair</button>
+      <div class="conta__botoes">
+        <button type="submit" class="btn btn--solo" id="btnEntrar">Entrar</button>
+        <button type="button" class="btn btn--fantasma" id="btnCriar">Criar conta</button>
       </div>
-    </section>
-  </main>
 
-  <script src="js/auth-config.js"></script>
-  <script src="js/auth.js" defer></script>
-  <script defer>
-    // Ponte da pagina com o modulo. Fica aqui e nao dentro do auth.js porque e
-    // especifico desta tela: o modulo nao deve saber que existe um formulario.
-    window.addEventListener('DOMContentLoaded', function () {
-      var A = window.NZAuth;
-      var form = document.getElementById('form');
-      var erro = document.getElementById('erro');
-      var painel = document.getElementById('painel');
-      var semConfig = document.getElementById('semConfig');
-      var btnEntrar = document.getElementById('btnEntrar');
-      var btnCriar = document.getElementById('btnCriar');
+      <p class="conta__nota">Mínimo de 8 caracteres. Criar conta não dá acesso ao material pago sozinho — isso é liberado depois, à mão.</p>
+    </form>
 
-      function mostrarErro(msg) {
-        erro.textContent = msg;
-        erro.hidden = !msg;
-      }
+    <div class="conta__painel" id="painel" hidden>
+      <p class="conta__rotulo mono">sessão ativa</p>
+      <p class="conta__email" data-conta-email></p>
+      <button type="button" class="btn btn--fantasma" data-conta-sair>Sair</button>
+    </div>
+  </div>
+</main>
 
-      function pintar() {
-        var logado = A.estado() === 'autenticado';
-        form.hidden = logado;
-        painel.hidden = !logado;
-        semConfig.hidden = A.estado() !== 'sem-config';
-        A.aplicar();
-      }
+<script src="js/auth-config.js"></script>
+<script src="js/auth.js" defer></script>
+<script src="js/produto-shell.js?v=3" defer></script>
+<script defer>
+  // Ponte da página com o módulo. Fica aqui e não dentro do auth.js porque é
+  // específico desta tela: o módulo não deve saber que existe um formulário.
+  window.addEventListener('DOMContentLoaded', function () {
+    var A = window.NZAuth;
+    var form = document.getElementById('form');
+    var erro = document.getElementById('erro');
+    var painel = document.getElementById('painel');
+    var semConfig = document.getElementById('semConfig');
+    var btnEntrar = document.getElementById('btnEntrar');
+    var btnCriar = document.getElementById('btnCriar');
 
-      if (!A.configurado()) {
-        btnEntrar.disabled = true;
-        btnCriar.disabled = true;
-      }
+    function mostrarErro(msg) {
+      erro.textContent = msg;
+      erro.hidden = !msg;
+    }
 
-      A.aoMudar(pintar);
+    function pintar() {
+      var logado = A.estado() === 'autenticado';
+      form.hidden = logado;
+      painel.hidden = !logado;
+      semConfig.hidden = A.estado() !== 'sem-config';
+      A.aplicar();
+    }
 
-      function acao(fn) {
-        return function (ev) {
-          if (ev) ev.preventDefault();
-          mostrarErro('');
-          var email = document.getElementById('email').value.trim();
-          var senha = document.getElementById('senha').value;
-          if (!email || !senha) { mostrarErro('Preencha e-mail e senha.'); return; }
-          if (senha.length < 8) { mostrarErro('A senha precisa de pelo menos 8 caracteres.'); return; }
-          var b = ev && ev.target;
-          if (b) { b.disabled = true; b.dataset.texto = b.textContent; b.textContent = '…'; }
-          fn(email, senha)
-            .then(function () { document.getElementById('senha').value = ''; })
-            .catch(function (e) { mostrarErro(e.message || 'Não deu.'); })
-            .then(function () {
-              if (b) { b.disabled = false; b.textContent = b.dataset.texto; }
-              pintar();
-            });
-        };
-      }
+    if (!A.configurado()) {
+      btnEntrar.disabled = true;
+      btnCriar.disabled = true;
+    }
 
-      form.addEventListener('submit', acao(A.entrar));
-      btnCriar.addEventListener('click', acao(A.cadastrar));
-    });
-  </script>
+    A.aoMudar(pintar);
+
+    function acao(fn) {
+      return function (ev) {
+        if (ev) ev.preventDefault();
+        mostrarErro('');
+        var email = document.getElementById('email').value.trim();
+        var senha = document.getElementById('senha').value;
+        if (!email || !senha) { mostrarErro('Preencha e-mail e senha.'); return; }
+        if (senha.length < 8) { mostrarErro('A senha precisa de pelo menos 8 caracteres.'); return; }
+        var b = ev && ev.target;
+        if (b) { b.disabled = true; b.dataset.texto = b.textContent; b.textContent = '…'; }
+        fn(email, senha)
+          .then(function () { document.getElementById('senha').value = ''; })
+          .catch(function (e) { mostrarErro(e.message || 'Não deu.'); })
+          .then(function () {
+            if (b) { b.disabled = false; b.textContent = b.dataset.texto; }
+            pintar();
+          });
+      };
+    }
+
+    form.addEventListener('submit', acao(A.entrar));
+    btnCriar.addEventListener('click', acao(A.cadastrar));
+  });
+</script>
 </body>
 </html>

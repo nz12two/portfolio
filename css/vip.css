@@ -1,6 +1,0 @@
-/* Area VIP: o que fica atrás da porta.
-   O cadeado e um elemento visual; a logica esta em js/auth.js e usa sessao real. */
-
-.vip__msg { color: var(--tx-2); margin-bottom: 14px; }
-.vip__msg--ok { color: var(--ok); }
-.vip__note { font-size: var(--t-xs); color: var(--tx-3); margin-top: 12px; }
