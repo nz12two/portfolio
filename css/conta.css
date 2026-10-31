@@ -28,9 +28,9 @@
 }
 .conta__erro {
   margin: 0 0 14px; padding: 10px 14px;
-  border: 1px solid oklch(0.6 0.19 25 / 0.4); border-left-width: 3px; border-radius: 8px;
-  background: oklch(0.6 0.19 25 / 0.1);
-  color: oklch(0.75 0.16 25); font-size: 0.82rem;
+  border: 1px solid rgba(219, 66, 65, 0.4); border-left-width: 3px; border-radius: 8px;
+  background: rgba(219, 66, 65, 0.1);
+  color: #ff8179; font-size: 0.82rem;
 }
 .conta__botoes { display: flex; gap: 10px; flex-wrap: wrap; }
 .conta__nota { margin: 16px 0 0; font-size: 0.72rem; color: var(--tx-3); }

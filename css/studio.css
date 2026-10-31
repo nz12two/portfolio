@@ -13,7 +13,11 @@
   --tx: #f1efe9;
   --tx-2: #a3a19b;
   --tx-3: #6f6e6a;
-  /* acento herdado do site antigo — continuidade de marca */
+  /* acento herdado do site antigo — hex primeiro (fallback), oklch por cima
+     (declaração que o navegador não entende é descartada: sem oklch, fica o hex) */
+  --acc: #ff9d36;
+  --acc-soft: rgba(255, 157, 54, 0.12);
+  --acc-line: rgba(255, 157, 54, 0.35);
   --acc: oklch(0.78 0.16 62);
   --acc-soft: oklch(0.78 0.16 62 / 0.12);
   --acc-line: oklch(0.78 0.16 62 / 0.35);
@@ -127,7 +131,7 @@ a { color: inherit; text-decoration: none; }
 }
 .btn:active { transform: translateY(1px) scale(0.99); }
 .btn--solo { background: var(--acc); color: #17120a; }
-.btn--solo:hover { transform: translateY(-2px); background: oklch(0.82 0.16 62); }
+.btn--solo:hover { transform: translateY(-2px); background: #ffaa46; }
 .btn--fantasma { border: 1px solid var(--line-hi); color: var(--tx-2); }
 .btn--fantasma:hover { border-color: var(--acc-line); color: var(--tx); transform: translateY(-2px); }
 /* montagem do hero: um momento orquestrado no load */
