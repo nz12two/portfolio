@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://nz12two.github.io/portfolio/conta.html">
 <meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="css/studio.css?v=3">
-<link rel="stylesheet" href="css/produto.css?v=3">
-<link rel="stylesheet" href="css/conta.css?v=3">
+<link rel="stylesheet" href="css/studio.css?v=4">
+<link rel="stylesheet" href="css/produto.css?v=4">
+<link rel="stylesheet" href="css/conta.css?v=4">
 <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,6 +52,14 @@
       <p>A conta só funciona depois de apontar <code class="mono">js/auth-config.js</code> para um projeto. Sem isso os botões ficam desligados — em vez de fingir um login que aceitaria qualquer senha.</p>
     </div>
 
+    <div class="p-aviso" id="loginOff" hidden>
+      <b>Login desligado por enquanto.</b>
+      <p id="loginOffMotivo">A conta vai guardar o material pago do catálogo. Enquanto não existe material pago, ela fica fechada.</p>
+      <a class="btn btn--solo" id="loginOffDisc" href="https://discord.gg/ZNchMjhZQK" target="_blank" rel="noopener">Entrar no Discord
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg>
+      </a>
+    </div>
+
     <form class="conta__form" id="form" novalidate>
       <label class="conta__campo">
         <span class="mono">e-mail</span>
@@ -81,9 +89,10 @@
   </div>
 </main>
 
-<script src="js/auth-config.js"></script>
-<script src="js/auth.js" defer></script>
-<script src="js/produto-shell.js?v=3" defer></script>
+<script src="js/login-config.js?v=4"></script>
+<script src="js/auth-config.js?v=4"></script>
+<script src="js/auth.js?v=4" defer></script>
+<script src="js/produto-shell.js?v=4" defer></script>
 <script defer>
   // Ponte da página com o módulo. Fica aqui e não dentro do auth.js porque é
   // específico desta tela: o módulo não deve saber que existe um formulário.
@@ -93,8 +102,22 @@
     var erro = document.getElementById('erro');
     var painel = document.getElementById('painel');
     var semConfig = document.getElementById('semConfig');
+    var loginOff = document.getElementById('loginOff');
     var btnEntrar = document.getElementById('btnEntrar');
     var btnCriar = document.getElementById('btnCriar');
+
+    /* interruptor primeiro: desligado, a tela não pede senha nenhuma */
+    if (loginOff && !(window.NZ_LOGIN && window.NZ_LOGIN.ativo)) {
+      var conf = window.NZ_LOGIN || {};
+      var m = document.getElementById('loginOffMotivo');
+      var d = document.getElementById('loginOffDisc');
+      if (m && conf.motivo) m.textContent = conf.motivo;
+      if (d && conf.discord) d.href = conf.discord;
+      form.hidden = true;
+      loginOff.hidden = false;
+      if (semConfig) semConfig.hidden = true;
+      return;
+    }
 
     function mostrarErro(msg) {
       erro.textContent = msg;

@@ -62,6 +62,11 @@ const itens = produtos.map((p, i) => {
     // rotulo muda.
     tipo: p.tipo || null,
     tipoRotulo: (TIPOS).find((t) => t.slug === p.tipo)?.rotulo || p.categoria,
+    // Prateleira do marketplace (plugins, modpacks, otimizacoes...). Separado
+    // de `tipo`: tipo diz o que o software E, categoria diz onde a pessoa
+    // PROCURA por ele. `desde` e a data de entrada no ar, medida no repo.
+    categoriaMkt: p.categoria_mkt || null,
+    desde: p.desde || null,
     dominio: p.dominio || null,
     status: p.status,
     statusTexto: { estavel: "estável", beta: "beta", "em-producao": "em produção", privado: "fechado" }[p.status] || p.status,
@@ -119,6 +124,10 @@ const saida = {
   // pratica existe mesmo sem item aberto, e esconder isso e o opposite de
   // "eu faco muito alem destes".
   tipos: TIPOS,
+  // Prateleiras do marketplace, declaradas no produtos.json. Categoria com
+  // `vindo: true` sai vazia de proposito: a prateleira existe antes do item,
+  // e e assim que o catalogo mostra que cresce com o tempo.
+  categoriasMkt: Array.isArray(doc.categorias_mkt) ? doc.categorias_mkt : [],
   dominios: [...new Set(itens.map((i) => i.dominio).filter(Boolean))].sort(),
   facetas: {
     tipo: (TIPOS).map((t) => t.slug),

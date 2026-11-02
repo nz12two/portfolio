@@ -268,6 +268,125 @@ footer {
 }
 footer a:hover { color: var(--acc); }
 
+/* ===== movimento ==============================================
+   O site é estático por natureza; o movimento aqui só marca hierarquia:
+   nada pisca, nada roda em loop rápido, nada compete com a leitura. */
+
+/* aurora de fundo: uma cor só, muito diluída, presa atrás do conteúdo */
+body::before {
+  content: "";
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(60vw 50vh at 15% -5%, color-mix(in srgb, var(--acc) 16%, transparent), transparent 70%),
+    radial-gradient(50vw 40vh at 90% 8%, color-mix(in srgb, var(--acc) 9%, transparent), transparent 72%);
+  opacity: .9;
+}
+
+/* reveal escalonado: um passo por irmão, na ordem em que aparecem */
+.rv { transition-delay: calc(var(--d, 0) * 90ms); }
+.proj { animation-delay: calc(var(--i, 0) * 70ms); }
+.proj.vivo { animation: none; }
+
+/* faixa que corre — o resumo de tudo que existe, em uma linha */
+.marquee {
+  overflow: hidden; margin-top: 46px; padding: 13px 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee__in {
+  display: flex; width: max-content; gap: 34px;
+  animation: correr 46s linear infinite;
+}
+.marquee:hover .marquee__in { animation-play-state: paused; }
+.marquee span {
+  font-family: "JetBrains Mono", monospace; font-size: 0.72rem; letter-spacing: .06em;
+  color: var(--tx-3); white-space: nowrap; display: inline-flex; align-items: center; gap: 8px;
+}
+.marquee span b { color: var(--acc); font-weight: 600; }
+.marquee span::after { content: "/"; color: var(--line-hi); margin-left: 26px; }
+@keyframes correr { to { transform: translateX(-50%); } }
+
+/* prateleiras do marketplace: a categoria existe antes do item */
+.prateleiras {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+}
+.prateleira {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--r);
+  padding: 15px 16px; transition: transform .3s var(--ease), border-color .3s, background .3s;
+  animation: aparece .5s var(--ease) backwards;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+.prateleira:hover { transform: translateY(-2px); border-color: var(--acc-line); background: var(--panel-2); }
+.prateleira__ic {
+  display: grid; place-items: center; flex: none;
+  width: 34px; height: 34px; border-radius: 9px;
+  background: var(--acc-soft); color: var(--acc); border: 1px solid var(--acc-line);
+}
+.prateleira__txt { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.prateleira__txt b { font-size: 0.9rem; font-weight: 600; }
+.prateleira__txt .mono { font-size: 0.66rem; color: var(--tx-3); letter-spacing: .04em; }
+.prateleira--vazio { border-style: dashed; background: transparent; }
+.prateleira--vazio .prateleira__ic { background: transparent; border-color: var(--line); color: var(--tx-3); }
+.prateleira--vazio .prateleira__txt b { color: var(--tx-2); font-weight: 500; }
+
+/* linha do tempo: quando cada produto entrou no ar */
+.linha-tempo { list-style: none; margin-top: 34px; display: grid; gap: 0; }
+.linha-tempo li {
+  display: grid; grid-template-columns: 110px 190px 1fr; gap: 14px; align-items: baseline;
+  padding: 13px 0 13px 20px; border-top: 1px solid var(--line); position: relative;
+  animation: aparece .5s var(--ease) backwards;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+.linha-tempo li::before {
+  content: ""; position: absolute; left: 0; top: 21px;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--acc); box-shadow: 0 0 0 4px var(--acc-soft);
+}
+.linha-tempo time { font-size: 0.7rem; color: var(--tx-3); letter-spacing: .04em; }
+.linha-tempo a { display: flex; align-items: baseline; gap: 8px; transition: color .2s; }
+.linha-tempo a:hover b { color: var(--acc); }
+.linha-tempo a b { font-size: 0.92rem; font-weight: 600; }
+.linha-tempo a .mono { font-size: 0.64rem; color: var(--tx-3); letter-spacing: .05em; text-transform: uppercase; }
+.linha-tempo p { font-size: 0.82rem; color: var(--tx-2); margin: 0; }
+
+/* stack vira tile: ícone da tecnologia + contagem, não só uma barra solta */
+.stack { gap: 8px; }
+.stk {
+  grid-template-columns: 22px minmax(70px, 1fr) minmax(40px, 1.1fr) 34px;
+  gap: 12px; padding: 10px 13px;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  animation: aparece .5s var(--ease) backwards;
+  animation-delay: calc(var(--i, 0) * 28ms);
+}
+.stk:hover { border-color: var(--acc-line); }
+.stk__ic { color: var(--tx-3); display: grid; place-items: center; }
+.stk:hover .stk__ic { color: var(--acc); }
+.stk .barra { height: 4px; }
+.ico { display: block; }
+
+/* botão de entrar: existe, mas ainda fechado */
+.nav-entrar { display: inline-flex; align-items: center; gap: 7px; }
+.breve {
+  font-style: normal; font-size: 0.56rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--tx-3); border: 1px solid var(--line); border-radius: 999px;
+  padding: 2px 6px; line-height: 1.3;
+}
+
+/* Discord flutuante: o caminho de contato sempre ao alcance do polegar */
+.disc {
+  position: fixed; right: 18px; bottom: 18px; z-index: 60;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--panel-2); border: 1px solid var(--acc-line); border-radius: 999px;
+  padding: 9px 15px 9px 12px; color: var(--tx); font-size: 0.78rem; font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .45);
+  transition: transform .25s var(--ease), background .3s, border-color .3s;
+}
+.disc svg { width: 17px; height: 17px; color: var(--acc); }
+.disc:hover { transform: translateY(-2px); background: var(--acc-soft); }
+.foot-links { display: inline-flex; gap: 16px; flex-wrap: wrap; }
+
 /* ===== responsivo ===== */
 @media (max-width: 820px) {
   .grid-proj, .duo, .stack { grid-template-columns: 1fr; }
@@ -275,6 +394,18 @@ footer a:hover { color: var(--acc); }
   .bar nav { display: none; }
   .hero { grid-template-columns: 1fr; gap: 34px; }
   .term { justify-self: stretch; max-width: none; }
+  .prateleiras { grid-template-columns: repeat(2, 1fr); }
+  .linha-tempo li { grid-template-columns: 90px 1fr; row-gap: 4px; }
+  .linha-tempo p { grid-column: 1 / -1; }
+}
+@media (max-width: 620px) {
+  .prateleiras { grid-template-columns: 1fr; }
+  .linha-tempo li { grid-template-columns: 1fr; }
+  .stk { grid-template-columns: 20px 1fr 34px; }
+  .stk .barra { display: none; }
+  .disc { right: 12px; bottom: 12px; padding: 10px; }
+  .disc span { display: none; }
+  .marquee { margin-top: 34px; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }

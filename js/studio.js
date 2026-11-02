@@ -49,29 +49,53 @@
   var obs = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('on'); obs.unobserve(en.target); } });
   }, { threshold: 0.25 });
-  document.querySelectorAll('.rv').forEach(function (el) { obs.observe(el); });
-
-  /* tilt + glow nos cards */
-  document.querySelectorAll('.proj').forEach(function (card) {
-    card.addEventListener('mousemove', function (e) {
-      var r = card.getBoundingClientRect();
-      var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-      card.style.setProperty('--px', (px * 100).toFixed(1) + '%');
-      card.style.setProperty('--py', (py * 100).toFixed(1) + '%');
-      if (!REDUZ) {
-        card.style.setProperty('--rx', ((py - 0.5) * -4).toFixed(2) + 'deg');
-        card.style.setProperty('--ry', ((px - 0.5) * 6).toFixed(2) + 'deg');
+  document.querySelectorAll('.rv').forEach(function (el) {
+    // escalonamento: cada bloco .rv entra 90ms depois do irmão anterior
+    var pai = el.parentNode, d = 0;
+    if (pai) {
+      for (var k = 0; k < pai.children.length; k++) {
+        var c = pai.children[k];
+        if (c === el) break;
+        if (c.classList && c.classList.contains('rv')) d++;
       }
-    });
-    card.addEventListener('mouseleave', function () {
-      card.style.setProperty('--rx', '0deg');
-      card.style.setProperty('--ry', '0deg');
-    });
+    }
+    el.style.setProperty('--d', d);
+    obs.observe(el);
   });
+
+  /* tilt + glow nos cards — chamado também depois de cada render, porque os
+     cards da vitrine nascem do catálogo, não do HTML */
+  var ligaTilt = function (escopo) {
+    (escopo || document).querySelectorAll('.proj').forEach(function (card) {
+      if (card.dataset.tilt) return;
+      card.dataset.tilt = '1';
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+        card.style.setProperty('--px', (px * 100).toFixed(1) + '%');
+        card.style.setProperty('--py', (py * 100).toFixed(1) + '%');
+        if (!REDUZ) {
+          card.style.setProperty('--rx', ((py - 0.5) * -4).toFixed(2) + 'deg');
+          card.style.setProperty('--ry', ((px - 0.5) * 6).toFixed(2) + 'deg');
+        }
+      });
+      card.addEventListener('mouseleave', function () {
+        card.style.setProperty('--rx', '0deg');
+        card.style.setProperty('--ry', '0deg');
+      });
+    });
+  };
+  ligaTilt();
 
   /* ===== conteúdo derivado do catálogo ===== */
   var C = window.CATALOGO;
   var itens = C && C.itens;
+  // prateleira do marketplace: slug -> rotulo legivel
+  var rotuloCat = function (slug) {
+    var l = (C && C.categoriasMkt) || [];
+    for (var k = 0; k < l.length; k++) if (l[k].slug === slug) return l[k].rotulo;
+    return '';
+  };
 
   /* 1. linha de provas do hero (números saem do campo prova.num, não de prosa) */
   var comProva = itens ? itens.filter(function (i) { return i.prova && i.prova.num; })
@@ -92,20 +116,22 @@
   /* 1b. terminal do hero: comandos digitados, provas impressas */
   var termBody = document.getElementById('termBody');
   if (termBody && itens) {
-    var linhaProva = comProva.slice(0, 4).map(function (i) {
-      return fmt(i.prova.num) + (i.slug === 'antixray' ? '+' : '') + ' ' + i.prova.unidade;
-    }).join(' · ');
+    var docs = comProva.slice(0, 4);
     var roteiro = [
-      { cm: 'nz-studios --vitrine', out: [fmt(itens.length) + ' produtos publicados — todos com repo aberto'] },
-      { cm: 'nz-studios --prova', out: ['medido no dado real:'] },
-      { cm: 'nz-studios catalogo --filtros', out: ['tipo · stack · status · preço — em /portfolio/catalogo/'] }
+      { cm: 'nz-studios status', out: [
+        '<em>ok</em> ' + fmt(itens.length) + ' produtos publicados · todos com repositório aberto'
+      ] },
+      { cm: 'nz-studios prova --resumo', out: ['medido no dado real, não estimado:'] },
+      { cm: 'nz-studios catalogo --filtros', out: ['tipo · stack · status · preço → /portfolio/catalogo/'] }
     ];
-    if (comProva.length) roteiro[1].out.push(linhaProva);
+    docs.forEach(function (i) {
+      roteiro[1].out.push('<b>' + fmt(i.prova.num) + (i.slug === 'antixray' ? '+' : '') + '</b> ' + esc(i.prova.unidade));
+    });
 
-    var passoLinha = function (classe, texto) {
+    var passoLinha = function (classe, html) {
       var d = document.createElement('div');
       d.className = classe;
-      d.textContent = texto;
+      d.innerHTML = html === undefined ? '' : html;
       termBody.appendChild(d);
       return d;
     };
@@ -116,13 +142,14 @@
     });
 
     if (REDUZ) {
-      termBody.innerHTML = passos.map(function (s) { return s.texto; }).join('');
-      passoLinha('cm', '');
+      passos.forEach(function (s) {
+        if (s.tipo === 'cm') passoLinha('cm', esc(s.texto));
+        else passoLinha('out', '<i>→</i> ' + s.texto);
+      });
     } else {
       var pi = 0, ci = 0, elLinha = null;
       var digit = function () {
         if (pi >= passos.length || !termBody.isConnected) {
-          passoLinha('cm', '');
           var bc = document.createElement('span');
           bc.className = 'caret';
           termBody.appendChild(bc);
@@ -134,14 +161,14 @@
           if (ci === 0) elLinha = passoLinha('cm', '');
           ci += 2;
           elLinha.textContent = texto.slice(0, ci);
-          if (ci >= texto.length) { pi++; ci = 0; setTimeout(digit, 220); return; }
+          if (ci >= texto.length) { pi++; ci = 0; setTimeout(digit, 240); return; }
           setTimeout(digit, 42);
           return;
         }
         // saída: terminal imprime de uma vez
-        passoLinha('out', ' ' + st.texto);
+        passoLinha('out', '<i>→</i> ' + st.texto);
         pi++;
-        setTimeout(digit, 210);
+        setTimeout(digit, 220);
       };
       setTimeout(digit, 450);
     }
@@ -151,18 +178,21 @@
   var grid = document.getElementById('grid');
   var filtroBox = document.getElementById('filtros');
   if (grid && itens) {
-    var venha = function (i) {
+    var venha = function (i, idx) {
       var prova = i.prova && i.prova.num
         ? ' — medida <b>' + fmt(i.prova.num) + (i.slug === 'antixray' ? '+' : '') + ' ' + esc(i.prova.unidade) + '</b>' : '';
-      return '<a class="proj' + (i.slug === 'antixray' ? ' proj--destaque' : '') + '" href="catalogo/' + esc(i.slug) + '.html" data-tipo="' + esc(i.tipo) + '">' +
-        '<span class="proj__tipo mono">' + esc(i.tipoRotulo || i.tipo || '') + '</span>' +
+      var cat = rotuloCat(i.categoriaMkt);
+      return '<a class="proj' + (i.slug === 'antixray' ? ' proj--destaque' : '') + '" style="--i:' + idx + '" href="catalogo/' + esc(i.slug) + '.html" data-tipo="' + esc(i.tipo) + '">' +
+        '<span class="proj__tipo mono">' + esc(cat + ' / ' + (i.tipoRotulo || i.tipo || '')) + '</span>' +
         '<h3>' + esc(i.nome) +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></h3>' +
         '<p>' + esc((i.home && i.home.descricao) || i.tagline || '') + '</p>' +
         '<span class="proj__p">stack <b>' + esc((i.stack || []).slice(0, 4).join(' · ').replace(/SQLite\/MySQL\/MariaDB\/PostgreSQL/g, 'SQL')) + '</b>' + prova + '</span></a>';
     };
     var destaque = itens.find(function (i) { return i.slug === 'antixray'; }) || itens[0];
-    grid.innerHTML = [destaque].concat(itens.filter(function (i) { return i !== destaque; })).map(venha).join('');
+    grid.innerHTML = [destaque].concat(itens.filter(function (i) { return i !== destaque; }))
+      .map(function (i, n) { return venha(i, n); }).join('');
+    ligaTilt(grid);
 
     if (filtroBox && C.tipos) {
       var usados = {};
@@ -207,11 +237,85 @@
     });
     var lista = Object.values(conta_m).sort(function (a, b) { return b.n - a.n || a.nome.localeCompare(b.nome); });
     var maxN = lista.length ? lista[0].n : 1;
-    stackBox.innerHTML = lista.map(function (s) {
-      return '<div class="stk"><b>' + esc(s.nome) + '</b><span class="barra"><i style="--v:' + (s.n / maxN).toFixed(3) + '"></i></span><span class="n">' + s.n + '×</span></div>';
+    stackBox.innerHTML = lista.map(function (s, idx) {
+      var ic = window.NZICONE ? window.NZICONE(s.nome, 20) : '';
+      return '<div class="stk" style="--i:' + idx + '">' +
+        '<span class="stk__ic">' + ic + '</span>' +
+        '<b>' + esc(s.nome) + '</b>' +
+        '<span class="n">' + s.n + '×</span>' +
+        '<span class="barra"><i style="--v:' + (s.n / maxN).toFixed(3) + '"></i></span></div>';
     }).join('') +
     '<p class="stk__nota">Contagem real do catálogo publicado (' + fmt(itens.length) + ' produtos). Fonte: catalogo/dados/catalogo.js — aberto para conferir.</p>';
+
+    // a barra só cresce quando a pessoa chega na seção: parada no zero, ela some
+    var barras = stackBox.querySelectorAll('.barra i');
+    barras.forEach(function (b) { b.style.setProperty('--vm', b.style.getPropertyValue('--v')); b.style.setProperty('--v', '0'); });
+    var solta = function () {
+      barras.forEach(function (b, n) {
+        setTimeout(function () { b.style.setProperty('--v', b.style.getPropertyValue('--vm')); }, n * 45);
+      });
+      stackBox.classList.add('vivo');
+    };
+    if ('IntersectionObserver' in window) {
+      var ob = new IntersectionObserver(function (ents) {
+        ents.forEach(function (e) { if (e.isIntersecting) { solta(); ob.disconnect(); } });
+      }, { threshold: 0.25 });
+      ob.observe(stackBox);
+    } else { solta(); }
   } else if (stackBox) {
     stackBox.innerHTML = '<p class="vazio">O catálogo não carregou — a contagem de stack vive no catálogo.</p>';
+  }
+
+  /* 5. faixa que corre: o que cada produto prova, em uma linha */
+  var mq = document.getElementById('marquee');
+  if (mq && itens) {
+    var chips = itens.map(function (i) {
+      var p = i.prova && i.prova.num
+        ? '<b>' + fmt(i.prova.num) + (i.slug === 'antixray' ? '+' : '') + '</b> ' + esc(i.prova.unidade)
+        : '<b>' + esc(rotuloCat(i.categoriaMkt) || i.tipoRotulo || 'produto') + '</b>';
+      return '<span>' + esc(i.nome.toUpperCase()) + ' ' + p + '</span>';
+    });
+    mq.innerHTML = chips.join('') + chips.join('');
+  }
+
+  /* 6. prateleiras do marketplace: a categoria antes do item */
+  var pr = document.getElementById('prateleiras');
+  if (pr && C && C.categoriasMkt) {
+    var ICONE_CAT = {
+      plugins: 'paper', modpacks: 'box', otimizacoes: 'bolt', automacoes: 'gear',
+      ferramentas: 'wrench', apis: 'plug', agentes: 'bot', jogos: 'pad', servicos: 'briefcase'
+    };
+    var contagem = {};
+    itens.forEach(function (i) { if (i.categoriaMkt) contagem[i.categoriaMkt] = (contagem[i.categoriaMkt] || 0) + 1; });
+    pr.innerHTML = C.categoriasMkt.map(function (c, idx) {
+      var n = contagem[c.slug] || 0;
+      var ic = window.NZICONE ? window.NZICONE(ICONE_CAT[c.slug] || 'box', 19) : '';
+      return '<a class="prateleira' + (n ? '' : ' prateleira--vazio') + '" style="--i:' + idx + '" ' +
+        'href="catalogo/index.html?cat=' + encodeURIComponent(c.slug) + '" title="' + esc(c.desc) + '">' +
+        '<span class="prateleira__ic">' + ic + '</span>' +
+        '<span class="prateleira__txt"><b>' + esc(c.rotulo) + '</b>' +
+        '<span class="mono">' + (n ? n + (n > 1 ? ' produtos' : ' produto') : 'chegando') + '</span></span></a>';
+    }).join('');
+  }
+
+  /* 7. linha do tempo: a ordem em que os produtos entraram no ar */
+  var lt = document.getElementById('linhaTempo');
+  if (lt && itens) {
+    var MES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+    var quando = function (iso) {
+      var p = String(iso || '').split('-');
+      if (p.length < 3) return '';
+      return p[2] + ' ' + MES[+p[1] - 1] + ' ' + p[0];
+    };
+    var ordem = itens.slice().sort(function (a, b) {
+      return String(b.desde || '').localeCompare(String(a.desde || ''));
+    });
+    lt.innerHTML = ordem.map(function (i, idx) {
+      return '<li style="--i:' + idx + '">' +
+        '<time class="mono" datetime="' + esc(i.desde || '') + '">' + esc(quando(i.desde)) + '</time>' +
+        '<a href="catalogo/' + esc(i.slug) + '.html"><b>' + esc(i.nome) + '</b>' +
+        '<span class="mono">' + esc(rotuloCat(i.categoriaMkt)) + '</span></a>' +
+        '<p>' + esc(i.tagline || '') + '</p></li>';
+    }).join('');
   }
 })();

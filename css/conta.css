@@ -12,6 +12,8 @@
 }
 .conta__caixa .p-aviso { margin-top: 0; }
 .conta__caixa .p-aviso code { font-size: 0.72rem; }
+.conta__caixa .p-aviso .btn { margin-top: 14px; }
+.conta__caixa .p-aviso p { margin: 6px 0 0; }
 
 .conta__campo { display: grid; gap: 6px; margin-bottom: 16px; }
 .conta__campo span {

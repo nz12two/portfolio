@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-12T20:30:30.691Z",
+  "gerado_em": "2026-11-02T02:33:42.373Z",
   "total": 6,
   "tipos": [
     {
@@ -49,6 +49,62 @@
       "rotulo": "Biblioteca",
       "desc": "Código reaproveitado, sem interface e sem servidor",
       "nucleo": false
+    }
+  ],
+  "categoriasMkt": [
+    {
+      "slug": "plugins",
+      "rotulo": "Plugins",
+      "vindo": false,
+      "desc": "Extensão que entra num sistema que já existe e roda dentro dele."
+    },
+    {
+      "slug": "modpacks",
+      "rotulo": "Modpacks",
+      "vindo": true,
+      "desc": "Pacote de mods, config e ajuste pronto pra subir — o servidor já nasce montado."
+    },
+    {
+      "slug": "otimizacoes",
+      "rotulo": "Otimizações",
+      "vindo": true,
+      "desc": "Tuning de performance: menos lag, menos memória, mais TPS."
+    },
+    {
+      "slug": "automacoes",
+      "rotulo": "Automações",
+      "vindo": true,
+      "desc": "Serviço que roda sozinho — coleta, organiza e reage sem ninguém olhando."
+    },
+    {
+      "slug": "ferramentas",
+      "rotulo": "Ferramentas",
+      "vindo": false,
+      "desc": "Resolve um trabalho pontual, sem virar sistema."
+    },
+    {
+      "slug": "apis",
+      "rotulo": "APIs & dados",
+      "vindo": false,
+      "desc": "Índice, catálogo e conjunto de dados com a fonte aberta."
+    },
+    {
+      "slug": "agentes",
+      "rotulo": "Agentes",
+      "vindo": false,
+      "desc": "Programa que decide sozinho e responde pelo que fez."
+    },
+    {
+      "slug": "jogos",
+      "rotulo": "Jogos & simulações",
+      "vindo": false,
+      "desc": "Simulação com regra de verdade e dado real por baixo."
+    },
+    {
+      "slug": "servicos",
+      "rotulo": "Serviços",
+      "vindo": false,
+      "desc": "Trabalho sob medida pra um cliente, com prazo e entrega."
     }
   ],
   "dominios": [
@@ -128,6 +184,8 @@
       "categoria": "Plugin",
       "tipo": "plugin",
       "tipoRotulo": "Plugin",
+      "categoriaMkt": "plugins",
+      "desde": "2026-10-11",
       "dominio": "minecraft",
       "status": "beta",
       "statusTexto": "beta",
@@ -187,6 +245,8 @@
       "categoria": "Ferramenta",
       "tipo": "ferramenta",
       "tipoRotulo": "Ferramenta",
+      "categoriaMkt": "apis",
+      "desde": "2026-10-11",
       "dominio": "dados",
       "status": "estavel",
       "statusTexto": "estável",
@@ -244,6 +304,8 @@
       "categoria": "Ferramenta",
       "tipo": "ferramenta",
       "tipoRotulo": "Ferramenta",
+      "categoriaMkt": "ferramentas",
+      "desde": "2026-08-05",
       "dominio": "devtools",
       "status": "estavel",
       "statusTexto": "estável",
@@ -305,6 +367,8 @@
       "categoria": "Jogo / simulação",
       "tipo": "jogo",
       "tipoRotulo": "Jogo / simulação",
+      "categoriaMkt": "jogos",
+      "desde": "2026-10-11",
       "dominio": "dados",
       "status": "estavel",
       "statusTexto": "estável",
@@ -363,6 +427,8 @@
       "categoria": "Serviço",
       "tipo": "servico",
       "tipoRotulo": "Serviço",
+      "categoriaMkt": "servicos",
+      "desde": "2026-10-14",
       "dominio": "minecraft",
       "status": "em-producao",
       "statusTexto": "em produção",
@@ -417,6 +483,8 @@
       "categoria": "Agente",
       "tipo": "agente",
       "tipoRotulo": "Agente",
+      "categoriaMkt": "agentes",
+      "desde": "2026-10-14",
       "dominio": "devtools",
       "status": "privado",
       "statusTexto": "fechado",

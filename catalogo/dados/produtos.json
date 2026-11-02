@@ -74,7 +74,9 @@
         "como": "19 detectores independentes mais motor de risco temporal, em Paper 1.21.4."
       },
       "tipo": "plugin",
-      "dominio": "minecraft"
+      "dominio": "minecraft",
+      "categoria_mkt": "plugins",
+      "desde": "2026-10-11"
     },
     {
       "slug": "api-directory",
@@ -139,7 +141,9 @@
         "como": "Cada entrada tem latência medida de fora; 994 rodam sem autenticação."
       },
       "tipo": "ferramenta",
-      "dominio": "dados"
+      "dominio": "dados",
+      "categoria_mkt": "apis",
+      "desde": "2026-10-11"
     },
     {
       "slug": "opendex",
@@ -207,7 +211,9 @@
         "como": "123 repositórios e 249 pacotes do ecossistema OpenCode, com a fonte citada."
       },
       "tipo": "ferramenta",
-      "dominio": "devtools"
+      "dominio": "devtools",
+      "categoria_mkt": "ferramentas",
+      "desde": "2026-08-05"
     },
     {
       "slug": "empresas-mundo",
@@ -269,7 +275,9 @@
         ]
       },
       "tipo": "jogo",
-      "dominio": "dados"
+      "dominio": "dados",
+      "categoria_mkt": "jogos",
+      "desde": "2026-10-11"
     },
     {
       "slug": "baccanas-hub",
@@ -319,7 +327,9 @@
         ]
       },
       "tipo": "servico",
-      "dominio": "minecraft"
+      "dominio": "minecraft",
+      "categoria_mkt": "servicos",
+      "desde": "2026-10-14"
     },
     {
       "slug": "banzinho",
@@ -395,7 +405,9 @@
         "como": "Cada *.check.ts lê a constitution e falha se uma regra declarada sumir do texto. É o que impede a política de virar decoração."
       },
       "tipo": "agente",
-      "dominio": "devtools"
+      "dominio": "devtools",
+      "categoria_mkt": "agentes",
+      "desde": "2026-10-14"
     }
   ],
   "_imagens": "Captura de tela real, tirada do site em producao com Chrome headless. O campo data em qual_url_respondeu. Produto sem imagem tem imagem_motiva explicando por que — nenhuma imagem e gerada por codigo para fingir captura.",
@@ -452,5 +464,63 @@
       "nucleo": false
     }
   ],
-  "_tipos_nota": "Taxonomia DECLARADA, nao derivada. Os tipos listados sao os tipos de trabalho que o NZ faz — plugin, script, automacao, ferramenta, agente, servico, jogo, biblioteca — e valem para o que ainda nao foi publicado. Tipo com zero produto e informacao: a pratica existe e ainda nao foi aberta. `dominio` (minecraft, dados, devtools) responde 'onde roda' e pode repetir entre tipos."
+  "_tipos_nota": "Taxonomia DECLARADA, nao derivada. Os tipos listados sao os tipos de trabalho que o NZ faz — plugin, script, automacao, ferramenta, agente, servico, jogo, biblioteca — e valem para o que ainda nao foi publicado. Tipo com zero produto e informacao: a pratica existe e ainda nao foi aberta. `dominio` (minecraft, dados, devtools) responde 'onde roda' e pode repetir entre tipos.",
+  "categorias_mkt": [
+    {
+      "slug": "plugins",
+      "rotulo": "Plugins",
+      "vindo": false,
+      "desc": "Extensão que entra num sistema que já existe e roda dentro dele."
+    },
+    {
+      "slug": "modpacks",
+      "rotulo": "Modpacks",
+      "vindo": true,
+      "desc": "Pacote de mods, config e ajuste pronto pra subir — o servidor já nasce montado."
+    },
+    {
+      "slug": "otimizacoes",
+      "rotulo": "Otimizações",
+      "vindo": true,
+      "desc": "Tuning de performance: menos lag, menos memória, mais TPS."
+    },
+    {
+      "slug": "automacoes",
+      "rotulo": "Automações",
+      "vindo": true,
+      "desc": "Serviço que roda sozinho — coleta, organiza e reage sem ninguém olhando."
+    },
+    {
+      "slug": "ferramentas",
+      "rotulo": "Ferramentas",
+      "vindo": false,
+      "desc": "Resolve um trabalho pontual, sem virar sistema."
+    },
+    {
+      "slug": "apis",
+      "rotulo": "APIs & dados",
+      "vindo": false,
+      "desc": "Índice, catálogo e conjunto de dados com a fonte aberta."
+    },
+    {
+      "slug": "agentes",
+      "rotulo": "Agentes",
+      "vindo": false,
+      "desc": "Programa que decide sozinho e responde pelo que fez."
+    },
+    {
+      "slug": "jogos",
+      "rotulo": "Jogos & simulações",
+      "vindo": false,
+      "desc": "Simulação com regra de verdade e dado real por baixo."
+    },
+    {
+      "slug": "servicos",
+      "rotulo": "Serviços",
+      "vindo": false,
+      "desc": "Trabalho sob medida pra um cliente, com prazo e entrega."
+    }
+  ],
+  "_categorias_nota": "Prateleira do marketplace. `categoria` (campo antigo) diz o TIPO de software; `categoria_mkt` diz a CATEGORIA da vitrine — e o que a pessoa procura. Categoria com `vindo: true` aparece vazia de proposito: mostra a prateleira que ainda vai ser abastecida.",
+  "_desde_nota": "desde = created_at do repositorio publico (API do GitHub, medido em 2026-11-01). Repositorio fechado usa a data em que a pagina entrou no catalogo. Nao e data inventada: e a primeira evidencia de existencia."
 }

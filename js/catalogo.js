@@ -33,7 +33,18 @@
   var obs = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('on'); obs.unobserve(en.target); } });
   }, { threshold: 0.2 });
-  document.querySelectorAll('.rv').forEach(function (el) { obs.observe(el); });
+  document.querySelectorAll('.rv').forEach(function (el) {
+    var pai = el.parentNode, d = 0;
+    if (pai) {
+      for (var k = 0; k < pai.children.length; k++) {
+        var c = pai.children[k];
+        if (c === el) break;
+        if (c.classList && c.classList.contains('rv')) d++;
+      }
+    }
+    el.style.setProperty('--d', d);
+    obs.observe(el);
+  });
 
   /* dados auxiliares */
   var provas = {};
@@ -46,6 +57,17 @@
   var nFila = function (s) {
     s = String(s == null ? '' : s);
     return s.replace(/SQLite\/MySQL\/MariaDB\/PostgreSQL/g, 'SQL');
+  };
+
+  /* prateleira do marketplace + data em que o produto entrou no ar */
+  var rotsCat = {};
+  ((C && C.categoriasMkt) || []).forEach(function (c) { rotsCat[c.slug] = c.rotulo; });
+  var rotCat = function (slug) { return rotsCat[slug] || ''; };
+  var MESES = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+  var quando = function (iso) {
+    var p = String(iso || '').split('-');
+    if (p.length < 3) return '';
+    return p[2] + ' ' + MESES[+p[1] - 1] + ' ' + p[0];
   };
 
   /* ===== 1. tipos segmentados (só tipos com item; contagem do catálogo) ===== */
@@ -77,8 +99,9 @@
   /* deep-link: ?ordem=prova&f=status&v=gratis&q=xray — filtro compartilhável */
   var qs = null;
   try { qs = new URLSearchParams(location.search); } catch (e) { qs = { get: function () { return null; } }; }
-  var estado = { texto: '', tipo: '', dominio: '', status: '', preco: '', ordem: 'catálogo' };
+  var estado = { texto: '', cat: '', tipo: '', dominio: '', status: '', preco: '', ordem: 'catálogo' };
   if (qs.get('q')) estado.texto = qs.get('q');
+  if (qs.get('cat')) estado.cat = qs.get('cat');
   if (['tipo', 'dominio', 'status', 'preco'].indexOf(qs.get('f')) !== -1) estado[qs.get('f')] = qs.get('v') || '';
   if (['catálogo', 'prova', 'nome'].indexOf(qs.get('ordem')) !== -1) estado.ordem = qs.get('ordem');
 
@@ -108,11 +131,49 @@
   pintaFiltros();
   $('ordem').value = estado.ordem;
 
+  /* ===== 2b. prateleiras: categoria primeiro, item depois =====
+     Categoria sem produto continua na lista, marcada "chegando". É o que
+     mostra que o catálogo tem prateleira vazia de propósito e cresce com o
+     tempo — esconder a prateleira faria parecer que só existe o que já saiu. */
+  var ICONE_CAT = {
+    plugins: 'paper', modpacks: 'box', otimizacoes: 'bolt', automacoes: 'gear',
+    ferramentas: 'wrench', apis: 'plug', agentes: 'bot', jogos: 'pad', servicos: 'briefcase'
+  };
+  var catsBox = $('cats');
+  var contaCat = {};
+  itens.forEach(function (i) { if (i.categoriaMkt) contaCat[i.categoriaMkt] = (contaCat[i.categoriaMkt] || 0) + 1; });
+  var listaCat = C.categoriasMkt || [];
+
+  var pintaCats = function () {
+    if (!catsBox) return;
+    catsBox.innerHTML =
+      '<button type="button" class="cat' + (estado.cat ? '' : ' on') + '" data-cat="">' +
+      'todos <em>' + itens.length + '</em></button>' +
+      listaCat.map(function (c) {
+        var n = contaCat[c.slug] || 0;
+        var ic = window.NZICONE ? window.NZICONE(ICONE_CAT[c.slug] || 'box', 15) : '';
+        return '<button type="button" class="cat' + (n ? '' : ' cat--vindo') + (estado.cat === c.slug ? ' on' : '') +
+          '" data-cat="' + esc(c.slug) + '" title="' + esc(c.desc || '') + '">' +
+          ic + esc(c.rotulo) + ' <em>' + (n ? n : 'chegando') + '</em></button>';
+      }).join('');
+  };
+  pintaCats();
+  if (catsBox) {
+    catsBox.addEventListener('click', function (e) {
+      var b = e.target.closest('.cat');
+      if (!b) return;
+      estado.cat = (estado.cat === b.dataset.cat) ? '' : b.dataset.cat;
+      pintaCats();
+      aplica();
+    });
+  }
+
   /* ===== 3. card ===== */
-  var card = function (i) {
+  var card = function (i, n) {
     var stack = (i.stack || []).slice(0, 4);
-    return '<a class="proj" href="' + i.slug + '.html" data-slug="' + esc(i.slug) + '">' +
-      '<span class="proj__tipo mono">' + esc(i.tipoRotulo || i.tipo) + '</span>' +
+    var cat = rotCat(i.categoriaMkt);
+    return '<a class="proj" style="--i:' + (n || 0) + '" href="' + i.slug + '.html" data-slug="' + esc(i.slug) + '">' +
+      '<span class="proj__tipo mono">' + esc(cat ? cat + ' / ' + (i.tipoRotulo || i.tipo) : (i.tipoRotulo || i.tipo)) + '</span>' +
       '<h3>' + esc(i.nome) +
       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></h3>' +
       '<p>' + esc((i.home && i.home.descricao) || i.tagline || '') + '</p>' +
@@ -120,6 +181,7 @@
       '<span class="proj__meta">status <b>' + esc(rotulos[i.status] || i.statusTexto || i.status) +
       '</b> · licença <b>' + esc(i.licenca || '—') +
       '</b> · ' + esc(i.preco) +
+      (i.desde ? ' · no ar desde <b>' + esc(quando(i.desde)) + '</b>' : '') +
       '</span>' +
       (stack.length ? '<span class="proj__p mono">stack <b>' + esc(nFila(stack.join(' · '))) + '</b></span>' : '') +
       '</a>';
@@ -135,6 +197,7 @@
     var txt = estado.texto.trim().toLowerCase();
     var lista = itens.filter(function (i) {
       var chave = i.precoChave || '';
+      if (estado.cat && i.categoriaMkt !== estado.cat) return false;
       if (estado.tipo && i.tipo !== estado.tipo) return false;
       if (estado.dominio && i.dominio !== estado.dominio) return false;
       if (estado.status && i.status !== estado.status) return false;
@@ -157,11 +220,18 @@
     }
     grid.innerHTML = lista.length
       ? lista.map(card).join('')
-      : '<p class="vazio__grande"><b>Nada aqui.</b> Não é bug: não existe produto com esse conjunto de filtros. Limpa um e tenta de novo.</p><a class="mais mono" style="display:inline-block" href="#" id="limpaVazio">limpar filtros ↺</a>';
+      : (estado.cat && !contaCat[estado.cat]
+        ? '<p class="vazio__grande"><b>Prateleira vazia.</b> ' + esc(rotCat(estado.cat)) +
+          ' ainda não tem produto publicado — a prateleira existe antes do item, de propósito. ' +
+          'Entra no Discord se quiser que o primeiro seja o seu.</p>' +
+          '<a class="mais mono" style="display:inline-block" href="#" id="limpaVazio">ver o catálogo inteiro ↺</a>'
+        : '<p class="vazio__grande"><b>Nada aqui.</b> Não é bug: não existe produto com esse conjunto de filtros. Limpa um e tenta de novo.</p><a class="mais mono" style="display:inline-block" href="#" id="limpaVazio">limpar filtros ↺</a>');
     contagem.textContent = lista.length + (lista.length === 1 ? ' produto' : ' produtos');
-    veredicto.textContent = (estado.texto || estado.tipo || estado.dominio || estado.status || estado.preco)
-      ? 'Filtrando o catálogo' : 'Todos os produtos';
-    limparBtn.hidden = !(estado.texto || estado.tipo || estado.dominio || estado.status || estado.preco);
+    var filtrando = estado.texto || estado.cat || estado.tipo || estado.dominio || estado.status || estado.preco;
+    veredicto.textContent = estado.cat
+      ? (rotCat(estado.cat) + (contaCat[estado.cat] ? '' : ' — chegando'))
+      : (filtrando ? 'Filtrando o catálogo' : 'Todos os produtos');
+    limparBtn.hidden = !filtrando;
   };
   aplica();
 
@@ -203,9 +273,10 @@
   });
 
   var zera = function () {
-    estado.texto = ''; estado.tipo = ''; estado.dominio = ''; estado.status = ''; estado.preco = '';
+    estado.texto = ''; estado.cat = ''; estado.tipo = ''; estado.dominio = ''; estado.status = ''; estado.preco = '';
     $('q').value = '';
     pintaFiltros();
+    pintaCats();
     aplica();
   };
   limparBtn.addEventListener('click', zera);
