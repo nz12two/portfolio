@@ -70,14 +70,11 @@
       if (card.dataset.tilt) return;
       card.dataset.tilt = '1';
       card.addEventListener('mousemove', function (e) {
+        if (REDUZ) return;
         var r = card.getBoundingClientRect();
         var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-        card.style.setProperty('--px', (px * 100).toFixed(1) + '%');
-        card.style.setProperty('--py', (py * 100).toFixed(1) + '%');
-        if (!REDUZ) {
-          card.style.setProperty('--rx', ((py - 0.5) * -4).toFixed(2) + 'deg');
-          card.style.setProperty('--ry', ((px - 0.5) * 6).toFixed(2) + 'deg');
-        }
+        card.style.setProperty('--rx', ((py - 0.5) * -4).toFixed(2) + 'deg');
+        card.style.setProperty('--ry', ((px - 0.5) * 6).toFixed(2) + 'deg');
       });
       card.addEventListener('mouseleave', function () {
         card.style.setProperty('--rx', '0deg');

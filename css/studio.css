@@ -181,12 +181,6 @@ a { color: inherit; text-decoration: none; }
   will-change: transform;
 }
 .proj:hover { border-color: var(--acc-line); background: var(--panel-2); }
-.proj::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
-  background: radial-gradient(300px circle at var(--px,50%) var(--py,50%), rgba(255,255,255,.05), transparent 70%);
-  transition: opacity .3s;
-}
-.proj:hover::after { opacity: 1; }
 .proj--destaque { grid-column: span 2; min-height: 240px; }
 .proj__tipo {
   font-family: "JetBrains Mono", monospace; font-size: 0.66rem; letter-spacing: 0.06em;
