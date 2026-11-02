@@ -288,16 +288,61 @@
     stackBox.innerHTML = '<p class="vazio">O catálogo não carregou — a contagem de stack vive no catálogo.</p>';
   }
 
-  /* 5. faixa que corre: o que cada produto prova, em uma linha */
+  /* 5. carrossel de produtos: cada card abre a página do produto */
   var mq = document.getElementById('marquee');
   if (mq && itens) {
-    var chips = itens.map(function (i) {
+    mq.innerHTML = itens.map(function (i) {
       var p = i.prova && i.prova.num
         ? '<b>' + fmt(i.prova.num) + (i.slug === 'antixray' ? '+' : '') + '</b> ' + esc(i.prova.unidade)
         : '<b>' + esc(rotuloCat(i.categoriaMkt) || i.tipoRotulo || 'produto') + '</b>';
-      return '<span>' + esc(i.nome.toUpperCase()) + ' ' + p + '</span>';
+      var href = 'catalogo/' + esc(i.slug) + '.html';
+      return '<a class="carrossel-card" href="' + href + '">' +
+        '<span class="carrossel-card__tag">' + esc((i.categoriaMkt || i.tipoRotulo || 'produto').toUpperCase()) + '</span>' +
+        '<span class="carrossel-card__nome">' + esc(i.nome) + '</span>' +
+        '<span class="carrossel-card__prova">' + p + '</span>' +
+        '<span class="carrossel-card__seta">↗</span>' +
+      '</a>';
+    }).join('');
+
+    /* navegação por setas */
+    var wrap = mq.parentElement;
+    var prev = wrap && wrap.querySelector('.carrossel-btn--prev');
+    var next = wrap && wrap.querySelector('.carrossel-btn--next');
+    var passo = function (dir) {
+      mq.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    };
+    if (prev) prev.addEventListener('click', function () { passo(-1); });
+    if (next) next.addEventListener('click', function () { passo(1); });
+
+    /* arrastar com o mouse */
+    var down = false, startX = 0, scrollStart = 0, arrastou = false;
+    mq.addEventListener('mousedown', function (e) {
+      down = true; arrastou = false;
+      startX = e.pageX; scrollStart = mq.scrollLeft;
+      mq.style.cursor = 'grabbing';
     });
-    mq.innerHTML = chips.join('') + chips.join('');
+    addEventListener('mousemove', function (e) {
+      if (!down) return;
+      var dx = e.pageX - startX;
+      if (Math.abs(dx) > 4) arrastou = true;
+      mq.scrollLeft = scrollStart - dx;
+    });
+    addEventListener('mouseup', function () {
+      if (!down) return;
+      down = false; mq.style.cursor = '';
+    });
+    mq.addEventListener('click', function (e) {
+      if (arrastou) { e.preventDefault(); e.stopPropagation(); arrastou = false; }
+    }, true);
+
+    /* auto-scroll suave quando ocioso */
+    if (!REDUZ) {
+      var auto = setInterval(function () {
+        if (down) return;
+        mq.scrollLeft += 1;
+        if (mq.scrollLeft + mq.clientWidth >= mq.scrollWidth - 2) mq.scrollLeft = 0;
+      }, 30);
+    }
   }
 
   /* 6. prateleiras do marketplace: a categoria antes do item */

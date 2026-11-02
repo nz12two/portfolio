@@ -17,7 +17,7 @@
 <meta property="og:image:height" content="910">
 <meta property="og:image:alt" content="NZ Studios — portfólio de software com código aberto e números medidos">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="css/studio.css?v=6">
+<link rel="stylesheet" href="css/studio.css?v=7">
 <link rel="icon" href="assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="assets/brand/favicon-16.png" sizes="16x16" type="image/png">
 <link rel="apple-touch-icon" href="assets/brand/app-icon-512.png">
@@ -73,7 +73,15 @@
   </div>
 </section>
 
-<div class="marquee" aria-hidden="true"><div class="marquee__in" id="marquee"></div></div>
+<div class="carrossel-wrap">
+  <button class="carrossel-btn carrossel-btn--prev" aria-label="Anterior" type="button">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="carrossel" id="marquee" role="region" aria-label="Carrossel de produtos"></div>
+  <button class="carrossel-btn carrossel-btn--next" aria-label="Próximo" type="button">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
 
 <section class="sec" id="projetos">
   <div class="sec__top rv">
@@ -179,7 +187,7 @@
 
 <!-- O catálogo entra antes do script que o lê -->
 <script src="catalogo/dados/catalogo.js" defer></script>
-<script src="js/icones.js?v=6" defer></script>
-<script src="js/studio.js?v=6" defer></script>
+<script src="js/icones.js?v=7" defer></script>
+<script src="js/studio.js?v=7" defer></script>
 </body>
 </html>
