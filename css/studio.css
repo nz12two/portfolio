@@ -120,6 +120,7 @@ a { color: inherit; text-decoration: none; }
   font-family: "JetBrains Mono", monospace; font-size: 0.72rem; color: var(--tx-3);
 }
 .prova-linha b { color: var(--tx); font-weight: 500; font-variant-numeric: tabular-nums; }
+.prova-linha em b { color: inherit; }
 .prova-linha i { font-style: normal; color: var(--tx-3); }
 .prova-linha em { font-style: normal; color: var(--acc); }
 
@@ -144,6 +145,7 @@ a { color: inherit; text-decoration: none; }
 .aberto .prova-linha { animation-delay: .44s; }
 .aberto .term { animation: sobe .6s var(--ease) .3s backwards; }
 @keyframes sobe { to { opacity: 1; transform: none; } }
+@keyframes aparece { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
 /* ===== seções ===== */
 .sec { max-width: 1120px; margin: 0 auto; padding: clamp(64px, 10vw, 110px) var(--gut) 0; }
@@ -178,6 +180,7 @@ a { color: inherit; text-decoration: none; }
   transform: rotateX(var(--rx)) rotateY(var(--ry));
   transition: transform .35s var(--ease), border-color .3s, background .3s, opacity .3s;
   animation: aparece .45s var(--ease) backwards;
+  animation-delay: calc(var(--i, 0) * 60ms);
   will-change: transform;
 }
 .proj:hover { border-color: var(--acc-line); background: var(--panel-2); }
@@ -217,7 +220,17 @@ a { color: inherit; text-decoration: none; }
 .duo { display: grid; grid-template-columns: 1.3fr 1fr; gap: 46px; }
 .duo p { font-size: 0.94rem; color: var(--tx-2); margin-bottom: 14px; max-width: 520px; }
 .duo p b { color: var(--tx); }
-.svc { border-left: 2px solid var(--acc-line); padding-left: 18px; margin-bottom: 22px; }
+.svc {
+  border-left: 2px solid var(--acc-line); padding-left: 18px; margin-bottom: 22px;
+  animation: aparece .5s var(--ease) backwards;
+  animation-delay: calc(var(--i, 0) * 80ms);
+  animation-play-state: paused;
+  transition: border-color .25s, transform .25s;
+}
+.svc:nth-child(1) { --i: 0; }
+.svc:nth-child(2) { --i: 1; }
+.svc:nth-child(3) { --i: 2; }
+.svc:hover { border-color: var(--acc); transform: translateX(3px); }
 .svc h4 { font-size: 0.98rem; font-weight: 600; margin-bottom: 3px; }
 .svc p { font-size: 0.84rem; margin: 0; color: var(--tx-2); }
 
@@ -278,8 +291,13 @@ body::before {
 
 /* reveal escalonado: um passo por irmão, na ordem em que aparecem */
 .rv { transition-delay: calc(var(--d, 0) * 90ms); }
-.proj { animation-delay: calc(var(--i, 0) * 70ms); }
 .proj.vivo { animation: none; }
+
+/* prateleiras, timeline, stack e serviços ficam abaixo da dobra: esperam o .rv virar .on */
+.rv.on .prateleira,
+.rv.on .linha-tempo li,
+.rv.on .stk,
+.rv.on .svc { animation-play-state: running; }
 
 /* faixa que corre — o resumo de tudo que existe, em uma linha */
 .marquee {
@@ -311,6 +329,7 @@ body::before {
   padding: 15px 16px; transition: transform .3s var(--ease), border-color .3s, background .3s;
   animation: aparece .5s var(--ease) backwards;
   animation-delay: calc(var(--i, 0) * 55ms);
+  animation-play-state: paused;
 }
 .prateleira:hover { transform: translateY(-2px); border-color: var(--acc-line); background: var(--panel-2); }
 .prateleira__ic {
@@ -332,6 +351,7 @@ body::before {
   padding: 13px 0 13px 20px; border-top: 1px solid var(--line); position: relative;
   animation: aparece .5s var(--ease) backwards;
   animation-delay: calc(var(--i, 0) * 55ms);
+  animation-play-state: paused;
 }
 .linha-tempo li::before {
   content: ""; position: absolute; left: 0; top: 21px;
@@ -353,6 +373,7 @@ body::before {
   background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
   animation: aparece .5s var(--ease) backwards;
   animation-delay: calc(var(--i, 0) * 28ms);
+  animation-play-state: paused;
 }
 .stk:hover { border-color: var(--acc-line); }
 .stk__ic { color: var(--tx-3); display: grid; place-items: center; }

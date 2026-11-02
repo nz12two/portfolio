@@ -32,6 +32,8 @@
 
   /* contagem animada dos números */
   var conta = function (el) {
+    if (el.dataset.contado) return;
+    el.dataset.contado = '1';
     var fim = +(el.dataset.n || 0), suf = el.dataset.suf || '';
     if (fim === 0) { el.textContent = '—'; return; }
     if (REDUZ) { el.textContent = fmt(fim) + suf; return; }
@@ -48,7 +50,7 @@
   /* reveal de seção */
   var obs = new IntersectionObserver(function (ents) {
     ents.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('on'); obs.unobserve(en.target); } });
-  }, { threshold: 0.25 });
+  }, { threshold: 0.15 });
   document.querySelectorAll('.rv').forEach(function (el) {
     // escalonamento: cada bloco .rv entra 90ms depois do irmão anterior
     var pai = el.parentNode, d = 0;
@@ -100,11 +102,34 @@
   var provaLinha = document.getElementById('provaLinha');
   if (provaLinha) {
     if (comProva.length) {
-      provaLinha.innerHTML = '<em>' + fmt(itens.length) + ' produtos</em> ' +
-        comProva.slice(0, 4).map(function (i) {
-          var suf = i.slug === 'antixray' ? '+' : '';
-          return '<span>' + fmt(i.prova.num) + suf + ' ' + esc(i.prova.unidade) + '</span>';
-        }).join('<i> · </i>');
+      var prodHtml = '<em><b class="num" data-n="' + itens.length + '">' + (REDUZ ? fmt(itens.length) : '0') + '</b> produtos</em>';
+      var provasHtml = comProva.slice(0, 4).map(function (i) {
+        var suf = i.slug === 'antixray' ? '+' : '';
+        return '<span><b class="num" data-n="' + i.prova.num + '" data-suf="' + suf + '">' + (REDUZ ? fmt(i.prova.num) + suf : '0' + suf) + '</b> ' + esc(i.prova.unidade) + '</span>';
+      }).join('<i> · </i>');
+      provaLinha.innerHTML = prodHtml + ' ' + provasHtml;
+
+      var disparaConta = function () {
+        if (provaLinha.dataset.contado) return;
+        provaLinha.dataset.contado = '1';
+        provaLinha.querySelectorAll('.num').forEach(conta);
+      };
+
+      if (REDUZ) {
+        // sem animação para prefers-reduced-motion
+      } else if ('IntersectionObserver' in window) {
+        var obProva = new IntersectionObserver(function (ents) {
+          ents.forEach(function (en) {
+            if (en.isIntersecting) {
+              setTimeout(disparaConta, 360);
+              obProva.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        obProva.observe(provaLinha);
+      } else {
+        setTimeout(disparaConta, 450);
+      }
     } else {
       provaLinha.textContent = 'catálogo no repositório — os números moram lá';
     }
