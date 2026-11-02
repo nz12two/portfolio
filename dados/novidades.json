@@ -1,7 +1,16 @@
 {
-  "gerado_em": "2026-11-02T02:34:54.877Z",
+  "gerado_em": "2026-11-02T16:09:25.503Z",
   "convite": "https://discord.gg/FwPq3hSmr",
   "canal": "📢-anúncios",
-  "total": 0,
-  "itens": []
+  "total": 1,
+  "itens": [
+    {
+      "id": "1566824269218975865",
+      "ts": "2026-11-02T14:40:15.969000+00:00",
+      "url": "https://discord.com/channels/1559216448969248770/1559253303039234119/1566824269218975865",
+      "autor": "ʜᴘᴢɴ",
+      "bot": false,
+      "texto": "@everyone estamos aberto a ."
+    }
+  ]
 }
