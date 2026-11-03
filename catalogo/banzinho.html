@@ -3,167 +3,118 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agentes — material e configurações · NZ Studios</title>
-<meta name="description" content="Como eu monto agentes de engenharia que não alucinam estado: dicas abertas, config de partida e o material pago completo por trás do Banzinho.">
+<title>Banzinho — NZ</title>
+<meta name="description" content="Agente de engenharia que roda no meu computador: 28 subsistemas, 38 verificadores que quebram a build se uma regra da constitution sumir.">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
 <link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/banzinho.html">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="NZ Studios">
-<meta property="og:title" content="Agentes — material e configurações · NZ Studios">
-<meta property="og:description" content="Dicas abertas e config de partida para montar agente com verificação de verdade. O material completo fica na conta paga.">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="Banzinho — NZ">
+<meta property="og:description" content="Agente de engenharia que roda no meu computador: 28 subsistemas, 38 verificadores que quebram a build se uma regra da constitution sumir.">
 <meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/banzinho.html">
 <meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../css/studio.css?v=7">
-<link rel="stylesheet" href="../css/produto.css?v=7">
+<link rel="stylesheet" href="../css/main.css?v=4">
+<link rel="stylesheet" href="../css/produto.css?v=4">
+<link rel="stylesheet" href="../css/vip.css?v=4">
+<!-- Sem isto o navegador pede /favicon.ico e leva 404 nas seis paginas de
+     produto (medido na varredura das nove paginas do site). -->
 <link rel="icon" href="../assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="../assets/brand/favicon-16.png" sizes="16x16" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="../assets/brand/app-icon-512.png">
 </head>
 <body>
 
-<header class="bar" id="bar">
-  <div class="bar__in">
-    <a href="../index.html" class="brand" aria-label="NZ Studios — home">
-      <svg viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
-      NZ Studios
-      <span class="p-head__backset mono">/ Agentes</span>
-    </a>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="index.html">Catálogo</a>
-    </nav>
-    <a class="gh" href="https://github.com/nz12two" target="_blank" rel="noopener" aria-label="GitHub de nz12two">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
-    </a>
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a href="../index.html" class="brand">NZ <small>/ Banzinho</small></a>
+    <nav class="nav"><a href="../index.html">Produtos</a></nav>
+    <a class="btn btn--acc" href="../conta.html" data-conta-open>VIP</a>
   </div>
 </header>
 
-<main>
-<section class="p-head">
-  <div class="p-head__volta"><a href="index.html">↙ catálogo completo</a></div>
-  <p class="hero__ov mono"><i></i> agentes · material aberto e pago</p>
-  <h1>Agentes</h1>
-  <p class="p-head__tag">Como eu monto agente de engenharia que não alucina estado: <b>dicas abertas, config de partida e material pago</b> por trás do Banzinho.</p>
-  <div class="p-chips">
-    <span class="chip chip--acc">números medidos no meu agente</span>
-    <span class="chip">material grátis nesta página</span>
-    <span class="chip">material completo na conta</span>
+<main class="wrap ppage">
+
+  <a href="../index.html" class="ppage__volta">← catálogo</a>
+
+  <div class="eyebrow mono">Agente</div>
+  <h1>Banzinho</h1>
+  <p class="ppage__tag">Agente de engenharia que roda no meu computador: 28 subsistemas, 38 verificadores que quebram a build se uma regra da constitution sumir.</p>
+
+  <div class="item__tags">
+    <span class="tag tag--acc">fechado</span>
+    <span class="tag tag--acc">sob-consulta</span>
+    <span class="tag">proprietário</span>
+    <span class="tag">TypeScript</span><span class="tag">Node.js</span><span class="tag">Bun</span><span class="tag">Obsidian/Vault</span>
   </div>
-  <p class="p-aviso"><b>O Banzinho em si está fechado</b> — roda no meu computador e não está à venda. O que se vende aqui é o material: o que ele usa de verdade, calibrado, com alguém explicando junto.</p>
-</section>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> a prova de tamanho</p>
-  <h2>O material não vem de palpite</h2>
-  <p>Tudo que distribuo aqui saiu de um agente em uso diário. O tamanho deles é medido no código, não no texto de marketing:</p>
-  <ul class="p-lista">
-    <li><b>28 subsistemas</b> vivos no agente</li>
-    <li><b>18.263 linhas</b> medidas no código fechado</li>
-    <li><b>38 verificadores</b> que quebram a build se uma regra sair da constitution</li>
-    <li><b>552 sessões medidas</b> e 41 tools catalogadas</li>
-  </ul>
-</section>
+  <p class="ppage__aviso">Projeto fechado e em uso diário. Não está no GitHub — roda local, a constitution, os skills e os hooks são privados. Vira distribuível depois; prazo definido depois.</p>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> material grátis</p>
-  <h2>Três dicas que valem por si</h2>
-  <p>É o essencial do método, sem enrolação. Dá para montar um agente muito melhor que a média só com isto.</p>
-  <ul class="p-lista">
-    <li><b>Regra que só vive no prompt morre no prompt.</b> Toda regra importante precisa de um verificador: um teste que quebra a build quando alguém apaga a regra. O prompt convence; o verificador garante.</li>
-    <li><b>Estado sobrevive à sessão ou não aconteceu.</b> Tudo que importa no fim do turno vai para o disco (tarefa, decisão, falha, próxima etapa) — memória de chat não é memória.</li>
-    <li><b>Recusa raramente existe.</b> Falta de ferramenta vira contorno, ambiguidade de técnica vira decisão documentada, e a irreversibilidade que vale uma linha de consequência roda igual.</li>
-  </ul>
-  <div class="passo" style="border-bottom:0">
-    <span class="passo__n mono">▣</span>
-    <div>
-      <h3>Config de partida (exemplo)</h3>
-      <div class="code">
-        <button type="button" class="code__copy" data-copy aria-label="Copiar comando"><span class="code__txt">copiar</span></button>
-        <pre><code># agents.config.example — ponto de partida, não é a config real do Banzinho
-indice:
-  porta_de_entrada: AGENTS.md          # a regra global carrega aqui
-precedencia: [pedido, constitution, subsistema, estado]
-turno:
-  fechar_so_com: objetivo_verificado
-  estado_persistente: task ledger          # tarefa/decisão/prova no disco, não no chat
-verificadores:
-  _so_vai_verde: sim                    # regra sem verificador não é regra</code></pre>
-      </div>
-      <p class="passo__note">Exemplo ilustrativo. A config de produção calibrada fica no material pago.</p>
+  <section class="psec psec--priv">
+         <div class="eyebrow mono">projeto fechado</div>
+         <h2>Roda fechado, e isso é uma escolha</h2>
+         <p class="psec__p">Fechado agora. Vira distribuível quando o código sair do meu computador — sem prazo, e o prazo só entra quando for real.</p>
+         <p class="psec__p psec__p--fraco">Sem licença e sem preço definidos enquanto é fechado. Não contrate antes de o código existir publicamente.</p>
+       </section>
+  <section class="psec">
+         <div class="eyebrow mono">medido no código</div>
+         <h2>O tamanho real, não o redigido</h2>
+         <dl class="pnums">
+           <div><dt>subsistemas</dt><dd>28</dd></div><div><dt>linhas de código</dt><dd>18263</dd></div><div><dt>verificadores de regra</dt><dd>38</dd></div><div><dt>commits</dt><dd>47</dd></div><div><dt>primeiro commit</dt><dd>2026-09-28</dd></div><div><dt>sessões medidas</dt><dd>552</dd></div><div><dt>tools no catálogo</dt><dd>41</dd></div><div><dt>tools com contrato</dt><dd>9</dd></div>
+         </dl>
+       </section>
+  <p class="shot shot--vazio">Sem imagem.</p>
+
+  <section class="psec">
+         <div class="eyebrow mono">o diferencial</div>
+         <h2>O que este projeto faz diferente</h2>
+         <p class="psec__p">A parte rara não é o agente escrever código: é ele recusar. Contrato que não tem como provar não entra, número que não foi medido não sai, e a política dele é verificável — 38 verificadores leem a constitution e quebram se alguém tirar uma linha.</p>
+       </section>
+  <section class="psec">
+         <h2>O que ele faz</h2>
+         <ul class="psec__ul"><li>Guarda estado entre sessões — o que já foi feito, o que falhou, o que não repetir</li><li>Verifica a si mesmo: 38 checagens que param a build se uma regra escrita for removida do texto</li><li>Memória que responde 'como você resolveu isso antes' com recibo, não com memória de chat</li><li>Isola arquivos entre sessões com claim, para duas ideias não sobrescrevessem</li></ul>
+       </section>
+
+  <section class="psec">
+    <h2>Para quem é</h2>
+    <ul class="psec__ul"><li>Quem quer um agente que não alucina estado</li><li>Quem cansou de pedir de novo a mesma tarefa</li><li>Quem precisa que a regra seja verificada, não pedida</li></ul>
+  </section>
+
+  <section class="psec">
+    <div class="eyebrow mono">instalação</div>
+    <h2>Passo a passo</h2>
+    <div class="steps">
+      
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> para quem é</p>
-  <h2>Para quem é</h2>
-  <ul class="p-lista">
-    <li>Quem quer um agente que <b>não alucina estado</b>.</li>
-    <li>Quem cansou de pedir de novo a mesma tarefa.</li>
-    <li>Quem precisa que a regra seja verificada, não pedida.</li>
-  </ul>
-</section>
+  
+  
 
-<section class="planos rv">
-  <p class="hero__ov mono"><i></i> planos</p>
-  <h2>O que vem de graça, e o que a conta acrescenta</h2>
-  <p class="planos__lead">As dicas em cima ficam aqui de graça, para sempre. A conta traz o material de produção — configs reais em uso, não exemplo bonito de tutorial.</p>
-  <div class="planos__grid">
-    <article class="plano">
-      <header class="plano__hd">
-        <h3 class="plano__nome">Nesta página</h3>
-        <p class="plano__preco plano__preco--zero">R$ 0</p>
-      </header>
-      <p class="plano__resumo">O mínimo que você já deve levar daqui.</p>
-      <ul class="plano__list">
-        <li>as três dicas do método, condensadas</li>
-        <li>config de partida (exemplo ilustrativo)</li>
-        <li>lista do que um agente precisa medir em si mesmo</li>
-      </ul>
-      <p class="plano__resumo"><b>Comece por aqui.</b> O método nasce com o essencial; o resto é apenas configurar sem verificador.</p>
-    </article>
-    <article class="plano plano--pago">
-      <header class="plano__hd">
-        <h3 class="plano__nome">Material completo</h3>
-        <p class="plano__preco">na conta</p>
-      </header>
-      <p class="plano__resumo">O que o Banzinho roda de verdade, atualizado junto com ele.</p>
-      <ul class="plano__list">
-        <li>config de produção (o arquivo em uso, com os valores reais)</li>
-        <li>excertos verificados da constitution com os verificadores equivalentes</li>
-        <li>estrutura de diretórios do agente (camadas e o que cada uma pode tocar)</li>
-        <li>defaults de sessão: gatilhos de memória, portas de recusa e política de turno</li>
-        <li>atualização do material rolando junto com o agente</li>
-      </ul>
-      <p class="plano__resumo"><b>É o sistema por dentro:</b> configs reais em uso, com o que foi medido em 552 sessões rodando.</p>
-    </article>
+  <div class="ppage__links">
+        
+        
   </div>
-  <div class="planos__acesso">
-    <div class="vip__gate" data-gate>
-      <p class="vip__msg">Quer ver o material do nível pago?</p>
-      <a class="btn btn--solo" href="../conta.html">Entrar na conta</a>
-      <p class="vip__note">O material pago fica atrás da sua conta. Sem conta, o que está aqui é o nível grátis.</p>
-    </div>
-    <div class="vip__unlocked" data-unlocked hidden>
-      <p class="vip__msg vip__msg--ok">Sessão ativa.</p>
-      <p>Sessão ativa: o material completo abre na conta.</p>
-      <a class="btn btn--solo" href="../conta.html">Abrir o material</a>
-    </div>
-  </div>
-  <p class="planos__aviso">O agente continua fechado e sem preço definido — vira distribuível quando o código sair do meu computador, e o prazo entra quando for real. O material pago não depende disso.</p>
-</section>
-
-<div class="p-foot">
-  <span>Agentes · material aberto + material pago · Banzinho fechado</span>
-  <a href="https://github.com/nz12two" target="_blank" rel="noopener">NZ Studios</a>
-</div>
 </main>
 
-<script src="../js/auth-config.js?v=7"></script>
-<script src="../js/auth.js?v=7" defer></script>
-<script src="../js/copiar.js?v=7" defer></script>
-<script src="../js/produto-shell.js?v=7" defer></script>
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <!-- Rodapé com o dado do produto, nao com elogio genérico. "Construído à
+         mão, sem template" não mudava nunca e não dizia nada. -->
+    <!-- O rodape repete o status com o MESMO mapa que a vitrine usa. Antes
+         caia num ternario que so conhecia beta e em-producao, e todo produto
+         novo virava "estavel" — foi o que aconteceu com o agente, que e
+         fechado, e o rodape afirmava que era estavel. -->
+    <span class="mono">Banzinho · fechado · proprietário</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
+<script src="../js/auth-config.js?v=4"></script>
+<script src="../js/auth.js?v=4" defer></script>
+<script src="../js/copiar.js?v=4" defer></script>
 </body>
 </html>

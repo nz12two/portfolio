@@ -163,6 +163,7 @@ function paginaProduto(p, vip) {
             <h3 class="plano__nome">${esc(pl.nome)}</h3>
             <p class="plano__preco${gratis ? " plano__preco--zero" : ""}">${esc(pl.preco)}</p>
           </header>
+          ${pl.preco_nota ? `<p class="plano__mo">${esc(pl.preco_nota)}</p>` : ""}
           <p class="plano__resumo">${esc(pl.resumo)}</p>
           <ul class="plano__list">
             ${itens.map((x) => `<li><span class="plano__pip" aria-hidden="true"></span>${esc(x)}</li>`).join("")}
@@ -199,9 +200,10 @@ function paginaProduto(p, vip) {
              : ""
          }
          <p class="planos__aviso">
-           Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi
-           deixar o valor visível antes de a cobrança funcionar do que montar um
-           checkout que não entrega.
+           O preço público é um só: <strong>mão de obra R$ 7,00 fixa</strong>. O
+           resto depende do serviço — volume, urgência, manutenção, integração —
+           e é combinado por escrito antes de começar. Sem escopo escrito, não
+           existe preço. Contrato e pagamento pelo Discord.
          </p>
        </section>`
     : "";

@@ -1,6 +1,6 @@
 {
   "_nota": "O que cada nível entrega. 'gratis' é público e aparece na página; 'vip' fica atrás da porta local. Nenhum item aqui é segredo: o código está no GitHub. O VIP vende acesso, tempo e suporte — não exclusividade de código, porque código aberto não se esconde.",
-  "_precos": "Preço é sugestão. Defina antes de publicar qualquer cobrança real — nada aqui cobra ninguém.",
+  "_precos": "O preço público é um só: mão de obra R$ 7,00 fixa. O resto do valor depende do serviço e é combinado por escrito antes de começar — não existe tabela fechada de nível.",
   "produtos": {
     "antixray": {
       "gratis": [
@@ -24,7 +24,8 @@
         },
         {
           "nome": "AntiXray Pro",
-          "preco": "R$ 29/mês",
+          "preco": "R$ 7,00",
+          "preco_nota": "mão de obra fixa — o resto do serviço é combinado antes",
           "resumo": "O mesmo plugin, calibrado para o seu servidor e com alguém olhando.",
           "diferenca": "Detec calibrado contra falso positivo no seu hardware e número de jogadores, suporte por Discord, builds nightly com detector novo antes do público e painel web para ler as evidências."
         }
@@ -50,7 +51,8 @@
         },
         {
           "nome": "Monitor",
-          "preco": "R$ 19/mês",
+          "preco": "R$ 7,00",
+          "preco_nota": "mão de obra fixa — o resto do serviço é combinado antes",
           "resumo": "O diretório watching: alerta quando uma API que você usa cai.",
           "diferenca": "Endpoint próprio com histórico de latência, alerta de queda e exportação programada no seu formato."
         }
@@ -76,7 +78,8 @@
         },
         {
           "nome": "OpenDex White-label",
-          "preco": "R$ 49/mês",
+          "preco": "R$ 7,00",
+          "preco_nota": "mão de obra fixa — o resto do serviço é combinado antes",
           "resumo": "O mesmo catálogo, com a sua marca e no seu domínio.",
           "diferenca": "Espelho do catálogo mantendo a sua marca, alerta quando o ecossistema ganha plugin relevante."
         }
@@ -102,7 +105,8 @@
         },
         {
           "nome": "Estudo",
-          "preco": "R$ 89/estudo",
+          "preco": "R$ 7,00",
+          "preco_nota": "mão de obra fixa — o resto do serviço é combinado antes",
           "resumo": "Eu rodo a sua hipótese na sua cidade e entrego a leitura.",
           "diferenca": "Simulação no grafo real do seu contexto, relatório de resultado e análise do agente."
         }
@@ -127,18 +131,20 @@
         },
         {
           "nome": "Configuração",
-          "preco": "R$ 150",
+          "preco": "R$ 7,00",
+          "preco_nota": "mão de obra fixa — o resto do serviço é combinado antes",
           "resumo": "Configuração e otimização feitas direto no seu servidor.",
           "diferenca": "Feito no seu servidor, com medição antes e depois."
         },
         {
           "nome": "Desenvolvimento",
-          "preco": "sob consulta",
+          "preco": "R$ 7,00",
+          "preco_nota": "mão de obra fixa — o resto do serviço é combinado antes",
           "resumo": "Plugin, integração ou automação sob medida, com manutenção contínua.",
           "diferenca": "Escopo definido depois do diagnóstico, com preço antes de começar."
         }
       ]
     }
   },
-  "_planos_nota": "Nome e preco de cada nivel. 'gratis' e 'vip' listam o que entra em cada um. Preco e sugestao: nada aqui cobra ninguem ainda, e a pagina diz isso — cobrar antes de ter o produto pronto e o jeito de queimar a confianca que o numero nao minta."
+  "_planos_nota": "Nome e preco de cada nivel. Preco publico = mao de obra R$ 7,00 fixa; o servico soma o resto, combinado antes, por escrito. 'gratis' e 'vip' listam o que entra em cada um. Preco e sugestao: nada aqui cobra ninguem ainda, e a pagina diz isso — cobrar antes de ter o produto pronto e o jeito de queimar a confianca que o numero nao minta."
 }

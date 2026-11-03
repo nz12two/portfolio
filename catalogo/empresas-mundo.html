@@ -3,161 +3,185 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EmpresasMundo — NZ Studios</title>
+<title>EmpresasMundo — NZ</title>
 <meta name="description" content="Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
 <link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/empresas-mundo.html">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="NZ Studios">
-<meta property="og:title" content="EmpresasMundo — NZ Studios">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="EmpresasMundo — NZ">
 <meta property="og:description" content="Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.">
 <meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/empresas-mundo.html">
 <meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../css/studio.css?v=7">
-<link rel="stylesheet" href="../css/produto.css?v=7">
+<link rel="stylesheet" href="../css/main.css?v=4">
+<link rel="stylesheet" href="../css/produto.css?v=4">
+<link rel="stylesheet" href="../css/vip.css?v=4">
+<!-- Sem isto o navegador pede /favicon.ico e leva 404 nas seis paginas de
+     produto (medido na varredura das nove paginas do site). -->
 <link rel="icon" href="../assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="../assets/brand/favicon-16.png" sizes="16x16" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="../assets/brand/app-icon-512.png">
 </head>
 <body>
 
-<header class="bar" id="bar">
-  <div class="bar__in">
-    <a href="../index.html" class="brand" aria-label="NZ Studios — home">
-      <svg viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
-      NZ Studios
-      <span class="p-head__backset mono">/ EmpresasMundo</span>
-    </a>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="index.html">Catálogo</a>
-    </nav>
-    <a class="gh" href="https://github.com/nz12two" target="_blank" rel="noopener" aria-label="GitHub de nz12two">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
-    </a>
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a href="../index.html" class="brand">NZ <small>/ EmpresasMundo</small></a>
+    <nav class="nav"><a href="../index.html">Produtos</a></nav>
+    <a class="btn btn--acc" href="../conta.html" data-conta-open>VIP</a>
   </div>
 </header>
 
-<main>
-<section class="p-head">
-  <div class="p-head__volta"><a href="index.html">↙ catálogo completo</a></div>
-  <p class="hero__ov mono"><i></i> jogo / simulação · dados</p>
+<main class="wrap ppage">
+
+  <a href="../index.html" class="ppage__volta">← catálogo</a>
+
+  <div class="eyebrow mono">Jogo / simulação</div>
   <h1>EmpresasMundo</h1>
-  <p class="p-head__tag">Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.</p>
-  <div class="p-chips">
-    <span class="chip">estável</span>
-    <span class="chip">gratuito</span>
-    <span class="chip">sem licença</span>
-    <span class="chip">Python · FastAPI · OSMnx</span>
+  <p class="ppage__tag">Simulação de empresas de entrega competindo por fitness: cada uma é um agente com rede neural recorrente própria, num grafo do OpenStreetMap.</p>
+
+  <div class="item__tags">
+    <span class="tag tag--ok">estável</span>
+    <span class="tag tag--acc">gratuito</span>
+    <span class="tag">nenhuma</span>
+    <span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">WebSocket</span><span class="tag">OSMnx</span><span class="tag">OpenStreetMap</span><span class="tag">JavaScript</span>
   </div>
-  <p class="p-aviso"><b>Roda local.</b> Sem deploy público e sem licença no repositório — GPL implícito por omissão, o que é ambíguo.</p>
-</section>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> para quem é</p>
-  <h2>Para quem é</h2>
-  <ul class="p-lista">
-    <li>Quem quer ver <b>agent-based modeling</b> funcionando em mapa real: São Paulo via OSMnx.</li>
-    <li>Quem estuda routing evolucionário — o DNA de cada empresa (estratégia, agressividade, velocidade) evolui ao longo das gerações.</li>
-  </ul>
-</section>
+  <p class="ppage__aviso">Roda local. Sem deploy público e sem license no repositório — GPL implícito por omissão, o que é ambíguo.</p>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> instalação</p>
-  <h2>Passo a passo</h2>
-  <div class="passo">
-    <span class="passo__n mono">1</span>
-    <div>
-      <h3>Dependências</h3>
-      <div class="code">
-        <button type="button" class="code__copy" data-copy aria-label="Copiar comando"><span class="code__txt">copiar</span></button>
-        <pre><code>cd backend &amp;&amp; python -m venv .venv &amp;&amp; .venv\Scripts\activate &amp;&amp; pip install -r requirements.txt</code></pre>
+  
+  
+  <p class="shot shot--vazio">Precisa da simulacao com OSMnx rodando — nao ha URL publica para fotografar.</p>
+
+  
+  
+
+  <section class="psec">
+    <h2>Para quem é</h2>
+    <ul class="psec__ul"><li>Quem quer ver agent-based modeling funcionando em mapa real: São Paulo via OSMnx.</li><li>Quem estuda routing evolutionário — o DNA de cada empresa (estratégia, agressividade, velocidade) evolui ao longo das gerações.</li></ul>
+  </section>
+
+  <section class="psec">
+    <div class="eyebrow mono">instalação</div>
+    <h2>Passo a passo</h2>
+    <div class="steps">
+      
+      <div class="step">
+        <div class="step__n">1</div>
+        <div>
+          <h3 class="step__t">Dependências</h3>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>cd backend &amp;&amp; python -m venv .venv &amp;&amp; .venv\Scripts\activate &amp;&amp; pip install -r requirements.txt</code></pre>
+          </div>
+          
+          <p class="step__note">Windows. Em Linux: python -m venv .venv &amp;&amp; source .venv/bin/activate.</p>
+        </div>
       </div>
-      <p class="passo__note">Windows. Em Linux: <span class="mono">python -m venv .venv &amp;&amp; source .venv/bin/activate</span>.</p>
-    </div>
-  </div>
-  <div class="passo">
-    <span class="passo__n mono">2</span>
-    <div>
-      <h3>Subir o servidor</h3>
-      <div class="code">
-        <button type="button" class="code__copy" data-copy aria-label="Copiar comando"><span class="code__txt">copiar</span></button>
-        <pre><code>.venv\Scripts\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000</code></pre>
+      <div class="step">
+        <div class="step__n">2</div>
+        <div>
+          <h3 class="step__t">Subir o servidor</h3>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>.venv\Scripts\python.exe -m uvicorn main:app --host 0.0.0.0 --port 8000</code></pre>
+          </div>
+          <p class="step__out">saída: <code>http://localhost:8000</code></p>
+          <p class="step__note">FastAPI + WebSocket. O frontend conecta e desenha o mapa.</p>
+        </div>
       </div>
-      <p class="passo__note">saída: <span class="mono">http://localhost:8000</span>. FastAPI + WebSocket. O frontend conecta e desenha o mapa.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> arquitetura</p>
-  <h2>Como está montado</h2>
-  <ul class="p-lista">
-    <li><span class="mono">backend/main.py</span> — servidor FastAPI + WebSocket.</li>
-    <li><span class="mono">backend/map_data.py</span> — carrega o grafo de ruas pelo OSMnx.</li>
-    <li><span class="mono">backend/simulation.py</span> — motor de simulação tick a tick.</li>
-    <li><span class="mono">backend/company.py</span> — classe Empresa, o agente com DNA.</li>
-    <li><span class="mono">frontend/</span> — interface, lógica de WebSocket e estilo.</li>
-  </ul>
-</section>
+  <section class="psec">
+         <div class="eyebrow mono">tutorial</div>
+         <h2>Arquitetura</h2>
+         <p class="psec__p">backend/main.py — servidor FastAPI + WebSocket.</p><p class="psec__p">backend/map_data.py — carrega o grafo de ruas pelo OSMnx.</p><p class="psec__p">backend/simulation.py — motor de simulação tick a tick.</p><p class="psec__p">backend/company.py — classe Empresa, o agente com DNA.</p><p class="psec__p">frontend/ — interface, lógica de WebSocket e estilo.</p>
+       </section>
+  <section class="planos" data-slug="empresas-mundo">
+         <div class="eyebrow mono">planos</div>
+         <h2>O que é grátis, e o que a versão paga acrescenta</h2>
+         <p class="planos__lead">
+           O que está no GitHub continua gratuito, com a mesma licença e sem
+           conta. A versão paga não é o código trancado — é o mesmo código
+           calibrado para o seu caso, com alguém olhando junto.
+         </p>
+         <div class="planos__grid">
+           
+        <article class="plano" data-gratis="1">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Simulação</h3>
+            <p class="plano__preco plano__preco--zero">R$ 0</p>
+          </header>
+          
+          <p class="plano__resumo">O código do agente, do motor e as instruções de setup.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>simulação completa com OSMnx e FastAPI</li><li><span class="plano__pip" aria-hidden="true"></span>código do agente e do motor</li><li><span class="plano__pip" aria-hidden="true"></span>instruções de setup</li>
+          </ul>
+          <p class="plano__dif">Roda na sua máquina, com OSMnx e FastAPI.</p>
+        </article>
+           
+        <article class="plano">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Estudo</h3>
+            <p class="plano__preco">R$ 7,00</p>
+          </header>
+          <p class="plano__mo">mão de obra fixa — o resto do serviço é combinado antes</p>
+          <p class="plano__resumo">Eu rodo a sua hipótese na sua cidade e entrego a leitura.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>rodar a simulação na sua cidade e no seu grafo real</li><li><span class="plano__pip" aria-hidden="true"></span>rodar a hipótese que você quer testar, com leitura do resultado</li><li><span class="plano__pip" aria-hidden="true"></span>relatório de resultado e leitura do agente</li>
+          </ul>
+          <p class="plano__dif">Simulação no grafo real do seu contexto, relatório de resultado e análise do agente.</p>
+        </article>
+         </div>
+         <div class="planos__acesso">
+           <div class="vip__gate" data-gate>
+             <p class="vip__msg">Quer ver o material do nível pago?</p>
+             <a class="btn btn--acc" href="../conta.html">Entrar na conta</a>
+             <p class="vip__note">O material pago fica atrás da sua conta. Sem conta, o que está aqui é o nível grátis.</p>
+           </div>
+           <div class="vip__unlocked" data-unlocked hidden>
+             <p class="vip__msg vip__msg--ok">Sessão ativa.</p>
+             <a class="btn btn--acc" href="https://github.com/nz12two/empresas-mundo" target="_blank" rel="noopener">Ir para o código</a>
+           </div>
+         </div>
+         <p class="planos__aviso">
+           O preço público é um só: <strong>mão de obra R$ 7,00 fixa</strong>. O
+           resto depende do serviço — volume, urgência, manutenção, integração —
+           e é combinado por escrito antes de começar. Sem escopo escrito, não
+           existe preço. Contrato e pagamento pelo Discord.
+         </p>
+       </section>
 
-<section class="planos rv">
-  <p class="hero__ov mono"><i></i> planos</p>
-  <h2>O que é grátis, e o que o estudo pago acrescenta</h2>
-  <p class="planos__lead">O código continua aberto no GitHub. O lado pago não tranca nada — é a simulação rodando na sua hipótese, com leitura do resultado.</p>
-  <div class="planos__grid">
-    <article class="plano">
-      <header class="plano__hd">
-        <h3 class="plano__nome">Simulação</h3>
-        <p class="plano__preco plano__preco--zero">R$ 0</p>
-      </header>
-      <p class="plano__resumo">O código do agente, do motor e as instruções de setup.</p>
-      <ul class="plano__list">
-        <li>simulação completa com OSMnx e FastAPI</li>
-        <li>código do agente e do motor</li>
-        <li>instruções de setup</li>
-      </ul>
-      <p class="plano__resumo"><b>Roda na sua máquina</b>, com OSMnx e FastAPI.</p>
-    </article>
-    <article class="plano plano--pago">
-      <header class="plano__hd">
-        <h3 class="plano__nome">Estudo</h3>
-        <p class="plano__preco">R$ 89/estudo</p>
-      </header>
-      <p class="plano__resumo">Eu rodo a sua hipótese na sua cidade e entrego a leitura.</p>
-      <ul class="plano__list">
-        <li>rodar a simulação na sua cidade e no seu grafo real</li>
-        <li>rodar a hipótese que você quer testar, com leitura do resultado</li>
-        <li>relatório de resultado e leitura do agente</li>
-      </ul>
-      <p class="plano__resumo"><b>No grafo real</b> do seu contexto, com relatório e leitura do agente.</p>
-    </article>
+  <div class="ppage__links">
+        <a class="btn btn--acc" href="https://github.com/nz12two/empresas-mundo" target="_blank" rel="noopener">Ver código</a>
+        
   </div>
-  <div class="planos__acesso">
-    <div class="vip__gate" data-gate>
-      <p class="vip__msg">Quer ver o material do nível pago?</p>
-      <a class="btn btn--solo" href="../conta.html">Entrar na conta</a>
-      <p class="vip__note">O material pago fica atrás da sua conta. Sem conta, o que está aqui é o nível grátis.</p>
-    </div>
-    <div class="vip__unlocked" data-unlocked hidden>
-      <p class="vip__msg vip__msg--ok">Sessão ativa.</p>
-      <span class="vip__msg">O estudo entra no próximo passo: conversa por Discord define o recorte.</span>
-    </div>
-  </div>
-  <p class="planos__aviso">Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi deixar o valor visível antes de a cobrança funcionar do que montar um checkout que não entrega.</p>
-</section>
-
-<div class="p-foot">
-  <span>EmpresasMundo · estável · sem licença · Python · FastAPI · OSMnx · WebSocket</span>
-  <a href="https://github.com/nz12two/empresas-mundo" target="_blank" rel="noopener">github.com/nz12two/empresas-mundo</a>
-</div>
 </main>
 
-<script src="../js/auth-config.js?v=7"></script>
-<script src="../js/auth.js?v=7" defer></script>
-<script src="../js/copiar.js?v=7" defer></script>
-<script src="../js/produto-shell.js?v=7" defer></script>
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <!-- Rodapé com o dado do produto, nao com elogio genérico. "Construído à
+         mão, sem template" não mudava nunca e não dizia nada. -->
+    <!-- O rodape repete o status com o MESMO mapa que a vitrine usa. Antes
+         caia num ternario que so conhecia beta e em-producao, e todo produto
+         novo virava "estavel" — foi o que aconteceu com o agente, que e
+         fechado, e o rodape afirmava que era estavel. -->
+    <span class="mono">EmpresasMundo · estável · nenhuma</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
+<script src="../js/auth-config.js?v=4"></script>
+<script src="../js/auth.js?v=4" defer></script>
+<script src="../js/copiar.js?v=4" defer></script>
 </body>
 </html>

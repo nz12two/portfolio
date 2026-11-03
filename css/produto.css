@@ -124,6 +124,10 @@ main { max-width: 1120px; margin: 0 auto; padding: 0 var(--gut); }
   color: var(--acc); white-space: nowrap;
 }
 .plano__preco--zero { color: var(--tx-3); }
+.plano__mo {
+  font-family: "JetBrains Mono", monospace; font-size: 0.7rem;
+  color: var(--tx-3); margin-top: -8px;
+}
 .plano__resumo { font-size: 0.85rem; color: var(--tx-2); }
 .plano__pip { list-style: none; }
 .plano__list { list-style: none; }

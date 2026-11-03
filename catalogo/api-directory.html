@@ -3,161 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>API Directory — NZ Studios</title>
-<meta name="description" content="Diretório de 2.085 APIs públicas que diz se elas respondem, com a latência medida de fora.">
+<title>API Directory — NZ</title>
+<meta name="description" content="Diretorio de 2085 APIs publicas que diz se elas respondem, com a latencia medida de fora.">
+<!-- Canonical e OG por produto. A URL precisa ser absoluta: e o valor que o
+     WhatsApp e o Telegram guardam quando alguem compartilha, e o caminho
+     relativo so funciona enquanto a pagina estiver na mesma pasta. A imagem
+     preferida e a captura real do produto; sem ela cai na previa do site. -->
 <link rel="canonical" href="https://nz12two.github.io/portfolio/catalogo/api-directory.html">
 <meta property="og:type" content="article">
-<meta property="og:site_name" content="NZ Studios">
-<meta property="og:title" content="API Directory — NZ Studios">
-<meta property="og:description" content="Diretório de 2.085 APIs públicas que diz se elas respondem, com a latência medida de fora.">
+<meta property="og:site_name" content="NZ">
+<meta property="og:title" content="API Directory — NZ">
+<meta property="og:description" content="Diretorio de 2085 APIs publicas que diz se elas respondem, com a latencia medida de fora.">
 <meta property="og:url" content="https://nz12two.github.io/portfolio/catalogo/api-directory.html">
-<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/social-preview.png">
+<meta property="og:image" content="https://nz12two.github.io/portfolio/assets/produtos/api-directory.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="../css/studio.css?v=7">
-<link rel="stylesheet" href="../css/produto.css?v=7">
+<link rel="stylesheet" href="../css/main.css?v=4">
+<link rel="stylesheet" href="../css/produto.css?v=4">
+<link rel="stylesheet" href="../css/vip.css?v=4">
+<!-- Sem isto o navegador pede /favicon.ico e leva 404 nas seis paginas de
+     produto (medido na varredura das nove paginas do site). -->
 <link rel="icon" href="../assets/brand/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="icon" href="../assets/brand/favicon-16.png" sizes="16x16" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="../assets/brand/app-icon-512.png">
 </head>
 <body>
 
-<header class="bar" id="bar">
-  <div class="bar__in">
-    <a href="../index.html" class="brand" aria-label="NZ Studios — home">
-      <svg viewBox="0 0 512 512" aria-hidden="true"><g fill="currentColor"><polygon points="72,256 196,150 196,206 142,256 196,306 196,362"/><polygon points="440,256 316,150 316,206 370,256 316,306 316,362"/><polygon points="256,80 308,80 218,432 166,432"/></g></svg>
-      NZ Studios
-      <span class="p-head__backset mono">/ API Directory</span>
-    </a>
-    <nav>
-      <a href="../index.html">Home</a>
-      <a href="index.html">Catálogo</a>
-    </nav>
-    <a class="gh" href="https://github.com/nz12two" target="_blank" rel="noopener" aria-label="GitHub de nz12two">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .96-.31 3.15 1.18a10.9 10.9 0 0 1 5.74 0c2.19-1.49 3.15-1.18 3.15-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.66.41.36.77 1.05.77 2.13v3.16c0 .31.21.68.8.56A11.52 11.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
-    </a>
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a href="../index.html" class="brand">NZ <small>/ API Directory</small></a>
+    <nav class="nav"><a href="../index.html">Produtos</a></nav>
+    <a class="btn btn--acc" href="../conta.html" data-conta-open>VIP</a>
   </div>
 </header>
 
-<main>
-<section class="p-head">
-  <div class="p-head__volta"><a href="index.html">↙ catálogo completo</a></div>
-  <p class="hero__ov mono"><i></i> ferramenta · dados</p>
+<main class="wrap ppage">
+
+  <a href="../index.html" class="ppage__volta">← catálogo</a>
+
+  <div class="eyebrow mono">Ferramenta</div>
   <h1>API Directory</h1>
-  <p class="p-head__tag">Diretório de 2.085 APIs públicas que diz se elas respondem, com a latência medida de fora.</p>
-  <div class="p-chips">
-    <span class="chip chip--acc">2.085 APIs sondadas — medido</span>
-    <span class="chip">estável</span>
-    <span class="chip">gratuito</span>
-    <span class="chip">MIT (só no README)</span>
-  </div>
-  <div class="p-chips" style="margin-top:12px">
-    <a class="btn btn--solo" href="https://nz12two.github.io/api-directory/" target="_blank" rel="noopener">Abrir o produto ↗</a>
-    <a class="btn btn--fantasma" href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">Ver código</a>
-  </div>
-  <p class="p-aviso"><b>No ar em nz12two.github.io/api-directory.</b> Vanilla JS, sem build step. O CI sonda o dataset uma vez por dia.</p>
-</section>
+  <p class="ppage__tag">Diretorio de 2085 APIs publicas que diz se elas respondem, com a latencia medida de fora.</p>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> para quem é</p>
-  <h2>Para quem é</h2>
-  <ul class="p-lista">
-    <li>Quem procura endpoint grátis e precisa saber se ainda funciona antes de integrar.</li>
-    <li>Quem já toma timeout no servidor e quer separar <b>"fora do ar"</b> de <b>"CORS bloqueando"</b> — o site responde as duas perguntas separadamente.</li>
-  </ul>
-</section>
+  <div class="item__tags">
+    <span class="tag tag--ok">estável</span>
+    <span class="tag tag--acc">gratuito</span>
+    <span class="tag">MIT (só no README)</span>
+    <span class="tag">Python</span><span class="tag">JavaScript</span><span class="tag">GitHub Actions</span>
+  </div>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> instalação</p>
-  <h2>Passo a passo</h2>
-  <div class="passo">
-    <span class="passo__n mono">1</span>
-    <div>
-      <h3>Rodar a sondagem</h3>
-      <div class="code">
-        <button type="button" class="code__copy" data-copy aria-label="Copiar comando"><span class="code__txt">copiar</span></button>
-        <pre><code>python tools/probe_apis.py</code></pre>
+  <p class="ppage__aviso">No ar em https://nz12two.github.io/api-directory/. Vanilla JS, sem build step.</p>
+
+  
+  
+  <figure class="shot">
+         <img src="../assets/produtos/api-directory.png" alt="Catalogo do API Directory com 2085 APIs, 52 categorias e 994 sem autenticacao; cada card traz a latencia medida, como Axolotl em 571 ms e eBird em 1712 ms." width="1100" height="739" decoding="async">
+         <figcaption>
+           Captura real em 2026-10-12 · <a href="https://nz12two.github.io/api-directory/" target="_blank" rel="noopener">ver no ar</a>
+         </figcaption>
+       </figure>
+
+  
+  
+
+  <section class="psec">
+    <h2>Para quem é</h2>
+    <ul class="psec__ul"><li>Quem procura endpoint grátis e precisa saber se ainda funciona antes de integrate.</li><li>Quem já toma low-level timeout do servidor e quer separar 'fora do ar' de 'CORS bloqueando' — o site responde as duas perguntas separadamente.</li></ul>
+  </section>
+
+  <section class="psec">
+    <div class="eyebrow mono">instalação</div>
+    <h2>Passo a passo</h2>
+    <div class="steps">
+      
+      <div class="step">
+        <div class="step__n">1</div>
+        <div>
+          <h3 class="step__t">Rodar a sondagem</h3>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>python tools/probe_apis.py</code></pre>
+          </div>
+          <p class="step__out">saída: <code>data/health.json</code></p>
+          <p class="step__note">16 workers, ~3 min. Roda no CI uma vez por dia.</p>
+        </div>
       </div>
-      <p class="passo__note">saída: <span class="mono">data/health.json</span> — 16 workers, ~3 min. Roda no CI uma vez por dia.</p>
-    </div>
-  </div>
-  <div class="passo">
-    <span class="passo__n mono">2</span>
-    <div>
-      <h3>Gerar o dataset</h3>
-      <div class="code">
-        <button type="button" class="code__copy" data-copy aria-label="Copiar comando"><span class="code__txt">copiar</span></button>
-        <pre><code>python tools/build_dataset.py</code></pre>
+      <div class="step">
+        <div class="step__n">2</div>
+        <div>
+          <h3 class="step__t">Gerar o dataset</h3>
+          <div class="code">
+            <button type="button" class="code__copy" data-copy aria-label="Copiar comando">
+              <span class="code__ico" aria-hidden="true"></span><span class="code__txt">copiar</span>
+            </button>
+            <pre class="step__code"><code>python tools/build_dataset.py</code></pre>
+          </div>
+          <p class="step__out">saída: <code>data/apis.json</code></p>
+          <p class="step__note">Catálogo + tradução PT. O site carrega JSON estático — a tradução acontece uma vez, não no navegador de cada visitante.</p>
+        </div>
       </div>
-      <p class="passo__note">saída: <span class="mono">data/apis.json</span> — catálogo + tradução PT. O site carrega JSON estático: a tradução acontece uma vez, não no navegador de cada visitante.</p>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="p-sec rv">
-  <p class="hero__ov mono"><i></i> tutorial</p>
-  <h2>Por que a latência não é medida no navegador</h2>
-  <p>Porque <b>o navegador mentiria</b>. Um fetch só entrega o corpo se o servidor mandar <span class="mono">Access-Control-Allow-Origin</span>; sem isso o browser bloqueia e reporta "failed" — sem distinguir servidor fora do ar de CORS barrando.</p>
-  <p>São duas perguntas diferentes, então a sondagem responde as duas: <span class="mono">tools/probe_apis.py</span> no CI mede se o host responde e em quantos ms; o botão ▶ no navegador diz se dá para consumir no front.</p>
-  <p>Quando o ▶ falha mas a sondagem diz HTTP 200, as duas informações aparecem lado a lado — <b>e as duas estão certas</b>.</p>
-</section>
+  <section class="psec">
+         <div class="eyebrow mono">tutorial</div>
+         <h2>Por que a latência não é medida no navegador</h2>
+         <p class="psec__p">Porque o navegador mentiria. Um fetch só entrega o corpo se o servidor mandar Access-Control-Allow-Origin; sem isso o browser bloqueia e reporta 'failed' — sem distinguir servidor fora do ar de CORS barrando.</p><p class="psec__p">São duas perguntas diferentes, então a sondagem responde as duas: tools/probe_apis.py no CI mede se o host responde e em quantos ms; o botão ▶ no navegador diz se dá para consumir no front.</p><p class="psec__p">Quando o ▶ falha mas a sondagem diz HTTP 200, as duas informações aparecem lado a lado — e as duas estão certas.</p>
+       </section>
+  <section class="planos" data-slug="api-directory">
+         <div class="eyebrow mono">planos</div>
+         <h2>O que é grátis, e o que a versão paga acrescenta</h2>
+         <p class="planos__lead">
+           O que está no GitHub continua gratuito, com a mesma licença e sem
+           conta. A versão paga não é o código trancado — é o mesmo código
+           calibrado para o seu caso, com alguém olhando junto.
+         </p>
+         <div class="planos__grid">
+           
+        <article class="plano" data-gratis="1">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Diretório</h3>
+            <p class="plano__preco plano__preco--zero">R$ 0</p>
+          </header>
+          
+          <p class="plano__resumo">Os 2085 endereços medidos, o dataset em JSON e o CI que mede latência.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>site completo no ar, com os dados já medidos</li><li><span class="plano__pip" aria-hidden="true"></span>dataset bruto em JSON (apis + health)</li><li><span class="plano__pip" aria-hidden="true"></span>código do CI que mede latência</li>
+          </ul>
+          <p class="plano__dif">Consulte à vontade. O CI roda uma vez ao dia sozinho.</p>
+        </article>
+           
+        <article class="plano">
+          <header class="plano__hd">
+            <h3 class="plano__nome">Monitor</h3>
+            <p class="plano__preco">R$ 7,00</p>
+          </header>
+          <p class="plano__mo">mão de obra fixa — o resto do serviço é combinado antes</p>
+          <p class="plano__resumo">O diretório watching: alerta quando uma API que você usa cai.</p>
+          <ul class="plano__list">
+            <li><span class="plano__pip" aria-hidden="true"></span>monitor próprio com alerta quando uma API que você usa cai</li><li><span class="plano__pip" aria-hidden="true"></span>endpoint próprio com SLA e histórico de latência</li><li><span class="plano__pip" aria-hidden="true"></span>exportação programada para o seu formato</li>
+          </ul>
+          <p class="plano__dif">Endpoint próprio com histórico de latência, alerta de queda e exportação programada no seu formato.</p>
+        </article>
+         </div>
+         <div class="planos__acesso">
+           <div class="vip__gate" data-gate>
+             <p class="vip__msg">Quer ver o material do nível pago?</p>
+             <a class="btn btn--acc" href="../conta.html">Entrar na conta</a>
+             <p class="vip__note">O material pago fica atrás da sua conta. Sem conta, o que está aqui é o nível grátis.</p>
+           </div>
+           <div class="vip__unlocked" data-unlocked hidden>
+             <p class="vip__msg vip__msg--ok">Sessão ativa.</p>
+             <a class="btn btn--acc" href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">Ir para o código</a>
+           </div>
+         </div>
+         <p class="planos__aviso">
+           O preço público é um só: <strong>mão de obra R$ 7,00 fixa</strong>. O
+           resto depende do serviço — volume, urgência, manutenção, integração —
+           e é combinado por escrito antes de começar. Sem escopo escrito, não
+           existe preço. Contrato e pagamento pelo Discord.
+         </p>
+       </section>
 
-<section class="planos rv">
-  <p class="hero__ov mono"><i></i> planos</p>
-  <h2>O que é grátis, e o que a versão paga acrescenta</h2>
-  <p class="planos__lead">O que está no GitHub continua gratuito, com a mesma licença e sem conta. A versão paga não é o código trancado — é o mesmo código calibrado para o seu caso, com alguém olhando junto.</p>
-  <div class="planos__grid">
-    <article class="plano">
-      <header class="plano__hd">
-        <h3 class="plano__nome">Diretório</h3>
-        <p class="plano__preco plano__preco--zero">R$ 0</p>
-      </header>
-      <p class="plano__resumo">Os 2.085 endereços medidos, o dataset em JSON e o CI que mede latência.</p>
-      <ul class="plano__list">
-        <li>site completo no ar, com os dados já medidos</li>
-        <li>dataset bruto em JSON (apis + health)</li>
-        <li>código do CI que mede latência</li>
-      </ul>
-      <p class="plano__resumo"><b>Consulte à vontade.</b> O CI roda uma vez ao dia sozinho.</p>
-    </article>
-    <article class="plano plano--pago">
-      <header class="plano__hd">
-        <h3 class="plano__nome">Monitor</h3>
-        <p class="plano__preco">R$ 19/mês</p>
-      </header>
-      <p class="plano__resumo">O diretório com vigília: alerta quando uma API que você usa cai.</p>
-      <ul class="plano__list">
-        <li>monitor próprio com alerta quando uma API que você usa cai</li>
-        <li>endpoint próprio com SLA e histórico de latência</li>
-        <li>exportação programada para o seu formato</li>
-      </ul>
-      <p class="plano__resumo"><b>Endpoint próprio</b> com histórico de latência, alerta de queda e exportação no seu formato.</p>
-    </article>
+  <div class="ppage__links">
+        <a class="btn btn--acc" href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">Ver código</a>
+        <a class="btn" href="https://nz12two.github.io/api-directory/" target="_blank" rel="noopener">Abrir</a>
   </div>
-  <div class="planos__acesso">
-    <div class="vip__gate" data-gate>
-      <p class="vip__msg">Quer ver o material do nível pago?</p>
-      <a class="btn btn--solo" href="../conta.html">Entrar na conta</a>
-      <p class="vip__note">O material pago fica atrás da sua conta. Sem conta, o que está aqui é o nível grátis.</p>
-    </div>
-    <div class="vip__unlocked" data-unlocked hidden>
-      <p class="vip__msg vip__msg--ok">Sessão ativa.</p>
-      <a class="btn btn--solo" href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">Ir para o código</a>
-    </div>
-  </div>
-  <p class="planos__aviso">Preço é sugestão, e nada aqui está cobrando ninguém ainda. Preferi deixar o valor visível antes de a cobrança funcionar do que montar um checkout que não entrega.</p>
-</section>
-
-<div class="p-foot">
-  <span>API Directory · estável · MIT (só no README) · Python · GitHub Actions</span>
-  <a href="https://github.com/nz12two/api-directory" target="_blank" rel="noopener">github.com/nz12two/api-directory</a>
-</div>
 </main>
 
-<script src="../js/auth-config.js?v=7"></script>
-<script src="../js/auth.js?v=7" defer></script>
-<script src="../js/copiar.js?v=7" defer></script>
-<script src="../js/produto-shell.js?v=7" defer></script>
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <!-- Rodapé com o dado do produto, nao com elogio genérico. "Construído à
+         mão, sem template" não mudava nunca e não dizia nada. -->
+    <!-- O rodape repete o status com o MESMO mapa que a vitrine usa. Antes
+         caia num ternario que so conhecia beta e em-producao, e todo produto
+         novo virava "estavel" — foi o que aconteceu com o agente, que e
+         fechado, e o rodape afirmava que era estavel. -->
+    <span class="mono">API Directory · estável · MIT (só no README)</span>
+    <span class="mono"><a href="https://github.com/nz12two" style="color:var(--tx-2)">github.com/nz12two</a></span>
+  </div>
+</footer>
+
+<script src="../js/auth-config.js?v=4"></script>
+<script src="../js/auth.js?v=4" defer></script>
+<script src="../js/copiar.js?v=4" defer></script>
 </body>
 </html>
