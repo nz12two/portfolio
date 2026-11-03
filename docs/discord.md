@@ -1,7 +1,7 @@
 # Discord — plano e sincronia com o portfólio
 
 **Servidor criado em 2026-10-12.** Nome: **NZ Studios**. Convite:
-<https://discord.gg/FwPq3hSmr>. Guild id `1559216448969248770` (confirmado pela
+<https://discord.gg/ZNchMjhZQK>. Guild id `1559216448969248770` (confirmado pela
 API — o id da barra de endereço do browser não era o mesmo).
 
 ## Identidades

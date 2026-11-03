@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-03T02:07:02.087Z",
+  "gerado_em": "2026-11-03T16:57:13.246Z",
   "total": 6,
   "tipos": [
     {
@@ -454,7 +454,7 @@
         "vercel"
       ],
       "repo": null,
-      "site": "https://baccanas-hub.vercel.app",
+      "site": null,
       "inicial": "B",
       "imagem": null,
       "imagemAlt": null,

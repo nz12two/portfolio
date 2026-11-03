@@ -289,7 +289,7 @@
       "preco": "sob-consulta",
       "preco_nota": "Serviço, não produto. Preço por conversa.",
       "repo": null,
-      "site": "https://baccanas-hub.vercel.app",
+      "site": null,
       "licenca": "proprietario",
       "stack": [
         "Next.js",
@@ -304,9 +304,9 @@
         {
           "passo": "1",
           "titulo": "Não se instala",
-          "comando": "abrir https://baccanas-hub.vercel.app",
+          "comando": "contratar pelo ticket",
           "saida": null,
-          "nota": "Serviço hospedado. O onboarding é por contato direto."
+          "nota": "Serviço sob medida. O deploy antigo saiu do ar."
         }
       ],
       "tutorial": {
