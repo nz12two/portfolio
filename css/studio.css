@@ -294,11 +294,10 @@ body::before {
 .rv { transition-delay: calc(var(--d, 0) * 90ms); }
 .proj.vivo { animation: none; }
 
-/* prateleiras, timeline, stack e serviços ficam abaixo da dobra: esperam o .rv virar .on */
-.rv.on .prateleira,
-.rv.on .linha-tempo li,
-.rv.on .stk,
-.rv.on .svc { animation-play-state: running; }
+/* prateleiras, timeline, stack e serviços ficam abaixo da dobra: esperam o .rv virar .on.
+   Precisa de `*` e não de lista de filhos: #linhaTempo é `linha-tempo rv` no MESMO elemento,
+   então `.rv.on .linha-tempo li` nunca casava e os itens ficavam paused (opacity 0) para sempre. */
+.rv.on * { animation-play-state: running; }
 
 /* carrossel: faixa horizontal de produtos, arrastável, com setas */
 .carrossel-wrap {
