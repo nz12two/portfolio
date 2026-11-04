@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /conta.html
+
+Sitemap: https://nz12two.github.io/portfolio/sitemap.xml

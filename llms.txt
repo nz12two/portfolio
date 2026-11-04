@@ -1,0 +1,36 @@
+# NZ Studios
+
+> Estúdio de software de uma pessoa. Produtos com código aberto e número medido:
+> plugins para servidores Minecraft Paper, ferramentas de dados, automações e
+> agentes de engenharia. Atendimento via Discord (tickets).
+
+Site: https://nz12two.github.io/portfolio/
+Catálogo completo: https://nz12two.github.io/portfolio/catalogo/
+GitHub: https://github.com/nz12two
+Discord: https://discord.gg/ZNchMjhZQK
+
+## Produtos
+
+- [AntiXray](https://nz12two.github.io/portfolio/catalogo/antixray.html) — detecção modular de x-ray para Paper 1.21.4+. 19+ detectores independentes, motor de risco temporal. Gratuito, MIT. https://github.com/nz12two/antixray
+- [API Directory](https://nz12two.github.io/portfolio/catalogo/api-directory.html) — catálogo de 2.085 APIs públicas gratuitas, com latência medida de fora e atualização por GitHub Actions. https://github.com/nz12two/api-directory
+- [OpenDex](https://nz12two.github.io/portfolio/catalogo/opendex.html) — catálogo e documentação do ecossistema OpenCode: 123 repositórios e 249 pacotes mapeados. https://github.com/nz12two/opendex
+- [EmpresasMundo](https://nz12two.github.io/portfolio/catalogo/empresas-mundo.html) — simulação de empresas de entrega com agentes de rede neural competindo no grafo real de São Paulo. https://github.com/nz12two/empresas-mundo
+- [Baccana's Hub](https://nz12two.github.io/portfolio/catalogo/baccanas-hub.html) — serviços para servidores Minecraft: configuração, otimização de tick loop e desenvolvimento sob medida.
+- [Banzinho](https://nz12two.github.io/portfolio/catalogo/banzinho.html) — agente de engenharia (uso interno, 28 subsistemas, 38 verificadores de regra).
+
+## Perguntas frequentes
+
+### Quanto custa um serviço do NZ Studios?
+A mão de obra é R$ 7,00 fixa em todos os planos. O resto depende do serviço — volume, urgência, manutenção, integração — e é combinado por escrito antes de começar. Sem escopo escrito, não existe preço.
+
+### Como eu contrato?
+Entre no Discord (https://discord.gg/ZNchMjhZQK) e abra um ticket descrevendo o problema em duas linhas. Você recebe o que dá e o que não dá de fazer.
+
+### Os produtos são gratuitos?
+AntiXray é gratuito (MIT). API Directory e OpenDex são gratuitos e abertos. Serviços sob medida são pagos pelo modelo acima.
+
+### Qual a garantia de qualidade?
+Cada produto declara a medida e a fonte dela na própria página (ex.: número de APIs sondadas, detectores de x-ray, repositórios mapeados). O que não tem número medido, o card não declara.
+
+### Vocês atendem servidores pequenos?
+Sim. O ponto de entrada típico é Minecraft Paper: configuração, anti-x-ray, otimização de tick loop e plugins sob medida.
