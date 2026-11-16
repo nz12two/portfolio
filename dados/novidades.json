@@ -1,7 +1,16 @@
 {
-  "gerado_em": "2026-11-04T06:36:11.578Z",
+  "gerado_em": "2026-11-16T22:14:09.252Z",
   "convite": "https://discord.gg/ZNchMjhZQK",
   "canal": "📢-anúncios",
-  "total": 0,
-  "itens": []
+  "total": 1,
+  "itens": [
+    {
+      "id": "1572000418068963430",
+      "ts": "2026-11-16T21:28:26.023000+00:00",
+      "url": "https://discord.com/channels/1559216448969248770/1559253303039234119/1572000418068963430",
+      "autor": "ʜᴘᴢɴ",
+      "bot": false,
+      "texto": "🚧 AVISO IMPORTANTE, RAPAZIADA! Estou dedicando um tempo para realizar uma série de upgrades, melhorias e manutenções no e . Por esse motivo, as atualizações estão temporariamente pausadas. Mas não pensem que estou parado 👀 🔥 EM BREVE TEREMOS NOVIDADES! @here"
+    }
+  ]
 }
